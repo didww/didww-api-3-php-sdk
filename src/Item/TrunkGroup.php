@@ -15,7 +15,6 @@ class TrunkGroup extends BaseItem
         return $this->hasMany(Trunk::class);
     }
 
-
     public function setTrunks(\Swis\JsonApi\Client\Collection $trunks)
     {
         $this->trunks()->associate($trunks);

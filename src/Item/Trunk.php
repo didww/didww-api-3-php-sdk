@@ -50,7 +50,6 @@ class Trunk extends BaseItem
         return new $class();
     }
 
-
     public function setTrunkGroup(TrunkGroup $trunkGroup)
     {
         $this->trunkGroup()->associate($trunkGroup);

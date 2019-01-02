@@ -20,7 +20,6 @@ class SharedCapacityGroup extends BaseItem
         return $this->hasMany(Did::class);
     }
 
-
     public function setDids(\Swis\JsonApi\Client\Collection $dids)
     {
         $this->dids()->associate($dids);

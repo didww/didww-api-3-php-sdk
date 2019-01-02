@@ -17,7 +17,6 @@ class Order extends BaseItem
         return new $class($attributes);
     }
 
-
     public function toJsonApiArray(): array
     {
         $data = parent::toJsonApiArray();
