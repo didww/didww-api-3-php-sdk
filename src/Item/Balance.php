@@ -14,7 +14,6 @@ class Balance extends BaseItem
 
     public static function getEndpoint()
     {
-       return '/balance';
+        return '/balance';
     }
-
 }

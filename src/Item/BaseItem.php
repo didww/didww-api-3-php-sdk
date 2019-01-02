@@ -4,7 +4,6 @@ namespace Didww\Item;
 
 abstract class BaseItem extends \Swis\JsonApi\Client\Item
 {
-
     public static function build(string $uuid, array $attributes = [])
     {
         $item = new static();
@@ -18,11 +17,12 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
     {
         $repository = new \Didww\Repository(\Didww\Configuration::getDocumentClient());
         $repository->setEndpoint(static::getEndpoint());
+
         return $repository;
     }
 
     public static function getEndpoint()
     {
-      return '/'.snake_case(str_plural(substr(get_called_class(), strrpos(get_called_class(), '\\') + 1)));
+        return '/'.snake_case(str_plural(substr(get_called_class(), strrpos(get_called_class(), '\\') + 1)));
     }
 }

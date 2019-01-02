@@ -34,7 +34,6 @@ class CdrExport extends BaseItem
         return $data;
     }
 
-
     public function download($dest)
     {
         $apiKey = \Didww\Configuration::getCredentials()->getApiKey();
