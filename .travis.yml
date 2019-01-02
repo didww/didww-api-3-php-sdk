@@ -1,0 +1,24 @@
+language: php
+
+php:
+  - 7.1
+  - 7.2
+
+install:
+  - composer install
+
+script:
+  - composer test
+  - composer check-style
+ 
+# Configure email notifications
+notifications:
+  email:
+    on_success: always
+    on_failure: always
+
+# delete cache using travis-ci web interface
+cache:
+  directories:
+    - vendor
+    - $HOME/.cache/composer
