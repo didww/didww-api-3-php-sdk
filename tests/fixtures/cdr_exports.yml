@@ -1,0 +1,145 @@
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/cdr_exports'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"cdr_exports","attributes":{"filters":{"did_number":"1234556789","year":"2019","month":"01"}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Wed, 02 Jan 2019 10:23:00 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"96d611c3e9699c77553e49c0aedccac6"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 3f540391-ec00-42d9-93b6-f4add6840770
+            X-Runtime: '0.217836'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"da15f006-5da4-45ca-b0df-735baeadf423","type":"cdr_exports","attributes":{"filters":{"did_number":"1234556789","year":"2019","month":"01"},"status":"Pending","created_at":"2019-01-02T10:23:00.897Z","url":null}}}'
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/cdr_exports'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Wed, 02 Jan 2019 10:23:44 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"ec5b465be60de31831704ef59abeb3a1"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 78798ddb-78c1-4cdd-8dd0-81cd4134d502
+            X-Runtime: '0.192358'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":[{"id":"da15f006-5da4-45ca-b0df-735baeadf423","type":"cdr_exports","attributes":{"filters":{"did_number":"1234556789","year":"2019","month":"01"},"status":"Completed","created_at":"2019-01-02T10:23:00.897Z","url":"https://sandbox-api.didww.com/v3/cdr_exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv"}}],"meta":{"total_records":1},"links":{"first":"https://sandbox-api.didww.com/v3/cdr_exports?page%5Bnumber%5D=1&page%5Bsize%5D=50","last":"https://sandbox-api.didww.com/v3/cdr_exports?page%5Bnumber%5D=1&page%5Bsize%5D=50"}}'
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/cdr_exports/da15f006-5da4-45ca-b0df-735baeadf423'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Wed, 02 Jan 2019 10:35:41 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"35a0264c38ea4383fda506fa25913136"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: ede6cf40-7baf-4a08-b751-d8ac712968aa
+            X-Runtime: '0.038676'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"da15f006-5da4-45ca-b0df-735baeadf423","type":"cdr_exports","attributes":{"filters":{"did_number":"1234556789","year":"2019","month":"01"},"status":"Completed","created_at":"2019-01-02T10:23:00.897Z","url":"https://sandbox-api.didww.com/v3/cdr_exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv"}}}'
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/cdr_exports/02bf6df4-3af9-416c-96be-16e5b7eeb651.csv'
+        headers:
+            Host: sandbox-api.didww.com
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Wed, 02 Jan 2019 12:09:13 GMT'
+            Content-Type: application/octet-stream
+            Content-Length: '129860'
+            Connection: keep-alive
+            Content-Disposition: 'attachment; filename="02bf6df4-3af9-416c-96be-16e5b7eeb651.csv"'
+            Cache-Control: no-cache
+            Last-Modified: 'Wed, 02 Jan 2019 11:32:50 GMT'
+            ETag: '"5c2ca162-1fb44"'
+            Accept-Ranges: bytes
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: "Date/Time (UTC),Source,DID,Destination,Duration (secs),Disconnect Initiator,Disconnect Code,Response,TollFree Amount (USD),Termination Amount (USD),Metered Channels Amount (USD),Customer ID,Sell Amount (Points)\n2018-12-06 05:20:58,4,972397239159652,sip:972397239159652@didww.com,0,Destination,408,SIP transaction timeout,0.000,0.000,0.000,,0.000\n2018-12-06 05:20:58,4,972397239159652,sip:test@didww.com,0,Destination,408,SIP transaction timeout,0.000,0.000,0.000,,0.000\n"

@@ -1,0 +1,76 @@
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/did_group_types/d6530a8c-924c-469a-98c0-9525602e6192'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 10:09:09 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"da32b81c46718de090405e5152244e19"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 6cc74992-d490-4517-8f49-3a9d5f39bb5f
+            X-Runtime: '0.033930'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"d6530a8c-924c-469a-98c0-9525602e6192","type":"did_group_types","attributes":{"name":"Global"}}}'
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/did_group_types'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 10:06:14 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"ac717a0cd738c714937774a1ebb6b0e5"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 52dd2c85-0510-41a1-9d88-4263cd2e82da
+            X-Runtime: '0.043254'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":[{"id":"d6530a8c-924c-469a-98c0-9525602e6192","type":"did_group_types","attributes":{"name":"Global"}},{"id":"994ea201-4a4d-4b27-ac4b-b5916ac969a3","type":"did_group_types","attributes":{"name":"Local"}},{"id":"6bba60f1-e724-4d12-9ea4-a3a64705800f","type":"did_group_types","attributes":{"name":"Mobile"}},{"id":"2c165e9d-c6f5-4fe1-ad0e-bacf5bab3d86","type":"did_group_types","attributes":{"name":"National"}},{"id":"e95378ee-e93f-459e-a2f6-9056c064f529","type":"did_group_types","attributes":{"name":"Shared Cost"}},{"id":"ec95e831-fc36-489a-a531-0fd1984ab6e8","type":"did_group_types","attributes":{"name":"Toll-free"}}],"meta":{"total_records":6},"links":{"first":"https://sandbox-api.didww.com/v3/did_group_types?page%5Bnumber%5D=1&page%5Bsize%5D=50","last":"https://sandbox-api.didww.com/v3/did_group_types?page%5Bnumber%5D=1&page%5Bsize%5D=50"}}'

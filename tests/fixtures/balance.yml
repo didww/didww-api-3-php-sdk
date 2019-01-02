@@ -1,0 +1,38 @@
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/balance'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Fri, 28 Dec 2018 10:14:17 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"a9f122ef88880ebbacbb5c0439009ff7"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 1dee075f-ba35-45ac-ac81-a03ac972b69e
+            X-Runtime: '0.036894'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"4c39e0bf-683b-4697-9322-5abaf4011883","type":"balances","attributes":{"total_balance":"60.00","credit":"10.00","balance":"50.00"}}}'

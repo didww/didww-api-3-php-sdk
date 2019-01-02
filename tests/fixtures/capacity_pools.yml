@@ -1,0 +1,116 @@
+
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"capacity_pools","id":"f288d07c-e2fc-4ae6-9837-b18fb469c324","attributes":{"total_channels_count":25}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 12:10:06 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"22820dfa53c66f9f1f31dcf1fbfbc007"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: f1ebfb1e-d4b5-4d3e-92c0-1c88b0a13195
+            X-Runtime: '0.176165'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"f288d07c-e2fc-4ae6-9837-b18fb469c324","type":"capacity_pools","attributes":{"name":"Standard","renew_date":"2019-01-21","total_channels_count":25,"assigned_channels_count":24,"minimum_limit":0,"minimum_qty_per_order":1,"setup_price":"0.0","monthly_price":"15.0","metered_rate":"1.0"},"relationships":{"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/relationships/countries","related":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/countries"}},"shared_capacity_groups":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/relationships/shared_capacity_groups","related":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/shared_capacity_groups"}},"qty_based_pricings":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/relationships/qty_based_pricings","related":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/qty_based_pricings"}}}}}'
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324?include=countries%2Cshared_capacity_groups%2Cqty_based_pricings'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 11:04:37 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"8619c751b259cdb7d4dc7d1e8d2e6124"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 760b47fd-de02-469d-bd7f-74c8bd8d8b8d
+            X-Runtime: '0.406830'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"f288d07c-e2fc-4ae6-9837-b18fb469c324","type":"capacity_pools","attributes":{"name":"Standard","renew_date":"2019-01-21","total_channels_count":34,"assigned_channels_count":24,"minimum_limit":0,"minimum_qty_per_order":1,"setup_price":"0.0","monthly_price":"15.0","metered_rate":"1.0"},"relationships":{"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/relationships/countries","related":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/countries"},"data":[{"type":"countries","id":"dac76647-14d5-438f-9de7-598c8d3d3149"},{"type":"countries","id":"8526a723-49dc-461b-b9fd-ee7c0742935c"},{"type":"countries","id":"9a4c9414-5353-4fb3-81ee-f8e3e3587034"},{"type":"countries","id":"a84bb196-c3dd-40a2-af7d-baeee3660061"},{"type":"countries","id":"eb06b185-ff83-445f-96f7-16bfc98bc23e"},{"type":"countries","id":"dc9c1de5-6043-4726-bab2-63e915b7eae4"},{"type":"countries","id":"514e77da-5c87-4b86-9b5f-8c48b12a4d48"},{"type":"countries","id":"e413c0ce-8eee-42c2-9f4c-2e4c6c9fd5c3"},{"type":"countries","id":"a2618969-ac27-41e4-af10-cec2dee7ca92"},{"type":"countries","id":"eb89ebf7-2c8c-4e7d-9aea-89cddeced3c8"},{"type":"countries","id":"d17c184d-6f7d-4848-a87d-c5ed88020015"},{"type":"countries","id":"410c07fc-4fa6-4693-b217-90838c1750a8"},{"type":"countries","id":"3ba49d6a-5f02-4dbe-bb7f-b3509fec2b2a"},{"type":"countries","id":"93444592-cbb1-42c5-99e9-5ffeb150b7ec"},{"type":"countries","id":"5883ec41-eafe-46e9-99e8-5b3b386fea3a"},{"type":"countries","id":"7c0f34bc-2c6f-4a0a-a4ce-3690cd3be29c"},{"type":"countries","id":"c03605c9-b40d-4b13-9e83-c8e5bf41d9f4"},{"type":"countries","id":"9b0329f8-8295-45a7-8f2a-64129b87cdaa"},{"type":"countries","id":"3d1c2c4e-4b06-4c94-8f0b-43eea90929a0"},{"type":"countries","id":"d5ca867b-9a2f-49bf-bd50-1d37349e665e"},{"type":"countries","id":"b6f04bf7-f31a-44cb-a062-a36b3699429b"},{"type":"countries","id":"fd56bea6-8cbf-4846-9c2f-bd2742015529"},{"type":"countries","id":"f7e78968-b6e4-463f-b213-8681ab3760f8"},{"type":"countries","id":"134d9428-0cf1-469b-9657-bb65d1d9fcac"},{"type":"countries","id":"76bfece7-78d7-471e-baab-edd0325714c4"},{"type":"countries","id":"98513846-dd8f-487b-9828-e5f689bee3c6"},{"type":"countries","id":"6061dbd6-e5ff-45ed-8c98-489c397fc807"},{"type":"countries","id":"1d2c0df1-1b51-40f7-bb76-5397a3f25934"},{"type":"countries","id":"37a97e75-f2ac-4485-82d3-d5a49bd4e4a9"},{"type":"countries","id":"f782047c-09ae-4424-8de3-762408dc7ba9"},{"type":"countries","id":"93d5c5d4-e420-440b-9887-9693edd006ca"},{"type":"countries","id":"b84bc6d4-fb8d-46bb-9b95-a94c78cb82a0"},{"type":"countries","id":"be646dc6-dd7e-4947-a11b-79fe5871d3dd"},{"type":"countries","id":"05baebb6-4053-4870-acd6-8491eb200e0b"},{"type":"countries","id":"7549be3c-1077-433d-9a77-25416373660d"},{"type":"countries","id":"5b156dc2-327e-4665-bdc5-35cd8729b885"},{"type":"countries","id":"de9ad7fd-115d-4f95-9a59-d357a9999e38"},{"type":"countries","id":"093df79a-c4d5-4ebd-8716-5a8523db2854"},{"type":"countries","id":"c7ff81e1-da30-4d87-8110-88c5aed0b619"},{"type":"countries","id":"6f8a6d1d-9341-4a64-a5d0-986639e24124"},{"type":"countries","id":"e369a791-dad8-4a48-a512-0fab3b54d4c2"},{"type":"countries","id":"661d8448-8897-4765-acda-00cc1740148d"},{"type":"countries","id":"5ff63a6f-075f-4d12-ba3a-d4a1e617eaeb"},{"type":"countries","id":"f711b8ee-7576-4d40-9dd4-f51a69cee8a7"},{"type":"countries","id":"60657766-0c13-4ad9-beb2-300ad1c66511"},{"type":"countries","id":"f25136bb-a336-43fa-b05f-34e52d75adaa"},{"type":"countries","id":"78347fe1-6f98-47ea-999f-2b93b6aceb58"},{"type":"countries","id":"3786d53f-2a7b-450f-ac57-c38850d1a0d9"},{"type":"countries","id":"7eda11bb-0e66-4146-98e7-57a5281f56c8"},{"type":"countries","id":"7d9f8011-40a4-4fd7-a970-c3b679a75daf"},{"type":"countries","id":"dfd1a0a0-bd53-4f7a-9c8e-d2fc5dd1bf7e"},{"type":"countries","id":"24eb6e85-f628-4765-bbb2-420e48de76f2"},{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}]},"shared_capacity_groups":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/relationships/shared_capacity_groups","related":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/shared_capacity_groups"},"data":[{"type":"shared_capacity_groups","id":"e67b7be7-0698-41eb-9aca-7217903bf0e8"},{"type":"shared_capacity_groups","id":"89f987e2-0862-4bf4-a3f4-cdc89af0d875"},{"type":"shared_capacity_groups","id":"206881de-7a92-4415-aa32-b05458c79623"}]},"qty_based_pricings":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/relationships/qty_based_pricings","related":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/qty_based_pricings"},"data":[{"type":"qty_based_pricings","id":"1cd4a878-9f11-4bba-afe2-86e76ed21bb6"},{"type":"qty_based_pricings","id":"46f8db15-a9e8-4de7-96f4-1b68f20642b8"},{"type":"qty_based_pricings","id":"c43fd0e8-b6c6-4022-9d5e-ed14c1850dc1"}]}}},"included":[{"id":"dac76647-14d5-438f-9de7-598c8d3d3149","type":"countries","attributes":{"name":"Peru","prefix":"51","iso":"PE"}},{"id":"8526a723-49dc-461b-b9fd-ee7c0742935c","type":"countries","attributes":{"name":"Iceland","prefix":"354","iso":"IS"}},{"id":"9a4c9414-5353-4fb3-81ee-f8e3e3587034","type":"countries","attributes":{"name":"Australia","prefix":"61","iso":"AU"}},{"id":"a84bb196-c3dd-40a2-af7d-baeee3660061","type":"countries","attributes":{"name":"Puerto Rico","prefix":"1","iso":"PR"}},{"id":"eb06b185-ff83-445f-96f7-16bfc98bc23e","type":"countries","attributes":{"name":"Chile","prefix":"56","iso":"CL"}},{"id":"dc9c1de5-6043-4726-bab2-63e915b7eae4","type":"countries","attributes":{"name":"Bahrain","prefix":"973","iso":"BH"}},{"id":"514e77da-5c87-4b86-9b5f-8c48b12a4d48","type":"countries","attributes":{"name":"Israel","prefix":"972","iso":"IL"}},{"id":"e413c0ce-8eee-42c2-9f4c-2e4c6c9fd5c3","type":"countries","attributes":{"name":"Hong Kong","prefix":"852","iso":"HK"}},{"id":"a2618969-ac27-41e4-af10-cec2dee7ca92","type":"countries","attributes":{"name":"Dominican Republic","prefix":"1","iso":"DO"}},{"id":"eb89ebf7-2c8c-4e7d-9aea-89cddeced3c8","type":"countries","attributes":{"name":"Japan","prefix":"81","iso":"JP"}},{"id":"d17c184d-6f7d-4848-a87d-c5ed88020015","type":"countries","attributes":{"name":"Norway","prefix":"47","iso":"NO"}},{"id":"410c07fc-4fa6-4693-b217-90838c1750a8","type":"countries","attributes":{"name":"Mexico","prefix":"52","iso":"MX"}},{"id":"3ba49d6a-5f02-4dbe-bb7f-b3509fec2b2a","type":"countries","attributes":{"name":"Luxembourg","prefix":"352","iso":"LU"}},{"id":"93444592-cbb1-42c5-99e9-5ffeb150b7ec","type":"countries","attributes":{"name":"Greece","prefix":"30","iso":"GR"}},{"id":"5883ec41-eafe-46e9-99e8-5b3b386fea3a","type":"countries","attributes":{"name":"Finland","prefix":"358","iso":"FI"}},{"id":"7c0f34bc-2c6f-4a0a-a4ce-3690cd3be29c","type":"countries","attributes":{"name":"Malta","prefix":"356","iso":"MT"}},{"id":"c03605c9-b40d-4b13-9e83-c8e5bf41d9f4","type":"countries","attributes":{"name":"Switzerland","prefix":"41","iso":"CH"}},{"id":"9b0329f8-8295-45a7-8f2a-64129b87cdaa","type":"countries","attributes":{"name":"South Africa","prefix":"27","iso":"ZA"}},{"id":"3d1c2c4e-4b06-4c94-8f0b-43eea90929a0","type":"countries","attributes":{"name":"Argentina","prefix":"54","iso":"AR"}},{"id":"d5ca867b-9a2f-49bf-bd50-1d37349e665e","type":"countries","attributes":{"name":"Panama","prefix":"507","iso":"PA"}},{"id":"b6f04bf7-f31a-44cb-a062-a36b3699429b","type":"countries","attributes":{"name":"Georgia","prefix":"995","iso":"GE"}},{"id":"fd56bea6-8cbf-4846-9c2f-bd2742015529","type":"countries","attributes":{"name":"Brazil","prefix":"55","iso":"BR"}},{"id":"f7e78968-b6e4-463f-b213-8681ab3760f8","type":"countries","attributes":{"name":"Kazakhstan","prefix":"7","iso":"KZ"}},{"id":"134d9428-0cf1-469b-9657-bb65d1d9fcac","type":"countries","attributes":{"name":"Russian Federation","prefix":"7","iso":"RU"}},{"id":"76bfece7-78d7-471e-baab-edd0325714c4","type":"countries","attributes":{"name":"Costa Rica","prefix":"506","iso":"CR"}},{"id":"98513846-dd8f-487b-9828-e5f689bee3c6","type":"countries","attributes":{"name":"New Zealand","prefix":"64","iso":"NZ"}},{"id":"6061dbd6-e5ff-45ed-8c98-489c397fc807","type":"countries","attributes":{"name":"Cyprus","prefix":"357","iso":"CY"}},{"id":"1d2c0df1-1b51-40f7-bb76-5397a3f25934","type":"countries","attributes":{"name":"Czech Republic","prefix":"420","iso":"CZ"}},{"id":"37a97e75-f2ac-4485-82d3-d5a49bd4e4a9","type":"countries","attributes":{"name":"Poland","prefix":"48","iso":"PL"}},{"id":"f782047c-09ae-4424-8de3-762408dc7ba9","type":"countries","attributes":{"name":"Denmark","prefix":"45","iso":"DK"}},{"id":"93d5c5d4-e420-440b-9887-9693edd006ca","type":"countries","attributes":{"name":"Romania","prefix":"40","iso":"RO"}},{"id":"b84bc6d4-fb8d-46bb-9b95-a94c78cb82a0","type":"countries","attributes":{"name":"Portugal","prefix":"351","iso":"PT"}},{"id":"be646dc6-dd7e-4947-a11b-79fe5871d3dd","type":"countries","attributes":{"name":"Slovakia","prefix":"421","iso":"SK"}},{"id":"05baebb6-4053-4870-acd6-8491eb200e0b","type":"countries","attributes":{"name":"Italy","prefix":"39","iso":"IT"}},{"id":"7549be3c-1077-433d-9a77-25416373660d","type":"countries","attributes":{"name":"Sweden","prefix":"46","iso":"SE"}},{"id":"5b156dc2-327e-4665-bdc5-35cd8729b885","type":"countries","attributes":{"name":"Spain","prefix":"34","iso":"ES"}},{"id":"de9ad7fd-115d-4f95-9a59-d357a9999e38","type":"countries","attributes":{"name":"Slovenia","prefix":"386","iso":"SI"}},{"id":"093df79a-c4d5-4ebd-8716-5a8523db2854","type":"countries","attributes":{"name":"Hungary","prefix":"36","iso":"HU"}},{"id":"c7ff81e1-da30-4d87-8110-88c5aed0b619","type":"countries","attributes":{"name":"Singapore","prefix":"65","iso":"SG"}},{"id":"6f8a6d1d-9341-4a64-a5d0-986639e24124","type":"countries","attributes":{"name":"Netherlands","prefix":"31","iso":"NL"}},{"id":"e369a791-dad8-4a48-a512-0fab3b54d4c2","type":"countries","attributes":{"name":"Estonia","prefix":"372","iso":"EE"}},{"id":"661d8448-8897-4765-acda-00cc1740148d","type":"countries","attributes":{"name":"Lithuania","prefix":"370","iso":"LT"}},{"id":"5ff63a6f-075f-4d12-ba3a-d4a1e617eaeb","type":"countries","attributes":{"name":"Ireland","prefix":"353","iso":"IE"}},{"id":"f711b8ee-7576-4d40-9dd4-f51a69cee8a7","type":"countries","attributes":{"name":"Belgium","prefix":"32","iso":"BE"}},{"id":"60657766-0c13-4ad9-beb2-300ad1c66511","type":"countries","attributes":{"name":"Austria","prefix":"43","iso":"AT"}},{"id":"f25136bb-a336-43fa-b05f-34e52d75adaa","type":"countries","attributes":{"name":"Bulgaria","prefix":"359","iso":"BG"}},{"id":"78347fe1-6f98-47ea-999f-2b93b6aceb58","type":"countries","attributes":{"name":"Croatia","prefix":"385","iso":"HR"}},{"id":"3786d53f-2a7b-450f-ac57-c38850d1a0d9","type":"countries","attributes":{"name":"Latvia","prefix":"371","iso":"LV"}},{"id":"7eda11bb-0e66-4146-98e7-57a5281f56c8","type":"countries","attributes":{"name":"United Kingdom","prefix":"44","iso":"GB"}},{"id":"7d9f8011-40a4-4fd7-a970-c3b679a75daf","type":"countries","attributes":{"name":"France","prefix":"33","iso":"FR"}},{"id":"dfd1a0a0-bd53-4f7a-9c8e-d2fc5dd1bf7e","type":"countries","attributes":{"name":"Germany","prefix":"49","iso":"DE"}},{"id":"24eb6e85-f628-4765-bbb2-420e48de76f2","type":"countries","attributes":{"name":"Canada","prefix":"1","iso":"CA"}},{"id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9","type":"countries","attributes":{"name":"United States","prefix":"1","iso":"US"}},{"id":"e67b7be7-0698-41eb-9aca-7217903bf0e8","type":"shared_capacity_groups","attributes":{"name":"test","shared_channels_count":5,"created_at":"2018-06-19T12:26:48.938Z","metered_channels_count":5},"relationships":{"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/shared_capacity_groups/e67b7be7-0698-41eb-9aca-7217903bf0e8/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/shared_capacity_groups/e67b7be7-0698-41eb-9aca-7217903bf0e8/capacity_pool"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/shared_capacity_groups/e67b7be7-0698-41eb-9aca-7217903bf0e8/relationships/dids","related":"https://sandbox-api.didww.com/v3/shared_capacity_groups/e67b7be7-0698-41eb-9aca-7217903bf0e8/dids"}}}},{"id":"89f987e2-0862-4bf4-a3f4-cdc89af0d875","type":"shared_capacity_groups","attributes":{"name":"didww","shared_channels_count":19,"created_at":"2018-06-19T11:41:21.644Z","metered_channels_count":0},"relationships":{"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/shared_capacity_groups/89f987e2-0862-4bf4-a3f4-cdc89af0d875/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/shared_capacity_groups/89f987e2-0862-4bf4-a3f4-cdc89af0d875/capacity_pool"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/shared_capacity_groups/89f987e2-0862-4bf4-a3f4-cdc89af0d875/relationships/dids","related":"https://sandbox-api.didww.com/v3/shared_capacity_groups/89f987e2-0862-4bf4-a3f4-cdc89af0d875/dids"}}}},{"id":"206881de-7a92-4415-aa32-b05458c79623","type":"shared_capacity_groups","attributes":{"name":"Pay Per Minute","shared_channels_count":0,"created_at":"2018-06-19T11:41:21.644Z","metered_channels_count":100},"relationships":{"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/shared_capacity_groups/206881de-7a92-4415-aa32-b05458c79623/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/shared_capacity_groups/206881de-7a92-4415-aa32-b05458c79623/capacity_pool"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/shared_capacity_groups/206881de-7a92-4415-aa32-b05458c79623/relationships/dids","related":"https://sandbox-api.didww.com/v3/shared_capacity_groups/206881de-7a92-4415-aa32-b05458c79623/dids"}}}},{"id":"1cd4a878-9f11-4bba-afe2-86e76ed21bb6","type":"qty_based_pricings","attributes":{"qty":30,"monthly_price":"10.0","setup_price":"10.0"}},{"id":"46f8db15-a9e8-4de7-96f4-1b68f20642b8","type":"qty_based_pricings","attributes":{"qty":300,"monthly_price":"8.0","setup_price":"8.0"}},{"id":"c43fd0e8-b6c6-4022-9d5e-ed14c1850dc1","type":"qty_based_pricings","attributes":{"qty":990,"monthly_price":"7.0","setup_price":"7.0"}}]}'
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/capacity_pools'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 10:55:47 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"c70254dbd8a0741a5102f3e33fbdb290"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 64084b07-b452-43df-b93c-39b03339b6c9
+            X-Runtime: '0.254942'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":[{"id":"f288d07c-e2fc-4ae6-9837-b18fb469c324","type":"capacity_pools","attributes":{"name":"Standard","renew_date":"2019-01-21","total_channels_count":34,"assigned_channels_count":24,"minimum_limit":0,"minimum_qty_per_order":1,"setup_price":"0.0","monthly_price":"15.0","metered_rate":"1.0"},"relationships":{"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/relationships/countries","related":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/countries"}},"shared_capacity_groups":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/relationships/shared_capacity_groups","related":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/shared_capacity_groups"}},"qty_based_pricings":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/relationships/qty_based_pricings","related":"https://sandbox-api.didww.com/v3/capacity_pools/f288d07c-e2fc-4ae6-9837-b18fb469c324/qty_based_pricings"}}}},{"id":"b7522a31-4bf3-4c23-81e8-e7a14b23663f","type":"capacity_pools","attributes":{"name":"Extended","renew_date":"2019-01-21","total_channels_count":8,"assigned_channels_count":1,"minimum_limit":0,"minimum_qty_per_order":1,"setup_price":"25.0","monthly_price":"25.0","metered_rate":"1.0"},"relationships":{"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/b7522a31-4bf3-4c23-81e8-e7a14b23663f/relationships/countries","related":"https://sandbox-api.didww.com/v3/capacity_pools/b7522a31-4bf3-4c23-81e8-e7a14b23663f/countries"}},"shared_capacity_groups":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/b7522a31-4bf3-4c23-81e8-e7a14b23663f/relationships/shared_capacity_groups","related":"https://sandbox-api.didww.com/v3/capacity_pools/b7522a31-4bf3-4c23-81e8-e7a14b23663f/shared_capacity_groups"}},"qty_based_pricings":{"links":{"self":"https://sandbox-api.didww.com/v3/capacity_pools/b7522a31-4bf3-4c23-81e8-e7a14b23663f/relationships/qty_based_pricings","related":"https://sandbox-api.didww.com/v3/capacity_pools/b7522a31-4bf3-4c23-81e8-e7a14b23663f/qty_based_pricings"}}}}],"meta":{"total_records":2},"links":{"first":"https://sandbox-api.didww.com/v3/capacity_pools?page%5Bnumber%5D=1&page%5Bsize%5D=50","last":"https://sandbox-api.didww.com/v3/capacity_pools?page%5Bnumber%5D=1&page%5Bsize%5D=50"}}'

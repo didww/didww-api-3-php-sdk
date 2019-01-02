@@ -1,0 +1,159 @@
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/orders'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"orders","attributes":{"items":[{"type":"did_order_items","attributes":{"sku_id":"acc46374-0b34-4912-9f67-8340339db1e5","qty":2}},{"type":"did_order_items","attributes":{"sku_id":"f36d2812-2195-4385-85e8-e59c3484a8bc","qty":1}}],"allow_back_ordering":true}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 12:16:46 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"a52734826bb8997c836324e4bbfee99c"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: e061c95e-392b-4783-9c4b-577e27a050e9
+            X-Runtime: '0.519521'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"5da18706-be9f-49b0-aeec-0480aacd49ad","type":"orders","attributes":{"amount":"5.98","status":"Pending","created_at":"2018-12-29T12:16:45.813Z","description":"DID","reference":"JXK-923618","items":[{"type":"did_order_items","attributes":{"qty":1,"nrc":"0.0","mrc":"5.6","prorated_mrc":false,"billed_from":null,"billed_to":null,"setup_price":"0.0","monthly_price":"5.6","did_group_id":"899f0119-b4e9-47d0-9b2c-8a9f282fcbe2"}},{"type":"did_order_items","attributes":{"qty":2,"nrc":"0.0","mrc":"0.19","prorated_mrc":false,"billed_from":null,"billed_to":null,"setup_price":"0.0","monthly_price":"0.19","did_group_id":"7156eea4-09af-4f82-a43e-3b572f9927d8"}}]}}}'
+        
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/orders'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"orders","attributes":{"items":[{"type":"did_order_items","attributes":{"did_reservation_id":"e3ed9f97-1058-430c-9134-38f1c614ee9f","sku_id":"32840f64-5c3f-4278-8c8d-887fbe2f03f4"}}]}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Fri, 28 Dec 2018 10:40:48 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"589f474e9bda8eade33813703e819414"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 0def5bb7-093a-4f31-9408-b5bf3e368cc6
+            X-Runtime: '0.291378'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"a9a7ff2d-d634-4545-bf28-dfda92d1c723","type":"orders","attributes":{"amount":"0.19","status":"Pending","created_at":"2018-12-28T10:40:48.355Z","description":"DID","reference":"UAM-764395","items":[{"type":"did_order_items","attributes":{"qty":1,"nrc":"0.0","mrc":"0.19","prorated_mrc":false,"billed_from":null,"billed_to":null,"setup_price":"0.0","monthly_price":"0.19","did_group_id":"7edb4f99-09ab-4bde-bef5-83685b9e76eb"}}]}}}'
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/orders'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"orders","attributes":{"items":[{"type":"capacity_order_items","attributes":{"capacity_pool_id":"b7522a31-4bf3-4c23-81e8-e7a14b23663f","qty":1}}]}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Fri, 28 Dec 2018 14:08:38 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"7176eddfb35b390231bfe80bcbd22242"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: fb8cf303-c79c-4d61-b7b9-b3b5cf469a9f
+            X-Runtime: '0.273558'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"68a46dd5-d405-4283-b7a5-62503267e9f8","type":"orders","attributes":{"amount":"44.35","status":"Completed","created_at":"2018-12-28T14:08:38.304Z","description":"Capacity","reference":"RUG-725648","items":[{"type":"capacity_order_items","attributes":{"qty":1,"nrc":"25.0","mrc":"19.35","prorated_mrc":true,"billed_from":"2018-12-28","billed_to":"2019-01-20","capacity_pool_id":"b7522a31-4bf3-4c23-81e8-e7a14b23663f"}}]}}}'
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/orders'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"orders","attributes":{"items":[{"type":"did_order_items","attributes":{"available_did_id":"c43441e3-82d4-4d84-93e2-80998576c1ce","sku_id":"acc46374-0b34-4912-9f67-8340339db1e5"}}]}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Thu, 27 Dec 2018 16:44:05 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"a15f38d39d95d6a83a0963a8796ec471"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 11ff7e0d-46e2-48f5-bb79-ed3d9a6fbb51
+            X-Runtime: '0.294102'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"9b9f2121-8d9e-4aa8-9754-dbaf6f695fd6","type":"orders","attributes":{"amount":"0.19","status":"Pending","created_at":"2018-12-27T16:44:05.511Z","description":"DID","reference":"YGA-665789","items":[{"type":"did_order_items","attributes":{"qty":1,"nrc":"0.0","mrc":"0.19","prorated_mrc":false,"billed_from":null,"billed_to":null,"setup_price":"0.0","monthly_price":"0.19","did_group_id":"7156eea4-09af-4f82-a43e-3b572f9927d8"}}]}}}'

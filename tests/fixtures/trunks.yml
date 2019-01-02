@@ -1,0 +1,471 @@
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d?include=pop%2Ctrunk_group'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"trunks","id":"2021b895-52c9-4f65-990b-e57a1abf858d","relationships":{"pop":{"data":{"type":"pops","id":"ba7ccbef-82ac-4372-9391-eac90d5c9479"}},"trunk_group":{"data":{"type":"trunk_groups","id":"837c5764-a6c3-456f-aa37-71fc8f8ca07b"}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 10:39:09 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"ca25bb5e3a0adb969e9b62162799ad00"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: bcd72e98-ad05-4dea-9a6d-a2ec4f6141bc
+            X-Runtime: '0.120380'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"2021b895-52c9-4f65-990b-e57a1abf858d","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"hello, updated test iax2 trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":null,"configuration":{"type":"iax2_configurations","attributes":{"dst":"558540420024","host":"example.com","port":4567,"auth_user":"new_auth_user","auth_password":"new_auth_password","codec_ids":[9,10,8,7,6]}},"created_at":"2018-12-29T10:07:53.374Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/trunk_group"},"data":{"type":"trunk_groups","id":"837c5764-a6c3-456f-aa37-71fc8f8ca07b"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/pop"},"data":{"type":"pops","id":"ba7ccbef-82ac-4372-9391-eac90d5c9479"}}}},"included":[{"id":"837c5764-a6c3-456f-aa37-71fc8f8ca07b","type":"trunk_groups","attributes":{"created_at":"2017-11-14T15:07:25.571Z","name":"sample trunk group","capacity_limit":null},"relationships":{"trunks":{"links":{"self":"https://sandbox-api.didww.com/v3/trunk_groups/837c5764-a6c3-456f-aa37-71fc8f8ca07b/relationships/trunks","related":"https://sandbox-api.didww.com/v3/trunk_groups/837c5764-a6c3-456f-aa37-71fc8f8ca07b/trunks"}}},"meta":{"trunks_count":4}},{"id":"ba7ccbef-82ac-4372-9391-eac90d5c9479","type":"pops","attributes":{"name":"DE, FRA"}}]}'
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/trunks?sort=-created_at&include=trunk_group%2Cpop&page%5Bsize%5D=4&page%5Bnumber%5D=1'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Fri, 28 Dec 2018 15:21:34 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"7763bed5dee8917cdc4409013a397734"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: bf019fbf-0d12-49ff-ab80-b2b626b0256f
+            X-Runtime: '0.091125'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":[{"id":"9cbadd6f-0665-46bc-b3aa-687d22157808","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"iax2 trunk sample","cli_format":"e164","cli_prefix":"","description":"","ringing_timeout":null,"configuration":{"type":"iax2_configurations","attributes":{"dst":"{DID}","host":"216.58.215.78","port":4569,"auth_user":"auth_user","auth_password":"auth_password","codec_ids":[9,6,10,8]}},"created_at":"2018-12-28T15:11:49.330Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/9cbadd6f-0665-46bc-b3aa-687d22157808/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/9cbadd6f-0665-46bc-b3aa-687d22157808/trunk_group"},"data":{"type":"trunk_groups","id":"837c5764-a6c3-456f-aa37-71fc8f8ca07b"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/9cbadd6f-0665-46bc-b3aa-687d22157808/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/9cbadd6f-0665-46bc-b3aa-687d22157808/pop"},"data":null}}},{"id":"2b4b1fcf-fe6a-4de9-8a58-7df46820ba13","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"sample trunk pstn","cli_format":"e164","cli_prefix":"","description":"","ringing_timeout":null,"configuration":{"type":"pstn_configurations","attributes":{"dst":"442080995011"}},"created_at":"2018-12-28T15:03:48.751Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/2b4b1fcf-fe6a-4de9-8a58-7df46820ba13/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/2b4b1fcf-fe6a-4de9-8a58-7df46820ba13/trunk_group"},"data":null},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/2b4b1fcf-fe6a-4de9-8a58-7df46820ba13/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/2b4b1fcf-fe6a-4de9-8a58-7df46820ba13/pop"},"data":null}}},{"id":"cae43c7c-3c62-429a-b4ff-210e511cafab","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"h323 trunk sample","cli_format":"raw","cli_prefix":"","description":"","ringing_timeout":null,"configuration":{"type":"h323_configurations","attributes":{"dst":"{DID}","host":"216.58.215.78","port":5060,"codec_ids":[9,8,6]}},"created_at":"2018-12-28T15:02:27.821Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/cae43c7c-3c62-429a-b4ff-210e511cafab/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/cae43c7c-3c62-429a-b4ff-210e511cafab/trunk_group"},"data":null},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/cae43c7c-3c62-429a-b4ff-210e511cafab/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/cae43c7c-3c62-429a-b4ff-210e511cafab/pop"},"data":{"type":"pops","id":"f402ddc7-0ef9-486d-85f3-6278f1417dd0"}}}},{"id":"24cec518-da51-4274-9a4b-1aad910b996f","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"Sip trunk sample","cli_format":"local","cli_prefix":"","description":"","ringing_timeout":null,"configuration":{"type":"sip_configurations","attributes":{"username":"username","host":"216.58.215.78","port":8060,"codec_ids":[9,10,8],"rx_dtmf_format_id":1,"tx_dtmf_format_id":1,"resolve_ruri":true,"auth_enabled":true,"auth_user":"auth_user","auth_password":"auth_password","auth_from_user":"","auth_from_domain":"","sst_enabled":false,"sst_min_timer":600,"sst_max_timer":900,"sst_accept_501":true,"sip_timer_b":8000,"dns_srv_failover_timer":2000,"rtp_ping":false,"rtp_timeout":30,"force_symmetric_rtp":false,"symmetric_rtp_ignore_rtcp":false,"rerouting_disconnect_code_ids":null,"sst_session_expires":null,"sst_refresh_method_id":1,"transport_protocol_id":1,"max_transfers":2,"max_30x_redirects":5}},"created_at":"2018-12-28T15:00:43.522Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/24cec518-da51-4274-9a4b-1aad910b996f/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/24cec518-da51-4274-9a4b-1aad910b996f/trunk_group"},"data":null},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/24cec518-da51-4274-9a4b-1aad910b996f/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/24cec518-da51-4274-9a4b-1aad910b996f/pop"},"data":{"type":"pops","id":"ba7ccbef-82ac-4372-9391-eac90d5c9479"}}}}],"included":[{"id":"837c5764-a6c3-456f-aa37-71fc8f8ca07b","type":"trunk_groups","attributes":{"created_at":"2017-11-14T15:07:25.571Z","name":"sample trunk group","capacity_limit":null},"relationships":{"trunks":{"links":{"self":"https://sandbox-api.didww.com/v3/trunk_groups/837c5764-a6c3-456f-aa37-71fc8f8ca07b/relationships/trunks","related":"https://sandbox-api.didww.com/v3/trunk_groups/837c5764-a6c3-456f-aa37-71fc8f8ca07b/trunks"}}},"meta":{"trunks_count":3}},{"id":"f402ddc7-0ef9-486d-85f3-6278f1417dd0","type":"pops","attributes":{"name":"US, LA"}},{"id":"ba7ccbef-82ac-4372-9391-eac90d5c9479","type":"pops","attributes":{"name":"DE, FRA"}}],"meta":{"total_records":70},"links":{"first":"https://sandbox-api.didww.com/v3/trunks?include=trunk_group%2Cpop&page%5Bnumber%5D=1&page%5Bsize%5D=4&sort=-created_at","next":"https://sandbox-api.didww.com/v3/trunks?include=trunk_group%2Cpop&page%5Bnumber%5D=2&page%5Bsize%5D=4&sort=-created_at","last":"https://sandbox-api.didww.com/v3/trunks?include=trunk_group%2Cpop&page%5Bnumber%5D=18&page%5Bsize%5D=4&sort=-created_at"}}'
+
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/trunks/41b94706-325e-4704-a433-d65105758836'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"trunks","id":"41b94706-325e-4704-a433-d65105758836","attributes":{"configuration":{"type":"pstn_configurations","attributes":{"dst":"558540420025"}},"name":"hello, updated test pstn trunk"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 09:59:20 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"5e1ccc4e3fa4360892f79fc72395a1ff"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: d4c1710f-3a84-4bde-8cb6-befbc77e9a15
+            X-Runtime: '0.102538'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"41b94706-325e-4704-a433-d65105758836","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"hello, updated test pstn trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":null,"configuration":{"type":"pstn_configurations","attributes":{"dst":"558540420025"}},"created_at":"2018-12-29T09:51:54.661Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/41b94706-325e-4704-a433-d65105758836/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/41b94706-325e-4704-a433-d65105758836/trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/41b94706-325e-4704-a433-d65105758836/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/41b94706-325e-4704-a433-d65105758836/pop"}}}}}'
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"trunks","attributes":{"configuration":{"type":"pstn_configurations","attributes":{"dst":"558540420024"}},"name":"hello, test pstn trunk"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 09:51:54 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"ab77d5badcc82965eecdbbfbf8eb7071"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: e59df728-cdde-4950-95ef-2e256eb7220e
+            X-Runtime: '0.094421'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"41b94706-325e-4704-a433-d65105758836","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"hello, test pstn trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":null,"configuration":{"type":"pstn_configurations","attributes":{"dst":"558540420024"}},"created_at":"2018-12-29T09:51:54.661Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/41b94706-325e-4704-a433-d65105758836/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/41b94706-325e-4704-a433-d65105758836/trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/41b94706-325e-4704-a433-d65105758836/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/41b94706-325e-4704-a433-d65105758836/pop"}}}}}'
+
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"trunks","id":"2021b895-52c9-4f65-990b-e57a1abf858d","attributes":{"configuration":{"type":"iax2_configurations","attributes":{"port":4567,"auth_user":"new_auth_user","auth_password":"new_auth_password"}},"name":"hello, updated test iax2 trunk"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 10:09:27 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"5c2abef19c46f010e98ead03a8fc4f73"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: c62b7f74-f716-4dd9-806e-7074d2bc9f47
+            X-Runtime: '0.273207'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"2021b895-52c9-4f65-990b-e57a1abf858d","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"hello, updated test iax2 trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":null,"configuration":{"type":"iax2_configurations","attributes":{"dst":"558540420024","host":"example.com","port":4567,"auth_user":"new_auth_user","auth_password":"new_auth_password","codec_ids":[9,10,8,7,6]}},"created_at":"2018-12-29T10:07:53.374Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/pop"}}}}}'
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"trunks","attributes":{"configuration":{"type":"iax2_configurations","attributes":{"dst":"558540420024","host":"example.com","port":4569,"auth_user":"auth_user","auth_password":"auth_password","codec_ids":[9,10,8,7,6]}},"name":"hello, test iax2 trunk"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 10:07:53 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"ba55f7814831166519c0a358e04f6127"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: f39de63f-5f97-4c2c-a2cd-1f330427ac52
+            X-Runtime: '0.080025'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"2021b895-52c9-4f65-990b-e57a1abf858d","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"hello, test iax2 trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":null,"configuration":{"type":"iax2_configurations","attributes":{"dst":"558540420024","host":"example.com","port":4569,"auth_user":"auth_user","auth_password":"auth_password","codec_ids":[9,10,8,7,6]}},"created_at":"2018-12-29T10:07:53.374Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/2021b895-52c9-4f65-990b-e57a1abf858d/pop"}}}}}'
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"trunks","attributes":{"configuration":{"type":"iax2_configurations","attributes":{"dst":"558540420024","host":"example.com","port":4569,"codec_ids":[9,10,8,7,6]}},"name":"hello, test h323 trunk"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 10:13:56 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"6fd8c2229c1cfdf722cfcafa552f1658"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 78e2c529-6049-459b-8448-9500c8eb75f6
+            X-Runtime: '0.077821'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"c6fbfd81-094a-4c5b-8447-e68cfe9d711e","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"hello, test h323 trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":null,"configuration":{"type":"iax2_configurations","attributes":{"dst":"558540420024","host":"example.com","port":4569,"auth_user":null,"auth_password":null,"codec_ids":[9,10,8,7,6]}},"created_at":"2018-12-29T10:13:56.189Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/c6fbfd81-094a-4c5b-8447-e68cfe9d711e/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/c6fbfd81-094a-4c5b-8447-e68cfe9d711e/trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/c6fbfd81-094a-4c5b-8447-e68cfe9d711e/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/c6fbfd81-094a-4c5b-8447-e68cfe9d711e/pop"}}}}}'
+
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/trunks/78146511-7648-45ba-9b26-a4b2cf87db06'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"trunks","id":"78146511-7648-45ba-9b26-a4b2cf87db06","attributes":{"configuration":{"type":"h323_configurations","attributes":{"host":"example2.com","port":4567}},"name":"hello, updated test h323 trunk"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 10:22:12 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"ae2b85b2900722e3f49ff8343ed82362"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 13e7fc50-e3ee-44f5-856a-e222429e526b
+            X-Runtime: '0.091976'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"78146511-7648-45ba-9b26-a4b2cf87db06","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"hello, updated test h323 trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":null,"configuration":{"type":"h323_configurations","attributes":{"dst":"558540420024","host":"example2.com","port":4567,"codec_ids":[9,10,8,7,6]}},"created_at":"2018-12-29T10:20:50.396Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/78146511-7648-45ba-9b26-a4b2cf87db06/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/78146511-7648-45ba-9b26-a4b2cf87db06/trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/78146511-7648-45ba-9b26-a4b2cf87db06/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/78146511-7648-45ba-9b26-a4b2cf87db06/pop"}}}}}'
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"trunks","attributes":{"configuration":{"type":"h323_configurations","attributes":{"dst":"558540420024","host":"example.com","port":4569,"codec_ids":[9,10,8,7,6]}},"name":"hello, test h323 trunk"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 10:20:50 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"ef16c32003b53be6650e3322b882b691"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 25b32408-f04a-4645-9112-bb4c94e3e676
+            X-Runtime: '0.082235'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"78146511-7648-45ba-9b26-a4b2cf87db06","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"hello, test h323 trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":null,"configuration":{"type":"h323_configurations","attributes":{"dst":"558540420024","host":"example.com","port":4569,"codec_ids":[9,10,8,7,6]}},"created_at":"2018-12-29T10:20:50.396Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/78146511-7648-45ba-9b26-a4b2cf87db06/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/78146511-7648-45ba-9b26-a4b2cf87db06/trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/78146511-7648-45ba-9b26-a4b2cf87db06/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/78146511-7648-45ba-9b26-a4b2cf87db06/pop"}}}}}'
+
+-
+    request:
+        method: DELETE
+        url: 'https://sandbox-api.didww.com/v3/trunks/41b94706-325e-4704-a433-d65105758836'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '204'
+            message: 'No Content'
+        headers:
+            Server: nginx
+            Date: 'Sat, 29 Dec 2018 10:23:34 GMT'
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Cache-Control: no-cache
+            X-Request-Id: 7981aef6-b765-4266-9a46-627aed6bfacf
+            X-Runtime: '0.117944'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"trunks","attributes":{"configuration":{"type":"sip_configurations","attributes":{"username":"username","host":"216.58.215.110","sst_refresh_method_id":1,"port":5060,"codec_ids":[9,10,8,7,6],"rerouting_disconnect_code_ids":[56,58,59,60,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,87,88,89,90,91,92,96,97,98,99,101,102,103,104,105,106,107,108,1505]}},"name":"hello, test sip trunk"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Fri, 28 Dec 2018 17:37:48 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"435b4d8b5b2c9b10e3f75dffbe71510e"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 0b8f551c-e49f-4e71-b56b-eae72fdaf3eb
+            X-Runtime: '0.219159'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"a80006b6-4183-4865-8b99-7ebbd359a762","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"hello, test sip trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":null,"configuration":{"type":"sip_configurations","attributes":{"username":"username","host":"216.58.215.110","port":5060,"codec_ids":[9,10,8,7,6],"rx_dtmf_format_id":1,"tx_dtmf_format_id":1,"resolve_ruri":false,"auth_enabled":false,"auth_user":null,"auth_password":null,"auth_from_user":null,"auth_from_domain":null,"sst_enabled":false,"sst_min_timer":600,"sst_max_timer":900,"sst_accept_501":true,"sip_timer_b":8000,"dns_srv_failover_timer":2000,"rtp_ping":false,"rtp_timeout":30,"force_symmetric_rtp":false,"symmetric_rtp_ignore_rtcp":false,"rerouting_disconnect_code_ids":[56,58,59,60,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,87,88,89,90,91,92,96,97,98,99,101,102,103,104,105,106,107,108,1505],"sst_session_expires":null,"sst_refresh_method_id":1,"transport_protocol_id":1,"max_transfers":0,"max_30x_redirects":0}},"created_at":"2018-12-28T17:37:48.010Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/a80006b6-4183-4865-8b99-7ebbd359a762/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/a80006b6-4183-4865-8b99-7ebbd359a762/trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/a80006b6-4183-4865-8b99-7ebbd359a762/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/a80006b6-4183-4865-8b99-7ebbd359a762/pop"}}}}}'
+
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/trunks/a80006b6-4183-4865-8b99-7ebbd359a762'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"trunks","id":"a80006b6-4183-4865-8b99-7ebbd359a762","attributes":{"configuration":{"type":"sip_configurations","attributes":{"username":"new-username","max_transfers":5}},"name":"hello, updated test sip trunk","description":"just a description"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Wed, 02 Jan 2019 13:24:02 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"cc54eec453a874d323654e058ddeb044"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 3147ab75-c3f8-41dd-8406-09a5a9af8886
+            X-Runtime: '0.087735'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"a80006b6-4183-4865-8b99-7ebbd359a762","type":"trunks","attributes":{"priority":1,"capacity_limit":null,"weight":65535,"name":"hello, updated test sip trunk","cli_format":"e164","cli_prefix":null,"description":"just a description","ringing_timeout":null,"configuration":{"type":"sip_configurations","attributes":{"username":"new-username","host":"216.58.215.110","port":5060,"codec_ids":[9,10,8,7,6],"rx_dtmf_format_id":1,"tx_dtmf_format_id":1,"resolve_ruri":false,"auth_enabled":false,"auth_user":null,"auth_password":null,"auth_from_user":null,"auth_from_domain":null,"sst_enabled":false,"sst_min_timer":600,"sst_max_timer":900,"sst_accept_501":true,"sip_timer_b":8000,"dns_srv_failover_timer":2000,"rtp_ping":false,"rtp_timeout":30,"force_symmetric_rtp":false,"symmetric_rtp_ignore_rtcp":false,"rerouting_disconnect_code_ids":[56,58,59,60,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,87,88,89,90,91,92,96,97,98,99,101,102,103,104,105,106,107,108,1505],"sst_session_expires":null,"sst_refresh_method_id":1,"transport_protocol_id":1,"max_transfers":5,"max_30x_redirects":0}},"created_at":"2018-12-28T17:37:48.010Z"},"relationships":{"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/a80006b6-4183-4865-8b99-7ebbd359a762/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/trunks/a80006b6-4183-4865-8b99-7ebbd359a762/trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/trunks/a80006b6-4183-4865-8b99-7ebbd359a762/relationships/pop","related":"https://sandbox-api.didww.com/v3/trunks/a80006b6-4183-4865-8b99-7ebbd359a762/pop"}}}}}'

@@ -1,0 +1,186 @@
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/did_reservations/fd38d3ff-80cf-4e67-a605-609a2884a5c4?include=available_did.did_group.stock_keeping_units'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Fri, 28 Dec 2018 16:20:24 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"e26b1c9f5486dae49f1a81bd12ac55a3"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: de716d8e-1220-421e-a517-0fb4eb96d5db
+            X-Runtime: '0.506197'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"fd38d3ff-80cf-4e67-a605-609a2884a5c4","type":"did_reservations","attributes":{"expire_at":"2018-12-28T16:22:00.417Z","created_at":"2018-12-28T16:12:00.440Z","description":"DIDWW"},"relationships":{"available_did":{"links":{"self":"https://sandbox-api.didww.com/v3/did_reservations/fd38d3ff-80cf-4e67-a605-609a2884a5c4/relationships/available_did","related":"https://sandbox-api.didww.com/v3/did_reservations/fd38d3ff-80cf-4e67-a605-609a2884a5c4/available_did"},"data":{"type":"available_dids","id":"857d1462-5f43-4238-b007-ff05f282e41b"}}}},"included":[{"id":"857d1462-5f43-4238-b007-ff05f282e41b","type":"available_dids","attributes":{"number":"19492033398"},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/available_dids/857d1462-5f43-4238-b007-ff05f282e41b/relationships/did_group","related":"https://sandbox-api.didww.com/v3/available_dids/857d1462-5f43-4238-b007-ff05f282e41b/did_group"},"data":{"type":"did_groups","id":"23bc0f41-67c0-40c3-b877-dccbbb65d5e4"}}}},{"id":"23bc0f41-67c0-40c3-b877-dccbbb65d5e4","type":"did_groups","attributes":{"prefix":"949","local_prefix":"","features":["voice"],"is_metered":false,"area_name":"Saddleback Valley","allow_additional_channels":true},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/23bc0f41-67c0-40c3-b877-dccbbb65d5e4/relationships/country","related":"https://sandbox-api.didww.com/v3/did_groups/23bc0f41-67c0-40c3-b877-dccbbb65d5e4/country"}},"city":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/23bc0f41-67c0-40c3-b877-dccbbb65d5e4/relationships/city","related":"https://sandbox-api.didww.com/v3/did_groups/23bc0f41-67c0-40c3-b877-dccbbb65d5e4/city"}},"did_group_type":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/23bc0f41-67c0-40c3-b877-dccbbb65d5e4/relationships/did_group_type","related":"https://sandbox-api.didww.com/v3/did_groups/23bc0f41-67c0-40c3-b877-dccbbb65d5e4/did_group_type"}},"region":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/23bc0f41-67c0-40c3-b877-dccbbb65d5e4/relationships/region","related":"https://sandbox-api.didww.com/v3/did_groups/23bc0f41-67c0-40c3-b877-dccbbb65d5e4/region"}},"stock_keeping_units":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/23bc0f41-67c0-40c3-b877-dccbbb65d5e4/relationships/stock_keeping_units","related":"https://sandbox-api.didww.com/v3/did_groups/23bc0f41-67c0-40c3-b877-dccbbb65d5e4/stock_keeping_units"},"data":[{"type":"stock_keeping_units","id":"209a43fa-41a5-490f-9376-97fdb0a727b3"},{"type":"stock_keeping_units","id":"76492222-4895-42bc-89be-a681a1e40f37"}]}},"meta":{"needs_registration":false,"is_available":true,"restrictions":null,"available_dids_enabled":true}},{"id":"209a43fa-41a5-490f-9376-97fdb0a727b3","type":"stock_keeping_units","attributes":{"setup_price":"0.0","monthly_price":"0.09","channels_included_count":0}},{"id":"76492222-4895-42bc-89be-a681a1e40f37","type":"stock_keeping_units","attributes":{"setup_price":"0.0","monthly_price":"0.19","channels_included_count":2}}],"meta":{"available_count":9}}'
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/did_reservations'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Fri, 28 Dec 2018 16:15:09 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"6909971582a1c5bc692f4f8e0acd7a67"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 41dee66d-7705-48b2-be73-97e8fa5b580b
+            X-Runtime: '0.049170'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":[{"id":"fd38d3ff-80cf-4e67-a605-609a2884a5c4","type":"did_reservations","attributes":{"expire_at":"2018-12-28T16:22:00.417Z","created_at":"2018-12-28T16:12:00.440Z","description":"DIDWW"},"relationships":{"available_did":{"links":{"self":"https://sandbox-api.didww.com/v3/did_reservations/fd38d3ff-80cf-4e67-a605-609a2884a5c4/relationships/available_did","related":"https://sandbox-api.didww.com/v3/did_reservations/fd38d3ff-80cf-4e67-a605-609a2884a5c4/available_did"}}}}],"meta":{"total_records":1,"available_count":9},"links":{"first":"https://sandbox-api.didww.com/v3/did_reservations?page%5Bnumber%5D=1&page%5Bsize%5D=50","last":"https://sandbox-api.didww.com/v3/did_reservations?page%5Bnumber%5D=1&page%5Bsize%5D=50"}}'
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/did_reservations'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"did_reservations","attributes":{"description":"DIDWW"},"relationships":{"available_did":{"data":{"type":"available_dids","id":"857d1462-5f43-4238-b007-ff05f282e41b"}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Fri, 28 Dec 2018 16:12:00 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"e62a4daabd54ca89e39f9195242a3738"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 48670dd2-dc1b-441d-b83f-fd349fd5759a
+            X-Runtime: '0.160584'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"fd38d3ff-80cf-4e67-a605-609a2884a5c4","type":"did_reservations","attributes":{"expire_at":"2018-12-28T16:22:00.417Z","created_at":"2018-12-28T16:12:00.440Z","description":"DIDWW"},"relationships":{"available_did":{"links":{"self":"https://sandbox-api.didww.com/v3/did_reservations/fd38d3ff-80cf-4e67-a605-609a2884a5c4/relationships/available_did","related":"https://sandbox-api.didww.com/v3/did_reservations/fd38d3ff-80cf-4e67-a605-609a2884a5c4/available_did"}}}}}'
+
+-
+    request:
+        method: DELETE
+        url: 'https://sandbox-api.didww.com/v3/did_reservations/fd38d3ff-80cf-4e67-a605-609a2884a5c4'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '404'
+            message: 'Not Found'
+        headers:
+            Server: nginx
+            Date: 'Fri, 28 Dec 2018 16:30:21 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Cache-Control: no-cache
+            X-Request-Id: f05e7b0c-02d6-4ca5-ab52-9f82c3de9335
+            X-Runtime: '0.039878'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"errors":[{"title":"Record not found","detail":"The record identified by fd38d3ff-80cf-4e67-a605-609a2884a5c4 could not be found.","code":"404","status":"404"}]}'
+-
+    request:
+        method: DELETE
+        url: 'https://sandbox-api.didww.com/v3/did_reservations/8a18a19f-b082-42f3-acca-99ea402a4e5d'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '204'
+            message: 'No Content'
+        headers:
+            Server: nginx
+            Date: 'Fri, 28 Dec 2018 16:31:56 GMT'
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Cache-Control: no-cache
+            X-Request-Id: 11d0c044-7419-4a6f-81a6-c5f5f36e2f0e
+            X-Runtime: '0.110214'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
