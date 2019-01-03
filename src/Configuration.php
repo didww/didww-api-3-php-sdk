@@ -32,7 +32,7 @@ class Configuration
         $typeMapper->registerItems();
         $parser = new \Swis\JsonApi\Client\JsonApi\Parser(
             new \Art4\JsonApiClient\Utils\Manager(),
-            new \Didww\Hydrator($typeMapper),
+            new \Swis\JsonApi\Client\JsonApi\Hydrator($typeMapper),
             new \Swis\JsonApi\Client\JsonApi\ErrorsParser()
         );
 
