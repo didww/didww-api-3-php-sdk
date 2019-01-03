@@ -1,5 +1,8 @@
 PHP client for DIDWW API v3.
 
+[![Build Status](https://travis-ci.org/didww/didww-api-3-php-sdk.svg?branch=master)](https://travis-ci.org/didww/didww-api-3-php-sdk)
+[![Coverage Status](https://coveralls.io/repos/github/didww/didww-api-3-php-sdk/badge.svg?branch=master)](https://coveralls.io/github/didww/didww-api-3-php-sdk?branch=master)
+
 About DIDWW API v3
 -----
 

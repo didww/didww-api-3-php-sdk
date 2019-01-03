@@ -10,7 +10,7 @@ install:
 script:
   - composer test
   - composer check-style
- 
+
 # Configure email notifications
 notifications:
   email:
@@ -22,3 +22,6 @@ cache:
   directories:
     - vendor
     - $HOME/.cache/composer
+
+after_success:
+  - travis_retry php vendor/bin/php-coveralls -v
