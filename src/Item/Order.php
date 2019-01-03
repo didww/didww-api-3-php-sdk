@@ -33,6 +33,14 @@ class Order extends BaseItem
         return $data;
     }
 
+    protected function getWhiteListAttributesKeys()
+    {
+        return [
+         'allow_back_ordering',
+         'items',
+       ];
+    }
+
     public function fill(array $attributes)
     {
         if (isset($attributes['items'])) {

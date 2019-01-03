@@ -73,4 +73,11 @@ class CapacityPool extends BaseItem
     {
         $this->attributes['total_channels_count'] = $totalChannelsCount;
     }
+
+    protected function getWhiteListAttributesKeys()
+    {
+        return [
+         'total_channels_count',
+       ];
+    }
 }

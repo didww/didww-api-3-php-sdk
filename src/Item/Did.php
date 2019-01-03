@@ -60,4 +60,15 @@ class Did extends BaseItem
     {
         $this->sharedCapacityGroup()->associate($sharedCapacityGroup);
     }
+
+    protected function getWhiteListAttributesKeys()
+    {
+        return [
+         'pending_removal',
+         'capacity_limit',
+         'description',
+         'terminated',
+         'dedicated_channels_count',
+       ];
+    }
 }

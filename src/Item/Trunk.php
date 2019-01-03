@@ -177,4 +177,19 @@ class Trunk extends BaseItem
 
         return self::configurationFactory($parts[0]);
     }
+
+    protected function getWhiteListAttributesKeys()
+    {
+        return [
+         'priority',
+         'capacity_limit',
+         'weight',
+         'name',
+         'cli_format',
+         'cli_prefix',
+         'description',
+         'ringing_timeout',
+         'configuration',
+       ];
+    }
 }

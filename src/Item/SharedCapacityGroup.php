@@ -29,4 +29,13 @@ class SharedCapacityGroup extends BaseItem
     {
         $this->capacityPool()->associate($capacityPool);
     }
+
+    protected function getWhiteListAttributesKeys()
+    {
+        return [
+         'name',
+         'shared_channels_count',
+         'metered_channels_count',
+       ];
+    }
 }

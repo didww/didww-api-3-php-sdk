@@ -25,4 +25,21 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
     {
         return '/'.snake_case(str_plural(substr(get_called_class(), strrpos(get_called_class(), '\\') + 1)));
     }
+
+    public function toJsonApiArray(): array
+    {
+        $attributes = parent::toJsonApiArray();
+        $whitelist = $this->getWhiteListAttributesKeys();
+        if (is_array($whitelist) && isset($attributes['attributes'])) {
+            // keep only whitelisted attributes
+            $attributes['attributes'] = array_intersect_key($attributes['attributes'], array_flip($whitelist));
+        }
+
+        return $attributes;
+    }
+
+    protected function getWhiteListAttributesKeys()
+    {
+        return null;
+    }
 }

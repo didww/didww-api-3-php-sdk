@@ -55,4 +55,11 @@ class CdrExport extends BaseItem
             return true;
         }
     }
+
+    protected function getWhiteListAttributesKeys()
+    {
+        return [
+         'filters',
+       ];
+    }
 }
