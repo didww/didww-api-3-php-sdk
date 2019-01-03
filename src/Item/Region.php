@@ -14,7 +14,7 @@ class Region extends BaseItem
     }
 
     /**
-     * Get name of the region
+     * Get name of the region.
      *
      * @return string
      */

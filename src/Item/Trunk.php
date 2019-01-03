@@ -10,6 +10,81 @@ class Trunk extends BaseItem
 
     protected $type = 'trunks';
 
+    public function getPriority(): int
+    {
+        return $this->attributes['priority'];
+    }
+
+    public function setPriority(int $priority)
+    {
+        $this->attributes['priority'] = $priority;
+    }
+
+    public function getWeight(): int
+    {
+        return $this->attributes['weight'];
+    }
+
+    public function setWeight(int $weight)
+    {
+        $this->attributes['weight'] = $weight;
+    }
+
+    public function getCliFormat(): string
+    {
+        return $this->attributes['cli_format'];
+    }
+
+    public function setCliFormat(string $cliFormat)
+    {
+        $this->attributes['cli_format'] = $cliFormat;
+    }
+
+    public function getCliPrefix(): string
+    {
+        return $this->attributes['cli_prefix'];
+    }
+
+    public function setCliPrefix(string $cliPrefix)
+    {
+        $this->attributes['cli_prefix'] = $cliFormat;
+    }
+
+    public function setDescription(string $description)
+    {
+        $this->attributes['description'] = $description;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->attributes['description'];
+    }
+
+    public function getRingingTimeout(): int
+    {
+        return $this->attributes['ringing_timeout'];
+    }
+
+    public function setRingingTimeout(int $ringingTimeout)
+    {
+        $this->attributes['ringing_timeout'] = $ringingTimeout;
+    }
+
+    public function getName(): string
+    {
+        return $this->attributes['name'];
+    }
+
+    public function setName(string $name)
+    {
+        $this->attributes['name'] = $name;
+    }
+
+    public function getCreatedAt()
+    {
+        return new \DateTime($this->attributes['created_at']);
+    }
+
     /** @return array [
      * ]
      * 'priority' => integer // The priority of this target host. DIDWW will attempt to contact the target trunk with the lowest-numbered priority; target trunk with the same priority will be tried in an order defined by the weight field. The range is 0-65535. See RFC 2782 for more details
@@ -31,6 +106,11 @@ class Trunk extends BaseItem
     public function getConfiguration()
     {
         return $this->configuration;
+    }
+
+    public function setConfiguration(\Didww\Item\Configuration\Base $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     public function pop()

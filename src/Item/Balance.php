@@ -13,7 +13,7 @@ class Balance extends BaseItem
     }
 
     /**
-     * Get DIDWW API 3 endpoint
+     * Get DIDWW API 3 endpoint.
      *
      * @return string
      */
@@ -23,32 +23,32 @@ class Balance extends BaseItem
     }
 
     /**
-     * Get account total balance (including credit line balance)
+     * Get account total balance (including credit line balance).
      *
      * @return float
      */
     public function getTotalBalance(): float
     {
-        return (float)$this->getAttributes()['total_balance'];
+        return (float) $this->getAttributes()['total_balance'];
     }
 
     /**
-     * Get account credit line balance
+     * Get account credit line balance.
      *
      * @return float
      */
     public function getCredit(): float
     {
-        return (double)$this->getAttributes()['credit'];
+        return (float) $this->getAttributes()['credit'];
     }
 
     /**
-     * Get account balance (not including credit line balance)
+     * Get account balance (not including credit line balance).
      *
      * @return float
      */
     public function getBalance(): float
     {
-        return (float)$this->getAttributes()['balance'];
+        return (float) $this->getAttributes()['balance'];
     }
 }
