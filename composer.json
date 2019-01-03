@@ -21,7 +21,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "swisnl/json-api-client": "dev-gigorok-patch-1",
+        "swisnl/json-api-client": "dev-master",
         "php-http/guzzle6-adapter": "^1.1",
         "guzzlehttp/psr7": "^1.5",
         "php-http/message": "^1.7"
