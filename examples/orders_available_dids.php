@@ -4,7 +4,6 @@ require_once 'bootstrap.php';
 
 $availableDidsDocument = \Didww\Item\AvailableDid::all([
     'include' => 'did_group.stock_keeping_units',
-    'number_contains' => '333',
 ]);
 $availableDids = $availableDidsDocument->getData()->all();
 $availableDid = $availableDids[array_rand($availableDids)];
