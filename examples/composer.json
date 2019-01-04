@@ -1,7 +1,6 @@
 {
-    "prefer-stable": true,
     "minimum-stability": "dev",
     "require": {
-        "didww/didww-api-3-php-sdk": "^1.0@beta"
+        "didww/didww-api-3-php-sdk": "^1.0"
     }
 }
