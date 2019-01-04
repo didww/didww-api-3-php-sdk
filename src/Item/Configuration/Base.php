@@ -4,7 +4,7 @@ namespace Didww\Item\Configuration;
 
 abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
 {
-    private $attributes = [];
+    protected $attributes = [];
 
     abstract protected function getType();
 
