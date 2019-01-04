@@ -19,4 +19,12 @@ class TrunkGroup extends BaseItem
     {
         $this->trunks()->associate($trunks);
     }
+
+    protected function getWhiteListAttributesKeys()
+    {
+        return [
+          'capacity_limit',
+          'name',
+       ];
+    }
 }

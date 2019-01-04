@@ -32,4 +32,34 @@ class DidGroup extends BaseItem
     {
         return $this->hasOne(DidGroupType::class);
     }
+
+    public function getAreaName(): string
+    {
+        return $this->getAttributes()['area_name'];
+    }
+
+    public function getPrefix(): string
+    {
+        return $this->getAttributes()['prefix'];
+    }
+
+    public function getLocalPrefix(): string
+    {
+        return $this->getAttributes()['local_prefix'];
+    }
+
+    public function getFeatures(): array
+    {
+        return $this->getAttributes()['features'];
+    }
+
+    public function getIsMetered(): bool
+    {
+        return $this->getAttributes()['is_metered'];
+    }
+
+    public function getAllowAdditionalChannels(): bool
+    {
+        return $this->getAttributes()['allow_additional_channels'];
+    }
 }

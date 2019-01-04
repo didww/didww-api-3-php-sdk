@@ -4,7 +4,7 @@ namespace Didww\Item\OrderItem;
 
 abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
 {
-    private $attributes = [];
+    protected $attributes = [];
 
     abstract protected function getType();
 
@@ -44,5 +44,35 @@ abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
         unset($attributes['monthly_price']);
         unset($attributes['setup_price']);
         $this->attributes = $attributes;
+    }
+
+    public function getQty(): int
+    {
+        return $this->getAttributes()['qty'];
+    }
+
+    public function getNrc(): float
+    {
+        return (float) $this->getAttributes()['nrc'];
+    }
+
+    public function getMrc(): float
+    {
+        return (float) $this->getAttributes()['mrc'];
+    }
+
+    public function getBilledFrom()
+    {
+        return $this->getAttributes()['billed_from'];
+    }
+
+    public function getBilledTo()
+    {
+        return $this->getAttributes()['billed_to'];
+    }
+
+    public function getProratedMrc(): bool
+    {
+        return (bool) $this->getAttributes()['prorated_mrc'];
     }
 }

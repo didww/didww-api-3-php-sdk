@@ -12,4 +12,9 @@ class AvailableDid extends BaseItem
     {
         return $this->hasOne(DidGroup::class);
     }
+
+    public function getNumber(): string
+    {
+        return $this->getAttributes()['number'];
+    }
 }

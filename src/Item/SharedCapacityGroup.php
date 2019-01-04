@@ -10,6 +10,41 @@ class SharedCapacityGroup extends BaseItem
 
     protected $type = 'shared_capacity_groups';
 
+    public function setName(string $name)
+    {
+        $this->attributes['name'] = $name;
+    }
+
+    public function getName(): string
+    {
+        return $this->attributes['name'];
+    }
+
+    public function setSharedChannelsCount(int $sharedChannelsCount)
+    {
+        $this->attributes['shared_channels_count'] = $sharedChannelsCount;
+    }
+
+    public function getSharedChannelsCount(): int
+    {
+        return $this->attributes['shared_channels_count'];
+    }
+
+    public function setMeteredhannelsCount(int $sharedMeteredCount)
+    {
+        $this->attributes['metered_channels_count'] = $sharedMeteredCount;
+    }
+
+    public function getMeteredChannelsCount(): int
+    {
+        return $this->attributes['metered_channels_count'];
+    }
+
+    public function getCreatedAt()
+    {
+        return new \DateTime($this->attributes['created_at']);
+    }
+
     public function capacityPool()
     {
         return $this->hasOne(CapacityPool::class);
@@ -28,5 +63,14 @@ class SharedCapacityGroup extends BaseItem
     public function setCapacityPool(CapacityPool $capacityPool)
     {
         $this->capacityPool()->associate($capacityPool);
+    }
+
+    protected function getWhiteListAttributesKeys()
+    {
+        return [
+         'name',
+         'shared_channels_count',
+         'metered_channels_count',
+       ];
     }
 }

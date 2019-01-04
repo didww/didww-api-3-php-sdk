@@ -112,7 +112,15 @@ class CapacityPoolTest extends BaseTest
         $this->startVCR('capacity_pools.yml');
 
         $uuid = 'f288d07c-e2fc-4ae6-9837-b18fb469c324';
-        $capacityPool = \Didww\Item\CapacityPool::build($uuid, ['total_channels_count' => 25]);
+        $capacityPool = \Didww\Item\CapacityPool::build($uuid);
+        $capacityPool->setTotalChannelsCount(25);
+        $this->assertEquals($capacityPool->toJsonApiArray(), [
+            'id' => $capacityPool->getId(),
+            'type' => 'capacity_pools',
+            'attributes' => [
+                'total_channels_count' => 25,
+            ],
+        ]);
         $capacityPoolDocument = $capacityPool->save();
 
         $this->assertInstanceOf('Didww\Item\CapacityPool', $capacityPoolDocument->getData());

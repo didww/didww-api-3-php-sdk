@@ -12,4 +12,14 @@ class Region extends BaseItem
     {
         return $this->hasOne(Country::class);
     }
+
+    /**
+     * Get name of the region.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->getAttributes()['name'];
+    }
 }
