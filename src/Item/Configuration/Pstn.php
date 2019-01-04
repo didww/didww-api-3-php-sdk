@@ -6,7 +6,7 @@ class Pstn extends Base
 {
     public function getDst()
     {
-        $this->attributes['dst'] = $newDst;
+        return $this->attributes['dst'];
     }
 
     public function setDst($newDst)

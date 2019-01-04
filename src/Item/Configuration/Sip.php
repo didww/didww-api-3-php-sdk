@@ -135,7 +135,17 @@ class Sip extends Base
         return $this->attributes['max_30x_redirects'];
     }
 
+    public function getHost()
+    {
+        return $this->attributes['host'];
+    }
+
     //##
+
+    public function setHost($newHost)
+    {
+        $this->attributes['host'] = $newHost;
+    }
 
     public function setUsername($newUserName)
     {
@@ -197,6 +207,11 @@ class Sip extends Base
         $this->attributes['sst_enabled'] = $newSstEnabled;
     }
 
+    public function setSstRefreshMethodId($newSstRefreshMethodId)
+    {
+        $this->attributes['sst_refresh_method_id'] = $newSstRefreshMethodId;
+    }
+
     public function setSstMinTimer($newSstMinTimer)
     {
         $this->attributes['sst_min_timer'] = $newSstMinTimer;
@@ -240,11 +255,6 @@ class Sip extends Base
     public function setSstSessionExpires($newSstSessionExpires)
     {
         $this->attributes['sst_session_expires'] = $newSstSessionExpires;
-    }
-
-    public function setSstRefreshMethodId($newSstRefreshMethodId)
-    {
-        $this->attributes['sst_refresh_method_id'] = $newSstRefreshMethodId;
     }
 
     public function setTransportProtocolId($newTransportProtocolId)

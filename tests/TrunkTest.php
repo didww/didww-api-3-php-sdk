@@ -43,11 +43,23 @@ class TrunkTest extends BaseTest
         $trunk = new \Didww\Item\Trunk($attributes);
         $trunkDocument = $trunk->save();
         $trunk = $trunkDocument->getData();
+
+        $h323Configuration = $trunk->getConfiguration();
+        $this->assertInstanceOf('Didww\Item\Configuration\H323', $h323Configuration);
+
+        $this->assertEquals($attributes['configuration']->getAttributes(), $h323Configuration->getAttributes());
+
+        $this->assertEquals(4569, $h323Configuration->getPort());
+
+        $this->assertEquals('558540420024', $h323Configuration->getDst());
+        $this->assertEquals('example.com', $h323Configuration->getHost());
+        $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultCodecIds(), $h323Configuration->getCodecIds());
+
         $this->assertInstanceOf('Didww\Item\Trunk', $trunk);
         $this->assertInstanceOf('Didww\Item\Configuration\H323', $trunk->getConfiguration());
         $this->assertEquals('78146511-7648-45ba-9b26-a4b2cf87db06', $trunk->getId());
         $this->assertEquals($attributes['configuration']->getAttributes(), $trunk->getConfiguration()->getAttributes());
-        $this->assertEquals($attributes['name'], $trunk->getAttributes()['name']);
+        $this->assertEquals($attributes['name'], $trunk->getName());
         $this->stopVCR();
     }
 
@@ -67,7 +79,7 @@ class TrunkTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Trunk', $trunk);
         $this->assertInstanceOf('Didww\Item\Configuration\H323', $trunk->getConfiguration());
         $this->assertArraySubset($attributes['configuration']->getAttributes(), $trunk->getConfiguration()->getAttributes());
-        $this->assertEquals($attributes['name'], $trunk->getAttributes()['name']);
+        $this->assertEquals($attributes['name'], $trunk->getName());
         $this->stopVCR();
     }
 
@@ -89,10 +101,21 @@ class TrunkTest extends BaseTest
         $trunkDocument = $trunk->save();
         $trunk = $trunkDocument->getData();
         $this->assertInstanceOf('Didww\Item\Trunk', $trunk);
-        $this->assertInstanceOf('Didww\Item\Configuration\Iax2', $trunk->getConfiguration());
         $this->assertEquals('2021b895-52c9-4f65-990b-e57a1abf858d', $trunk->getId());
-        $this->assertEquals($attributes['configuration']->getAttributes(), $trunk->getConfiguration()->getAttributes());
-        $this->assertEquals($attributes['name'], $trunk->getAttributes()['name']);
+        $this->assertEquals($attributes['name'], $trunk->getName());
+
+        $iaxConfiguration = $trunk->getConfiguration();
+        $this->assertInstanceOf('Didww\Item\Configuration\Iax2', $iaxConfiguration);
+
+        $this->assertEquals($attributes['configuration']->getAttributes(), $iaxConfiguration->getAttributes());
+
+        $this->assertEquals(4569, $iaxConfiguration->getPort());
+        $this->assertEquals('auth_user', $iaxConfiguration->getAuthUser());
+        $this->assertEquals('auth_password', $iaxConfiguration->getAuthPassword());
+        $this->assertEquals('558540420024', $iaxConfiguration->getDst());
+        $this->assertEquals('example.com', $iaxConfiguration->getHost());
+        $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultCodecIds(), $iaxConfiguration->getCodecIds());
+
         $this->stopVCR();
     }
 
@@ -111,9 +134,10 @@ class TrunkTest extends BaseTest
         $trunkDocument = $trunk->save();
         $trunk = $trunkDocument->getData();
         $this->assertInstanceOf('Didww\Item\Trunk', $trunk);
-        $this->assertInstanceOf('Didww\Item\Configuration\Iax2', $trunk->getConfiguration());
-        $this->assertArraySubset($attributes['configuration']->getAttributes(), $trunk->getConfiguration()->getAttributes());
-        $this->assertEquals($attributes['name'], $trunk->getAttributes()['name']);
+        $iaxConfiguration = $trunk->getConfiguration();
+        $this->assertInstanceOf('Didww\Item\Configuration\Iax2', $iaxConfiguration);
+        $this->assertArraySubset($attributes['configuration']->getAttributes(), $iaxConfiguration->getAttributes());
+        $this->assertEquals($attributes['name'], $trunk->getName());
         $this->stopVCR();
     }
 
@@ -133,7 +157,7 @@ class TrunkTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Configuration\Pstn', $trunk->getConfiguration());
         $this->assertEquals('41b94706-325e-4704-a433-d65105758836', $trunk->getId());
         $this->assertEquals($attributes['configuration']->getAttributes(), $trunk->getConfiguration()->getAttributes());
-        $this->assertEquals($attributes['name'], $trunk->getAttributes()['name']);
+        $this->assertEquals($attributes['name'], $trunk->getName());
         $this->stopVCR();
     }
 
@@ -151,8 +175,8 @@ class TrunkTest extends BaseTest
         $trunk = $trunkDocument->getData();
         $this->assertInstanceOf('Didww\Item\Trunk', $trunk);
         $this->assertInstanceOf('Didww\Item\Configuration\Pstn', $trunk->getConfiguration());
-        $this->assertEquals($attributes['configuration']->getAttributes(), $trunk->getConfiguration()->getAttributes());
-        $this->assertEquals($attributes['name'], $trunk->getAttributes()['name']);
+        $this->assertEquals('558540420025', $trunk->getConfiguration()->getDst());
+        $this->assertEquals($attributes['name'], $trunk->getName());
         $this->stopVCR();
     }
 
@@ -160,23 +184,33 @@ class TrunkTest extends BaseTest
     {
         $this->startVCR('trunks.yml');
         $attributes = [
-        'configuration' => new \Didww\Item\Configuration\Sip([
-            'username' => 'username',
-            'host' => '216.58.215.110',
-            'sst_refresh_method_id' => 1,
-            'port' => 5060,
-            'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
-            'rerouting_disconnect_code_ids' => \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
-        ]),
-        'name' => 'hello, test sip trunk',
-    ];
+          'configuration' => new \Didww\Item\Configuration\Sip([
+              'username' => 'username',
+              'host' => '216.58.215.110',
+              'sst_refresh_method_id' => 1,
+              'port' => 5060,
+              'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
+              'rerouting_disconnect_code_ids' => \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
+          ]),
+          'name' => 'hello, test sip trunk',
+        ];
         $trunk = new \Didww\Item\Trunk($attributes);
         $trunkDocument = $trunk->save();
         $trunk = $trunkDocument->getData();
         $this->assertInstanceOf('Didww\Item\Trunk', $trunk);
-        $this->assertInstanceOf('Didww\Item\Configuration\Sip', $trunk->getConfiguration());
-        $this->assertArraySubset($attributes['configuration']->getAttributes(), $trunk->getConfiguration()->getAttributes());
-        $this->assertEquals($attributes['name'], $trunk->getAttributes()['name']);
+
+        $sipConfiguration = $trunk->getConfiguration();
+
+        $this->assertInstanceOf('Didww\Item\Configuration\Sip', $sipConfiguration);
+        $this->assertArraySubset($attributes['configuration']->getAttributes(), $sipConfiguration->getAttributes());
+
+        $this->assertEquals('216.58.215.110', $sipConfiguration->getHost());
+        $this->assertEquals(1, $sipConfiguration->getSstRefreshMethodId());
+        $this->assertEquals(5060, $sipConfiguration->getPort());
+        $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultCodecIds(), $sipConfiguration->getCodecIds());
+        $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(), $sipConfiguration->getReroutingDisconnectCodeIds());
+        $this->assertEquals('username', $sipConfiguration->getUsername());
+        $this->assertEquals($attributes['name'], $trunk->getName());
         $this->stopVCR();
     }
 
@@ -197,8 +231,8 @@ class TrunkTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Trunk', $trunk);
         $this->assertInstanceOf('Didww\Item\Configuration\Sip', $trunk->getConfiguration());
         $this->assertArraySubset($attributes['configuration']->getAttributes(), $trunk->getConfiguration()->getAttributes());
-        $this->assertEquals($attributes['name'], $trunk->getAttributes()['name']);
-        $this->assertEquals($attributes['description'], $trunk->getAttributes()['description']);
+        $this->assertEquals($attributes['name'], $trunk->getName());
+        $this->assertEquals($attributes['description'], $trunk->getDescription());
         $this->stopVCR();
     }
 

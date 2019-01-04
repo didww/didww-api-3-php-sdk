@@ -16,7 +16,7 @@ class Iax2 extends Base
 
     public function getPort()
     {
-        return $this->attributes['host'];
+        return $this->attributes['port'];
     }
 
     public function getCodecIds()
