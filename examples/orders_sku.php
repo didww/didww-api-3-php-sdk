@@ -2,15 +2,15 @@
 
 require_once 'bootstrap.php';
 
-# to get different sku_id see examples\did_groups.php
+// to get different sku_id see examples\did_groups.php
 $orderItemAttributes = [
     'sku_id' => '82460535-2b3f-43a6-bcdd-62f3da0d9fa6',
-    'qty' => 2
+    'qty' => 2,
 ];
 $orderAttributes = [
     'items' => [
-        new \Didww\Item\OrderItem\Did($orderItemAttributes)
-    ]
+        new \Didww\Item\OrderItem\Did($orderItemAttributes),
+    ],
 ];
 $order = new \Didww\Item\Order($orderAttributes);
 $orderDocument = $order->save();
@@ -34,4 +34,3 @@ var_dump(
     $orderItem->getProratedMrc(), // false
     $orderItem->getDidGroupId() // df73511e-3b8e-4967-9bd8-d7b88ae1a084
 );
-

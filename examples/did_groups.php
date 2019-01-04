@@ -6,16 +6,16 @@ require_once 'bootstrap.php';
 $parameters = [
     'filter' => [
         'country.id' => '1f6fc2bd-f081-4202-9b1a-d9cb88d942b9',
-        'area_name' => 'Beverly Hills'
+        'area_name' => 'Beverly Hills',
     ],
-    'include' => 'stock_keeping_units'
+    'include' => 'stock_keeping_units',
 ];
 $didGroupsDocument = \Didww\Item\DidGroup::all($parameters);
 $didGroups = $didGroupsDocument->getData();
 
 var_dump(count($didGroups)); // 2
 
-foreach($didGroups as $didGroup) {
+foreach ($didGroups as $didGroup) {
     var_dump(
         $didGroup->getId(), // df73511e-3b8e-4967-9bd8-d7b88ae1a084
         $didGroup->getAreaName(), // Beverly Hills

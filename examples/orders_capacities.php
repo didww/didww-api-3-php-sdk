@@ -15,7 +15,7 @@ $orderItem->setQty(1);
 
 $order = new \Didww\Item\Order();
 $items = [
-    $orderItem
+    $orderItem,
 ];
 $order->setItems($items);
 $orderDocument = $order->save();

@@ -53,12 +53,12 @@ abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
 
     public function getNrc(): float
     {
-        return (float)$this->getAttributes()['nrc'];
+        return (float) $this->getAttributes()['nrc'];
     }
 
     public function getMrc(): float
     {
-        return (float)$this->getAttributes()['mrc'];
+        return (float) $this->getAttributes()['mrc'];
     }
 
     public function getBilledFrom()
@@ -73,6 +73,6 @@ abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
 
     public function getProratedMrc(): bool
     {
-        return (bool)$this->getAttributes()['prorated_mrc'];
+        return (bool) $this->getAttributes()['prorated_mrc'];
     }
 }

@@ -68,7 +68,7 @@ class Order extends BaseItem
 
     public function getAmount(): float
     {
-        return (float)$this->getAttributes()['amount'];
+        return (float) $this->getAttributes()['amount'];
     }
 
     public function getStatus(): string

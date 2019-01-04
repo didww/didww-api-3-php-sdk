@@ -5,7 +5,7 @@ require_once 'bootstrap.php';
 // get available DID
 $availableDidsDocument = \Didww\Item\AvailableDid::all([
     'include' => 'did_group.stock_keeping_units',
-    'number_contains' => '333'
+    'number_contains' => '333',
 ]);
 $availableDids = $availableDidsDocument->getData()->all();
 $availableDid = $availableDids[array_rand($availableDids)];
@@ -36,7 +36,7 @@ $orderItem->setSkuId($sku->getId());
 
 $order = new \Didww\Item\Order();
 $items = [
-    $orderItem
+    $orderItem,
 ];
 $order->setItems($items);
 $orderDocument = $order->save();

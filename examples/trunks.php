@@ -14,7 +14,7 @@ $trunkSipConfig = new \Didww\Item\Configuration\Sip([
 
 $trunk = new \Didww\Item\Trunk();
 // set name (should be unique)
-$trunk->setName('My New Custom Sip Trunk '. uniqid());
+$trunk->setName('My New Custom Sip Trunk '.uniqid());
 // set configuration object
 // see also \Didww\Item\Configuration\H323  \Didww\Item\Configuration\Iax2 and \Didww\Item\Configuration\Pstn
 $trunk->setConfiguration($trunkSipConfig);
@@ -22,11 +22,11 @@ $trunk->setConfiguration($trunkSipConfig);
 $trunk->setRingingTimeout(30);
 $trunkDocument = $trunk->save();
 
-if ($trunkDocument->hasErrors()){
-  var_dump($trunkDocument->getErrors());
-}else{
-  $trunk = $trunkDocument->getData();
-  var_dump(
+if ($trunkDocument->hasErrors()) {
+    var_dump($trunkDocument->getErrors());
+} else {
+    $trunk = $trunkDocument->getData();
+    var_dump(
       $trunk->getId(), // 1f6fc2bd-f081-4202-9b1a-d9cb88d942b9
       $trunk->getName(), // "My New Custom Sip Trunk 5c2e393794b07"
       $trunk->getCreatedAt(), // object(DateTime)
