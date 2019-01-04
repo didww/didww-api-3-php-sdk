@@ -65,4 +65,39 @@ class Order extends BaseItem
 
         return self::itemFactory($parts[0], (array) $attributes);
     }
+
+    public function getAmount(): float
+    {
+        return (float)$this->getAttributes()['amount'];
+    }
+
+    public function getStatus(): string
+    {
+        return $this->getAttributes()['status'];
+    }
+
+    public function getCreatedAt(): \DateTime
+    {
+        return new \DateTime($this->getAttributes()['created_at']);
+    }
+
+    public function getDescription(): string
+    {
+        return $this->getAttributes()['description'];
+    }
+
+    public function getReference(): string
+    {
+        return $this->getAttributes()['reference'];
+    }
+
+    public function getItems(): array
+    {
+        return $this->getAttributes()['items'];
+    }
+
+    public function setItems(array $items)
+    {
+        $this->attributes['items'] = $items;
+    }
 }

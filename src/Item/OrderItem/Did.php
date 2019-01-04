@@ -13,4 +13,9 @@ class Did extends Base
     {
         return 'did_order_items';
     }
+
+    public function getDidGroupId()
+    {
+        return $this->getAttributes()['did_group_id'];
+    }
 }
