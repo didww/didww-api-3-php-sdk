@@ -8,16 +8,16 @@ class StockKeepingUnit extends BaseItem
 
     public function getSetupPrice(): float
     {
-        return (float) $this->getAttributes()['setup_price'];
+        return (float) $this->attributes['setup_price'];
     }
 
     public function getMonthlyPrice(): float
     {
-        return (float) $this->getAttributes()['monthly_price'];
+        return (float) $this->attributes['monthly_price'];
     }
 
     public function getChannelsIncludedCount()
     {
-        return $this->getAttributes()['channels_included_count'];
+        return $this->attributes['channels_included_count'];
     }
 }
