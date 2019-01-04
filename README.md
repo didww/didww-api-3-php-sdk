@@ -32,6 +32,8 @@ $didGroup = \Didww\Item\DidGroup::all(['include'=>'stock_keeping_units', 'filter
 var_dump($didGroup->getAttributes());
 ```
 
+For more examples visit https://github.com/didww/didww-api-3-php-sdk/tree/master/examples
+
 For details on obtaining your API key please visit https://doc.didww.com/api#introduction-api-keys
 
 ## Contributing
