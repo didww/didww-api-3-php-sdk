@@ -8,8 +8,8 @@ class CountryTest extends BaseTest
     {
         $this->startVCR('countries.yml');
 
-        $countries = \Didww\Item\Country::all();
-        $this->assertContainsOnlyInstancesOf('Didww\Item\Country', $countries->getData());
+        $countriesDocument = \Didww\Item\Country::all();
+        $this->assertContainsOnlyInstancesOf('Didww\Item\Country', $countriesDocument->getData());
 
         $this->stopVCR();
     }
@@ -19,13 +19,18 @@ class CountryTest extends BaseTest
         $this->startVCR('countries.yml');
 
         $uuid = '7eda11bb-0e66-4146-98e7-57a5281f56c8';
-        $country = \Didww\Item\Country::find($uuid);
-        $this->assertInstanceOf('Didww\Item\Country', $country->getData());
-        $this->assertEquals($country->getData()->getAttributes(), [
+        $countryDocument = \Didww\Item\Country::find($uuid);
+        $country = $countryDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Country', $country);
+        $this->assertEquals($country->getAttributes(), [
             'iso' => 'GB',
             'prefix' => '44',
             'name' => 'United Kingdom',
         ]);
+
+        $this->assertEquals('GB', $country->getIso());
+        $this->assertEquals('44', $country->getPrefix());
+        $this->assertEquals('United Kingdom', $country->getName());
 
         $this->stopVCR();
     }
