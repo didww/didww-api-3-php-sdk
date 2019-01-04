@@ -16,6 +16,7 @@ class TrunkTest extends BaseTest
         $pop = $trunks[2]->pop()->getIncluded();
 
         $this->assertInstanceOf('Didww\Item\Pop', $pop);
+        $this->assertEquals('US, LA', $pop->getName());
         $this->assertInstanceOf('Didww\Item\TrunkGroup', $trunkGroup);
 
         $this->assertInstanceOf('Didww\Item\Configuration\Iax2', $trunks[0]->getConfiguration());
