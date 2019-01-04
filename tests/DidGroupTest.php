@@ -55,24 +55,16 @@ class DidGroupTest extends BaseTest
             'name' => 'Local',
         ]);
 
-        $this->assertContainsOnlyInstancesOf('Didww\Item\StockKeepingUnit', $stockKeepingUnitsRelation->getIncluded()->all());
-        $this->assertEquals(array_map(
-            function ($value) {
-                return $value->getAttributes();
-            },
-            $stockKeepingUnitsRelation->getIncluded()->all()
-        ), [
-            [
-                'setup_price' => '0.4',
-                'monthly_price' => '0.8',
-                'channels_included_count' => 0,
-            ],
-            [
-                'setup_price' => '1.0',
-                'monthly_price' => '4.8',
-                'channels_included_count' => 2,
-            ],
-        ]);
+        $stockKeepingUnits = $stockKeepingUnitsRelation->getIncluded()->all();
+        $this->assertContainsOnlyInstancesOf('Didww\Item\StockKeepingUnit', $stockKeepingUnits);
+
+        $this->assertEquals(0.4, $stockKeepingUnits[0]->getSetupPrice());
+        $this->assertEquals(0.8, $stockKeepingUnits[0]->getMonthlyPrice());
+        $this->assertEquals(0, $stockKeepingUnits[0]->getChannelsIncludedCount());
+
+        $this->assertEquals(1.0, $stockKeepingUnits[1]->getSetupPrice());
+        $this->assertEquals(4.8, $stockKeepingUnits[1]->getMonthlyPrice());
+        $this->assertEquals(2, $stockKeepingUnits[1]->getChannelsIncludedCount());
 
         $this->stopVCR();
     }
