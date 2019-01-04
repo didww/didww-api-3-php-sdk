@@ -9,6 +9,81 @@ class Did extends BaseItem
 
     protected $type = 'dids';
 
+    public function setDedicatedChannelsCount(int $dedicatedChannelCount)
+    {
+        $this->attributes['dedicated_channels_count'] = $dedicatedChannelCount;
+    }
+
+    public function getDedicatedChannelsCount(): int
+    {
+        return $this->attributes['dedicated_channels_count'];
+    }
+
+    public function getTerminated(): boolean
+    {
+        return $this->attributes['terminated'];
+    }
+
+    public function setTerminated(boolean $terminated)
+    {
+        $this->attributes['terminated'] = $terminated;
+    }
+
+    public function setDescription(string $desc)
+    {
+        $this->attributes['description'] = $desc;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->attributes['description'];
+    }
+
+    public function setPendingRemoval(boolean $pendingRemoval)
+    {
+        $this->attributes['pending_removal'] = $pendingRemoval;
+    }
+
+    public function getPendingRemoval(): boolean
+    {
+        return $this->attributes['pending_removal'];
+    }
+
+    public function setCapacityLimit(int $capacityLimit)
+    {
+        $this->attributes['capacity_limit'] = $capacityLimit;
+    }
+
+    public function getCapacityLimit(): int
+    {
+        return $this->attributes['capacity_limit'];
+    }
+
+    public function getBlocked(): boolean
+    {
+        return $this->attributes['blocked'];
+    }
+
+    public function getAwaitingRegistration(): boolean
+    {
+        return $this->attributes['awaiting_registration'];
+    }
+
+    public function getNumber(): boolean
+    {
+        return $this->attributes['number'];
+    }
+
+    public function getCreatedAt()
+    {
+        return new \DateTime($this->attributes['created_at']);
+    }
+
+    public function getExpiresAt()
+    {
+        return new \DateTime($this->attributes['expires_at']);
+    }
+
     public function order()
     {
         return $this->hasOne(Order::class);
