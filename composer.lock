@@ -1109,16 +1109,16 @@
         },
         {
             "name": "swisnl/json-api-client",
-            "version": "0.12.0",
+            "version": "0.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swisnl/json-api-client.git",
-                "reference": "9ff198202c3472ece7888e9e5fcd0421f2517119"
+                "reference": "60109a6088b589626d064f8c95b672afca2f8b2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swisnl/json-api-client/zipball/9ff198202c3472ece7888e9e5fcd0421f2517119",
-                "reference": "9ff198202c3472ece7888e9e5fcd0421f2517119",
+                "url": "https://api.github.com/repos/swisnl/json-api-client/zipball/60109a6088b589626d064f8c95b672afca2f8b2a",
+                "reference": "60109a6088b589626d064f8c95b672afca2f8b2a",
                 "shasum": ""
             },
             "require": {
@@ -1173,7 +1173,7 @@
                 }
             ],
             "description": "A PHP package for mapping remote {json:api} resources to Eloquent like models and collections.",
-            "time": "2019-01-11T12:28:14+00:00"
+            "time": "2019-01-11T16:20:35+00:00"
         },
         {
             "name": "symfony/contracts",
