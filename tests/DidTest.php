@@ -42,10 +42,7 @@ class DidTest extends BaseTest
                     ],
                 ],
                 'trunk' => [
-                    'data' => [
-                        'type' => 'trunks',
-                        'id' => null,
-                    ],
+                    'data' => null,
                 ],
             ],
         ]);

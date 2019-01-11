@@ -11,7 +11,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","relationships":{"trunk_group":{"data":{"type":"trunk_groups","id":"invalid"}},"trunk":{"data":{"type":"trunks","id":null}}}}}'
+        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","relationships":{"trunk_group":{"data":{"type":"trunk_groups","id":"invalid"}},"trunk":{"data":null}}}}'
     response:
         status:
             http_version: '1.1'
@@ -205,7 +205,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","relationships":{"trunk_group":{"data":{"type":"trunk_groups","id":"837c5764-a6c3-456f-aa37-71fc8f8ca07b"}},"trunk":{"data":{"type":"trunks","id":null}}}}}'
+        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","relationships":{"trunk_group":{"data":{"type":"trunk_groups","id":"837c5764-a6c3-456f-aa37-71fc8f8ca07b"}},"trunk":{"data":null}}}}'
     response:
         status:
             http_version: '1.1'
