@@ -4,6 +4,9 @@ namespace Didww\Item\OrderItem;
 
 class Did extends Base
 {
+    use Traits\Sku;
+    use Traits\Qty;
+
     protected function getCreatableAttributesKeys()
     {
         return ['sku_id', 'qty'];

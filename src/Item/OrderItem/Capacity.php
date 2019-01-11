@@ -4,6 +4,8 @@ namespace Didww\Item\OrderItem;
 
 class Capacity extends Base
 {
+    use Traits\Qty;
+
     protected function getCreatableAttributesKeys()
     {
         return ['capacity_pool_id', 'qty'];
@@ -27,10 +29,5 @@ class Capacity extends Base
     public function setCapacityPool(\Didww\Item\CapacityPool $capacityPool)
     {
         return $this->attributes['capacity_pool_id'] = $capacityPool->getId();
-    }
-
-    public function setQty(int $qty)
-    {
-        $this->attributes['qty'] = $qty;
     }
 }
