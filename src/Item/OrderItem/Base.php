@@ -46,11 +46,6 @@ abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
         $this->attributes = $attributes;
     }
 
-    public function getQty(): int
-    {
-        return $this->getAttributes()['qty'];
-    }
-
     public function getNrc(): float
     {
         return (float) $this->getAttributes()['nrc'];
