@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "204469538a16c6d43d9bae2b712e4ae5",
+    "content-hash": "dda8b9ad6500544be423f99863478439",
     "packages": [
         {
             "name": "art4/json-api-client",
@@ -1109,14 +1109,21 @@
         },
         {
             "name": "swisnl/json-api-client",
-            "version": "dev-master",
+            "version": "0.12.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/didww/json-api-client",
-                "reference": "790e22724b04a46227909954126c0bffdda99b98"
+                "url": "https://github.com/swisnl/json-api-client.git",
+                "reference": "9ff198202c3472ece7888e9e5fcd0421f2517119"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swisnl/json-api-client/zipball/9ff198202c3472ece7888e9e5fcd0421f2517119",
+                "reference": "9ff198202c3472ece7888e9e5fcd0421f2517119",
+                "shasum": ""
             },
             "require": {
                 "art4/json-api-client": "^0.9.1",
+                "ext-json": "*",
                 "illuminate/support": "5.3.*|5.4.*|5.5.*|5.6.*|5.7.*",
                 "jenssegers/model": "^1.1",
                 "php": ">=7.0",
@@ -1147,27 +1154,15 @@
                     "Swis\\JsonApi\\Client\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Swis\\JsonApi\\Client\\Tests\\": "tests/",
-                    "Swis\\JsonApi\\Client\\Tests\\Mocks\\": "tests/_mocks/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "phpunit"
-                ],
-                "check-style": [
-                    "php-cs-fixer fix --dry-run -v"
-                ],
-                "fix-style": [
-                    "php-cs-fixer fix"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
+                {
+                    "name": "Björn Brala",
+                    "email": "bjorn@swis.nl"
+                },
                 {
                     "name": "Hendrik Nijmeijer",
                     "email": "hendrik@swis.nl"
@@ -1175,14 +1170,10 @@
                 {
                     "name": "Jasper Zonneveld",
                     "email": "jasper@swis.nl"
-                },
-                {
-                    "name": "Björn Brala",
-                    "email": "bjorn@swis.nl"
                 }
             ],
             "description": "A PHP package for mapping remote {json:api} resources to Eloquent like models and collections.",
-            "time": "2019-01-03T12:10:09+00:00"
+            "time": "2019-01-11T12:28:14+00:00"
         },
         {
             "name": "symfony/contracts",
@@ -4131,11 +4122,9 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "dev",
-    "stability-flags": {
-        "swisnl/json-api-client": 20
-    },
-    "prefer-stable": true,
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1.3"
