@@ -18,7 +18,7 @@ var_dump($sku->getId()); // be1d31ce-c317-4a8a-85bd-5fe3915d4524
 
 $orderItem = new \Didww\Item\OrderItem\AvailableDid();
 $orderItem->setAvailableDidId($availableDid->getId());
-$orderItem->setSkuId($sku->getId());
+$orderItem->setSku($sku);
 
 $order = new \Didww\Item\Order();
 $items = [

@@ -31,7 +31,7 @@ var_dump(
 // purchase reserved DID
 $orderItem = new \Didww\Item\OrderItem\ReservationDid();
 $orderItem->setDidReservationId($didReservation->getId());
-$orderItem->setSkuId($sku->getId());
+$orderItem->setSku($sku);
 
 $order = new \Didww\Item\Order();
 $items = [
