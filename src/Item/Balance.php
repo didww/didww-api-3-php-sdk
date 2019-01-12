@@ -29,7 +29,7 @@ class Balance extends BaseItem
      */
     public function getTotalBalance(): float
     {
-        return (float) $this->getAttributes()['total_balance'];
+        return (float) $this->attributes['total_balance'];
     }
 
     /**
@@ -39,7 +39,7 @@ class Balance extends BaseItem
      */
     public function getCredit(): float
     {
-        return (float) $this->getAttributes()['credit'];
+        return (float) $this->attributes['credit'];
     }
 
     /**
@@ -49,6 +49,6 @@ class Balance extends BaseItem
      */
     public function getBalance(): float
     {
-        return (float) $this->getAttributes()['balance'];
+        return (float) $this->attributes['balance'];
     }
 }
