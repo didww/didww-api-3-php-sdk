@@ -16,16 +16,6 @@ trait Sku
 
     public function setSku(\Didww\Item\StockKeepingUnit $stockKeepingUnit)
     {
-        $this->attributes['sku_id'] = $stockKeepingUnit->getId();
-    }
-
-    public function setStockKeepingUnitId(string $uuid)
-    {
-        $this->attributes['sku_id'] = $uuid;
-    }
-
-    public function setStockKeepingUnit(\Didww\Item\StockKeepingUnit $stockKeepingUnit)
-    {
-        $this->attributes['sku_id'] = $stockKeepingUnit->getId();
+        $this->setSkuId($stockKeepingUnit->getId());
     }
 }
