@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dda8b9ad6500544be423f99863478439",
+    "content-hash": "b258e10da256006da37ea8e819a166bd",
     "packages": [
         {
             "name": "art4/json-api-client",
@@ -1109,16 +1109,16 @@
         },
         {
             "name": "swisnl/json-api-client",
-            "version": "0.12.1",
+            "version": "0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swisnl/json-api-client.git",
-                "reference": "60109a6088b589626d064f8c95b672afca2f8b2a"
+                "reference": "527079834125e6afefef735dd1efa7ad3055d94d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swisnl/json-api-client/zipball/60109a6088b589626d064f8c95b672afca2f8b2a",
-                "reference": "60109a6088b589626d064f8c95b672afca2f8b2a",
+                "url": "https://api.github.com/repos/swisnl/json-api-client/zipball/527079834125e6afefef735dd1efa7ad3055d94d",
+                "reference": "527079834125e6afefef735dd1efa7ad3055d94d",
                 "shasum": ""
             },
             "require": {
@@ -1173,7 +1173,7 @@
                 }
             ],
             "description": "A PHP package for mapping remote {json:api} resources to Eloquent like models and collections.",
-            "time": "2019-01-11T16:20:35+00:00"
+            "time": "2019-01-14T15:37:14+00:00"
         },
         {
             "name": "symfony/contracts",
