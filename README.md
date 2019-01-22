@@ -1,5 +1,6 @@
 PHP client for DIDWW API v3.
-
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/didww/didww-api-3-php-sdk.svg)](https://packagist.org/packages/didww/didww-api-3-php-sdk)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/didww/didww-api-3-php-sdk.svg)](https://packagist.org/packages/didww/didww-api-3-php-sdk)
 [![Build Status](https://travis-ci.org/didww/didww-api-3-php-sdk.svg?branch=master)](https://travis-ci.org/didww/didww-api-3-php-sdk)
 [![Coverage Status](https://coveralls.io/repos/github/didww/didww-api-3-php-sdk/badge.svg?branch=master)](https://coveralls.io/github/didww/didww-api-3-php-sdk?branch=master)
 
