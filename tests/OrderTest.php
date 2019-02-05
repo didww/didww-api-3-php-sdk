@@ -4,6 +4,31 @@ namespace Didww\Tests;
 
 class OrderTest extends BaseTest
 {
+    public function testFind()
+    {
+        $this->startVCR('orders.yml');
+
+        $uuid = '9df11dac-9d83-448c-8866-19c998be33db';
+        $orderDocument = \Didww\Item\Order::find($uuid);
+        $order = $orderDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Order', $order);
+        $this->assertContainsOnlyInstancesOf('Didww\Item\OrderItem\Generic', $order->getAttributes()['items']);
+        $this->assertEquals($order->getAmount(), 25.07);
+
+        $this->assertEquals($order->getStatus(), 'Completed');
+        $this->assertEquals($order->getCreatedAt(), new \DateTime('2018-08-17T09:48:48.440Z'));
+        $this->assertEquals($order->getDescription(), 'Payment processing fee');
+        $this->assertEquals($order->getReference(), 'SPT-474057');
+        $item = $order->getItems()[0];
+        $this->assertEquals($item->getMrc(), 0.0);
+        $this->assertEquals($item->getNrc(), 25.07);
+        $this->assertEquals($item->getBilledTo(), '2018-09-16');
+        $this->assertEquals($item->getBilledFrom(), '2018-08-17');
+        $this->assertEquals($item->getProratedMrc(), false);
+        $this->assertEquals($item->getQty(), 1);
+        $this->stopVCR();
+    }
+
     public function testOrderSkuSave()
     {
         $this->startVCR('orders.yml');
