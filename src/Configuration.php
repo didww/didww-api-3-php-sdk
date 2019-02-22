@@ -30,10 +30,12 @@ class Configuration
 
         $typeMapper = new TypeMapper();
         $typeMapper->registerItems();
+        $linksParser = new \Swis\JsonApi\Client\JsonApi\LinksParser();
         $parser = new \Swis\JsonApi\Client\JsonApi\Parser(
             new \Art4\JsonApiClient\Utils\Manager(),
-            new \Swis\JsonApi\Client\JsonApi\Hydrator($typeMapper),
-            new \Swis\JsonApi\Client\JsonApi\ErrorsParser()
+            new \Swis\JsonApi\Client\JsonApi\Hydrator($typeMapper, $linksParser),
+            new \Swis\JsonApi\Client\JsonApi\ErrorsParser($linksParser),
+            $linksParser
         );
 
         self::$documentClient = new \Swis\JsonApi\Client\DocumentClient($client, $parser);
