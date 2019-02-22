@@ -15,7 +15,7 @@
     ],
     "require": {
       "php": "^7.1.3",
-      "swisnl/json-api-client": "~0.12",
+      "swisnl/json-api-client": "~0.17",
       "php-http/guzzle6-adapter": "^1.1",
       "guzzlehttp/psr7": "^1.5",
       "php-http/message": "^1.7"
