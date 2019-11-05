@@ -19,12 +19,12 @@ class Did extends BaseItem
         return $this->attributes['dedicated_channels_count'];
     }
 
-    public function getTerminated(): boolean
+    public function getTerminated(): bool
     {
         return $this->attributes['terminated'];
     }
 
-    public function setTerminated(boolean $terminated)
+    public function setTerminated(bool $terminated)
     {
         $this->attributes['terminated'] = $terminated;
     }
@@ -39,12 +39,12 @@ class Did extends BaseItem
         return $this->attributes['description'];
     }
 
-    public function setPendingRemoval(boolean $pendingRemoval)
+    public function setPendingRemoval(bool $pendingRemoval)
     {
         $this->attributes['pending_removal'] = $pendingRemoval;
     }
 
-    public function getPendingRemoval(): boolean
+    public function getPendingRemoval(): bool
     {
         return $this->attributes['pending_removal'];
     }
@@ -59,17 +59,17 @@ class Did extends BaseItem
         return $this->attributes['capacity_limit'];
     }
 
-    public function getBlocked(): boolean
+    public function getBlocked(): bool
     {
         return $this->attributes['blocked'];
     }
 
-    public function getAwaitingRegistration(): boolean
+    public function getAwaitingRegistration(): bool
     {
         return $this->attributes['awaiting_registration'];
     }
 
-    public function getNumber(): boolean
+    public function getNumber(): string
     {
         return $this->attributes['number'];
     }

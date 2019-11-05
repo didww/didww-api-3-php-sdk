@@ -121,4 +121,40 @@ class DidTest extends BaseTest
 
         $this->stopVCR();
     }
+
+    public function testBooleans()
+    {
+        $this->startVCR('dids.yml');
+
+        $didDocument = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b');
+        $did = $didDocument->getData();
+        $this->assertEquals($did->getPendingRemoval(), false);
+        $this->assertEquals($did->getTerminated(), false);
+        $this->assertEquals($did->getNumber(), '16091609123456797');
+        $this->assertEquals($did->getBlocked(), false);
+        $this->assertEquals($did->getAwaitingRegistration(), false);
+
+        $did->setPendingRemoval(true);
+        $did->setTerminated(true);
+        $didDocument = $did->save();
+
+        $this->assertEquals($did->toJsonApiArray(), [
+            'id' => $did->getId(),
+            'type' => 'dids',
+            'attributes' => [
+                'capacity_limit' => $did->getCapacityLimit(),
+                'description' => $did->getDescription(),
+                'terminated' => true,
+                'pending_removal' => true,
+                'dedicated_channels_count' => $did->getDedicatedChannelsCount(),
+            ],
+        ]);
+
+        $did = $didDocument->getData();
+
+        $this->assertEquals($did->getPendingRemoval(), true);
+        $this->assertEquals($did->getTerminated(), true);
+
+        $this->stopVCR();
+    }
 }
