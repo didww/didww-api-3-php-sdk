@@ -64,7 +64,7 @@ class Iax2 extends Base
         $this->attributes['auth_password'] = $newAuthPassword;
     }
 
-    protected function getType()
+    public function getType(): string
     {
         return 'iax2_configurations';
     }

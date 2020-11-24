@@ -2,6 +2,8 @@
 
 namespace Didww\Item;
 
+use Illuminate\Support\Str;
+
 abstract class BaseItem extends \Swis\JsonApi\Client\Item
 {
     public static function build(string $uuid, array $attributes = [])
@@ -15,7 +17,9 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
 
     public static function getRepository()
     {
-        $repository = new \Didww\Repository(\Didww\Configuration::getDocumentClient());
+        $documentFactory = new \Swis\JsonApi\Client\DocumentFactory();
+        $documentClient = \Didww\Configuration::getDocumentClient();
+        $repository = new \Didww\Repository($documentClient, $documentFactory);
         $repository->setEndpoint(static::getEndpoint());
 
         return $repository;
@@ -23,7 +27,7 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
 
     public static function getEndpoint()
     {
-        return '/'.snake_case(str_plural(substr(get_called_class(), strrpos(get_called_class(), '\\') + 1)));
+        return '/'.Str::snake(Str::plural(substr(get_called_class(), strrpos(get_called_class(), '\\') + 1)));
     }
 
     public function toJsonApiArray(): array

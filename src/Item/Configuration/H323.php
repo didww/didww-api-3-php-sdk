@@ -44,7 +44,7 @@ class H323 extends Base
         $this->attributes['codec_ids'] = $codecIds;
     }
 
-    protected function getType()
+    public function getType(): string
     {
         return 'h323_configurations';
     }

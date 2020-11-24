@@ -11,7 +11,7 @@ class Capacity extends Base
         return ['capacity_pool_id', 'qty'];
     }
 
-    protected function getType()
+    public function getType(): string
     {
         return 'capacity_order_items';
     }

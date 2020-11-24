@@ -20,24 +20,34 @@ class Configuration
 
     public static function configure(Credentials $credentials, array $httpClientConfig = [])
     {
-        $httpClient = \Http\Adapter\Guzzle6\Client::createWithConfig($httpClientConfig);
-
-        $messageFactory = \Http\Discovery\MessageFactoryDiscovery::find();
-
         self::$credentials = $credentials;
-        $client = new Client($httpClient, self::$credentials->getEndpoint(), $messageFactory);
-        $client->setApiKey(self::$credentials->getApiKey());
+
+        $httpClient = new \GuzzleHttp\Client($httpClientConfig);
+
+        $client = new Client($httpClient);
+        $client->setBaseUri($credentials->getEndpoint());
+        $client->setApiKey($credentials->getApiKey());
 
         $typeMapper = new TypeMapper();
         $typeMapper->registerItems();
-        $linksParser = new \Swis\JsonApi\Client\JsonApi\LinksParser();
-        $parser = new \Swis\JsonApi\Client\JsonApi\Parser(
-            new \Art4\JsonApiClient\Utils\Manager(),
-            new \Swis\JsonApi\Client\JsonApi\Hydrator($typeMapper, $linksParser),
-            new \Swis\JsonApi\Client\JsonApi\ErrorsParser($linksParser),
-            $linksParser
-        );
 
-        self::$documentClient = new \Swis\JsonApi\Client\DocumentClient($client, $parser);
+        $metaParser = new \Swis\JsonApi\Client\Parsers\MetaParser();
+        $linksParser = new \Swis\JsonApi\Client\Parsers\LinksParser($metaParser);
+        $itemParser = new \Swis\JsonApi\Client\Parsers\ItemParser($typeMapper, $linksParser, $metaParser);
+        $collectionParser = new \Swis\JsonApi\Client\Parsers\CollectionParser($itemParser);
+        $errorParser = new \Swis\JsonApi\Client\Parsers\ErrorParser($linksParser, $metaParser);
+        $errorCollectionParser = new \Swis\JsonApi\Client\Parsers\ErrorCollectionParser($errorParser);
+        $jsonapiParser = new \Swis\JsonApi\Client\Parsers\JsonapiParser($metaParser);
+        $documentParser = new \Swis\JsonApi\Client\Parsers\DocumentParser(
+            $itemParser,
+            $collectionParser,
+            $errorCollectionParser,
+            $linksParser,
+            $jsonapiParser,
+            $metaParser
+        );
+        $resposeParser = new \Swis\JsonApi\Client\Parsers\ResponseParser($documentParser);
+
+        self::$documentClient = new \Swis\JsonApi\Client\DocumentClient($client, $resposeParser);
     }
 }

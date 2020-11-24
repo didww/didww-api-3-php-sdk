@@ -12,7 +12,7 @@ class Did extends Base
         return ['sku_id', 'qty'];
     }
 
-    protected function getType()
+    public function getType(): string
     {
         return 'did_order_items';
     }

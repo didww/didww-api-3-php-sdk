@@ -6,6 +6,6 @@ trait Deletable
 {
     public function delete()
     {
-        return self::getRepository()->deleteById($this->id);
+        return self::getRepository()->delete($this->id);
     }
 }

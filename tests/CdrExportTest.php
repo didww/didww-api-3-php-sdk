@@ -9,7 +9,7 @@ class CdrExportTest extends BaseTest
         $this->startVCR('cdr_exports.yml');
 
         $cdrExport = new \Didww\Item\CdrExport();
-        $cdrExport->setFilerDidNumber('1234556789');
+        $cdrExport->setFilterDidNumber('1234556789');
         $cdrExport->setFilterYear('2019');
         $cdrExport->setFilterMonth('01');
 
@@ -28,7 +28,7 @@ class CdrExportTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\CdrExport', $cdrExport);
 
         $this->assertEquals($cdrExport->getAttributes(), [
-            'filters' => [
+            'filters' => (object) [
                    'did_number' => '1234556789',
                    'year' => '2019',
                    'month' => '01',
@@ -61,7 +61,7 @@ class CdrExportTest extends BaseTest
 
         $this->assertInstanceOf('Didww\Item\CdrExport', $cdrExport);
         $this->assertEquals($cdrExport->getAttributes(), [
-          'filters' => [
+          'filters' => (object) [
                  'did_number' => '1234556789',
                  'year' => '2019',
                  'month' => '01',
