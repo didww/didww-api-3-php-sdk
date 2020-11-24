@@ -14,7 +14,7 @@ class Pstn extends Base
         $this->attributes['dst'] = $newDst;
     }
 
-    protected function getType()
+    public function getType(): string
     {
         return 'pstn_configurations';
     }

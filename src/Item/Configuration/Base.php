@@ -2,11 +2,9 @@
 
 namespace Didww\Item\Configuration;
 
-abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
+abstract class Base extends \Didww\Item\BaseItem
 {
     protected $attributes = [];
-
-    abstract protected function getType();
 
     public function __construct($attributes = [])
     {

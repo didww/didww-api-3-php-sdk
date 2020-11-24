@@ -166,6 +166,9 @@ class Trunk extends BaseItem
             $this->configuration->fill($configuration['attributes']);
         } elseif ($configuration instanceof \Didww\Item\Configuration\Base) {
             $this->configuration = $configuration;
+        } elseif (is_object($configuration)) {
+            $this->configuration = $this->buildConfiguration($configuration->type);
+            $this->configuration->fill((array) $configuration->attributes);
         } else {
             throw new \InvalidArgumentException('can\'t set configuration');
         }

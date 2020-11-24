@@ -5,7 +5,7 @@ namespace Didww\Item\Configuration;
 class Sip extends Base
 {
     //todo: add getters setters
-    protected function getType()
+    public function getType(): string
     {
         return 'sip_configurations';
     }

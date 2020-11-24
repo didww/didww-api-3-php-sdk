@@ -6,7 +6,7 @@ abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
 {
     protected $attributes = [];
 
-    abstract protected function getType();
+    abstract public function getType(): string;
 
     abstract protected function getCreatableAttributesKeys();
 

@@ -11,7 +11,7 @@ class CdrExport extends BaseItem
 
     private $filters = [];
 
-    public function setFilerDidNumber($didNumber)
+    public function setFilterDidNumber($didNumber)
     {
         $this->filters['did_number'] = $didNumber;
     }
