@@ -14,8 +14,6 @@ class Balance extends BaseItem
 
     /**
      * Get DIDWW API 3 endpoint.
-     *
-     * @return string
      */
     public static function getEndpoint(): string
     {
@@ -24,8 +22,6 @@ class Balance extends BaseItem
 
     /**
      * Get account total balance (including credit line balance).
-     *
-     * @return float
      */
     public function getTotalBalance(): float
     {
@@ -34,8 +30,6 @@ class Balance extends BaseItem
 
     /**
      * Get account credit line balance.
-     *
-     * @return float
      */
     public function getCredit(): float
     {
@@ -44,8 +38,6 @@ class Balance extends BaseItem
 
     /**
      * Get account balance (not including credit line balance).
-     *
-     * @return float
      */
     public function getBalance(): float
     {

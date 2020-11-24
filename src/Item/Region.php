@@ -15,8 +15,6 @@ class Region extends BaseItem
 
     /**
      * Get name of the region.
-     *
-     * @return string
      */
     public function getName(): string
     {
