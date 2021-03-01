@@ -29,6 +29,45 @@ class OrderTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testOrderBillingCyclesCountSave()
+    {
+        $this->startVCR('orders.yml');
+
+        $attributes = [
+            'allow_back_ordering' => true,
+            'items' => [
+                new \Didww\Item\OrderItem\Did([
+                    'sku_id' => 'f36d2812-2195-4385-85e8-e59c3484a8bc',
+                    'qty' => 1,
+                    'billing_cycles_count' => 5,
+                ]),
+            ],
+        ];
+        $order = new \Didww\Item\Order($attributes);
+        $this->assertEquals($order->toJsonApiArray(), [
+            'type' => 'orders',
+            'attributes' => [
+                'allow_back_ordering' => true,
+                'items' => [
+                    [
+                        'type' => 'did_order_items',
+                        'attributes' => [
+                            'qty' => 1,
+                            'sku_id' => 'f36d2812-2195-4385-85e8-e59c3484a8bc',
+                            'billing_cycles_count' => 5,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+        $orderDocument = $order->save();
+        $order = $orderDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Order', $order);
+        $this->assertContainsOnlyInstancesOf('Didww\Item\OrderItem\Did', $order->getAttributes()['items']);
+
+        $this->stopVCR();
+    }
+
     public function testOrderSkuSave()
     {
         $this->startVCR('orders.yml');

@@ -39,14 +39,14 @@ class Did extends BaseItem
         return $this->attributes['description'];
     }
 
-    public function setPendingRemoval(bool $pendingRemoval)
+    public function setBillingCyclesCount(?int $billingCyclesCount)
     {
-        $this->attributes['pending_removal'] = $pendingRemoval;
+        $this->attributes['billing_cycles_count'] = $billingCyclesCount;
     }
 
-    public function getPendingRemoval(): bool
+    public function getBillingCyclesCount(): ?int
     {
-        return $this->attributes['pending_removal'];
+        return $this->attributes['billing_cycles_count'];
     }
 
     public function setCapacityLimit(int $capacityLimit)
@@ -139,7 +139,7 @@ class Did extends BaseItem
     protected function getWhiteListAttributesKeys()
     {
         return [
-         'pending_removal',
+         'billing_cycles_count',
          'capacity_limit',
          'description',
          'terminated',

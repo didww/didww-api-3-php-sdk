@@ -8,7 +8,7 @@ class AvailableDid extends Did
 
     protected function getCreatableAttributesKeys()
     {
-        return ['available_did_id', 'sku_id'];
+        return $this->withOptionalKeys(['available_did_id', 'sku_id']);
     }
 
     public function setAvailableDidId(string $uuid)
