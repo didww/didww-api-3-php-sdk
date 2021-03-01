@@ -128,13 +128,13 @@ class DidTest extends BaseTest
 
         $didDocument = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did = $didDocument->getData();
-        $this->assertEquals($did->getPendingRemoval(), false);
+        $this->assertEquals($did->getBillingCyclesCount(), null);
         $this->assertEquals($did->getTerminated(), false);
         $this->assertEquals($did->getNumber(), '16091609123456797');
         $this->assertEquals($did->getBlocked(), false);
         $this->assertEquals($did->getAwaitingRegistration(), false);
 
-        $did->setPendingRemoval(true);
+        $did->setBillingCyclesCount(0);
         $did->setTerminated(true);
         $didDocument = $did->save();
 
@@ -145,14 +145,14 @@ class DidTest extends BaseTest
                 'capacity_limit' => $did->getCapacityLimit(),
                 'description' => $did->getDescription(),
                 'terminated' => true,
-                'pending_removal' => true,
+                'billing_cycles_count' => 0,
                 'dedicated_channels_count' => $did->getDedicatedChannelsCount(),
             ],
         ]);
 
         $did = $didDocument->getData();
 
-        $this->assertEquals($did->getPendingRemoval(), true);
+        $this->assertEquals($did->getBillingCyclesCount(), 0);
         $this->assertEquals($did->getTerminated(), true);
 
         $this->stopVCR();

@@ -8,7 +8,7 @@ class ReservationDid extends Did
 
     protected function getCreatableAttributesKeys()
     {
-        return ['did_reservation_id', 'sku_id'];
+        return $this->withOptionalKeys(['did_reservation_id', 'sku_id']);
     }
 
     public function setDidReservationId(string $uuid)
