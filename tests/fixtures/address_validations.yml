@@ -1,0 +1,80 @@
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/address_validations'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"address_validations","relationships":{"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"requirement":{"data":{"type":"requirements","id":"aea92b24-a044-4864-9740-89d3e15b65c7"}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Thu, 01 Apr 2021 15:00:59 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            ETag: 'W/"27688b14dc552d8c4a9572f2e004de1d"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: b0ef826c-4002-423d-8002-def916bdc265
+            X-Runtime: '0.036646'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, X-User-Agent, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"aea92b24-a044-4864-9740-89d3e15b65c7","type":"address_validations"},"meta":{"didww_api_version":"2021-03-22"}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/address_validations'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"address_validations","relationships":{"identity":{"data":{"type":"identities","id":"5e9df058-50d2-4e34-b0d4-d1746b86f41a"}},"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"requirement":{"data":{"type":"requirements","id":"2efc3427-8ba6-4d50-875d-f2de4a068de8"}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '422'
+            message: 'Unprocessable Entity'
+        headers:
+            Server: nginx
+            Date: 'Thu, 01 Apr 2021 15:01:04 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            Cache-Control: no-cache
+            X-Request-Id: 738898a4-96d6-405c-80fa-fdda1c2da06d
+            X-Runtime: '0.044491'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, X-User-Agent, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"errors":[{"title":"Identity Place of Birth must be Belgium","detail":"Identity Place of Birth must be Belgium","code":"100","source":{"pointer":"/data"},"status":"422"},{"title":"Following Supporting Document(s) required (Belgium Registration Form)","detail":"Following Supporting Document(s) required (Belgium Registration Form)","code":"100","source":{"pointer":"/data"},"status":"422"},{"title":"Address in Belgium required","detail":"Address in Belgium required","code":"100","source":{"pointer":"/data"},"status":"422"}]}'

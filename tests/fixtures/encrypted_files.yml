@@ -1,0 +1,73 @@
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/encrypted_files?page%5Bsize%5D=5&page%5Bnumber%5D=1'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Thu, 01 Apr 2021 14:53:29 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            ETag: 'W/"85afa2363aaf45ff9c49f92f2ed6aeea"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 32ff2580-f108-4b7d-993a-8432c255150c
+            X-Runtime: '0.033008'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, X-User-Agent, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":[{"id":"7f2fbdca-8008-44ce-bcb6-3537ea5efaac","type":"encrypted_files","attributes":{"description":"file.enc","expire_at":"2021-04-02T13:42:51.612Z"}}],"meta":{"total_records":1,"didww_api_version":"2021-03-22"},"links":{"first":"https://sandbox-api.didww.com/v3/encrypted_files?page%5Bnumber%5D=1&page%5Bsize%5D=5","last":"https://sandbox-api.didww.com/v3/encrypted_files?page%5Bnumber%5D=1&page%5Bsize%5D=5"}}'
+-
+    request:
+        method: DELETE
+        url: 'https://sandbox-api.didww.com/v3/encrypted_files/7f2fbdca-8008-44ce-bcb6-3537ea5efaac'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '204'
+            message: 'No Content'
+        headers:
+            Server: nginx
+            Date: 'Thu, 01 Apr 2021 14:54:10 GMT'
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            Cache-Control: no-cache
+            X-Request-Id: cbb26f9c-d7c2-405f-98e7-5e6064b659b1
+            X-Runtime: '0.063646'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, X-User-Agent, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'

@@ -1,0 +1,75 @@
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/permanent_supporting_documents?include=template'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"permanent_supporting_documents","relationships":{"identity":{"data":{"type":"identities","id":"5e9df058-50d2-4e34-b0d4-d1746b86f41a"}},"template":{"data":{"type":"supporting_document_templates","id":"4199435f-646e-4e9d-a143-8f3b972b10c5"}},"files":{"data":[{"type":"encrypted_files","id":"254b3c2d-c40c-4ff7-93b1-a677aee7fa10"}]}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Thu, 01 Apr 2021 15:02:01 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            ETag: 'W/"29636da294e7c58afecb7400e95dde5d"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 2a8a5170-5869-4153-a895-4d52264c79be
+            X-Runtime: '2.381665'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, X-User-Agent, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"19510da3-c07e-4fa9-a696-6b9ab89cc172","type":"permanent_supporting_documents","attributes":{"created_at":"2021-04-01T15:01:59.756Z"},"relationships":{"template":{"links":{"self":"https://sandbox-api.didww.com/v3/permanent_supporting_documents/19510da3-c07e-4fa9-a696-6b9ab89cc172/relationships/template","related":"https://sandbox-api.didww.com/v3/permanent_supporting_documents/19510da3-c07e-4fa9-a696-6b9ab89cc172/template"},"data":{"type":"supporting_document_templates","id":"4199435f-646e-4e9d-a143-8f3b972b10c5"}},"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/permanent_supporting_documents/19510da3-c07e-4fa9-a696-6b9ab89cc172/relationships/identity","related":"https://sandbox-api.didww.com/v3/permanent_supporting_documents/19510da3-c07e-4fa9-a696-6b9ab89cc172/identity"}}}},"included":[{"id":"4199435f-646e-4e9d-a143-8f3b972b10c5","type":"supporting_document_templates","attributes":{"name":"Germany Special Registration Form","permanent":true,"template_type":"Address","url":"https://sandbox-api.didww.com/storage/public/4rghqnqtba0fa7mbdgig086xej1e"}}],"meta":{"didww_api_version":"2021-03-22"}}'
+-
+    request:
+        method: DELETE
+        url: 'https://sandbox-api.didww.com/v3/permanent_supporting_documents/19510da3-c07e-4fa9-a696-6b9ab89cc172'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '204'
+            message: 'No Content'
+        headers:
+            Server: nginx
+            Date: 'Thu, 01 Apr 2021 15:03:35 GMT'
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            Cache-Control: no-cache
+            X-Request-Id: 258e5def-6b9d-4cb5-965c-722191504475
+            X-Runtime: '0.079932'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, X-User-Agent, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'

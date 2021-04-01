@@ -1,0 +1,39 @@
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/proof_types?page%5Bsize%5D=5&page%5Bnumber%5D=1'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Thu, 01 Apr 2021 14:53:13 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            ETag: 'W/"d4d6bd6ed4537df60e36be6f9485492f"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 58474156-f407-4716-b0d2-863b7a6b1cda
+            X-Runtime: '0.028339'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, X-User-Agent, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":[{"id":"ab1fb565-ac55-4c73-bc55-64dc61e70169","type":"proof_types","attributes":{"name":"Utility Bill","entity_type":"Address"}},{"id":"634aea96-43d9-49a2-bd4e-6e8e2ce4e5e9","type":"proof_types","attributes":{"name":"Rental Receipt","entity_type":"Address"}},{"id":"49f42cbd-d051-43e0-9d30-883e154bad0d","type":"proof_types","attributes":{"name":"Other","entity_type":"Address"}},{"id":"19cd7b22-559b-41d4-99c9-7ad7ad63d5d1","type":"proof_types","attributes":{"name":"Drivers License","entity_type":"Personal"}},{"id":"d2c1b3fb-29f7-46ca-ba82-b617f4630b78","type":"proof_types","attributes":{"name":"Copy of Phone Bill","entity_type":"Address"}}],"meta":{"total_records":17,"didww_api_version":"2021-03-22"},"links":{"first":"https://sandbox-api.didww.com/v3/proof_types?page%5Bnumber%5D=1&page%5Bsize%5D=5","next":"https://sandbox-api.didww.com/v3/proof_types?page%5Bnumber%5D=2&page%5Bsize%5D=5","last":"https://sandbox-api.didww.com/v3/proof_types?page%5Bnumber%5D=4&page%5Bsize%5D=5"}}'
