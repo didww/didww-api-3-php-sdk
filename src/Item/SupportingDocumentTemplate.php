@@ -39,4 +39,23 @@ class SupportingDocumentTemplate extends BaseItem
     {
         return parent::getAttributes();
     }
+
+    public function download($dest)
+    {
+        $options = [
+            CURLOPT_FILE => is_resource($dest) ? $dest : fopen($dest, 'w'),
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_URL => $this->getAttributes()['url'],
+            CURLOPT_VERBOSE => true,
+            CURLOPT_FAILONERROR => true, // HTTP code > 400 will throw curl error
+        ];
+        $ch = curl_init();
+        curl_setopt_array($ch, $options);
+        $return = curl_exec($ch);
+        if (false === $return) {
+            return curl_error($ch);
+        } else {
+            return true;
+        }
+    }
 }
