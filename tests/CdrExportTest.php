@@ -36,6 +36,8 @@ class CdrExportTest extends BaseTest
             'created_at' => '2019-01-02T10:23:00.897Z',
             'status' => 'Pending',
             'url' => null,
+            'callback_url' => null,
+            'callback_method' => null,
         ]);
 
         $this->stopVCR();
@@ -69,6 +71,8 @@ class CdrExportTest extends BaseTest
           'created_at' => '2019-01-02T10:23:00.897Z',
           'status' => 'Completed',
           'url' => 'https://sandbox-api.didww.com/v3/cdr_exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv',
+          'callback_url' => null,
+          'callback_method' => null,
         ]);
         $this->stopVCR();
     }

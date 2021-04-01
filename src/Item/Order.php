@@ -33,7 +33,7 @@ class Order extends BaseItem
         return $data;
     }
 
-    protected function getWhiteListAttributesKeys()
+    protected function getWhiteListAttributesKeys(): array
     {
         return [
          'allow_back_ordering',
@@ -107,5 +107,25 @@ class Order extends BaseItem
     public function setItems(array $items)
     {
         $this->attributes['items'] = $items;
+    }
+
+    public function getCallbackUrl(): string
+    {
+        return $this->attributes['callback_url'];
+    }
+
+    public function setCallbackUrl(string $callbackUrl)
+    {
+        $this->attributes['callback_url'] = $callbackUrl;
+    }
+
+    public function getCallbackMethod(): string
+    {
+        return $this->attributes['callback_method'];
+    }
+
+    public function setCallbackMethod(string $callbackMethod)
+    {
+        $this->attributes['callback_method'] = $callbackMethod;
     }
 }
