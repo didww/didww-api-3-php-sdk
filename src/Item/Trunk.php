@@ -108,7 +108,7 @@ class Trunk extends BaseItem
         return $this->configuration;
     }
 
-    public function setConfiguration(\Didww\Item\Configuration\Base $configuration)
+    public function setConfiguration(Configuration\Base $configuration)
     {
         $this->configuration = $configuration;
     }

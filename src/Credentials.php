@@ -23,12 +23,12 @@ class Credentials
         $this->env = $env;
     }
 
-    public function getEndpoint()
+    public function getEndpoint(): string
     {
         if ('production' == $this->getEnv()) {
             return 'https://api.didww.com/v3';
         } else {
-            return  'https://sandbox-api.didww.com/v3';
+            return 'https://sandbox-api.didww.com/v3';
         }
     }
 }

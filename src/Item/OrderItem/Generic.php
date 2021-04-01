@@ -8,7 +8,7 @@ class Generic extends Base
 
     protected function getCreatableAttributesKeys()
     {
-        return  [];
+        return [];
     }
 
     //todo: readonly: getType can't be called
