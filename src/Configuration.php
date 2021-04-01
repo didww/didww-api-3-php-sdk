@@ -46,8 +46,8 @@ class Configuration
             $jsonapiParser,
             $metaParser
         );
-        $resposeParser = new \Swis\JsonApi\Client\Parsers\ResponseParser($documentParser);
+        $responseParser = new \Swis\JsonApi\Client\Parsers\ResponseParser($documentParser);
 
-        self::$documentClient = new \Swis\JsonApi\Client\DocumentClient($client, $resposeParser);
+        self::$documentClient = new \Swis\JsonApi\Client\DocumentClient($client, $responseParser);
     }
 }
