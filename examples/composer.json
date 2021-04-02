@@ -1,6 +1,7 @@
 {
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
-        "didww/didww-api-3-php-sdk": "^2.0"
+        "didww/didww-api-3-php-sdk": "^2.0",
+        "phpseclib/phpseclib": "~3.0"
     }
 }
