@@ -1,0 +1,40 @@
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/public_keys'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Fri, 02 Apr 2021 11:15:13 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            ETag: 'W/"7f6046cb6f53866cff337cb82d4e62d3"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: e7407d7f-80dc-430d-9bb1-4fc24eba5111
+            X-Runtime: '0.006473'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: GET
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":[{"id":"dcf2bfcb-a1d0-3b58-bbf0-3ec22a510ba8","type":"public_keys","attributes":{"key":"-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAzIlvgCb5+0ROl4xj/6al\nBlsFq8r2ZzsBZTDbbwu1kTFmcbMHb8E+xK+8ICJitZeBMMLbIlnDKbNX7bvsHAHY\nHh3xbNlm1pDEHXwOFImRTNbzcrDj2fcD0+SaogHbP+FOEwfN3t/o8R7jOTgWo0mf\neNZVYoK0ksfqIridVV9QJTeV+ybdb+GfhD0tF9T69Ycvz9PPVXeXYBgoygE0mR6C\nuLLwXb2oNhFLDFPa2J1TKaDqQGBewTXJIewU1ux0Jr6Iaa520DGiofRI6UilErPK\n5OBBqPUqKvLkxvg/Igu7PMsrV1Sc1Hh9Ed/VVRheVZy9qW/ib4KdR+oiFB9Og043\nh6fBczS+0yjC2sngKvc/ROqosACTAgfogNZHDXj0/RZHUyEikn4ZEqUQM4M0Q8ZS\n5CV17cUrNbWU7K5E2sK+6iHVAeKq7Onaz4BeCxWuWIFiMtvfcTPTX1YThWYYkBw2\ni9azZZMyrBgBzAjcXogQUAR6U2GM/xx6wNH8eUnYjmWWhvXxzVBdQma1fEVLNF7t\n7FO4rBOyWD0uYpsW4e9xrQZaW+4yuciKpq1ExIzlh0cPt6ZtU6yzt2GnXGkoVvcB\nLfLsC1HKKpG9meJ1yigEM/Jm2xF12Ouvs3ob2X5xbg7DFN8174lp5UCx2TLU6F0f\n3NRMvvGwKilYOu3c6k9x3QECAwEAAQ==\n-----END PUBLIC KEY-----\n"}},{"id":"f40e1176-a4ff-36e6-b2ed-c2c2d18097a3","type":"public_keys","attributes":{"key":"-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAguKA6vGmocPM+d3a32FI\nNPWkygfDqvaTyifCfrha1jTtWpSmV81BrPlJYupAy9aR/RlIboOacpbxqIF/CRVJ\npsxn/AFgpRpC2USA/XkUivrSpUce/NALDSKStEA0s95MHRs3y7vWCiyvWVj3TZfS\njjJ4qZhy0ThI2b1JCdBOQlSWzaTO4ciEjzSB9mRgmfMtastPzsWMFJzKhXa0SrF1\ntKjmd5IiAxMAxb+FXKynItZgDPvv8Vx5uKZyjVg8maX4IhAq9lAypAEv4qNrZyYi\n7WhpI9M50Q+GNSgHwLZO2xPFEBH7FFd6jx7eoOuFVKuOykIClnhvjSP2Tz1Xpe6m\nAwIDAQAB\n-----END PUBLIC KEY-----\n"}}]}'
