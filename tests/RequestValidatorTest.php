@@ -52,7 +52,6 @@ class RequestValidatorTest extends BaseTest
         ));
     }
 
-
     public function testInvalidSignatureRequest()
     {
         $apiKey = 'SOMEAPIKEY';

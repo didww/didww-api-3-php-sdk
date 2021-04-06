@@ -2,8 +2,6 @@
 
 namespace Didww\Tests;
 
-use Didww\Encrypt;
-
 class EncryptedFileTest extends BaseTest
 {
     public function testAllWithPagination()

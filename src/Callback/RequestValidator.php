@@ -64,7 +64,6 @@ class RequestValidator
 
         $host = $parsedUrl['host'];
 
-
         if (array_key_exists('port', $parsedUrl)) {
             $port = $parsedUrl['port'];
         } elseif ('https' == $scheme) {
