@@ -27,6 +27,10 @@ class Configuration
         $client = new Client($httpClient);
         $client->setBaseUri($credentials->getEndpoint());
         $client->setApiKey($credentials->getApiKey());
+        $version = $credentials->getVersion();
+        if (null != $version) {
+            $client->setVersion($version);
+        }
 
         $typeMapper = new TypeMapper();
         $typeMapper->registerItems();

@@ -6,6 +6,7 @@ class Credentials
 {
     private $apiKey;
     private $env;
+    private $version;
 
     public function getEnv()
     {
@@ -17,10 +18,16 @@ class Credentials
         return $this->apiKey;
     }
 
-    public function __construct($apiKey, $env)
+    public function getVersion(): ?string
+    {
+        return $this->version;
+    }
+
+    public function __construct($apiKey, $env, ?string $version = null)
     {
         $this->apiKey = $apiKey;
         $this->env = $env;
+        $this->version = $version;
     }
 
     public function getEndpoint(): string
