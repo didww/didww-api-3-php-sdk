@@ -34,7 +34,7 @@ class CdrExport extends BaseItem
         return $data;
     }
 
-    public function getCallbackUrl(): string
+    public function getCallbackUrl(): ?string
     {
         return $this->attributes['callback_url'];
     }
@@ -44,7 +44,7 @@ class CdrExport extends BaseItem
         $this->attributes['callback_url'] = $callbackUrl;
     }
 
-    public function getCallbackMethod(): string
+    public function getCallbackMethod(): ?string
     {
         return $this->attributes['callback_method'];
     }

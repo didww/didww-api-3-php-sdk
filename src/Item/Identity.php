@@ -40,7 +40,7 @@ class Identity extends BaseItem
         $this->attributes['phone_number'] = $phoneNumber;
     }
 
-    public function getIdNumber(): string
+    public function getIdNumber(): ?string
     {
         return $this->attributes['id_number'];
     }
@@ -50,7 +50,7 @@ class Identity extends BaseItem
         $this->attributes['id_number'] = $idNumber;
     }
 
-    public function getBirthDate(): \DateTime
+    public function getBirthDate(): ?\DateTime
     {
         return new \DateTime($this->attributes['birth_date']);
     }
@@ -60,7 +60,7 @@ class Identity extends BaseItem
         $this->attributes['birth_date'] = $birthDate;
     }
 
-    public function getCompanyName(): string
+    public function getCompanyName(): ?string
     {
         return $this->attributes['company_name'];
     }
@@ -70,7 +70,7 @@ class Identity extends BaseItem
         $this->attributes['company_name'] = $companyName;
     }
 
-    public function getCompanyRegNumber(): string
+    public function getCompanyRegNumber(): ?string
     {
         return $this->attributes['company_reg_number'];
     }
@@ -80,7 +80,7 @@ class Identity extends BaseItem
         $this->attributes['company_reg_number'] = $companyRegNumber;
     }
 
-    public function getVatId(): string
+    public function getVatId(): ?string
     {
         return $this->attributes['vat_id'];
     }
@@ -90,7 +90,7 @@ class Identity extends BaseItem
         $this->attributes['vat_id'] = $vatId;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->attributes['description'];
     }
@@ -100,7 +100,7 @@ class Identity extends BaseItem
         $this->attributes['description'] = $description;
     }
 
-    public function getPersonalTaxId(): string
+    public function getPersonalTaxId(): ?string
     {
         return $this->attributes['personal_tax_id'];
     }
@@ -120,7 +120,7 @@ class Identity extends BaseItem
         $this->attributes['identity_type'] = $identityType;
     }
 
-    public function getExternalReferenceId(): string
+    public function getExternalReferenceId(): ?string
     {
         return $this->attributes['external_reference_id'];
     }

@@ -25,7 +25,7 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
         return $repository;
     }
 
-    public static function getEndpoint()
+    public static function getEndpoint(): string
     {
         return '/'.Str::snake(Str::plural(substr(get_called_class(), strrpos(get_called_class(), '\\') + 1)));
     }

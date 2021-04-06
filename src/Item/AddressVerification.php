@@ -9,7 +9,7 @@ class AddressVerification extends BaseItem
 
     protected $type = 'address_verifications';
 
-    public function getServiceDescription(): string
+    public function getServiceDescription(): ?string
     {
         return $this->attributes['service_description'];
     }
@@ -19,7 +19,7 @@ class AddressVerification extends BaseItem
         $this->attributes['service_description'] = $serviceDescription;
     }
 
-    public function getCallbackUrl(): string
+    public function getCallbackUrl(): ?string
     {
         return $this->attributes['callback_url'];
     }
@@ -29,7 +29,7 @@ class AddressVerification extends BaseItem
         $this->attributes['callback_url'] = $callbackUrl;
     }
 
-    public function getCallbackMethod(): string
+    public function getCallbackMethod(): ?string
     {
         return $this->attributes['callback_method'];
     }
@@ -44,7 +44,7 @@ class AddressVerification extends BaseItem
         return $this->attributes['status'];
     }
 
-    public function getRejectReasons(): string
+    public function getRejectReasons(): ?string
     {
         return $this->attributes['reject_reasons'];
     }
@@ -56,11 +56,11 @@ class AddressVerification extends BaseItem
 
     /** @return array [
      * ]
-     * 'service_description' => string
-     * 'callback_url' => string
-     * 'callback_method' => string
+     * 'service_description' => string or null
+     * 'callback_url' => string or null
+     * 'callback_method' => string or null
      * 'status' => string
-     * 'reject_reasons' => string
+     * 'reject_reasons' => string or null
      * 'created_at' => string // creation timestamp
      */
     public function getAttributes(): array

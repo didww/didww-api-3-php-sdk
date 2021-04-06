@@ -14,7 +14,7 @@ class Proof extends BaseItem
         return new \DateTime($this->attributes['created_at']);
     }
 
-    public function getExpiresAt(): \DateTime
+    public function getExpiresAt(): ?\DateTime
     {
         return new \DateTime($this->attributes['expires_at']);
     }
@@ -22,7 +22,7 @@ class Proof extends BaseItem
     /** @return array [
      * ]
      * 'created_at' => string // creation timestamp
-     * 'expires_at' => string // creation timestamp
+     * 'expires_at' => string or null // expiration timestamp
      */
     public function getAttributes(): array
     {
