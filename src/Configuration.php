@@ -50,4 +50,14 @@ class Configuration
 
         self::$documentClient = new \Swis\JsonApi\Client\DocumentClient($client, $responseParser);
     }
+
+    public static function getApiKey(): string
+    {
+        return self::$credentials->getApiKey();
+    }
+
+    public static function getBaseUri(): string
+    {
+        return self::getDocumentClient()->getBaseUri();
+    }
 }

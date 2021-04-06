@@ -26,7 +26,7 @@ abstract class BaseTest extends \PHPUnit\Framework\TestCase
         \VCR\VCR::turnOff();
     }
 
-    protected function getDidwwCredentials()
+    protected function getDidwwCredentials(): \Didww\Credentials
     {
         return new \Didww\Credentials('PLACEYOURAPIKEYHERE', 'sandbox');
     }
