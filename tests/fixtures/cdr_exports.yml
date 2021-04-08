@@ -37,7 +37,7 @@
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"da15f006-5da4-45ca-b0df-735baeadf423","type":"cdr_exports","attributes":{"filters":{"did_number":"1234556789","year":"2019","month":"01"},"status":"Pending","created_at":"2019-01-02T10:23:00.897Z","url":null}}}'
+        body: '{"data":{"id":"da15f006-5da4-45ca-b0df-735baeadf423","type":"cdr_exports","attributes":{"filters":{"did_number":"1234556789","year":"2019","month":"01"},"status":"Pending","created_at":"2019-01-02T10:23:00.897Z","url":null,"callback_url":null,"callback_method":null}}}'
 
 -
     request:
@@ -75,7 +75,7 @@
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":[{"id":"da15f006-5da4-45ca-b0df-735baeadf423","type":"cdr_exports","attributes":{"filters":{"did_number":"1234556789","year":"2019","month":"01"},"status":"Completed","created_at":"2019-01-02T10:23:00.897Z","url":"https://sandbox-api.didww.com/v3/cdr_exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv"}}],"meta":{"total_records":1},"links":{"first":"https://sandbox-api.didww.com/v3/cdr_exports?page%5Bnumber%5D=1&page%5Bsize%5D=50","last":"https://sandbox-api.didww.com/v3/cdr_exports?page%5Bnumber%5D=1&page%5Bsize%5D=50"}}'
+        body: '{"data":[{"id":"da15f006-5da4-45ca-b0df-735baeadf423","type":"cdr_exports","attributes":{"filters":{"did_number":"1234556789","year":"2019","month":"01"},"status":"Completed","created_at":"2019-01-02T10:23:00.897Z","url":"https://sandbox-api.didww.com/v3/cdr_exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv","callback_url":null,"callback_method":null}}],"meta":{"total_records":1},"links":{"first":"https://sandbox-api.didww.com/v3/cdr_exports?page%5Bnumber%5D=1&page%5Bsize%5D=50","last":"https://sandbox-api.didww.com/v3/cdr_exports?page%5Bnumber%5D=1&page%5Bsize%5D=50"}}'
 
 -
     request:
@@ -113,7 +113,7 @@
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"da15f006-5da4-45ca-b0df-735baeadf423","type":"cdr_exports","attributes":{"filters":{"did_number":"1234556789","year":"2019","month":"01"},"status":"Completed","created_at":"2019-01-02T10:23:00.897Z","url":"https://sandbox-api.didww.com/v3/cdr_exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv"}}}'
+        body: '{"data":{"id":"da15f006-5da4-45ca-b0df-735baeadf423","type":"cdr_exports","attributes":{"filters":{"did_number":"1234556789","year":"2019","month":"01"},"status":"Completed","created_at":"2019-01-02T10:23:00.897Z","url":"https://sandbox-api.didww.com/v3/cdr_exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv","callback_url":null,"callback_method":null}}}'
 
 -
     request:

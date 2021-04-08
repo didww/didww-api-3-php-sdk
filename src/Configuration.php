@@ -27,6 +27,10 @@ class Configuration
         $client = new Client($httpClient);
         $client->setBaseUri($credentials->getEndpoint());
         $client->setApiKey($credentials->getApiKey());
+        $version = $credentials->getVersion();
+        if (null != $version) {
+            $client->setVersion($version);
+        }
 
         $typeMapper = new TypeMapper();
         $typeMapper->registerItems();
@@ -46,8 +50,18 @@ class Configuration
             $jsonapiParser,
             $metaParser
         );
-        $resposeParser = new \Swis\JsonApi\Client\Parsers\ResponseParser($documentParser);
+        $responseParser = new \Swis\JsonApi\Client\Parsers\ResponseParser($documentParser);
 
-        self::$documentClient = new \Swis\JsonApi\Client\DocumentClient($client, $resposeParser);
+        self::$documentClient = new \Swis\JsonApi\Client\DocumentClient($client, $responseParser);
+    }
+
+    public static function getApiKey(): string
+    {
+        return self::$credentials->getApiKey();
+    }
+
+    public static function getBaseUri(): string
+    {
+        return self::getDocumentClient()->getBaseUri();
     }
 }

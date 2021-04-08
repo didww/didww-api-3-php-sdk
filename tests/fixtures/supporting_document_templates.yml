@@ -1,0 +1,39 @@
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/supporting_document_templates?page%5Bsize%5D=5&page%5Bnumber%5D=1'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Thu, 01 Apr 2021 14:52:47 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            ETag: 'W/"6647c37661b102002dbc2bc798478a5a"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 22fca245-ac6c-4006-b74e-7c203b6b2026
+            X-Runtime: '0.120325'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, X-User-Agent, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":[{"id":"206ccec2-1166-461f-9f58-3a56823db548","type":"supporting_document_templates","attributes":{"name":"Generic LOI","permanent":false,"template_type":"Address","url":"https://sandbox-api.didww.com/storage/public/w7f2irbo819la7vd7up7u67pkmkn"}},{"id":"fd38c86d-b69b-4ca8-b73c-286a3b93d107","type":"supporting_document_templates","attributes":{"name":"Belgium Registration Form","permanent":true,"template_type":"Address","url":"https://sandbox-api.didww.com/storage/public/e8lziulj68xetfa5ed6na3g7q7ra"}},{"id":"4199435f-646e-4e9d-a143-8f3b972b10c5","type":"supporting_document_templates","attributes":{"name":"Germany Special Registration Form","permanent":true,"template_type":"Address","url":"https://sandbox-api.didww.com/storage/public/4rghqnqtba0fa7mbdgig086xej1e"}},{"id":"94be4d74-c968-4d81-91c5-2d11b4e45328","type":"supporting_document_templates","attributes":{"name":"LOI Example","permanent":false,"template_type":"Address","url":"https://sandbox-api.didww.com/storage/public/xptvgb8derrz0ru95wr9oi68g9tg"}},{"id":"eb810289-8620-44e1-982d-13e6cee70404","type":"supporting_document_templates","attributes":{"name":"TestPermanDoc","permanent":true,"template_type":"Address","url":"https://sandbox-api.didww.com/storage/public/owwqi77007ks4qx198b7su3eukg6"}}],"meta":{"total_records":30,"didww_api_version":"2021-03-22"},"links":{"first":"https://sandbox-api.didww.com/v3/supporting_document_templates?page%5Bnumber%5D=1&page%5Bsize%5D=5","next":"https://sandbox-api.didww.com/v3/supporting_document_templates?page%5Bnumber%5D=2&page%5Bsize%5D=5","last":"https://sandbox-api.didww.com/v3/supporting_document_templates?page%5Bnumber%5D=6&page%5Bsize%5D=5"}}'

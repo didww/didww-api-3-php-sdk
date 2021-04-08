@@ -1,0 +1,75 @@
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/proofs?include=proof_type'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"proofs","relationships":{"entity":{"data":{"type":"identities","id":"5e9df058-50d2-4e34-b0d4-d1746b86f41a"}},"proof_type":{"data":{"type":"proof_types","id":"19cd7b22-559b-41d4-99c9-7ad7ad63d5d1"}},"files":{"data":[{"type":"encrypted_files","id":"254b3c2d-c40c-4ff7-93b1-a677aee7fa10"}]}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Thu, 01 Apr 2021 15:03:51 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            ETag: 'W/"8ebfa956b428922d58d88727b7a87082"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 5d4593ae-8129-441b-9bed-7b76c15aa878
+            X-Runtime: '2.576605'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, X-User-Agent, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"ed46925b-a830-482d-917d-015858cf7ab9","type":"proofs","attributes":{"created_at":"2021-04-01T15:03:49.672Z","expires_at":null},"relationships":{"proof_type":{"links":{"self":"https://sandbox-api.didww.com/v3/proofs/ed46925b-a830-482d-917d-015858cf7ab9/relationships/proof_type","related":"https://sandbox-api.didww.com/v3/proofs/ed46925b-a830-482d-917d-015858cf7ab9/proof_type"},"data":{"type":"proof_types","id":"19cd7b22-559b-41d4-99c9-7ad7ad63d5d1"}},"entity":{"links":{"self":"https://sandbox-api.didww.com/v3/proofs/ed46925b-a830-482d-917d-015858cf7ab9/relationships/entity","related":"https://sandbox-api.didww.com/v3/proofs/ed46925b-a830-482d-917d-015858cf7ab9/entity"}}}},"included":[{"id":"19cd7b22-559b-41d4-99c9-7ad7ad63d5d1","type":"proof_types","attributes":{"name":"Drivers License","entity_type":"Personal"}}],"meta":{"didww_api_version":"2021-03-22"}}'
+-
+    request:
+        method: DELETE
+        url: 'https://sandbox-api.didww.com/v3/proofs/ed46925b-a830-482d-917d-015858cf7ab9'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '204'
+            message: 'No Content'
+        headers:
+            Server: nginx
+            Date: 'Thu, 01 Apr 2021 15:04:15 GMT'
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: [Accept, Origin]
+            Cache-Control: no-cache
+            X-Request-Id: e9a0a4fb-a3ed-4c01-88df-e11eedba9526
+            X-Runtime: '0.105107'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, X-User-Agent, Cache-Control'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'

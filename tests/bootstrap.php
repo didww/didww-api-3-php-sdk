@@ -3,7 +3,7 @@
 require_once __DIR__.'/../vendor/autoload.php';
 // We want to compare all headers except for the User-Agent because it's based
 // on the local php and curl versions which can change.
-\VCR\VCR::configure()->addRequestMatcher('custom_headers', function (\VCR\Request $first, \VCR\Request $second) {
+\VCR\VCR::configure()->addRequestMatcher('custom_headers', function (VCR\Request $first, VCR\Request $second) {
     $firstHeaders = $first->getHeaders();
     $secondHeaders = $second->getHeaders();
     unset($firstHeaders['User-Agent']);

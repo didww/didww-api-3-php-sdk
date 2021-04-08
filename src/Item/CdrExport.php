@@ -34,6 +34,26 @@ class CdrExport extends BaseItem
         return $data;
     }
 
+    public function getCallbackUrl(): ?string
+    {
+        return $this->attributes['callback_url'];
+    }
+
+    public function setCallbackUrl(string $callbackUrl)
+    {
+        $this->attributes['callback_url'] = $callbackUrl;
+    }
+
+    public function getCallbackMethod(): ?string
+    {
+        return $this->attributes['callback_method'];
+    }
+
+    public function setCallbackMethod(string $callbackMethod)
+    {
+        $this->attributes['callback_method'] = $callbackMethod;
+    }
+
     public function download($dest)
     {
         $apiKey = \Didww\Configuration::getCredentials()->getApiKey();
@@ -56,7 +76,7 @@ class CdrExport extends BaseItem
         }
     }
 
-    protected function getWhiteListAttributesKeys()
+    protected function getWhiteListAttributesKeys(): array
     {
         return [
          'filters',
