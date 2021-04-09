@@ -13,20 +13,12 @@ class Encrypt
     {
         $aesKey = openssl_random_pseudo_bytes(32); // 256 bits => 32 bytes
         $aesIV = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
-        $salt = openssl_random_pseudo_bytes(16); // 16 bytes salt
-        $dataUriBinary = 'data:application/octet-stream;base64,'.base64_encode($binary);
-
-        $encrypted_aes = openssl_encrypt($dataUriBinary, 'aes-256-cbc', $aesKey, OPENSSL_RAW_DATA, $aesIV);
-
-        $aes_credentials = bin2hex($aesKey).':::'.bin2hex($aesIV);
+        $encrypted_aes = openssl_encrypt($binary, 'aes-256-cbc', $aesKey, OPENSSL_RAW_DATA, $aesIV);
+        $aes_credentials = $aesKey.$aesIV;
         $encrypted_rsa_a = Encrypt::encryptRsaOaep($publicKeys[0], $aes_credentials);
         $encrypted_rsa_b = Encrypt::encryptRsaOaep($publicKeys[1], $aes_credentials);
 
-        return join(':::', [
-            base64_encode($encrypted_rsa_a),
-            base64_encode($encrypted_rsa_b),
-            base64_encode($salt.$encrypted_aes),
-        ]);
+        return $encrypted_rsa_a.$encrypted_rsa_b.$encrypted_aes;
     }
 
     public static function calculateFingerprint(array $publicKeys): string
@@ -46,13 +38,13 @@ class Encrypt
         return bin2hex($digest);
     }
 
-    private static function encryptRsaOaep(string $publicKey, string $text): string
+    private static function encryptRsaOaep(string $publicKey, string $binary): string
     {
         $rsa = \phpseclib3\Crypt\PublicKeyLoader::load($publicKey)
             ->withHash('sha256')
             ->withMGFHash('sha256');
 
-        return $rsa->encrypt($text);
+        return $rsa->encrypt($binary);
     }
 
     private static function normalizePublicKey($publicKey): string
@@ -67,12 +59,7 @@ class Encrypt
 
     public function __construct()
     {
-        $publicKeysData = PublicKey::all()->getData();
-        $this->publicKeys = [
-            $publicKeysData[0]->getKey(),
-            $publicKeysData[1]->getKey(),
-        ];
-        $this->fingerprint = Encrypt::calculateFingerprint($this->publicKeys);
+        $this->reset();
     }
 
     public function encrypt(string $binary): string
@@ -88,5 +75,15 @@ class Encrypt
     public function getFingerprint(): string
     {
         return $this->fingerprint;
+    }
+
+    public function reset()
+    {
+        $publicKeysData = PublicKey::all()->getData();
+        $this->publicKeys = [
+            $publicKeysData[0]->getKey(),
+            $publicKeysData[1]->getKey(),
+        ];
+        $this->fingerprint = Encrypt::calculateFingerprint($this->publicKeys);
     }
 }
