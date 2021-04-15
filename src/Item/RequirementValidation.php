@@ -2,11 +2,11 @@
 
 namespace Didww\Item;
 
-class AddressValidation extends BaseItem
+class RequirementValidation extends BaseItem
 {
     use \Didww\Traits\Saveable;
 
-    protected $type = 'address_validations';
+    protected $type = 'requirement_validations';
 
     public function requirement()
     {

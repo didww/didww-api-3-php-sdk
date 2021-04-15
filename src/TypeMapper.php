@@ -25,7 +25,7 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('qty_based_pricings', Item\QtyBasedPricing::class);
         $this->setMapping('cdr_exports', Item\CdrExport::class);
         $this->setMapping('addresses', Item\Address::class);
-        $this->setMapping('address_validations', Item\AddressValidation::class);
+        $this->setMapping('requirement_validations', Item\RequirementValidation::class);
         $this->setMapping('address_verifications', Item\AddressVerification::class);
         $this->setMapping('encrypted_files', Item\EncryptedFile::class);
         $this->setMapping('identities', Item\Identity::class);

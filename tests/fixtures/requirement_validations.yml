@@ -2,7 +2,7 @@
 -
     request:
         method: POST
-        url: 'https://sandbox-api.didww.com/v3/address_validations'
+        url: 'https://sandbox-api.didww.com/v3/requirement_validations'
         headers:
             Host: sandbox-api.didww.com
             Expect: null
@@ -11,7 +11,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"address_validations","relationships":{"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"requirement":{"data":{"type":"requirements","id":"aea92b24-a044-4864-9740-89d3e15b65c7"}}}}}'
+        body: '{"data":{"type":"requirement_validations","relationships":{"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"requirement":{"data":{"type":"requirements","id":"aea92b24-a044-4864-9740-89d3e15b65c7"}}}}}'
     response:
         status:
             http_version: '1.1'
@@ -38,11 +38,11 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"aea92b24-a044-4864-9740-89d3e15b65c7","type":"address_validations"},"meta":{"didww_api_version":"2021-03-22"}}'
+        body: '{"data":{"id":"aea92b24-a044-4864-9740-89d3e15b65c7","type":"requirement_validations"},"meta":{"didww_api_version":"2021-03-22"}}'
 -
     request:
         method: POST
-        url: 'https://sandbox-api.didww.com/v3/address_validations'
+        url: 'https://sandbox-api.didww.com/v3/requirement_validations'
         headers:
             Host: sandbox-api.didww.com
             Expect: null
@@ -51,7 +51,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"address_validations","relationships":{"identity":{"data":{"type":"identities","id":"5e9df058-50d2-4e34-b0d4-d1746b86f41a"}},"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"requirement":{"data":{"type":"requirements","id":"2efc3427-8ba6-4d50-875d-f2de4a068de8"}}}}}'
+        body: '{"data":{"type":"requirement_validations","relationships":{"identity":{"data":{"type":"identities","id":"5e9df058-50d2-4e34-b0d4-d1746b86f41a"}},"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"requirement":{"data":{"type":"requirements","id":"2efc3427-8ba6-4d50-875d-f2de4a068de8"}}}}}'
     response:
         status:
             http_version: '1.1'

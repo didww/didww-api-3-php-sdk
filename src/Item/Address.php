@@ -55,6 +55,11 @@ class Address extends BaseItem
         return new \DateTime($this->attributes['created_at']);
     }
 
+    public function getVerified(): bool
+    {
+        return $this->attributes['verified'];
+    }
+
     /** @return array [
      * ]
      * 'city_name' => string
@@ -62,6 +67,7 @@ class Address extends BaseItem
      * 'address' => string
      * 'description' => string // custom description
      * 'created_at' => string // creation timestamp
+     * 'verified' => bool
      */
     public function getAttributes(): array
     {

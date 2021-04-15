@@ -18,11 +18,6 @@ class SupportingDocumentTemplate extends BaseItem
         return $this->attributes['permanent'];
     }
 
-    public function getTemplateType(): string
-    {
-        return $this->attributes['template_type'];
-    }
-
     public function getUrl(): string
     {
         return $this->attributes['url'];
@@ -32,7 +27,6 @@ class SupportingDocumentTemplate extends BaseItem
      * ]
      * 'name' => string // friendly name
      * 'permanent' => bool // if true than should be used as identity permanent document template, otherwise false
-     * 'template_type' => string // 'Address' or 'Porting'
      * 'url' => string // public URL for downloading document form
      */
     public function getAttributes(): array

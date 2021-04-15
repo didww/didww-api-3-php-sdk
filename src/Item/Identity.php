@@ -135,6 +135,11 @@ class Identity extends BaseItem
         return new \DateTime($this->attributes['created_at']);
     }
 
+    public function getVerified(): bool
+    {
+        return $this->attributes['verified'];
+    }
+
     /** @return array [
      * ]
      * 'first_name' => string
@@ -150,6 +155,7 @@ class Identity extends BaseItem
      * 'identity_type' => string // 'Personal' or 'Business'
      * 'created_at' => string // creation timestamp
      * 'external_reference_id' => string // custom identifier
+     * 'verified' => bool
      */
     public function getAttributes(): array
     {
