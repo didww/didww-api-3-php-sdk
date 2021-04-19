@@ -17,4 +17,9 @@ class City extends BaseItem
     {
         return $this->hasOne(Region::class);
     }
+
+    public function area()
+    {
+        return $this->hasOne(Area::class);
+    }
 }
