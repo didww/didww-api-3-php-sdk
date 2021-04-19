@@ -99,6 +99,16 @@ class Address extends BaseItem
         return $this->hasMany(Proof::class);
     }
 
+    public function area()
+    {
+        return $this->hasOne(Area::class);
+    }
+
+    public function city()
+    {
+        return $this->hasOne(City::class);
+    }
+
     protected function getWhiteListAttributesKeys(): array
     {
         return [

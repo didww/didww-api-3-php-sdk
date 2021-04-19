@@ -35,5 +35,6 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('requirements', Item\Requirement::class);
         $this->setMapping('supporting_document_templates', Item\SupportingDocumentTemplate::class);
         $this->setMapping('public_keys', Item\PublicKey::class);
+        $this->setMapping('areas', Item\Area::class);
     }
 }

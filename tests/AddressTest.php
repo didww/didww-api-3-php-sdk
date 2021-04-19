@@ -9,7 +9,7 @@ class AddressTest extends BaseTest
         $this->startVCR('addresses.yml');
         $addressesDocument = \Didww\Item\Address::all(
             [
-                'include' => 'country,identity,proofs',
+                'include' => 'country,identity,proofs,area,city',
                 'page' => ['size' => 5, 'number' => 1],
             ]
         );
@@ -19,7 +19,13 @@ class AddressTest extends BaseTest
         $country = $addresses[0]->country()->getIncluded();
         $this->assertInstanceOf('Didww\Item\Country', $country);
 
-        $this->assertEquals(2, $addressesDocument->getMeta()['total_records']);
+        $area = $addresses[0]->area()->getIncluded();
+        $this->assertEquals(null, $area);
+
+        $city = $addresses[0]->city()->getIncluded();
+        $this->assertEquals(null, $city);
+
+        $this->assertEquals(1, $addressesDocument->getMeta()['total_records']);
         $this->stopVCR();
     }
 
