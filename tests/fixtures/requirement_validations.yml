@@ -38,7 +38,7 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"aea92b24-a044-4864-9740-89d3e15b65c7","type":"requirement_validations"},"meta":{"didww_api_version":"2021-03-22"}}'
+        body: '{"data":{"id":"aea92b24-a044-4864-9740-89d3e15b65c7","type":"requirement_validations"},"meta":{"api_version":"2021-04-19"}}'
 -
     request:
         method: POST

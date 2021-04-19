@@ -36,7 +36,7 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":[{"id":"7f2fbdca-8008-44ce-bcb6-3537ea5efaac","type":"encrypted_files","attributes":{"description":"file.enc","expire_at":"2021-04-02T13:42:51.612Z"}}],"meta":{"total_records":1,"didww_api_version":"2021-03-22"},"links":{"first":"https://sandbox-api.didww.com/v3/encrypted_files?page%5Bnumber%5D=1&page%5Bsize%5D=5","last":"https://sandbox-api.didww.com/v3/encrypted_files?page%5Bnumber%5D=1&page%5Bsize%5D=5"}}'
+        body: '{"data":[{"id":"7f2fbdca-8008-44ce-bcb6-3537ea5efaac","type":"encrypted_files","attributes":{"description":"file.enc","expire_at":"2021-04-02T13:42:51.612Z"}}],"meta":{"total_records":1,"api_version":"2021-04-19"},"links":{"first":"https://sandbox-api.didww.com/v3/encrypted_files?page%5Bnumber%5D=1&page%5Bsize%5D=5","last":"https://sandbox-api.didww.com/v3/encrypted_files?page%5Bnumber%5D=1&page%5Bsize%5D=5"}}'
 -
     request:
         method: DELETE
@@ -144,7 +144,7 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"6eed102c-66a9-4a9b-a95f-4312d70ec12a","type":"encrypted_files","attributes":{"description":"some description","expire_at":"2021-04-06T16:38:34.396Z"}},"meta":{"didww_api_version":"2021-03-22"}}'
+        body: '{"data":{"id":"6eed102c-66a9-4a9b-a95f-4312d70ec12a","type":"encrypted_files","attributes":{"description":"some description","expire_at":"2021-04-06T16:38:34.396Z"}},"meta":{"api_version":"2021-04-19"}}'
 -
     request:
         method: GET
@@ -182,4 +182,4 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"371eafbd-ac6a-485c-aadf-9e3c5da37eb4","type":"encrypted_files","attributes":{"description":null,"expire_at":"2021-04-06T16:38:34.437Z"}},"meta":{"didww_api_version":"2021-03-22"}}'
+        body: '{"data":{"id":"371eafbd-ac6a-485c-aadf-9e3c5da37eb4","type":"encrypted_files","attributes":{"description":null,"expire_at":"2021-04-06T16:38:34.437Z"}},"meta":{"api_version":"2021-04-19"}}'
