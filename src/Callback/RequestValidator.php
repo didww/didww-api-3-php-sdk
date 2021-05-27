@@ -36,7 +36,7 @@ class RequestValidator
     private function validSignature(string $url, array $payload): string
     {
         $sortedPayload = $payload;
-        asort($sortedPayload);
+        ksort($sortedPayload);
         $data = $this->normalizeUrl($url);
         foreach ($sortedPayload as $key => $value) {
             $data .= $key.$value;
