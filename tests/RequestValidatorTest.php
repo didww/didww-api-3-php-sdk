@@ -4,6 +4,24 @@ namespace Didww\Tests;
 
 class RequestValidatorTest extends BaseTest
 {
+    public function testSandbox()
+    {
+        $apiKey = 'SOMEAPIKEY';
+        $signature = '18050028b6b22d0ed516706fba1c1af8d6a8f9d5';
+        $validator = new \Didww\Callback\RequestValidator($apiKey);
+        $url = 'http://example.com/callback.php?id=7ae7c48f-d48a-499f-9dc1-c9217014b457&reject_reason=&status=approved&type=address_verifications';
+        $this->assertTrue($validator->validate(
+            $url,
+            [
+                'status' => 'approved',
+                'id' => '7ae7c48f-d48a-499f-9dc1-c9217014b457',
+                'type' => 'address_verifications',
+                'reject_reason' => '',
+            ],
+            $signature
+        ));
+    }
+
     public function testValidRequest()
     {
         $apiKey = 'SOMEAPIKEY';
