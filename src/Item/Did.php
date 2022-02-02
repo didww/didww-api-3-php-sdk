@@ -94,14 +94,14 @@ class Did extends BaseItem
         return $this->hasOne(DidGroup::class);
     }
 
-    public function trunk()
+    public function voiceInTrunk()
     {
-        return $this->hasOne(Trunk::class);
+        return $this->hasOne(VoiceInTrunk::class);
     }
 
-    public function trunkGroup()
+    public function voiceInTrunkGroup()
     {
-        return $this->hasOne(TrunkGroup::class);
+        return $this->hasOne(VoiceInTrunkGroup::class);
     }
 
     public function capacityPool()
@@ -114,16 +114,16 @@ class Did extends BaseItem
         return $this->hasOne(SharedCapacityGroup::class);
     }
 
-    public function setTrunkGroup(TrunkGroup $trunkGroup)
+    public function setVoiceInTrunkGroup(VoiceInTrunkGroup $voiceInTrunkGroup)
     {
-        $this->trunkGroup()->associate($trunkGroup);
-        $this->trunk()->dissociate();
+        $this->voiceInTrunkGroup()->associate($voiceInTrunkGroup);
+        $this->voiceInTrunk()->dissociate();
     }
 
-    public function setTrunk(Trunk $trunk)
+    public function setVoiceInTrunk(VoiceInTrunk $voiceInTrunk)
     {
-        $this->trunk()->associate($trunk);
-        $this->trunkGroup()->dissociate();
+        $this->voiceInTrunk()->associate($voiceInTrunk);
+        $this->voiceInTrunkGroup()->dissociate();
     }
 
     public function setCapacityPool(CapacityPool $capacityPool)

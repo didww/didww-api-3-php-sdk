@@ -2,13 +2,13 @@
 
 namespace Didww\Item;
 
-class Trunk extends BaseItem
+class VoiceInTrunk extends BaseItem
 {
     use \Didww\Traits\Fetchable;
     use \Didww\Traits\Saveable;
     use \Didww\Traits\Deletable;
 
-    protected $type = 'trunks';
+    protected $type = 'voice_in_trunks';
 
     public function getPriority(): int
     {
@@ -47,7 +47,7 @@ class Trunk extends BaseItem
 
     public function setCliPrefix(string $cliPrefix)
     {
-        $this->attributes['cli_prefix'] = $cliFormat;
+        $this->attributes['cli_prefix'] = $cliPrefix;
     }
 
     public function setDescription(string $description)
@@ -118,9 +118,9 @@ class Trunk extends BaseItem
         return $this->hasOne(Pop::class);
     }
 
-    public function trunkGroup()
+    public function voiceInTrunkGroup()
     {
-        return $this->hasOne(TrunkGroup::class);
+        return $this->hasOne(VoiceInTrunkGroup::class);
     }
 
     public static function configurationFactory(string $type)
@@ -130,9 +130,9 @@ class Trunk extends BaseItem
         return new $class();
     }
 
-    public function setTrunkGroup(TrunkGroup $trunkGroup)
+    public function setVoiceInTrunkGroup(VoiceInTrunkGroup $voiceInTrunkGroup)
     {
-        $this->trunkGroup()->associate($trunkGroup);
+        $this->voiceInTrunkGroup()->associate($voiceInTrunkGroup);
     }
 
     public function setPop(Pop $pop)

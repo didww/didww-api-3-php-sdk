@@ -12,7 +12,7 @@ $trunkSipConfig = new \Didww\Item\Configuration\Sip([
     'rerouting_disconnect_code_ids' => \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
 ]);
 
-$trunk = new \Didww\Item\Trunk();
+$trunk = new \Didww\Item\VoiceInTrunk();
 // set name (should be unique)
 $trunk->setName('My New Custom Sip Trunk '.uniqid());
 // set configuration object

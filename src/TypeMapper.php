@@ -12,8 +12,8 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('balances', Item\Balance::class);
         $this->setMapping('dids', Item\Did::class);
         $this->setMapping('did_groups', Item\DidGroup::class);
-        $this->setMapping('trunks', Item\Trunk::class);
-        $this->setMapping('trunk_groups', Item\TrunkGroup::class);
+        $this->setMapping('voice_in_trunks', Item\VoiceInTrunk::class);
+        $this->setMapping('voice_in_trunk_groups', Item\VoiceInTrunkGroup::class);
         $this->setMapping('capacity_pools', Item\CapacityPool::class);
         $this->setMapping('shared_capacity_groups', Item\SharedCapacityGroup::class);
         $this->setMapping('available_dids', Item\AvailableDid::class);

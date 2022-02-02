@@ -23,25 +23,25 @@ class DidTest extends BaseTest
     {
         $this->startVCR('dids.yml');
 
-        $trunkGroup = new \Didww\Item\TrunkGroup();
-        $trunkGroup->setId('837c5764-a6c3-456f-aa37-71fc8f8ca07b');
+        $voiceInTrunkGroup = new \Didww\Item\VoiceInTrunkGroup();
+        $voiceInTrunkGroup->setId('837c5764-a6c3-456f-aa37-71fc8f8ca07b');
 
         $did = new \Didww\Item\Did();
         $did->setId('9df99644-f1a5-4a3c-99a4-559d758eb96b');
-        $did->setTrunkGroup($trunkGroup);
+        $did->setVoiceInTrunkGroup($voiceInTrunkGroup);
         $did->save();
 
         $this->assertEquals($did->toJsonApiArray(), [
             'id' => $did->getId(),
             'type' => 'dids',
             'relationships' => [
-                'trunk_group' => [
+                'voice_in_trunk_group' => [
                     'data' => [
-                        'type' => 'trunk_groups',
-                        'id' => $trunkGroup->getId(),
+                        'type' => 'voice_in_trunk_groups',
+                        'id' => $voiceInTrunkGroup->getId(),
                     ],
                 ],
-                'trunk' => [
+                'voice_in_trunk' => [
                     'data' => null,
                 ],
             ],
@@ -54,14 +54,14 @@ class DidTest extends BaseTest
     {
         $this->startVCR('dids.yml');
 
-        $trunkGroup = new \Didww\Item\TrunkGroup();
-        $trunkGroup->setId('invalid');
+        $voiceInTrunkGroup = new \Didww\Item\VoiceInTrunkGroup();
+        $voiceInTrunkGroup->setId('invalid');
 
         $did = new \Didww\Item\Did();
         $did->setId('9df99644-f1a5-4a3c-99a4-559d758eb96b');
-        $did->setTrunkGroup($trunkGroup);
+        $did->setVoiceInTrunkGroup($voiceInTrunkGroup);
         $response = $did->save();
-        $this->assertEquals($response->getErrors()->all()[0]->getDetail(), 'trunk_group_id - is invalid');
+        $this->assertEquals($response->getErrors()->all()[0]->getDetail(), 'voice_in_trunk_group - is invalid');
 
         $this->stopVCR();
     }
