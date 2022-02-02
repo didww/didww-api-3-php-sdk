@@ -50,6 +50,7 @@ abstract class Base extends \Didww\Item\BaseItem
       'transport_protocols' => [
             1 => 'UDP',
             2 => 'TCP',
+            3 => 'TLS',
        ],
        'rerouting_disconnect_codes' => [
             56 => '400 | Bad Request',
@@ -164,6 +165,19 @@ abstract class Base extends \Didww\Item\BaseItem
          1505,
        ],
        'default_codec_ids' => [9, 10, 8, 7, 6],
+       'media_encryption_mode' => [
+         'disabled',
+         'srtp_sdes',
+         'srtp_dtls',
+         'zrtp',
+       ],
+       'stir_shaken_mode' => [
+         'disabled',
+         'original',
+         'pai',
+         'original_pai',
+         'verstat',
+       ],
      ];
 
     public static function getRxDtmfFormats()
@@ -204,6 +218,16 @@ abstract class Base extends \Didww\Item\BaseItem
     public static function getDefaultCodecIds()
     {
         return self::optionsFor('default_codec_ids');
+    }
+
+    public static function getMediaEncryptionModes()
+    {
+        return self::optionsFor('media_encryption_mode');
+    }
+
+    public static function getStirShakenModes()
+    {
+        return self::optionsFor('stir_shaken_mode');
     }
 
     public static function getDidPlaceHolder()

@@ -25,7 +25,7 @@ class BaseTest extends \PHPUnit\Framework\TestCase
     public function testGetTransportProtocols()
     {
         $options = \Didww\Item\Configuration\Base::getTransportProtocols();
-        $this->assertEquals(count($options), 2);
+        $this->assertEquals(count($options), 3);
     }
 
     public function testGetReroutingDisconnectCodes()
