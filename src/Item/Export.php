@@ -2,12 +2,12 @@
 
 namespace Didww\Item;
 
-class CdrExport extends BaseItem
+class Export extends BaseItem
 {
     use \Didww\Traits\Saveable;
     use \Didww\Traits\Fetchable;
 
-    protected $type = 'cdr_exports';
+    protected $type = 'exports';
 
     private $filters = [];
 
@@ -26,12 +26,32 @@ class CdrExport extends BaseItem
         $this->filters['month'] = $month;
     }
 
+    public function setFilterDay($day)
+    {
+        $this->filters['day'] = $day;
+    }
+
+    public function setFilterVoiceOutTrunkId($voiceOutTrunkId)
+    {
+        $this->filters['voice_out_trunk.id'] = $voiceOutTrunkId;
+    }
+
     public function toJsonApiArray(): array
     {
         $data = parent::toJsonApiArray();
-        $data['attributes'] = ['filters' => $this->filters];
+        $data['attributes']['filters'] = $this->filters;
 
         return $data;
+    }
+
+    public function getExportType(): string
+    {
+        return $this->attributes['export_type'];
+    }
+
+    public function setExportType(string $exportType)
+    {
+        $this->attributes['export_type'] = $exportType;
     }
 
     public function getCallbackUrl(): ?string
@@ -76,10 +96,27 @@ class CdrExport extends BaseItem
         }
     }
 
+    /** @return array [
+     * ]
+     * 'status' => string
+     * 'url' => string
+     * 'callback_url' => string
+     * 'callback_method' => string
+     * 'export_type' => string
+     * 'created_at' => string // creation timestamp
+     */
+    public function getAttributes(): array
+    {
+        return parent::getAttributes();
+    }
+
     protected function getWhiteListAttributesKeys(): array
     {
         return [
-         'filters',
-       ];
+            'filters',
+            'export_type',
+            'callback_url',
+            'callback_method',
+        ];
     }
 }
