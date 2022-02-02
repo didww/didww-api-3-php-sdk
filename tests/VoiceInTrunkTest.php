@@ -192,6 +192,9 @@ class VoiceInTrunkTest extends BaseTest
               'port' => 5060,
               'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
               'rerouting_disconnect_code_ids' => \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
+              'media_encryption_mode' => 'zrtp',
+              'stir_shaken_mode' => 'pai',
+              'allowed_rtp_ips' => ['127.0.0.1'],
           ]),
           'name' => 'hello, test sip trunk',
         ];
@@ -211,6 +214,9 @@ class VoiceInTrunkTest extends BaseTest
         $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultCodecIds(), $sipConfiguration->getCodecIds());
         $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(), $sipConfiguration->getReroutingDisconnectCodeIds());
         $this->assertEquals('username', $sipConfiguration->getUsername());
+        $this->assertEquals('zrtp', $sipConfiguration->getMediaEncryptionMode());
+        $this->assertEquals('pai', $sipConfiguration->getStirShakenMode());
+        $this->assertEquals(['127.0.0.1'], $sipConfiguration->getAllowedRtpIps());
         $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
         $this->stopVCR();
     }

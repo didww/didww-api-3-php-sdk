@@ -4,7 +4,6 @@ namespace Didww\Item\Configuration;
 
 class Sip extends Base
 {
-    //todo: add getters setters
     public function getType(): string
     {
         return 'sip_configurations';
@@ -140,6 +139,21 @@ class Sip extends Base
         return $this->attributes['host'];
     }
 
+    public function getMediaEncryptionMode(): string
+    {
+        return $this->attributes['media_encryption_mode'];
+    }
+
+    public function getStirShakenMode(): string
+    {
+        return $this->attributes['stir_shaken_mode'];
+    }
+
+    public function getAllowedRtpIps(): ?array
+    {
+        return $this->attributes['allowed_rtp_ips'];
+    }
+
     //##
 
     public function setHost($newHost)
@@ -270,5 +284,20 @@ class Sip extends Base
     public function setMax30xRedirects($newMax30xRedirects)
     {
         $this->attributes['max_30x_redirects'] = $newMax30xRedirects;
+    }
+
+    public function setMediaEncryptionMode(string $mediaEncryptionMode)
+    {
+        $this->attributes['media_encryption_mode'] = $mediaEncryptionMode;
+    }
+
+    public function setStirShakenMode(string $stirShakenMode)
+    {
+        $this->attributes['stir_shaken_mode'] = $stirShakenMode;
+    }
+
+    public function setAllowedRtpIps(?array $allowedRtpIps)
+    {
+        $this->attributes['allowed_rtp_ips'] = $allowedRtpIps;
     }
 }
