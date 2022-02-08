@@ -201,7 +201,6 @@ class VoiceOutTrunk extends BaseItem
         return parent::getAttributes();
     }
 
-
     public function voiceInTrunkGroup()
     {
         return $this->hasOne(VoiceInTrunkGroup::class);
