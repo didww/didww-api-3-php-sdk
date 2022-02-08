@@ -8,7 +8,6 @@ class VoiceOutTrunkRegenerateCredential extends BaseItem
 
     protected $type = 'voice_out_trunk_regenerate_credentials';
 
-
     public function voiceOutTrunk()
     {
         return $this->hasOne(VoiceOutTrunk::class);
