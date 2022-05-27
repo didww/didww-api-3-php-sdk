@@ -1,0 +1,75 @@
+
+-
+  request:
+    method: GET
+    url: 'https://sandbox-api.didww.com/v3/nanpa_prefixes/6c16d51d-d376-4395-91c4-012321317e48?include=country'
+    headers:
+      Host: sandbox-api.didww.com
+      Accept-Encoding: null
+      User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+      Accept: application/vnd.api+json
+      Content-Type: application/vnd.api+json
+      api-key: PLACEYOURAPIKEYHERE
+  response:
+    status:
+      http_version: '1.1'
+      code: '200'
+      message: OK
+    headers:
+      Server: nginx
+      Date: 'Mon, 19 Apr 2021 13:56:07 GMT'
+      Content-Type: application/vnd.api+json
+      Transfer-Encoding: chunked
+      Connection: keep-alive
+      X-Frame-Options: SAMEORIGIN
+      X-XSS-Protection: '1; mode=block'
+      X-Content-Type-Options: nosniff
+      X-Download-Options: noopen
+      X-Permitted-Cross-Domain-Policies: none
+      Referrer-Policy: strict-origin-when-cross-origin
+      ETag: 'W/"0459a0b3ae21bf485ef3b19b2894a771"'
+      Cache-Control: 'max-age=0, private, must-revalidate'
+      X-Request-Id: 7f345f43-362c-4097-827b-b18c6e89c738
+      X-Runtime: '0.045377'
+      Access-Control-Allow-Origin: '*'
+      Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+      Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+      Access-Control-Allow-Credentials: 'true'
+    body: '{ "data": { "id": "6c16d51d-d376-4395-91c4-012321317e48", "type": "nanpa_prefixes", "attributes": { "npa": "864", "nxx": "920" }, "relationships": { "country": { "links": { "self": "https://sandbox-api.didww.com/v3/nanpa_prefixes/6c16d51d-d376-4395-91c4-012321317e48/relationships/country", "related": "https://sandbox-api.didww.com/v3/nanpa_prefixes/6c16d51d-d376-4395-91c4-012321317e48/country" }, "data": { "type": "countries", "id": "e5b6999c-aba0-4ae4-b9f9-3dcf744a0ed1" } }, "region": { "links": { "self": "https://sandbox-api.didww.com/v3/nanpa_prefixes/6c16d51d-d376-4395-91c4-012321317e48/relationships/region", "related": "https://sandbox-api.didww.com/v3/nanpa_prefixes/6c16d51d-d376-4395-91c4-012321317e48/region" } } } }, "included": [ { "id": "e5b6999c-aba0-4ae4-b9f9-3dcf744a0ed1", "type": "countries", "attributes": { "name": "United States", "prefix": "1", "iso": "US" }, "relationships": { "regions": { "links": { "self": "https://sandbox-api.didww.com/v3/countries/e5b6999c-aba0-4ae4-b9f9-3dcf744a0ed1/relationships/regions", "related": "https://sandbox-api.didww.com/v3/countries/e5b6999c-aba0-4ae4-b9f9-3dcf744a0ed1/regions" } } } } ], "meta": { "api_version": "2022-05-09" } }'
+-
+  request:
+    method: GET
+    url: 'https://sandbox-api.didww.com/v3/nanpa_prefixes'
+    headers:
+      Host: sandbox-api.didww.com
+      Accept-Encoding: null
+      User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+      Accept: application/vnd.api+json
+      Content-Type: application/vnd.api+json
+      api-key: PLACEYOURAPIKEYHERE
+  response:
+    status:
+      http_version: '1.1'
+      code: '200'
+      message: OK
+    headers:
+      Server: nginx
+      Date: 'Mon, 19 Apr 2021 13:56:11 GMT'
+      Content-Type: application/vnd.api+json
+      Transfer-Encoding: chunked
+      Connection: keep-alive
+      X-Frame-Options: SAMEORIGIN
+      X-XSS-Protection: '1; mode=block'
+      X-Content-Type-Options: nosniff
+      X-Download-Options: noopen
+      X-Permitted-Cross-Domain-Policies: none
+      Referrer-Policy: strict-origin-when-cross-origin
+      ETag: 'W/"82a7b70e7c38c19f6ee231f8092eb9c4"'
+      Cache-Control: 'max-age=0, private, must-revalidate'
+      X-Request-Id: a397e31c-ada4-45c0-8e67-365560eb6228
+      X-Runtime: '0.655124'
+      Access-Control-Allow-Origin: '*'
+      Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+      Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+      Access-Control-Allow-Credentials: 'true'
+    body: '{ "data": [ { "id": "54943e12-88e9-4df9-be54-a72926c251dd", "type": "nanpa_prefixes", "attributes": { "npa": "864", "nxx": "200" }, "relationships": { "country": { "links": { "self": "https://sandbox-api.didww.com/v3/nanpa_prefixes/54943e12-88e9-4df9-be54-a72926c251dd/relationships/country", "related": "https://sandbox-api.didww.com/v3/nanpa_prefixes/54943e12-88e9-4df9-be54-a72926c251dd/country" } }, "region": { "links": { "self": "https://sandbox-api.didww.com/v3/nanpa_prefixes/54943e12-88e9-4df9-be54-a72926c251dd/relationships/region", "related": "https://sandbox-api.didww.com/v3/nanpa_prefixes/54943e12-88e9-4df9-be54-a72926c251dd/region" } } } }, { "id": "d557ec68-fdb9-41bd-adc1-ebcc2ecd8f98", "type": "nanpa_prefixes", "attributes": { "npa": "864", "nxx": "920" }, "relationships": { "country": { "links": { "self": "https://sandbox-api.didww.com/v3/nanpa_prefixes/d557ec68-fdb9-41bd-adc1-ebcc2ecd8f98/relationships/country", "related": "https://sandbox-api.didww.com/v3/nanpa_prefixes/d557ec68-fdb9-41bd-adc1-ebcc2ecd8f98/country" } }, "region": { "links": { "self": "https://sandbox-api.didww.com/v3/nanpa_prefixes/d557ec68-fdb9-41bd-adc1-ebcc2ecd8f98/relationships/region", "related": "https://sandbox-api.didww.com/v3/nanpa_prefixes/d557ec68-fdb9-41bd-adc1-ebcc2ecd8f98/region" } } } } ], "meta": { "total_records": 2, "api_version": "2022-05-09" }, "links": { "first": "https://sandbox-api.didww.com/v3/nanpa_prefixes?page%5Bnumber%5D=1&page%5Bsize%5D=50", "last": "https://sandbox-api.didww.com/v3/nanpa_prefixes?page%5Bnumber%5D=1&page%5Bsize%5D=50" } }'
