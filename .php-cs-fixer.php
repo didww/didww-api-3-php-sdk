@@ -7,8 +7,6 @@ $finder = PhpCsFixer\Finder::create()
         __DIR__.'/tests'
     ]);
 
-return PhpCsFixer\Config::create()
-    ->setRules([
-        '@Symfony' => true,
-    ])->setFinder($finder);
-
+$config = new PhpCsFixer\Config();
+return $config->setRules(['@Symfony' => true])
+    ->setFinder($finder);
