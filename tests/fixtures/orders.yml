@@ -232,3 +232,42 @@
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
         body: '{"data":{"id":"9b9f2121-8d9e-4aa8-9754-dbaf6f695fd6","type":"orders","attributes":{"amount":"0.19","status":"Pending","created_at":"2018-12-27T16:44:05.511Z","description":"DID","reference":"YGA-665789","items":[{"type":"did_order_items","attributes":{"qty":1,"nrc":"0.0","mrc":"0.19","prorated_mrc":false,"billed_from":null,"billed_to":null,"setup_price":"0.0","monthly_price":"0.19","did_group_id":"7156eea4-09af-4f82-a43e-3b572f9927d8"}}]}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/orders'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"orders","attributes":{"items":[{"type":"did_order_items","attributes":{"sku_id":"fe77889c-f05a-40ad-a845-96aca3c28054","qty":1,"nanpa_prefix_id":"eeed293b-f3d8-4ef8-91ef-1b077d174b3b"}}],"allow_back_ordering":true}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Thu, 23 Jun 2022 07:05:10 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: Accept
+            Cache-Control: no-cache
+            X-Request-Id: 57da6099-adad-4358-a448-9e517f7dcd88
+            X-Runtime: '0.058566'
+            Access-Control-Allow-Origin: 'https://doc.in.didww.com'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, Cache-Control, value-track'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"c617f0ff-f819-477f-a17b-a8d248c4443e","type":"orders","attributes":{"amount":"4.0","status":"Pending","created_at":"2022-06-22T22:02:23.333Z","description":"DID","reference":"WHT-994648","items":[{"type":"did_order_items","attributes":{"qty":1,"nrc":"2.0","mrc":"2.0","prorated_mrc":false,"billed_from":null,"billed_to":null,"setup_price":"2.0","monthly_price":"2.0","did_group_id":"8d909d98-9385-4635-b123-809d64b2d4bb"}}],"callback_method":null,"callback_url":null}},"meta":{"api_version":"2022-05-09"}}'
