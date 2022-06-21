@@ -213,4 +213,43 @@ class OrderTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\OrderItem\Capacity', $order->getAttributes()['items'][0]);
         $this->stopVCR();
     }
+
+    public function testCreateOrderWithNanpaPrefix()
+    {
+        $this->startVCR('orders.yml');
+
+        $attributes = [
+            'allow_back_ordering' => true,
+            'items' => [
+                new \Didww\Item\OrderItem\Did([
+                    'sku_id' => 'fe77889c-f05a-40ad-a845-96aca3c28054',
+                    'nanpa_prefix_id' => 'eeed293b-f3d8-4ef8-91ef-1b077d174b3b',
+                    'qty' => 1,
+                ]),
+            ],
+        ];
+        $order = new \Didww\Item\Order($attributes);
+        $this->assertEquals($order->toJsonApiArray(), [
+            'type' => 'orders',
+            'attributes' => [
+                'allow_back_ordering' => true,
+                'items' => [
+                    [
+                        'type' => 'did_order_items',
+                        'attributes' => [
+                            'qty' => 1,
+                            'sku_id' => 'fe77889c-f05a-40ad-a845-96aca3c28054',
+                            'nanpa_prefix_id' => 'eeed293b-f3d8-4ef8-91ef-1b077d174b3b',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $orderDocument = $order->save();
+        $order = $orderDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Order', $order);
+        $this->assertContainsOnlyInstancesOf('Didww\Item\OrderItem\Did', $order->getAttributes()['items']);
+        $this->stopVCR();
+    }
 }
