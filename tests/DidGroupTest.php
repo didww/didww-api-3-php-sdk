@@ -14,6 +14,16 @@ class DidGroupTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testFilterByNanpaPrefix()
+    {
+        $this->startVCR('did_groups.yml');
+
+        $didGroupDocument = \Didww\Item\DidGroup::all(['filter' => ['nanpa_prefix.id' => 'eeed293b-f3d8-4ef8-91ef-1b077d174b3b']]);
+        $this->assertContainsOnlyInstancesOf('Didww\Item\DidGroup', $didGroupDocument->getData());
+
+        $this->stopVCR();
+    }
+
     public function testFind()
     {
         $this->startVCR('did_groups.yml');
