@@ -14,6 +14,16 @@ class AvailableDidTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testFilterByNanpaPrefix()
+    {
+        $this->startVCR('available_dids.yml');
+
+        $availableDidsDocument = \Didww\Item\AvailableDid::all(['filter' => ['nanpa_prefix.id' => 'eeed293b-f3d8-4ef8-91ef-1b077d174b3b']]);
+        $this->assertContainsOnlyInstancesOf('Didww\Item\AvailableDid', $availableDidsDocument->getData());
+
+        $this->stopVCR();
+    }
+
     public function testFind()
     {
         $this->startVCR('available_dids.yml');
