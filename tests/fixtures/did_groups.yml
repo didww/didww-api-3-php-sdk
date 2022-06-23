@@ -36,7 +36,37 @@
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
         body: '{"data":{"id":"2187c36d-28fb-436f-8861-5a0f5b5a3ee1","type":"did_groups","attributes":{"prefix":"241","features":["voice"],"is_metered":false,"area_name":"Aachen","allow_additional_channels":true},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2187c36d-28fb-436f-8861-5a0f5b5a3ee1/relationships/country","related":"https://sandbox-api.didww.com/v3/did_groups/2187c36d-28fb-436f-8861-5a0f5b5a3ee1/country"},"data":{"type":"countries","id":"dfd1a0a0-bd53-4f7a-9c8e-d2fc5dd1bf7e"}},"city":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2187c36d-28fb-436f-8861-5a0f5b5a3ee1/relationships/city","related":"https://sandbox-api.didww.com/v3/did_groups/2187c36d-28fb-436f-8861-5a0f5b5a3ee1/city"},"data":{"type":"cities","id":"bba735f9-7c37-499b-8998-94a5fca5d158"}},"did_group_type":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2187c36d-28fb-436f-8861-5a0f5b5a3ee1/relationships/did_group_type","related":"https://sandbox-api.didww.com/v3/did_groups/2187c36d-28fb-436f-8861-5a0f5b5a3ee1/did_group_type"},"data":{"type":"did_group_types","id":"994ea201-4a4d-4b27-ac4b-b5916ac969a3"}},"region":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2187c36d-28fb-436f-8861-5a0f5b5a3ee1/relationships/region","related":"https://sandbox-api.didww.com/v3/did_groups/2187c36d-28fb-436f-8861-5a0f5b5a3ee1/region"},"data":null},"stock_keeping_units":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2187c36d-28fb-436f-8861-5a0f5b5a3ee1/relationships/stock_keeping_units","related":"https://sandbox-api.didww.com/v3/did_groups/2187c36d-28fb-436f-8861-5a0f5b5a3ee1/stock_keeping_units"},"data":[{"type":"stock_keeping_units","id":"5c6f00cd-cfca-441f-9322-5d000458b44f"},{"type":"stock_keeping_units","id":"afcb54cd-1e36-472a-9f5b-07328d0d187f"}]}},"meta":{"needs_registration":true,"is_available":true,"available_dids_enabled":false}},"included":[{"id":"dfd1a0a0-bd53-4f7a-9c8e-d2fc5dd1bf7e","type":"countries","attributes":{"name":"Germany","prefix":"49","iso":"DE"}},{"id":"bba735f9-7c37-499b-8998-94a5fca5d158","type":"cities","attributes":{"name":"Aachen"},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/cities/bba735f9-7c37-499b-8998-94a5fca5d158/relationships/country","related":"https://sandbox-api.didww.com/v3/cities/bba735f9-7c37-499b-8998-94a5fca5d158/country"}},"region":{"links":{"self":"https://sandbox-api.didww.com/v3/cities/bba735f9-7c37-499b-8998-94a5fca5d158/relationships/region","related":"https://sandbox-api.didww.com/v3/cities/bba735f9-7c37-499b-8998-94a5fca5d158/region"}}}},{"id":"994ea201-4a4d-4b27-ac4b-b5916ac969a3","type":"did_group_types","attributes":{"name":"Local"}},{"id":"5c6f00cd-cfca-441f-9322-5d000458b44f","type":"stock_keeping_units","attributes":{"setup_price":"0.4","monthly_price":"0.8","channels_included_count":0}},{"id":"afcb54cd-1e36-472a-9f5b-07328d0d187f","type":"stock_keeping_units","attributes":{"setup_price":"1.0","monthly_price":"4.8","channels_included_count":2}}]}'
-
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/did_groups?filter%5Bnanpa_prefix.id%5D=eeed293b-f3d8-4ef8-91ef-1b077d174b3b'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Content-Type: application/vnd.api+json
+            Vary: Accept
+            ETag: 'W/"3ab86352ccf1c6d839d8a31c7535bf61"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 04bcdb35-571d-4365-8e44-e966201a0e2b
+            X-Runtime: '0.223991'
+            Transfer-Encoding: chunked
+        body: '{"data":[{"id":"f6cc4ea6-6dda-4c51-9952-c1440441bc2f","type":"did_groups","attributes":{"prefix":"864","features":["voice_in","sms_in","t38"],"is_metered":false,"area_name":"Inman","allow_additional_channels":true},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/relationships/country","related":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/country"}},"city":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/relationships/city","related":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/city"}},"did_group_type":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/relationships/did_group_type","related":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/did_group_type"}},"region":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/relationships/region","related":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/region"}},"stock_keeping_units":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/relationships/stock_keeping_units","related":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/stock_keeping_units"}},"requirement":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/relationships/requirement","related":"https://sandbox-api.didww.com/v3/did_groups/f6cc4ea6-6dda-4c51-9952-c1440441bc2f/requirement"}}},"meta":{"available_dids_enabled":false,"needs_registration":false,"is_available":true,"total_count":1}}],"meta":{"total_records":1,"api_version":"2022-05-09"},"links":{"first":"https://sandbox-api.didww.com/v3/did_groups?filter%5Bnanpa_prefix.id%5D=eeed293b-f3d8-4ef8-91ef-1b077d174b3b&page%5Bnumber%5D=1&page%5Bsize%5D=50","last":"https://sandbox-api.didww.com/v3/did_groups?filter%5Bnanpa_prefix.id%5D=eeed293b-f3d8-4ef8-91ef-1b077d174b3b&page%5Bnumber%5D=1&page%5Bsize%5D=50"}}'
 -
     request:
         method: GET
