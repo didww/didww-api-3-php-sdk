@@ -29,7 +29,6 @@ class DidGroupTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\DidGroup', $didGroupDocument->getData());
         $this->assertEquals($didGroupDocument->getData()->getAttributes(), [
             'prefix' => '241',
-            'local_prefix' => '',
             'features' => ['voice'],
             'is_metered' => false,
             'area_name' => 'Aachen',

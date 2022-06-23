@@ -66,7 +66,6 @@ class DidReservationTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\DidGroup', $didGroupRelation->getIncluded());
         $this->assertEquals($didGroupRelation->getIncluded()->getAttributes(), [
             'prefix' => '949',
-            'local_prefix' => '',
             'features' => ['voice'],
             'is_metered' => false,
             'area_name' => 'Saddleback Valley',

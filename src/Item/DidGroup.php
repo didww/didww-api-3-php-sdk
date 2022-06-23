@@ -43,11 +43,6 @@ class DidGroup extends BaseItem
         return $this->getAttributes()['prefix'];
     }
 
-    public function getLocalPrefix(): string
-    {
-        return $this->getAttributes()['local_prefix'];
-    }
-
     public function getFeatures(): array
     {
         return $this->getAttributes()['features'];
