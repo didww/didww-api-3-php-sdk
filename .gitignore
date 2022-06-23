@@ -1,3 +1,5 @@
 /vendor
 /examples/vendor
 /.php_cs.cache
+/build/logs/clover.xml
+examples/composer.lock
