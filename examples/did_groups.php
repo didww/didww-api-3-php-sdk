@@ -20,7 +20,6 @@ foreach ($didGroups as $didGroup) {
         $didGroup->getId(), // df73511e-3b8e-4967-9bd8-d7b88ae1a084
         $didGroup->getAreaName(), // Beverly Hills
         $didGroup->getPrefix(), // 352, 310
-        $didGroup->getLocalPrefix(), // ""
         $didGroup->getFeatures(), // ['voice']
         $didGroup->getIsMetered(), // false
         $didGroup->getAllowAdditionalChannels(), // true
@@ -43,7 +42,6 @@ var_dump(
     $didGroup->getId(), // df73511e-3b8e-4967-9bd8-d7b88ae1a084
     $didGroup->getAreaName(), // Beverly Hills
     $didGroup->getPrefix(), // 352, 310
-    $didGroup->getLocalPrefix(), // ""
     $didGroup->getFeatures(), // ['voice']
     $didGroup->getIsMetered(), // false
     $didGroup->getAllowAdditionalChannels(), // true
