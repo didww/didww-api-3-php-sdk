@@ -154,7 +154,7 @@ class Sip extends Base
         return $this->attributes['allowed_rtp_ips'];
     }
 
-    //##
+    // ##
 
     public function setHost($newHost)
     {

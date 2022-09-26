@@ -11,7 +11,7 @@ class Generic extends Base
         return [];
     }
 
-    //todo: readonly: getType can't be called
+    // todo: readonly: getType can't be called
     public function getType(): string
     {
         return 'generic_order_items';

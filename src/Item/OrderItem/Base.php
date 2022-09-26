@@ -40,7 +40,7 @@ abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
 
     public function fill(array $attributes)
     {
-        //remove deprecated attributes
+        // remove deprecated attributes
         unset($attributes['monthly_price']);
         unset($attributes['setup_price']);
         $this->attributes = $attributes;

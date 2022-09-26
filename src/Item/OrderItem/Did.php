@@ -7,7 +7,7 @@ class Did extends Base
     use Traits\Sku;
     use Traits\Qty;
 
-    const OPTIONAL_KEYS = ['billing_cycles_count', 'nanpa_prefix_id'];
+    protected const OPTIONAL_KEYS = ['billing_cycles_count', 'nanpa_prefix_id'];
 
     protected function getCreatableAttributesKeys()
     {
