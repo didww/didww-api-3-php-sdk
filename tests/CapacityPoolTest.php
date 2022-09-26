@@ -38,28 +38,30 @@ class CapacityPoolTest extends BaseTest
         ]);
 
         $this->assertContainsOnlyInstancesOf('Didww\Item\Country', $countriesRelation->getIncluded()->all());
-        $this->assertEquals(array_map(
-            function ($value) {
-                return $value->getAttributes();
-            },
-            //show only first 2 countries
-            array_slice($countriesRelation->getIncluded()->all(), 0, 2)
-        ), [
-            [
-                'name' => 'Peru',
-                'iso' => 'PE',
-                'prefix' => '51',
-            ],
-            [
-                'name' => 'Iceland',
-                'iso' => 'IS',
-                'prefix' => '354',
-            ],
-        ]);
+        $this->assertEquals(
+            array_map(
+                function ($value) {
+                    return $value->getAttributes();
+                },
+                // show only first 2 countries
+                array_slice($countriesRelation->getIncluded()->all(), 0, 2)
+            ), [
+                [
+                    'name' => 'Peru',
+                    'iso' => 'PE',
+                    'prefix' => '51',
+                ],
+                [
+                    'name' => 'Iceland',
+                    'iso' => 'IS',
+                    'prefix' => '354',
+                ],
+            ]);
 
         $this->assertContainsOnlyInstancesOf('Didww\Item\SharedCapacityGroup', $sharedCapacityGroupsRelation->getIncluded()->all());
-        $this->assertEquals(array_map(
-            function ($value) { return $value->getAttributes(); },
+        $this->assertEquals(
+            array_map(
+                function ($value) { return $value->getAttributes(); },
                 $sharedCapacityGroupsRelation->getIncluded()->all()
             ), [
                 [
@@ -83,8 +85,9 @@ class CapacityPoolTest extends BaseTest
             ]);
 
         $this->assertContainsOnlyInstancesOf('Didww\Item\QtyBasedPricing', $qtyBasedPricingsRelation->getIncluded()->all());
-        $this->assertEquals(array_map(
-            function ($value) { return $value->getAttributes(); },
+        $this->assertEquals(
+            array_map(
+                function ($value) { return $value->getAttributes(); },
                 $qtyBasedPricingsRelation->getIncluded()->all()
             ), [
                 [

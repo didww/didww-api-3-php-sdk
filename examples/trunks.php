@@ -27,9 +27,9 @@ if ($trunkDocument->hasErrors()) {
 } else {
     $trunk = $trunkDocument->getData();
     var_dump(
-      $trunk->getId(), // 1f6fc2bd-f081-4202-9b1a-d9cb88d942b9
-      $trunk->getName(), // "My New Custom Sip Trunk 5c2e393794b07"
-      $trunk->getCreatedAt(), // object(DateTime)
-      $trunk->getRingingTimeout() // int(30)
-  );
+        $trunk->getId(), // 1f6fc2bd-f081-4202-9b1a-d9cb88d942b9
+        $trunk->getName(), // "My New Custom Sip Trunk 5c2e393794b07"
+        $trunk->getCreatedAt(), // object(DateTime)
+        $trunk->getRingingTimeout() // int(30)
+    );
 }

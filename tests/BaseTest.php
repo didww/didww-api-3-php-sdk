@@ -4,7 +4,7 @@ namespace Didww\Tests;
 
 abstract class BaseTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         \Didww\Configuration::configure($this->getDidwwCredentials(), [
             'timeout' => 20,
