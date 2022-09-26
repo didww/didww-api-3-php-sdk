@@ -16,7 +16,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 \VCR\VCR::configure()->enableRequestMatchers(['method', 'url', 'query_string', 'body', 'custom_headers']);
 // This tells PHP-VCR to record a test if there is no previous recording. If there
 // is a recording then PHP-VCR will compare requests against those stored in the recording.
-//\VCR\VCR::configure()->setMode('once');
+// \VCR\VCR::configure()->setMode('once');
 // This instruct PHP-VCR to only instrument guzzle with code to intercept requests
-//\VCR\VCR::configure()->setWhiteList(array('vendor/guzzlehttp'));
+// \VCR\VCR::configure()->setWhiteList(array('vendor/guzzlehttp'));
 \VCR\VCR::turnOn();

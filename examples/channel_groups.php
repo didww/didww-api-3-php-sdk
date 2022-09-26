@@ -20,10 +20,10 @@ if ($capacityGroupDocument->hasErrors()) {
 } else {
     $capacityGroup = $capacityGroupDocument->getData();
     var_dump(
-      $capacityGroup->getId(), // 1f6fc2bd-f081-4202-9b1a-d9cb88d942b9
-      $capacityGroup->getName(), // "My New Channel Group 5c2f27fa320f2"
-      $capacityGroup->getCreatedAt(), // object(DateTime)
-      $capacityGroup->getMeteredChannelsCount(),// int(10),
-      $capacityGroup->getSharedChannelsCount() // int(1)
-  );
+        $capacityGroup->getId(), // 1f6fc2bd-f081-4202-9b1a-d9cb88d942b9
+        $capacityGroup->getName(), // "My New Channel Group 5c2f27fa320f2"
+        $capacityGroup->getCreatedAt(), // object(DateTime)
+        $capacityGroup->getMeteredChannelsCount(),// int(10),
+        $capacityGroup->getSharedChannelsCount() // int(1)
+    );
 }
