@@ -2,8 +2,12 @@
 
 namespace Didww\Tests;
 
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+
 class AddressTest extends BaseTest
 {
+    use ArraySubsetAsserts;
+
     public function testAllWithIncludesAndPagination()
     {
         $this->startVCR('addresses.yml');

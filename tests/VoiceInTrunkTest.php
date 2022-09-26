@@ -2,8 +2,12 @@
 
 namespace Didww\Tests;
 
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+
 class VoiceInTrunkTest extends BaseTest
 {
+    use ArraySubsetAsserts;
+
     public function testAllWithIncludesAndPagination()
     {
         $this->startVCR('voice_in_trunks.yml');
