@@ -10,7 +10,7 @@ class NanpaPrefixTest extends BaseTest
         $this->startVCR('nanpa_prefixes.yml');
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->stopVCR();
     }
