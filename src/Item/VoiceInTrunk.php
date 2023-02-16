@@ -156,6 +156,7 @@ class VoiceInTrunk extends BaseItem
             $this->fillConfiguration($attributes['configuration']);
             unset($attributes['configuration']);
         }
+
         return parent::fill($attributes);
     }
 

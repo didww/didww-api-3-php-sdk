@@ -47,6 +47,7 @@ class Order extends BaseItem
             $this->fillItems($attributes['items']);
             unset($attributes['items']);
         }
+
         return parent::fill($attributes);
     }
 
