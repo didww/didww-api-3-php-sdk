@@ -133,9 +133,11 @@ class DidTest extends BaseTest
         $this->assertEquals($did->getNumber(), '16091609123456797');
         $this->assertEquals($did->getBlocked(), false);
         $this->assertEquals($did->getAwaitingRegistration(), false);
+        $this->assertEquals($did->getDescription(), null);
 
         $did->setBillingCyclesCount(0);
         $did->setTerminated(true);
+        $did->setDescription('something');
         $didDocument = $did->save();
 
         $this->assertEquals($did->toJsonApiArray(), [

@@ -34,7 +34,7 @@ class Did extends BaseItem
         $this->attributes['description'] = $desc;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->attributes['description'];
     }
