@@ -27,6 +27,8 @@ abstract class Base extends \Didww\Item\BaseItem
     public function fill(array $attributes)
     {
         $this->attributes = $attributes;
+
+        return $this;
     }
 
     private static $didPlaceHolder = '{DID}';

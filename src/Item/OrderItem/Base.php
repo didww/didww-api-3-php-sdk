@@ -38,12 +38,17 @@ abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
         return $creatableAttributes;
     }
 
-    public function fill(array $attributes)
+    /**
+     * @return $this
+     */
+    public function fill(array $attributes): self
     {
         // remove deprecated attributes
         unset($attributes['monthly_price']);
         unset($attributes['setup_price']);
         $this->attributes = $attributes;
+
+        return $this;
     }
 
     public function getNrc(): float
