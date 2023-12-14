@@ -6,12 +6,13 @@ class UploadResult
 {
     private $response;
     private $responseCode;
-    private $responseData = null;
+    private $responseData;
 
     public function __construct($response, $responseCode)
     {
         $this->response = $response;
         $this->responseCode = $responseCode;
+        $this->responseData = null;
         if (false != $response && 500 != $responseCode) {
             $this->responseData = json_decode($this->response, true);
         }
