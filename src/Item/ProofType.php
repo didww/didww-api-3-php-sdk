@@ -8,12 +8,12 @@ class ProofType extends BaseItem
 
     protected $type = 'proof_types';
 
-    public function getName(): int
+    public function getName(): string
     {
         return $this->attributes['name'];
     }
 
-    public function getEntityType(): int
+    public function getEntityType(): string
     {
         return $this->attributes['entity_type'];
     }
