@@ -36,9 +36,9 @@ class Order extends BaseItem
     protected function getWhiteListAttributesKeys(): array
     {
         return [
-         'allow_back_ordering',
-         'items',
-       ];
+            'allow_back_ordering',
+            'items',
+        ];
     }
 
     public function fill(array $attributes)
@@ -56,7 +56,7 @@ class Order extends BaseItem
         if (is_array($items)) {
             $itemsCollection = [];
             foreach ($items as $value) {
-                if ($value instanceof \Didww\Item\OrderItem\Base) {
+                if ($value instanceof OrderItem\Base) {
                     $itemsCollection[] = $value;
                 } elseif (is_object($value)) {
                     $itemsCollection[] = $this->buildItem($value->type, $value->attributes);

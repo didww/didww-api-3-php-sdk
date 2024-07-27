@@ -68,17 +68,16 @@ class SharedCapacityGroupTest extends BaseTest
 
         $this->assertInstanceOf('Didww\Item\CapacityPool', $capacityPoolRelation->getIncluded());
         $this->assertEquals($capacityPoolRelation->getIncluded()->getAttributes(), [
-                'name' => 'Standard',
-                'renew_date' => '2019-01-21',
-                'total_channels_count' => 25,
-                'assigned_channels_count' => 24,
-                'minimum_limit' => 0,
-                'minimum_qty_per_order' => 1,
-                'setup_price' => '0.0',
-                'monthly_price' => '15.0',
-                'metered_rate' => '1.0',
-            ]
-        );
+            'name' => 'Standard',
+            'renew_date' => '2019-01-21',
+            'total_channels_count' => 25,
+            'assigned_channels_count' => 24,
+            'minimum_limit' => 0,
+            'minimum_qty_per_order' => 1,
+            'setup_price' => '0.0',
+            'monthly_price' => '15.0',
+            'metered_rate' => '1.0',
+        ]);
 
         $this->stopVCR();
     }

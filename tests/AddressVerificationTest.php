@@ -31,8 +31,8 @@ class AddressVerificationTest extends BaseTest
     {
         $this->startVCR('address_verifications.yml');
         $attributes = [
-          'callback_url' => 'http://example.com',
-          'callback_method' => 'GET',
+            'callback_url' => 'http://example.com',
+            'callback_method' => 'GET',
         ];
         $address = \Didww\Item\Address::build('d3414687-40f4-4346-a267-c2c65117d28c');
         $dids = new \Swis\JsonApi\Client\Collection([

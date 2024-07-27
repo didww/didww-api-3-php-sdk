@@ -23,8 +23,8 @@ class VoiceInTrunkGroup extends BaseItem
     protected function getWhiteListAttributesKeys()
     {
         return [
-          'capacity_limit',
-          'name',
-       ];
+            'capacity_limit',
+            'name',
+        ];
     }
 }

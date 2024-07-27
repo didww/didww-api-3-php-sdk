@@ -23,7 +23,7 @@ class Credentials
         return $this->version;
     }
 
-    public function __construct($apiKey, $env, string $version = null)
+    public function __construct($apiKey, $env, ?string $version = null)
     {
         $this->apiKey = $apiKey;
         $this->env = $env;

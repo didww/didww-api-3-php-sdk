@@ -117,9 +117,9 @@ class OrderTest extends BaseTest
         $attributes = [
             'items' => [
                 new \Didww\Item\OrderItem\AvailableDid([
-                'sku_id' => 'acc46374-0b34-4912-9f67-8340339db1e5',
-                'available_did_id' => 'c43441e3-82d4-4d84-93e2-80998576c1ce',
-               ]),
+                    'sku_id' => 'acc46374-0b34-4912-9f67-8340339db1e5',
+                    'available_did_id' => 'c43441e3-82d4-4d84-93e2-80998576c1ce',
+                ]),
             ],
         ];
         $order = new \Didww\Item\Order($attributes);
@@ -151,9 +151,9 @@ class OrderTest extends BaseTest
         $attributes = [
             'items' => [
                 new \Didww\Item\OrderItem\ReservationDid([
-                  'sku_id' => '32840f64-5c3f-4278-8c8d-887fbe2f03f4',
-                  'did_reservation_id' => 'e3ed9f97-1058-430c-9134-38f1c614ee9f',
-                  ]),
+                    'sku_id' => '32840f64-5c3f-4278-8c8d-887fbe2f03f4',
+                    'did_reservation_id' => 'e3ed9f97-1058-430c-9134-38f1c614ee9f',
+                ]),
             ],
         ];
         $order = new \Didww\Item\Order($attributes);
@@ -185,8 +185,8 @@ class OrderTest extends BaseTest
         $attributes = [
             'items' => [
                 new \Didww\Item\OrderItem\Capacity([
-                  'capacity_pool_id' => 'b7522a31-4bf3-4c23-81e8-e7a14b23663f',
-                  'qty' => 1,
+                    'capacity_pool_id' => 'b7522a31-4bf3-4c23-81e8-e7a14b23663f',
+                    'qty' => 1,
                 ]),
             ],
         ];

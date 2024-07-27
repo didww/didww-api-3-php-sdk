@@ -165,7 +165,7 @@ class VoiceInTrunk extends BaseItem
         if (is_array($configuration)) {
             $this->configuration = $this->buildConfiguration($configuration['type']);
             $this->configuration->fill($configuration['attributes']);
-        } elseif ($configuration instanceof \Didww\Item\Configuration\Base) {
+        } elseif ($configuration instanceof Configuration\Base) {
             $this->configuration = $configuration;
         } elseif (is_object($configuration)) {
             $this->configuration = $this->buildConfiguration($configuration->type);
@@ -185,15 +185,15 @@ class VoiceInTrunk extends BaseItem
     protected function getWhiteListAttributesKeys()
     {
         return [
-         'priority',
-         'capacity_limit',
-         'weight',
-         'name',
-         'cli_format',
-         'cli_prefix',
-         'description',
-         'ringing_timeout',
-         'configuration',
-       ];
+            'priority',
+            'capacity_limit',
+            'weight',
+            'name',
+            'cli_format',
+            'cli_prefix',
+            'description',
+            'ringing_timeout',
+            'configuration',
+        ];
     }
 }

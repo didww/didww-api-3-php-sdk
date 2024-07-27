@@ -3,16 +3,16 @@
 require_once 'bootstrap.php';
 
 // create Sip Configuration object
-$trunkSipConfig = new \Didww\Item\Configuration\Sip([
+$trunkSipConfig = new Didww\Item\Configuration\Sip([
     'username' => 'username',
     'host' => '216.58.215.110',
     'sst_refresh_method_id' => 1,
     'port' => 5060,
-    'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
-    'rerouting_disconnect_code_ids' => \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
+    'codec_ids' => Didww\Item\Configuration\Base::getDefaultCodecIds(),
+    'rerouting_disconnect_code_ids' => Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
 ]);
 
-$trunk = new \Didww\Item\VoiceInTrunk();
+$trunk = new Didww\Item\VoiceInTrunk();
 // set name (should be unique)
 $trunk->setName('My New Custom Sip Trunk '.uniqid());
 // set configuration object

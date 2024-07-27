@@ -18,9 +18,9 @@ abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
     public function toJsonApiArray(): array
     {
         return [
-          'type' => $this->getType(),
-          'attributes' => $this->getCreatableAttributes(),
-      ];
+            'type' => $this->getType(),
+            'attributes' => $this->getCreatableAttributes(),
+        ];
     }
 
     public function getAttributes()

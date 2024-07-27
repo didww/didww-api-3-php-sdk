@@ -77,7 +77,7 @@ class CapacityPool extends BaseItem
     protected function getWhiteListAttributesKeys()
     {
         return [
-         'total_channels_count',
-       ];
+            'total_channels_count',
+        ];
     }
 }

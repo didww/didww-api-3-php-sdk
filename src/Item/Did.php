@@ -139,11 +139,11 @@ class Did extends BaseItem
     protected function getWhiteListAttributesKeys()
     {
         return [
-         'billing_cycles_count',
-         'capacity_limit',
-         'description',
-         'terminated',
-         'dedicated_channels_count',
-       ];
+            'billing_cycles_count',
+            'capacity_limit',
+            'description',
+            'terminated',
+            'dedicated_channels_count',
+        ];
     }
 }

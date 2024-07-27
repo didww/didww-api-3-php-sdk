@@ -79,13 +79,13 @@ class Export extends BaseItem
         $apiKey = \Didww\Configuration::getCredentials()->getApiKey();
 
         $options = [
-         CURLOPT_HTTPHEADER => ["api-key: $apiKey"],
-         CURLOPT_FILE => is_resource($dest) ? $dest : fopen($dest, 'w'),
-         CURLOPT_FOLLOWLOCATION => true,
-         CURLOPT_URL => $this->getAttributes()['url'],
-         CURLOPT_VERBOSE => true,
-         CURLOPT_FAILONERROR => true, // HTTP code > 400 will throw curl error
-       ];
+            CURLOPT_HTTPHEADER => ["api-key: $apiKey"],
+            CURLOPT_FILE => is_resource($dest) ? $dest : fopen($dest, 'w'),
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_URL => $this->getAttributes()['url'],
+            CURLOPT_VERBOSE => true,
+            CURLOPT_FAILONERROR => true, // HTTP code > 400 will throw curl error
+        ];
         $ch = curl_init();
         curl_setopt_array($ch, $options);
         $return = curl_exec($ch);

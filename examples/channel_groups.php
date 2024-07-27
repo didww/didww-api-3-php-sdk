@@ -2,11 +2,11 @@
 
 require_once 'bootstrap.php';
 
-$capacityGroup = new \Didww\Item\SharedCapacityGroup();
+$capacityGroup = new Didww\Item\SharedCapacityGroup();
 // set name (should be unique)
 $capacityGroup->setName('My New Channel Group '.uniqid());
 
-$capacityPool = \Didww\Item\CapacityPool::all()->getData()[0];
+$capacityPool = Didww\Item\CapacityPool::all()->getData()[0];
 $capacityGroup->setMeteredhannelsCount(10);
 // see capacity order example to purchase shared channels and assign them to pool
 $capacityGroup->setSharedChannelsCount(1);

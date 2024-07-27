@@ -3,11 +3,11 @@
 require_once 'bootstrap.php';
 
 // get last ordered DID
-$did = \Didww\Item\Did::all(['sort' => '-created_at', 'page' => ['size' => 1, 'number' => 1]])->getData()[0];
+$did = Didww\Item\Did::all(['sort' => '-created_at', 'page' => ['size' => 1, 'number' => 1]])->getData()[0];
 
 // see trunks example to create Trunk
 // get last SIP trunk
-$trunk = \Didww\Item\VoiceInTrunk::all(['sort' => '-created_at', 'filter' => ['configuration.type' => 'sip_configurations']])->getData()[0];
+$trunk = Didww\Item\VoiceInTrunk::all(['sort' => '-created_at', 'filter' => ['configuration.type' => 'sip_configurations']])->getData()[0];
 
 // assign trunk
 $did->setTrunk($trunk);
@@ -26,14 +26,14 @@ if ($didDocument->hasErrors()) {
 }
 
 // assign capacity
-$capacityPools = \Didww\Item\CapacityPool::all()->getData()->all();
+$capacityPools = Didww\Item\CapacityPool::all()->getData()->all();
 
 $supportedPools = array_filter($capacityPools, function ($v, $k) {
     return 'Extended' == $v->getName();
 }, ARRAY_FILTER_USE_BOTH);
 $supportedPool = reset($supportedPools);
 
-$sharedCapacityGroup = \Didww\Item\SharedCapacityGroup::all(['filters' => ['capacity_pool.id' => $supportedPool->getId()]])->getData()[0];
+$sharedCapacityGroup = Didww\Item\SharedCapacityGroup::all(['filters' => ['capacity_pool.id' => $supportedPool->getId()]])->getData()[0];
 // assign channel group to use shared channels
 $did->setSharedCapacityGroup($sharedCapacityGroup);
 // assign channel pool to use dedicated channels
