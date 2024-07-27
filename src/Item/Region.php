@@ -20,4 +20,12 @@ class Region extends BaseItem
     {
         return $this->getAttributes()['name'];
     }
+
+    /**
+     * Get ISO of the region.
+     */
+    public function getIso(): ?string
+    {
+        return $this->getAttributes()['iso'];
+    }
 }
