@@ -252,4 +252,47 @@ class OrderTest extends BaseTest
         $this->assertContainsOnlyInstancesOf('Didww\Item\OrderItem\Did', $order->getAttributes()['items']);
         $this->stopVCR();
     }
+
+    public function testOrderSkuSaveWithCallback()
+    {
+        $this->startVCR('orders_with_callback.yml');
+
+        $attributes = [
+            'allow_back_ordering' => true,
+            'items' => [
+                new \Didww\Item\OrderItem\Did([
+                    'sku_id' => 'f36d2812-2195-4385-85e8-e59c3484a8bc',
+                    'qty' => 1,
+                ]),
+            ],
+        ];
+        $order = new \Didww\Item\Order($attributes);
+        $order->setCallbackUrl('https://example.com/callback');
+        $order->setCallbackMethod('POST');
+        $this->assertEquals($order->toJsonApiArray(), [
+        'type' => 'orders',
+        'attributes' => [
+            'allow_back_ordering' => true,
+            'callback_url' => 'https://example.com/callback',
+            'callback_method' => 'POST',
+            'items' => [
+                [
+                    'type' => 'did_order_items',
+                    'attributes' => [
+                        'qty' => 1,
+                        'sku_id' => 'f36d2812-2195-4385-85e8-e59c3484a8bc',
+                    ],
+                ],
+            ],
+        ],
+        ]);
+        $orderDocument = $order->save();
+        $order = $orderDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Order', $order);
+        $this->assertContainsOnlyInstancesOf('Didww\Item\OrderItem\Did', $order->getAttributes()['items']);
+        $this->assertEquals($order->getCallbackUrl(), 'https://example.com/callback');
+        $this->assertEquals($order->getCallbackMethod(), 'POST');
+
+        $this->stopVCR();
+    }
 }
