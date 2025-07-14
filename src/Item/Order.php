@@ -38,6 +38,8 @@ class Order extends BaseItem
         return [
          'allow_back_ordering',
          'items',
+         'callback_url',
+         'callback_method',
        ];
     }
 
