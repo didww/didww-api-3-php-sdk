@@ -22,7 +22,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function getAllowedSipIps(): array
     {
-        return $this->attributes['name'];
+        return $this->attributes['allowed_sip_ips'];
     }
 
     public function setAllowedSipIps(array $allowedSipIps)
