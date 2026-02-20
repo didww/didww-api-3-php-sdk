@@ -19,6 +19,7 @@ class NanpaPrefixTest extends BaseTest
     {
         $nanpaPrefixDocument = \Didww\Item\NanpaPrefix::all();
         $this->assertEquals('2', $nanpaPrefixDocument->getMeta()['total_records']);
+        $this->assertContainsOnlyInstancesOf('Didww\Item\NanpaPrefix', $nanpaPrefixDocument->getData());
     }
 
     public function testMetaData()
