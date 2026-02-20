@@ -30,7 +30,7 @@ class SharedCapacityGroup extends BaseItem
         return $this->attributes['shared_channels_count'];
     }
 
-    public function setMeteredhannelsCount(int $sharedMeteredCount)
+    public function setMeteredChannelsCount(int $sharedMeteredCount)
     {
         $this->attributes['metered_channels_count'] = $sharedMeteredCount;
     }
