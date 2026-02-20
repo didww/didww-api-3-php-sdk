@@ -27,6 +27,18 @@ class AddressVerificationTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testFindAddressVerification()
+    {
+        $this->startVCR('address_verifications.yml');
+        $addressVerificationDocument = \Didww\Item\AddressVerification::find('c8e004b0-87ec-4987-b4fb-ee89db099f0e');
+        $addressVerification = $addressVerificationDocument->getData();
+        $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
+        $this->assertEquals('c8e004b0-87ec-4987-b4fb-ee89db099f0e', $addressVerification->getId());
+        $this->assertEquals('Approved', $addressVerification->getStatus());
+        $this->assertEquals('SHB-485120', $addressVerification->getReference());
+        $this->stopVCR();
+    }
+
     public function testCreateAddressVerification()
     {
         $this->startVCR('address_verifications.yml');

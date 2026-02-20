@@ -49,6 +49,11 @@ class AddressVerification extends BaseItem
         return $this->attributes['reject_reasons'];
     }
 
+    public function getReference(): ?string
+    {
+        return $this->attributes['reference'] ?? null;
+    }
+
     public function getCreatedAt(): \DateTime
     {
         return new \DateTime($this->attributes['created_at']);
