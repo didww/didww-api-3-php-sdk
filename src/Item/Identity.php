@@ -52,7 +52,7 @@ class Identity extends BaseItem
 
     public function getBirthDate(): ?\DateTime
     {
-        return new \DateTime($this->attributes['birth_date']);
+        return isset($this->attributes['birth_date']) ? new \DateTime($this->attributes['birth_date']) : null;
     }
 
     public function setBirthDate(string $birthDate)

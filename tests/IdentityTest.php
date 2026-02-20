@@ -111,6 +111,20 @@ class IdentityTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testGetBirthDateReturnsNullWhenNull()
+    {
+        $identity = new \Didww\Item\Identity(['birth_date' => null]);
+        $this->assertNull($identity->getBirthDate());
+    }
+
+    public function testGetBirthDateReturnsDateTimeWhenSet()
+    {
+        $identity = new \Didww\Item\Identity(['birth_date' => '1990-05-15']);
+        $result = $identity->getBirthDate();
+        $this->assertInstanceOf(\DateTime::class, $result);
+        $this->assertEquals('1990-05-15', $result->format('Y-m-d'));
+    }
+
     public function testDeleteIdentity()
     {
         $this->startVCR('identities.yml');
