@@ -91,8 +91,6 @@ class EncryptedFile extends BaseItem
 
         $response = curl_exec($curl);
         $responseCode = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-        curl_close($curl);
-
         return new \Didww\UploadResult($response, $responseCode);
     }
 
