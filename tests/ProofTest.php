@@ -25,6 +25,20 @@ class ProofTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testGetExpiresAtReturnsNullWhenNull()
+    {
+        $proof = new \Didww\Item\Proof(['expires_at' => null]);
+        $this->assertNull($proof->getExpiresAt());
+    }
+
+    public function testGetExpiresAtReturnsDateTimeWhenSet()
+    {
+        $proof = new \Didww\Item\Proof(['expires_at' => '2025-01-01T00:00:00.000Z']);
+        $result = $proof->getExpiresAt();
+        $this->assertInstanceOf(\DateTime::class, $result);
+        $this->assertEquals('2025-01-01', $result->format('Y-m-d'));
+    }
+
     public function testDeleteProof()
     {
         $this->startVCR('proofs.yml');

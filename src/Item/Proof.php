@@ -16,7 +16,7 @@ class Proof extends BaseItem
 
     public function getExpiresAt(): ?\DateTime
     {
-        return new \DateTime($this->attributes['expires_at']);
+        return isset($this->attributes['expires_at']) ? new \DateTime($this->attributes['expires_at']) : null;
     }
 
     /** @return array [

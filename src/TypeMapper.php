@@ -36,6 +36,7 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('supporting_document_templates', Item\SupportingDocumentTemplate::class);
         $this->setMapping('public_keys', Item\PublicKey::class);
         $this->setMapping('areas', Item\Area::class);
+        $this->setMapping('nanpa_prefixes', Item\NanpaPrefix::class);
         $this->setMapping('voice_out_trunks', Item\VoiceOutTrunk::class);
         $this->setMapping('voice_out_trunk_regenerate_credentials', Item\VoiceOutTrunkRegenerateCredential::class);
     }
