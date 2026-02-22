@@ -19,9 +19,9 @@ class ExportTest extends BaseTest
             'attributes' => [
                 'export_type' => 'cdr_in',
                 'filters' => [
-                  'did_number' => '1234556789',
-                  'year' => '2019',
-                  'month' => '01',
+                    'did_number' => '1234556789',
+                    'year' => '2019',
+                    'month' => '01',
                 ],
             ],
         ]);
@@ -100,12 +100,12 @@ class ExportTest extends BaseTest
 
         $this->assertInstanceOf('Didww\Item\Export', $export);
         $this->assertEquals($export->getAttributes(), [
-          'created_at' => '2019-01-02T10:23:00.897Z',
-          'status' => 'Completed',
-          'url' => 'https://sandbox-api.didww.com/v3/exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv',
-          'callback_url' => null,
-          'callback_method' => null,
-          'export_type' => 'cdr_in',
+            'created_at' => '2019-01-02T10:23:00.897Z',
+            'status' => 'Completed',
+            'url' => 'https://sandbox-api.didww.com/v3/exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv',
+            'callback_url' => null,
+            'callback_method' => null,
+            'export_type' => 'cdr_in',
         ]);
         $this->stopVCR();
     }

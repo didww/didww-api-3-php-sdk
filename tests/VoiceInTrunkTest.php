@@ -35,11 +35,11 @@ class VoiceInTrunkTest extends BaseTest
     {
         $this->startVCR('voice_in_trunks.yml');
         $attributes = [
-        'configuration' => new \Didww\Item\Configuration\PSTN([
-            'dst' => '558540420024',
-        ]),
-        'name' => 'hello, test pstn trunk',
-    ];
+            'configuration' => new \Didww\Item\Configuration\PSTN([
+                'dst' => '558540420024',
+            ]),
+            'name' => 'hello, test pstn trunk',
+        ];
         $voiceInTrunk = new \Didww\Item\VoiceInTrunk($attributes);
         $voiceInTrunkDocument = $voiceInTrunk->save();
         $voiceInTrunk = $voiceInTrunkDocument->getData();
@@ -55,11 +55,11 @@ class VoiceInTrunkTest extends BaseTest
     {
         $this->startVCR('voice_in_trunks.yml');
         $attributes = [
-        'configuration' => new \Didww\Item\Configuration\PSTN([
-            'dst' => '558540420025',
-        ]),
-        'name' => 'hello, updated test pstn trunk',
-    ];
+            'configuration' => new \Didww\Item\Configuration\PSTN([
+                'dst' => '558540420025',
+            ]),
+            'name' => 'hello, updated test pstn trunk',
+        ];
         $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('41b94706-325e-4704-a433-d65105758836', $attributes);
         $voiceInTrunkDocument = $voiceInTrunk->save();
         $voiceInTrunk = $voiceInTrunkDocument->getData();
@@ -74,18 +74,18 @@ class VoiceInTrunkTest extends BaseTest
     {
         $this->startVCR('voice_in_trunks.yml');
         $attributes = [
-          'configuration' => new \Didww\Item\Configuration\Sip([
-              'username' => 'username',
-              'host' => '216.58.215.110',
-              'sst_refresh_method_id' => 1,
-              'port' => 5060,
-              'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
-              'rerouting_disconnect_code_ids' => \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
-              'media_encryption_mode' => 'zrtp',
-              'stir_shaken_mode' => 'pai',
-              'allowed_rtp_ips' => ['127.0.0.1'],
-          ]),
-          'name' => 'hello, test sip trunk',
+            'configuration' => new \Didww\Item\Configuration\Sip([
+                'username' => 'username',
+                'host' => '216.58.215.110',
+                'sst_refresh_method_id' => 1,
+                'port' => 5060,
+                'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
+                'rerouting_disconnect_code_ids' => \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
+                'media_encryption_mode' => 'zrtp',
+                'stir_shaken_mode' => 'pai',
+                'allowed_rtp_ips' => ['127.0.0.1'],
+            ]),
+            'name' => 'hello, test sip trunk',
         ];
         $voiceInTrunk = new \Didww\Item\VoiceInTrunk($attributes);
         $voiceInTrunkDocument = $voiceInTrunk->save();
@@ -114,13 +114,13 @@ class VoiceInTrunkTest extends BaseTest
     {
         $this->startVCR('voice_in_trunks.yml');
         $attributes = [
-        'configuration' => new \Didww\Item\Configuration\Sip([
-            'username' => 'new-username',
-            'max_transfers' => 5,
-        ]),
-        'name' => 'hello, updated test sip trunk',
-        'description' => 'just a description',
-    ];
+            'configuration' => new \Didww\Item\Configuration\Sip([
+                'username' => 'new-username',
+                'max_transfers' => 5,
+            ]),
+            'name' => 'hello, updated test sip trunk',
+            'description' => 'just a description',
+        ];
         $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('a80006b6-4183-4865-8b99-7ebbd359a762', $attributes);
         $voiceInTrunkDocument = $voiceInTrunk->save();
         $voiceInTrunk = $voiceInTrunkDocument->getData();

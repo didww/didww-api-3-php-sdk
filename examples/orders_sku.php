@@ -9,10 +9,10 @@ $orderItemAttributes = [
 ];
 $orderAttributes = [
     'items' => [
-        new \Didww\Item\OrderItem\Did($orderItemAttributes),
+        new Didww\Item\OrderItem\Did($orderItemAttributes),
     ],
 ];
-$order = new \Didww\Item\Order($orderAttributes);
+$order = new Didww\Item\Order($orderAttributes);
 $orderDocument = $order->save();
 $order = $orderDocument->getData();
 

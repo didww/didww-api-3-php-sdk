@@ -68,9 +68,9 @@ class SharedCapacityGroup extends BaseItem
     protected function getWhiteListAttributesKeys()
     {
         return [
-         'name',
-         'shared_channels_count',
-         'metered_channels_count',
-       ];
+            'name',
+            'shared_channels_count',
+            'metered_channels_count',
+        ];
     }
 }

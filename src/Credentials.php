@@ -34,8 +34,8 @@ class Credentials
     {
         if ('production' == $this->getEnv()) {
             return 'https://api.didww.com/v3';
-        } else {
-            return 'https://sandbox-api.didww.com/v3';
         }
+
+        return 'https://sandbox-api.didww.com/v3';
     }
 }
