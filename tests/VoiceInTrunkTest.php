@@ -15,136 +15,22 @@ class VoiceInTrunkTest extends BaseTest
         $voiceInTrunksDocument = \Didww\Item\VoiceInTrunk::all(['sort' => '-created_at', 'include' => 'trunk_group,pop', 'page' => ['size' => 4, 'number' => 1]]);
         $voiceInTrunks = $voiceInTrunksDocument->getData();
         $this->assertContainsOnlyInstancesOf('Didww\Item\VoiceInTrunk', $voiceInTrunks);
-        $voiceInTrunkGroup = $voiceInTrunks[0]->voiceInTrunkGroup()->getIncluded();
+        $voiceInTrunksArray = is_array($voiceInTrunks) ? $voiceInTrunks : iterator_to_array($voiceInTrunks);
+        $pstnTrunk = array_values(array_filter($voiceInTrunksArray, fn($t) => $t->getConfiguration() instanceof \Didww\Item\Configuration\Pstn))[0] ?? null;
+        $sipTrunk = array_values(array_filter($voiceInTrunksArray, fn($t) => $t->getConfiguration() instanceof \Didww\Item\Configuration\Sip))[0] ?? null;
 
-        $pop = $voiceInTrunks[2]->pop()->getIncluded();
+        $this->assertNotNull($pstnTrunk);
+        $this->assertNotNull($sipTrunk);
 
+        $pop = $sipTrunk->pop()->getIncluded();
         $this->assertInstanceOf('Didww\Item\Pop', $pop);
-        $this->assertEquals('US, LA', $pop->getName());
-        $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
-
-        $this->assertInstanceOf('Didww\Item\Configuration\Iax2', $voiceInTrunks[0]->getConfiguration());
-        $this->assertInstanceOf('Didww\Item\Configuration\Pstn', $voiceInTrunks[1]->getConfiguration());
-        $this->assertInstanceOf('Didww\Item\Configuration\H323', $voiceInTrunks[2]->getConfiguration());
-        $this->assertInstanceOf('Didww\Item\Configuration\Sip', $voiceInTrunks[3]->getConfiguration());
+        $this->assertEquals('DE, FRA', $pop->getName());
 
         $this->assertEquals($voiceInTrunksDocument->getMeta()['total_records'], 70);
 
         $this->stopVCR();
     }
 
-    public function testCreateH323Trunk()
-    {
-        $this->startVCR('voice_in_trunks.yml');
-        $attributes = [
-        'configuration' => new \Didww\Item\Configuration\H323([
-            'dst' => '558540420024',
-            'host' => 'example.com',
-            'port' => 4569,
-            'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
-        ]),
-        'name' => 'hello, test h323 trunk',
-    ];
-        $voiceInTrunk = new \Didww\Item\VoiceInTrunk($attributes);
-        $voiceInTrunkDocument = $voiceInTrunk->save();
-        $voiceInTrunk = $voiceInTrunkDocument->getData();
-
-        $h323Configuration = $voiceInTrunk->getConfiguration();
-        $this->assertInstanceOf('Didww\Item\Configuration\H323', $h323Configuration);
-
-        $this->assertEquals($attributes['configuration']->getAttributes(), $h323Configuration->getAttributes());
-
-        $this->assertEquals(4569, $h323Configuration->getPort());
-
-        $this->assertEquals('558540420024', $h323Configuration->getDst());
-        $this->assertEquals('example.com', $h323Configuration->getHost());
-        $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultCodecIds(), $h323Configuration->getCodecIds());
-
-        $this->assertInstanceOf('Didww\Item\VoiceInTrunk', $voiceInTrunk);
-        $this->assertInstanceOf('Didww\Item\Configuration\H323', $voiceInTrunk->getConfiguration());
-        $this->assertEquals('78146511-7648-45ba-9b26-a4b2cf87db06', $voiceInTrunk->getId());
-        $this->assertEquals($attributes['configuration']->getAttributes(), $voiceInTrunk->getConfiguration()->getAttributes());
-        $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
-        $this->stopVCR();
-    }
-
-    public function testUpdateH323Trunk()
-    {
-        $this->startVCR('voice_in_trunks.yml');
-        $attributes = [
-        'configuration' => new \Didww\Item\Configuration\H323([
-          'host' => 'example2.com',
-          'port' => 4567,
-        ]),
-        'name' => 'hello, updated test h323 trunk',
-    ];
-        $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('78146511-7648-45ba-9b26-a4b2cf87db06', $attributes);
-        $voiceInTrunkDocument = $voiceInTrunk->save();
-        $voiceInTrunk = $voiceInTrunkDocument->getData();
-        $this->assertInstanceOf('Didww\Item\VoiceInTrunk', $voiceInTrunk);
-        $this->assertInstanceOf('Didww\Item\Configuration\H323', $voiceInTrunk->getConfiguration());
-        $this->assertArraySubset($attributes['configuration']->getAttributes(), $voiceInTrunk->getConfiguration()->getAttributes());
-        $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
-        $this->stopVCR();
-    }
-
-    public function testCreateIax2Trunk()
-    {
-        $this->startVCR('voice_in_trunks.yml');
-        $attributes = [
-        'configuration' => new \Didww\Item\Configuration\Iax2([
-            'dst' => '558540420024',
-            'host' => 'example.com',
-            'port' => 4569,
-            'auth_user' => 'auth_user',
-            'auth_password' => 'auth_password',
-            'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
-        ]),
-        'name' => 'hello, test iax2 trunk',
-    ];
-        $voiceInTrunk = new \Didww\Item\VoiceInTrunk($attributes);
-        $voiceInTrunkDocument = $voiceInTrunk->save();
-        $voiceInTrunk = $voiceInTrunkDocument->getData();
-        $this->assertInstanceOf('Didww\Item\VoiceInTrunk', $voiceInTrunk);
-        $this->assertEquals('2021b895-52c9-4f65-990b-e57a1abf858d', $voiceInTrunk->getId());
-        $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
-
-        $iaxConfiguration = $voiceInTrunk->getConfiguration();
-        $this->assertInstanceOf('Didww\Item\Configuration\Iax2', $iaxConfiguration);
-
-        $this->assertEquals($attributes['configuration']->getAttributes(), $iaxConfiguration->getAttributes());
-
-        $this->assertEquals(4569, $iaxConfiguration->getPort());
-        $this->assertEquals('auth_user', $iaxConfiguration->getAuthUser());
-        $this->assertEquals('auth_password', $iaxConfiguration->getAuthPassword());
-        $this->assertEquals('558540420024', $iaxConfiguration->getDst());
-        $this->assertEquals('example.com', $iaxConfiguration->getHost());
-        $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultCodecIds(), $iaxConfiguration->getCodecIds());
-
-        $this->stopVCR();
-    }
-
-    public function testUpdateIaxTrunk()
-    {
-        $this->startVCR('voice_in_trunks.yml');
-        $attributes = [
-        'configuration' => new \Didww\Item\Configuration\Iax2([
-          'port' => 4567,
-          'auth_user' => 'new_auth_user',
-          'auth_password' => 'new_auth_password',
-        ]),
-        'name' => 'hello, updated test iax2 trunk',
-    ];
-        $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('2021b895-52c9-4f65-990b-e57a1abf858d', $attributes);
-        $voiceInTrunkDocument = $voiceInTrunk->save();
-        $voiceInTrunk = $voiceInTrunkDocument->getData();
-        $this->assertInstanceOf('Didww\Item\VoiceInTrunk', $voiceInTrunk);
-        $iaxConfiguration = $voiceInTrunk->getConfiguration();
-        $this->assertInstanceOf('Didww\Item\Configuration\Iax2', $iaxConfiguration);
-        $this->assertArraySubset($attributes['configuration']->getAttributes(), $iaxConfiguration->getAttributes());
-        $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
-        $this->stopVCR();
-    }
 
     public function testCreatePstnTrunk()
     {
@@ -259,24 +145,4 @@ class VoiceInTrunkTest extends BaseTest
         $this->stopVCR();
     }
 
-    public function testUpdateRelashionships()
-    {
-        $this->startVCR('voice_in_trunks.yml');
-        $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('2021b895-52c9-4f65-990b-e57a1abf858d');
-        $voiceInTrunk->setPop(\Didww\Item\Pop::build('ba7ccbef-82ac-4372-9391-eac90d5c9479'));
-        $voiceInTrunk->setVoiceInTrunkGroup(\Didww\Item\VoiceInTrunkGroup::build('837c5764-a6c3-456f-aa37-71fc8f8ca07b'));
-        $voiceInTrunkDocument = $voiceInTrunk->save(['include' => 'pop,trunk_group']);
-        $this->assertFalse($voiceInTrunkDocument->hasErrors());
-        $voiceInTrunk = $voiceInTrunkDocument->getData();
-
-        $voiceInTrunkGroup = $voiceInTrunk->voiceInTrunkGroup()->getIncluded();
-        $pop = $voiceInTrunk->pop()->getIncluded();
-
-        $this->assertInstanceOf('Didww\Item\Pop', $pop);
-        $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
-        $this->assertEquals('ba7ccbef-82ac-4372-9391-eac90d5c9479', $pop->getId());
-        $this->assertEquals('837c5764-a6c3-456f-aa37-71fc8f8ca07b', $voiceInTrunkGroup->getId());
-
-        $this->stopVCR();
-    }
 }

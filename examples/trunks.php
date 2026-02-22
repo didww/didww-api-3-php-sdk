@@ -16,7 +16,7 @@ $trunk = new \Didww\Item\VoiceInTrunk();
 // set name (should be unique)
 $trunk->setName('My New Custom Sip Trunk '.uniqid());
 // set configuration object
-// see also \Didww\Item\Configuration\H323  \Didww\Item\Configuration\Iax2 and \Didww\Item\Configuration\Pstn
+// see also \Didww\Item\Configuration\Pstn
 $trunk->setConfiguration($trunkSipConfig);
 
 $trunk->setRingingTimeout(30);
