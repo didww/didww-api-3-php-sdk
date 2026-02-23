@@ -13,22 +13,22 @@ class Requirement extends BaseItem
 
     public function getIdentityType(): IdentityType
     {
-        return IdentityType::from($this->attributes['identity_type']);
+        return $this->enumAttribute('identity_type', IdentityType::class);
     }
 
     public function getPersonalAreaLevel(): AreaLevel
     {
-        return AreaLevel::from($this->attributes['personal_area_level']);
+        return $this->enumAttribute('personal_area_level', AreaLevel::class);
     }
 
     public function getBusinessAreaLevel(): AreaLevel
     {
-        return AreaLevel::from($this->attributes['business_area_level']);
+        return $this->enumAttribute('business_area_level', AreaLevel::class);
     }
 
     public function getAddressAreaLevel(): AreaLevel
     {
-        return AreaLevel::from($this->attributes['address_area_level']);
+        return $this->enumAttribute('address_area_level', AreaLevel::class);
     }
 
     public function getPersonalProofQty(): int

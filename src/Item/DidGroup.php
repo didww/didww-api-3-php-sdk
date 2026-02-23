@@ -50,7 +50,7 @@ class DidGroup extends BaseItem
      */
     public function getFeatures(): array
     {
-        return array_map(fn ($v) => Feature::from($v), $this->getAttributes()['features']);
+        return $this->enumArrayAttribute('features', Feature::class) ?? [];
     }
 
     public function getIsMetered(): bool

@@ -37,7 +37,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function getOnCliMismatchAction(): OnCliMismatchAction
     {
-        return OnCliMismatchAction::from($this->attributes['on_cli_mismatch_action']);
+        return $this->enumAttribute('on_cli_mismatch_action', OnCliMismatchAction::class);
     }
 
     public function setOnCliMismatchAction(OnCliMismatchAction|string $onCliMismatchAction)
@@ -67,7 +67,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function getStatus(): VoiceOutTrunkStatus
     {
-        return VoiceOutTrunkStatus::from($this->attributes['status']);
+        return $this->enumAttribute('status', VoiceOutTrunkStatus::class);
     }
 
     public function setStatus(VoiceOutTrunkStatus|string $status)
@@ -97,7 +97,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function getMediaEncryptionMode(): MediaEncryptionMode
     {
-        return MediaEncryptionMode::from($this->attributes['media_encryption_mode']);
+        return $this->enumAttribute('media_encryption_mode', MediaEncryptionMode::class);
     }
 
     public function setMediaEncryptionMode(MediaEncryptionMode|string $mediaEncryptionMode)
@@ -107,7 +107,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function getDefaultDstAction(): DefaultDstAction
     {
-        return DefaultDstAction::from($this->attributes['default_dst_action']);
+        return $this->enumAttribute('default_dst_action', DefaultDstAction::class);
     }
 
     public function setDefaultDstAction(DefaultDstAction|string $defaultDstAction)

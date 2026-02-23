@@ -33,23 +33,17 @@ class Sip extends Base
      */
     public function getCodecIds(): ?array
     {
-        $val = $this->attributes['codec_ids'] ?? null;
-
-        return null !== $val ? array_map(fn ($v) => Codec::from($v), $val) : null;
+        return $this->enumArrayAttribute('codec_ids', Codec::class);
     }
 
     public function getRxDtmfFormatId(): ?RxDtmfFormat
     {
-        $val = $this->attributes['rx_dtmf_format_id'] ?? null;
-
-        return null !== $val ? RxDtmfFormat::from($val) : null;
+        return $this->enumAttribute('rx_dtmf_format_id', RxDtmfFormat::class);
     }
 
     public function getTxDtmfFormatId(): ?TxDtmfFormat
     {
-        $val = $this->attributes['tx_dtmf_format_id'] ?? null;
-
-        return null !== $val ? TxDtmfFormat::from($val) : null;
+        return $this->enumAttribute('tx_dtmf_format_id', TxDtmfFormat::class);
     }
 
     public function getResolveRuri()
@@ -127,9 +121,7 @@ class Sip extends Base
      */
     public function getReroutingDisconnectCodeIds(): ?array
     {
-        $val = $this->attributes['rerouting_disconnect_code_ids'] ?? null;
-
-        return null !== $val ? array_map(fn ($v) => ReroutingDisconnectCode::from($v), $val) : null;
+        return $this->enumArrayAttribute('rerouting_disconnect_code_ids', ReroutingDisconnectCode::class);
     }
 
     public function getSstSessionExpires()
@@ -139,16 +131,12 @@ class Sip extends Base
 
     public function getSstRefreshMethodId(): ?SstRefreshMethod
     {
-        $val = $this->attributes['sst_refresh_method_id'] ?? null;
-
-        return null !== $val ? SstRefreshMethod::from($val) : null;
+        return $this->enumAttribute('sst_refresh_method_id', SstRefreshMethod::class);
     }
 
     public function getTransportProtocolId(): ?TransportProtocol
     {
-        $val = $this->attributes['transport_protocol_id'] ?? null;
-
-        return null !== $val ? TransportProtocol::from($val) : null;
+        return $this->enumAttribute('transport_protocol_id', TransportProtocol::class);
     }
 
     public function getMaxTransfers()
@@ -168,16 +156,12 @@ class Sip extends Base
 
     public function getMediaEncryptionMode(): ?MediaEncryptionMode
     {
-        $val = $this->attributes['media_encryption_mode'] ?? null;
-
-        return null !== $val ? MediaEncryptionMode::from($val) : null;
+        return $this->enumAttribute('media_encryption_mode', MediaEncryptionMode::class);
     }
 
     public function getStirShakenMode(): ?StirShakenMode
     {
-        $val = $this->attributes['stir_shaken_mode'] ?? null;
-
-        return null !== $val ? StirShakenMode::from($val) : null;
+        return $this->enumAttribute('stir_shaken_mode', StirShakenMode::class);
     }
 
     public function getAllowedRtpIps(): ?array

@@ -87,7 +87,7 @@ class Order extends BaseItem
 
     public function getStatus(): OrderStatus
     {
-        return OrderStatus::from($this->getAttributes()['status']);
+        return $this->enumAttribute('status', OrderStatus::class);
     }
 
     public function getCreatedAt(): \DateTime
@@ -127,9 +127,7 @@ class Order extends BaseItem
 
     public function getCallbackMethod(): CallbackMethod|string|null
     {
-        $val = $this->attributes['callback_method'] ?? null;
-
-        return null !== $val ? CallbackMethod::from($val) : null;
+        return $this->enumAttribute('callback_method', CallbackMethod::class);
     }
 
     public function setCallbackMethod(CallbackMethod|string $callbackMethod)

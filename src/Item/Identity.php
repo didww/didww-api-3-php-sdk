@@ -114,7 +114,7 @@ class Identity extends BaseItem
 
     public function getIdentityType(): IdentityType
     {
-        return IdentityType::from($this->attributes['identity_type']);
+        return $this->enumAttribute('identity_type', IdentityType::class);
     }
 
     public function setIdentityType(IdentityType|string $identityType)

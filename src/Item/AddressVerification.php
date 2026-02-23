@@ -34,9 +34,7 @@ class AddressVerification extends BaseItem
 
     public function getCallbackMethod(): CallbackMethod|string|null
     {
-        $val = $this->attributes['callback_method'] ?? null;
-
-        return null !== $val ? CallbackMethod::from($val) : null;
+        return $this->enumAttribute('callback_method', CallbackMethod::class);
     }
 
     public function setCallbackMethod(CallbackMethod|string $callbackMethod)
@@ -46,7 +44,7 @@ class AddressVerification extends BaseItem
 
     public function getStatus(): AddressVerificationStatus
     {
-        return AddressVerificationStatus::from($this->attributes['status']);
+        return $this->enumAttribute('status', AddressVerificationStatus::class);
     }
 
     public function getRejectReasons(): ?string

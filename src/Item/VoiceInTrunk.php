@@ -34,7 +34,7 @@ class VoiceInTrunk extends BaseItem
 
     public function getCliFormat(): CliFormat
     {
-        return CliFormat::from($this->attributes['cli_format']);
+        return $this->enumAttribute('cli_format', CliFormat::class);
     }
 
     public function setCliFormat(CliFormat|string $cliFormat)

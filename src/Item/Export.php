@@ -49,7 +49,7 @@ class Export extends BaseItem
 
     public function getExportType(): ExportType
     {
-        return ExportType::from($this->attributes['export_type']);
+        return $this->enumAttribute('export_type', ExportType::class);
     }
 
     public function setExportType(ExportType|string $exportType)
@@ -69,9 +69,7 @@ class Export extends BaseItem
 
     public function getCallbackMethod(): CallbackMethod|string|null
     {
-        $val = $this->attributes['callback_method'] ?? null;
-
-        return null !== $val ? CallbackMethod::from($val) : null;
+        return $this->enumAttribute('callback_method', CallbackMethod::class);
     }
 
     public function setCallbackMethod(CallbackMethod|string $callbackMethod)
