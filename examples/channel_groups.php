@@ -7,7 +7,7 @@ $capacityGroup = new Didww\Item\SharedCapacityGroup();
 $capacityGroup->setName('My New Channel Group '.uniqid());
 
 $capacityPool = Didww\Item\CapacityPool::all()->getData()[0];
-$capacityGroup->setMeteredhannelsCount(10);
+$capacityGroup->setMeteredChannelsCount(10);
 // see capacity order example to purchase shared channels and assign them to pool
 $capacityGroup->setSharedChannelsCount(1);
 // set capacity pool as a source of purchased channels
