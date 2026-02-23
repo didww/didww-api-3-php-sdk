@@ -2,6 +2,8 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\CliFormat;
+
 class VoiceInTrunk extends BaseItem
 {
     use \Didww\Traits\Fetchable;
@@ -30,14 +32,14 @@ class VoiceInTrunk extends BaseItem
         $this->attributes['weight'] = $weight;
     }
 
-    public function getCliFormat(): string
+    public function getCliFormat(): CliFormat
     {
-        return $this->attributes['cli_format'];
+        return CliFormat::from($this->attributes['cli_format']);
     }
 
-    public function setCliFormat(string $cliFormat)
+    public function setCliFormat(CliFormat|string $cliFormat)
     {
-        $this->attributes['cli_format'] = $cliFormat;
+        $this->attributes['cli_format'] = $cliFormat instanceof CliFormat ? $cliFormat->value : $cliFormat;
     }
 
     public function getCliPrefix(): string

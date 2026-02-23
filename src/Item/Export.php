@@ -2,6 +2,9 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\CallbackMethod;
+use Didww\Enum\ExportType;
+
 class Export extends BaseItem
 {
     use \Didww\Traits\Saveable;
@@ -44,14 +47,14 @@ class Export extends BaseItem
         return $data;
     }
 
-    public function getExportType(): string
+    public function getExportType(): ExportType
     {
-        return $this->attributes['export_type'];
+        return ExportType::from($this->attributes['export_type']);
     }
 
-    public function setExportType(string $exportType)
+    public function setExportType(ExportType|string $exportType)
     {
-        $this->attributes['export_type'] = $exportType;
+        $this->attributes['export_type'] = $exportType instanceof ExportType ? $exportType->value : $exportType;
     }
 
     public function getCallbackUrl(): ?string
@@ -64,14 +67,16 @@ class Export extends BaseItem
         $this->attributes['callback_url'] = $callbackUrl;
     }
 
-    public function getCallbackMethod(): ?string
+    public function getCallbackMethod(): CallbackMethod|string|null
     {
-        return $this->attributes['callback_method'];
+        $val = $this->attributes['callback_method'] ?? null;
+
+        return $val !== null ? CallbackMethod::from($val) : null;
     }
 
-    public function setCallbackMethod(string $callbackMethod)
+    public function setCallbackMethod(CallbackMethod|string $callbackMethod)
     {
-        $this->attributes['callback_method'] = $callbackMethod;
+        $this->attributes['callback_method'] = $callbackMethod instanceof CallbackMethod ? $callbackMethod->value : $callbackMethod;
     }
 
     public function download($dest)

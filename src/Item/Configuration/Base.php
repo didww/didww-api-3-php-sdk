@@ -2,6 +2,15 @@
 
 namespace Didww\Item\Configuration;
 
+use Didww\Enum\Codec;
+use Didww\Enum\MediaEncryptionMode;
+use Didww\Enum\ReroutingDisconnectCode;
+use Didww\Enum\RxDtmfFormat;
+use Didww\Enum\SstRefreshMethod;
+use Didww\Enum\StirShakenMode;
+use Didww\Enum\TransportProtocol;
+use Didww\Enum\TxDtmfFormat;
+
 abstract class Base extends \Didww\Item\BaseItem
 {
     protected $attributes = [];
@@ -26,219 +35,156 @@ abstract class Base extends \Didww\Item\BaseItem
 
     public function fill(array $attributes)
     {
-        $this->attributes = $attributes;
+        $this->attributes = array_map(function ($value) {
+            if ($value instanceof \BackedEnum) {
+                return $value->value;
+            }
+            if (is_array($value)) {
+                return array_map(fn($v) => $v instanceof \BackedEnum ? $v->value : $v, $value);
+            }
+
+            return $value;
+        }, $attributes);
 
         return $this;
     }
 
     private static $didPlaceHolder = '{DID}';
-    private static $options = [
-        'rx_dtmf_formats' => [
-            1 => 'RFC 2833',
-            2 => 'SIP INFO application/dtmf-relay OR application/dtmf',
-            3 => 'RFC 2833 OR SIP INFO',
-        ],
-        'tx_dtmf_formats' => [
-            0 => 'Disable sending',
-            1 => 'RFC 2833',
-            2 => 'SIP INFO application/dtmf-relay',
-            4 => 'SIP INFO application/dtmf',
-        ],
-        'sst_refresh_methods' => [
-            1 => 'Invite',
-            2 => 'Update',
-            3 => 'Update fallback Invite',
-        ],
-        'transport_protocols' => [
-            1 => 'UDP',
-            2 => 'TCP',
-            3 => 'TLS',
-        ],
-        'rerouting_disconnect_codes' => [
-            56 => '400 | Bad Request',
-            57 => '401 | Unauthorized',
-            58 => '402 | Payment Required',
-            59 => '403 | Forbidden',
-            60 => '404 | Not Found',
-            64 => '408 | Request Timeout',
-            65 => '409 | Conflict',
-            66 => '410 | Gone',
-            67 => '412 | Conditional Request Failed',
-            68 => '413 | Request Entity Too Large',
-            69 => '414 | Request-URI Too Long',
-            70 => '415 | Unsupported Media Type',
-            71 => '416 | Unsupported URI Scheme',
-            72 => '417 | Unknown Resource-Priority',
-            73 => '420 | Bad Extension',
-            74 => '421 | Extension Required',
-            75 => '422 | Session Interval Too Small',
-            76 => '423 | Interval Too Brief',
-            77 => '424 | Bad Location Information',
-            78 => '428 | Use Identity Header',
-            79 => '429 | Provide Referrer Identity',
-            80 => '433 | Anonymity Disallowed',
-            81 => '436 | Bad Identity-Info',
-            82 => '437 | Unsupported Certificate',
-            83 => '438 | Invalid Identity Header',
-            84 => '480 | Temporarily Unavailable',
-            86 => '482 | Loop Detected',
-            87 => '483 | Too Many Hops',
-            88 => '484 | Address Incomplete',
-            89 => '485 | Ambiguous',
-            90 => '486 | Busy Here',
-            91 => '487 | Request Terminated',
-            92 => '488 | Not Acceptable Here',
-            96 => '494 | Security Agreement Required',
-            97 => '500 | Server Internal Error',
-            98 => '501 | Not Implemented',
-            99 => '502 | Bad Gateway',
-            100 => '503 | Service Unavailable',
-            101 => '504 | Server Time-out',
-            102 => '505 | Version Not Supported',
-            103 => '513 | Message Too Large',
-            104 => '580 | Precondition Failure',
-            105 => '600 | Busy Everywhere',
-            106 => '603 | Decline',
-            107 => '604 | Does Not Exist Anywhere',
-            108 => '606 | Not Acceptable',
-            1505 => 'Ringing timeout',
-        ],
 
-        'codecs' => [
-            6 => 'telephone-event',
-            7 => 'G723',
-            8 => 'G729',
-            9 => 'PCMU',
-            10 => 'PCMA',
-            12 => 'speex',
-            13 => 'GSM',
-            14 => 'G726-32',
-            15 => 'G721',
-            16 => 'G726-24',
-            17 => 'G726-40',
-            18 => 'G726-16',
-            19 => 'L16',
-        ],
-        'default_rerouting_disconnect_code_ids' => [
-            56,
-            58,
-            59,
-            60,
-            64,
-            65,
-            66,
-            67,
-            68,
-            69,
-            70,
-            71,
-            72,
-            73,
-            74,
-            75,
-            76,
-            77,
-            78,
-            79,
-            80,
-            81,
-            82,
-            83,
-            84,
-            86,
-            87,
-            88,
-            89,
-            90,
-            91,
-            92,
-            96,
-            97,
-            98,
-            99,
-            101,
-            102,
-            103,
-            104,
-            105,
-            106,
-            107,
-            108,
-            1505,
-        ],
-        'default_codec_ids' => [9, 10, 8, 7, 6],
-        'media_encryption_mode' => [
-            'disabled',
-            'srtp_sdes',
-            'srtp_dtls',
-            'zrtp',
-        ],
-        'stir_shaken_mode' => [
-            'disabled',
-            'original',
-            'pai',
-            'original_pai',
-            'verstat',
-        ],
-    ];
-
-    public static function getRxDtmfFormats()
+    /**
+     * @return RxDtmfFormat[]
+     */
+    public static function getRxDtmfFormats(): array
     {
-        return self::optionsFor('rx_dtmf_formats');
+        return RxDtmfFormat::cases();
     }
 
-    public static function getTxDtmfFormats()
+    /**
+     * @return TxDtmfFormat[]
+     */
+    public static function getTxDtmfFormats(): array
     {
-        return self::optionsFor('tx_dtmf_formats');
+        return TxDtmfFormat::cases();
     }
 
-    public static function getSstRefreshMethods()
+    /**
+     * @return SstRefreshMethod[]
+     */
+    public static function getSstRefreshMethods(): array
     {
-        return self::optionsFor('sst_refresh_methods');
+        return SstRefreshMethod::cases();
     }
 
-    public static function getTransportProtocols()
+    /**
+     * @return TransportProtocol[]
+     */
+    public static function getTransportProtocols(): array
     {
-        return self::optionsFor('transport_protocols');
+        return TransportProtocol::cases();
     }
 
-    public static function getReroutingDisconnectCodes()
+    /**
+     * @return ReroutingDisconnectCode[]
+     */
+    public static function getReroutingDisconnectCodes(): array
     {
-        return self::optionsFor('rerouting_disconnect_codes');
+        return ReroutingDisconnectCode::cases();
     }
 
-    public static function getCodecs()
+    /**
+     * @return Codec[]
+     */
+    public static function getCodecs(): array
     {
-        return self::optionsFor('codecs');
+        return Codec::cases();
     }
 
-    public static function getDefaultReroutingDisconnectCodeIds()
+    /**
+     * @return ReroutingDisconnectCode[]
+     */
+    public static function getDefaultReroutingDisconnectCodeIds(): array
     {
-        return self::optionsFor('default_rerouting_disconnect_code_ids');
+        return [
+            ReroutingDisconnectCode::SIP_400_BAD_REQUEST,
+            ReroutingDisconnectCode::SIP_402_PAYMENT_REQUIRED,
+            ReroutingDisconnectCode::SIP_403_FORBIDDEN,
+            ReroutingDisconnectCode::SIP_404_NOT_FOUND,
+            ReroutingDisconnectCode::SIP_408_REQUEST_TIMEOUT,
+            ReroutingDisconnectCode::SIP_409_CONFLICT,
+            ReroutingDisconnectCode::SIP_410_GONE,
+            ReroutingDisconnectCode::SIP_412_CONDITIONAL_REQUEST_FAILED,
+            ReroutingDisconnectCode::SIP_413_REQUEST_ENTITY_TOO_LARGE,
+            ReroutingDisconnectCode::SIP_414_REQUEST_URI_TOO_LONG,
+            ReroutingDisconnectCode::SIP_415_UNSUPPORTED_MEDIA_TYPE,
+            ReroutingDisconnectCode::SIP_416_UNSUPPORTED_URI_SCHEME,
+            ReroutingDisconnectCode::SIP_417_UNKNOWN_RESOURCE_PRIORITY,
+            ReroutingDisconnectCode::SIP_420_BAD_EXTENSION,
+            ReroutingDisconnectCode::SIP_421_EXTENSION_REQUIRED,
+            ReroutingDisconnectCode::SIP_422_SESSION_INTERVAL_TOO_SMALL,
+            ReroutingDisconnectCode::SIP_423_INTERVAL_TOO_BRIEF,
+            ReroutingDisconnectCode::SIP_424_BAD_LOCATION_INFORMATION,
+            ReroutingDisconnectCode::SIP_428_USE_IDENTITY_HEADER,
+            ReroutingDisconnectCode::SIP_429_PROVIDE_REFERRER_IDENTITY,
+            ReroutingDisconnectCode::SIP_433_ANONYMITY_DISALLOWED,
+            ReroutingDisconnectCode::SIP_436_BAD_IDENTITY_INFO,
+            ReroutingDisconnectCode::SIP_437_UNSUPPORTED_CERTIFICATE,
+            ReroutingDisconnectCode::SIP_438_INVALID_IDENTITY_HEADER,
+            ReroutingDisconnectCode::SIP_480_TEMPORARILY_UNAVAILABLE,
+            ReroutingDisconnectCode::SIP_482_LOOP_DETECTED,
+            ReroutingDisconnectCode::SIP_483_TOO_MANY_HOPS,
+            ReroutingDisconnectCode::SIP_484_ADDRESS_INCOMPLETE,
+            ReroutingDisconnectCode::SIP_485_AMBIGUOUS,
+            ReroutingDisconnectCode::SIP_486_BUSY_HERE,
+            ReroutingDisconnectCode::SIP_487_REQUEST_TERMINATED,
+            ReroutingDisconnectCode::SIP_488_NOT_ACCEPTABLE_HERE,
+            ReroutingDisconnectCode::SIP_494_SECURITY_AGREEMENT_REQUIRED,
+            ReroutingDisconnectCode::SIP_500_SERVER_INTERNAL_ERROR,
+            ReroutingDisconnectCode::SIP_501_NOT_IMPLEMENTED,
+            ReroutingDisconnectCode::SIP_502_BAD_GATEWAY,
+            ReroutingDisconnectCode::SIP_504_SERVER_TIMEOUT,
+            ReroutingDisconnectCode::SIP_505_VERSION_NOT_SUPPORTED,
+            ReroutingDisconnectCode::SIP_513_MESSAGE_TOO_LARGE,
+            ReroutingDisconnectCode::SIP_580_PRECONDITION_FAILURE,
+            ReroutingDisconnectCode::SIP_600_BUSY_EVERYWHERE,
+            ReroutingDisconnectCode::SIP_603_DECLINE,
+            ReroutingDisconnectCode::SIP_604_DOES_NOT_EXIST_ANYWHERE,
+            ReroutingDisconnectCode::SIP_606_NOT_ACCEPTABLE,
+            ReroutingDisconnectCode::RINGING_TIMEOUT,
+        ];
     }
 
-    public static function getDefaultCodecIds()
+    /**
+     * @return Codec[]
+     */
+    public static function getDefaultCodecIds(): array
     {
-        return self::optionsFor('default_codec_ids');
+        return [
+            Codec::PCMU,
+            Codec::PCMA,
+            Codec::G729,
+            Codec::G723,
+            Codec::TELEPHONE_EVENT,
+        ];
     }
 
-    public static function getMediaEncryptionModes()
+    /**
+     * @return MediaEncryptionMode[]
+     */
+    public static function getMediaEncryptionModes(): array
     {
-        return self::optionsFor('media_encryption_mode');
+        return MediaEncryptionMode::cases();
     }
 
-    public static function getStirShakenModes()
+    /**
+     * @return StirShakenMode[]
+     */
+    public static function getStirShakenModes(): array
     {
-        return self::optionsFor('stir_shaken_mode');
+        return StirShakenMode::cases();
     }
 
     public static function getDidPlaceHolder()
     {
         return self::$didPlaceHolder;
-    }
-
-    private static function optionsFor($section)
-    {
-        return self::$options[$section];
     }
 }

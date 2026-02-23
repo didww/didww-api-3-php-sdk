@@ -2,6 +2,9 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\CallbackMethod;
+use Didww\Enum\OrderStatus;
+
 class Order extends BaseItem
 {
     use \Didww\Traits\Fetchable;
@@ -82,9 +85,9 @@ class Order extends BaseItem
         return (float) $this->getAttributes()['amount'];
     }
 
-    public function getStatus(): string
+    public function getStatus(): OrderStatus
     {
-        return $this->getAttributes()['status'];
+        return OrderStatus::from($this->getAttributes()['status']);
     }
 
     public function getCreatedAt(): \DateTime
@@ -122,13 +125,15 @@ class Order extends BaseItem
         $this->attributes['callback_url'] = $callbackUrl;
     }
 
-    public function getCallbackMethod(): ?string
+    public function getCallbackMethod(): CallbackMethod|string|null
     {
-        return $this->attributes['callback_method'];
+        $val = $this->attributes['callback_method'] ?? null;
+
+        return $val !== null ? CallbackMethod::from($val) : null;
     }
 
-    public function setCallbackMethod(string $callbackMethod)
+    public function setCallbackMethod(CallbackMethod|string $callbackMethod)
     {
-        $this->attributes['callback_method'] = $callbackMethod;
+        $this->attributes['callback_method'] = $callbackMethod instanceof CallbackMethod ? $callbackMethod->value : $callbackMethod;
     }
 }

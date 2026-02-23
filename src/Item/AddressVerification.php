@@ -2,6 +2,9 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\AddressVerificationStatus;
+use Didww\Enum\CallbackMethod;
+
 class AddressVerification extends BaseItem
 {
     use \Didww\Traits\Fetchable;
@@ -29,19 +32,21 @@ class AddressVerification extends BaseItem
         $this->attributes['callback_url'] = $callbackUrl;
     }
 
-    public function getCallbackMethod(): ?string
+    public function getCallbackMethod(): CallbackMethod|string|null
     {
-        return $this->attributes['callback_method'];
+        $val = $this->attributes['callback_method'] ?? null;
+
+        return $val !== null ? CallbackMethod::from($val) : null;
     }
 
-    public function setCallbackMethod(string $callbackMethod)
+    public function setCallbackMethod(CallbackMethod|string $callbackMethod)
     {
-        $this->attributes['callback_method'] = $callbackMethod;
+        $this->attributes['callback_method'] = $callbackMethod instanceof CallbackMethod ? $callbackMethod->value : $callbackMethod;
     }
 
-    public function getStatus(): string
+    public function getStatus(): AddressVerificationStatus
     {
-        return $this->attributes['status'];
+        return AddressVerificationStatus::from($this->attributes['status']);
     }
 
     public function getRejectReasons(): ?string

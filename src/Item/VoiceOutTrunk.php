@@ -2,6 +2,11 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\DefaultDstAction;
+use Didww\Enum\MediaEncryptionMode;
+use Didww\Enum\OnCliMismatchAction;
+use Didww\Enum\VoiceOutTrunkStatus;
+
 class VoiceOutTrunk extends BaseItem
 {
     use \Didww\Traits\Fetchable;
@@ -30,14 +35,14 @@ class VoiceOutTrunk extends BaseItem
         $this->attributes['allowed_sip_ips'] = $allowedSipIps;
     }
 
-    public function getOnCliMismatchAction(): string
+    public function getOnCliMismatchAction(): OnCliMismatchAction
     {
-        return $this->attributes['on_cli_mismatch_action'];
+        return OnCliMismatchAction::from($this->attributes['on_cli_mismatch_action']);
     }
 
-    public function setOnCliMismatchAction(string $onCliMismatchAction)
+    public function setOnCliMismatchAction(OnCliMismatchAction|string $onCliMismatchAction)
     {
-        $this->attributes['on_cli_mismatch_action'] = $onCliMismatchAction;
+        $this->attributes['on_cli_mismatch_action'] = $onCliMismatchAction instanceof OnCliMismatchAction ? $onCliMismatchAction->value : $onCliMismatchAction;
     }
 
     public function getAllowedRtpIps(): ?array
@@ -60,14 +65,14 @@ class VoiceOutTrunk extends BaseItem
         $this->attributes['allow_any_did_as_cli'] = $allowAnyDidAsCli;
     }
 
-    public function getStatus(): string
+    public function getStatus(): VoiceOutTrunkStatus
     {
-        return $this->attributes['status'];
+        return VoiceOutTrunkStatus::from($this->attributes['status']);
     }
 
-    public function setStatus(string $status)
+    public function setStatus(VoiceOutTrunkStatus|string $status)
     {
-        $this->attributes['status'] = $status;
+        $this->attributes['status'] = $status instanceof VoiceOutTrunkStatus ? $status->value : $status;
     }
 
     public function getCapacityLimit(): string
@@ -90,24 +95,24 @@ class VoiceOutTrunk extends BaseItem
         $this->attributes['threshold_amount'] = $thresholdAmount;
     }
 
-    public function getMediaEncryptionMode(): string
+    public function getMediaEncryptionMode(): MediaEncryptionMode
     {
-        return $this->attributes['media_encryption_mode'];
+        return MediaEncryptionMode::from($this->attributes['media_encryption_mode']);
     }
 
-    public function setMediaEncryptionMode(string $mediaEncryptionMode)
+    public function setMediaEncryptionMode(MediaEncryptionMode|string $mediaEncryptionMode)
     {
-        $this->attributes['media_encryption_mode'] = $mediaEncryptionMode;
+        $this->attributes['media_encryption_mode'] = $mediaEncryptionMode instanceof MediaEncryptionMode ? $mediaEncryptionMode->value : $mediaEncryptionMode;
     }
 
-    public function getDefaultDstAction(): string
+    public function getDefaultDstAction(): DefaultDstAction
     {
-        return $this->attributes['default_dst_action'];
+        return DefaultDstAction::from($this->attributes['default_dst_action']);
     }
 
-    public function setDefaultDstAction(string $defaultDstAction)
+    public function setDefaultDstAction(DefaultDstAction|string $defaultDstAction)
     {
-        $this->attributes['default_dst_action'] = $defaultDstAction;
+        $this->attributes['default_dst_action'] = $defaultDstAction instanceof DefaultDstAction ? $defaultDstAction->value : $defaultDstAction;
     }
 
     public function getDstPrefixes(): array
