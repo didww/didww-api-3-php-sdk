@@ -125,7 +125,7 @@ class Order extends BaseItem
         $this->attributes['callback_url'] = $callbackUrl;
     }
 
-    public function getCallbackMethod(): CallbackMethod|string|null
+    public function getCallbackMethod(): ?CallbackMethod
     {
         return $this->enumAttribute('callback_method', CallbackMethod::class);
     }

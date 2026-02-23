@@ -315,7 +315,7 @@ $regions = $regionsDocument->getData();
 
 ## Enums
 
-The SDK provides PHP 8.1+ backed enum classes for all API option fields (for example `CallbackMethod`, `IdentityType`, `OrderStatus`, `ExportType`, `CliFormat`, `OnCliMismatchAction`, `MediaEncryptionMode`, `TransportProtocol`, `Codec`, and more).
+The SDK provides PHP 8.2+ backed enum classes for all API option fields (for example `CallbackMethod`, `IdentityType`, `OrderStatus`, `ExportType`, `CliFormat`, `OnCliMismatchAction`, `MediaEncryptionMode`, `TransportProtocol`, `Codec`, and more).
 
 ```php
 use Didww\Enum\CallbackMethod;
