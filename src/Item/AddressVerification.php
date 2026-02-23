@@ -36,7 +36,7 @@ class AddressVerification extends BaseItem
     {
         $val = $this->attributes['callback_method'] ?? null;
 
-        return $val !== null ? CallbackMethod::from($val) : null;
+        return null !== $val ? CallbackMethod::from($val) : null;
     }
 
     public function setCallbackMethod(CallbackMethod|string $callbackMethod)

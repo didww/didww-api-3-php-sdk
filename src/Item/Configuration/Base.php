@@ -40,7 +40,7 @@ abstract class Base extends \Didww\Item\BaseItem
                 return $value->value;
             }
             if (is_array($value)) {
-                return array_map(fn($v) => $v instanceof \BackedEnum ? $v->value : $v, $value);
+                return array_map(fn ($v) => $v instanceof \BackedEnum ? $v->value : $v, $value);
             }
 
             return $value;

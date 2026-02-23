@@ -35,21 +35,21 @@ class Sip extends Base
     {
         $val = $this->attributes['codec_ids'] ?? null;
 
-        return $val !== null ? array_map(fn($v) => Codec::from($v), $val) : null;
+        return null !== $val ? array_map(fn ($v) => Codec::from($v), $val) : null;
     }
 
     public function getRxDtmfFormatId(): ?RxDtmfFormat
     {
         $val = $this->attributes['rx_dtmf_format_id'] ?? null;
 
-        return $val !== null ? RxDtmfFormat::from($val) : null;
+        return null !== $val ? RxDtmfFormat::from($val) : null;
     }
 
     public function getTxDtmfFormatId(): ?TxDtmfFormat
     {
         $val = $this->attributes['tx_dtmf_format_id'] ?? null;
 
-        return $val !== null ? TxDtmfFormat::from($val) : null;
+        return null !== $val ? TxDtmfFormat::from($val) : null;
     }
 
     public function getResolveRuri()
@@ -129,7 +129,7 @@ class Sip extends Base
     {
         $val = $this->attributes['rerouting_disconnect_code_ids'] ?? null;
 
-        return $val !== null ? array_map(fn($v) => ReroutingDisconnectCode::from($v), $val) : null;
+        return null !== $val ? array_map(fn ($v) => ReroutingDisconnectCode::from($v), $val) : null;
     }
 
     public function getSstSessionExpires()
@@ -141,14 +141,14 @@ class Sip extends Base
     {
         $val = $this->attributes['sst_refresh_method_id'] ?? null;
 
-        return $val !== null ? SstRefreshMethod::from($val) : null;
+        return null !== $val ? SstRefreshMethod::from($val) : null;
     }
 
     public function getTransportProtocolId(): ?TransportProtocol
     {
         $val = $this->attributes['transport_protocol_id'] ?? null;
 
-        return $val !== null ? TransportProtocol::from($val) : null;
+        return null !== $val ? TransportProtocol::from($val) : null;
     }
 
     public function getMaxTransfers()
@@ -170,14 +170,14 @@ class Sip extends Base
     {
         $val = $this->attributes['media_encryption_mode'] ?? null;
 
-        return $val !== null ? MediaEncryptionMode::from($val) : null;
+        return null !== $val ? MediaEncryptionMode::from($val) : null;
     }
 
     public function getStirShakenMode(): ?StirShakenMode
     {
         $val = $this->attributes['stir_shaken_mode'] ?? null;
 
-        return $val !== null ? StirShakenMode::from($val) : null;
+        return null !== $val ? StirShakenMode::from($val) : null;
     }
 
     public function getAllowedRtpIps(): ?array
@@ -208,7 +208,7 @@ class Sip extends Base
     public function setCodecIds(array $newCodecIds)
     {
         $this->attributes['codec_ids'] = array_map(
-            fn($v) => $v instanceof Codec ? $v->value : $v,
+            fn ($v) => $v instanceof Codec ? $v->value : $v,
             $newCodecIds
         );
     }
@@ -304,7 +304,7 @@ class Sip extends Base
     public function setReroutingDisconnectCodeIds(array $newReroutingDisconnectCodeIds)
     {
         $this->attributes['rerouting_disconnect_code_ids'] = array_map(
-            fn($v) => $v instanceof ReroutingDisconnectCode ? $v->value : $v,
+            fn ($v) => $v instanceof ReroutingDisconnectCode ? $v->value : $v,
             $newReroutingDisconnectCodeIds
         );
     }

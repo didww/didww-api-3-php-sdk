@@ -3,8 +3,6 @@
 namespace Didww\Tests;
 
 use Didww\Enum\MediaEncryptionMode;
-use Didww\Enum\OnCliMismatchAction;
-use Didww\Enum\VoiceOutTrunkStatus;
 
 class VoiceOutTrunkTest extends BaseTest
 {
