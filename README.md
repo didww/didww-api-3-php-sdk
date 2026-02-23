@@ -26,15 +26,15 @@ composer require didww/didww-api-3-php-sdk
 ## Usage
 
 ```php
-$credentials = new \Didww\Credentials('YOUR_API_KEY', 'sandbox');
-\Didww\Configuration::configure($credentials, ['timeout' => 20]);
+$credentials = new Didww\Credentials('YOUR_API_KEY', 'sandbox');
+Didww\Configuration::configure($credentials, ['timeout' => 20]);
 
 // Check balance
-$balance = \Didww\Item\Balance::find()->getData();
+$balance = Didww\Item\Balance::find()->getData();
 echo "Balance: " . $balance->getTotalBalance();
 
 // List DID groups with stock keeping units
-$didGroups = \Didww\Item\DidGroup::all([
+$didGroups = Didww\Item\DidGroup::all([
     'include' => 'stock_keeping_units',
     'filter' => ['area_name' => 'Acapulco'],
 ])->getData();
@@ -53,12 +53,12 @@ For details on obtaining your API key please visit https://doc.didww.com/api#int
 
 ```php
 // Sandbox
-$credentials = new \Didww\Credentials('YOUR_API_KEY', 'sandbox');
-\Didww\Configuration::configure($credentials, ['timeout' => 20]);
+$credentials = new Didww\Credentials('YOUR_API_KEY', 'sandbox');
+Didww\Configuration::configure($credentials, ['timeout' => 20]);
 
 // Production
-$credentials = new \Didww\Credentials('YOUR_API_KEY', 'production');
-\Didww\Configuration::configure($credentials, ['timeout' => 20]);
+$credentials = new Didww\Credentials('YOUR_API_KEY', 'production');
+Didww\Configuration::configure($credentials, ['timeout' => 20]);
 ```
 
 ### Environments
@@ -74,59 +74,59 @@ $credentials = new \Didww\Credentials('YOUR_API_KEY', 'production');
 
 ```php
 // Countries
-$countries = \Didww\Item\Country::all()->getData();
-$country = \Didww\Item\Country::find('uuid')->getData();
+$countries = Didww\Item\Country::all()->getData();
+$country = Didww\Item\Country::find('uuid')->getData();
 
 // Regions
-$regions = \Didww\Item\Region::all()->getData();
+$regions = Didww\Item\Region::all()->getData();
 
 // Cities
-$cities = \Didww\Item\City::all()->getData();
+$cities = Didww\Item\City::all()->getData();
 
 // Areas
-$areas = \Didww\Item\Area::all()->getData();
+$areas = Didww\Item\Area::all()->getData();
 
 // NANPA Prefixes
-$prefixes = \Didww\Item\NanpaPrefix::all()->getData();
+$prefixes = Didww\Item\NanpaPrefix::all()->getData();
 
 // POPs (Points of Presence)
-$pops = \Didww\Item\Pop::all()->getData();
+$pops = Didww\Item\Pop::all()->getData();
 
 // DID Group Types
-$types = \Didww\Item\DidGroupType::all()->getData();
+$types = Didww\Item\DidGroupType::all()->getData();
 
 // DID Groups (with stock keeping units)
-$groups = \Didww\Item\DidGroup::all(['include' => 'stock_keeping_units'])->getData();
+$groups = Didww\Item\DidGroup::all(['include' => 'stock_keeping_units'])->getData();
 
 // Available DIDs
-$available = \Didww\Item\AvailableDid::all([
+$available = Didww\Item\AvailableDid::all([
     'include' => 'did_group.stock_keeping_units',
 ])->getData();
 
 // Proof Types
-$proofTypes = \Didww\Item\ProofType::all()->getData();
+$proofTypes = Didww\Item\ProofType::all()->getData();
 
 // Public Keys
-$publicKeys = \Didww\Item\PublicKey::all()->getData();
+$publicKeys = Didww\Item\PublicKey::all()->getData();
 
 // Requirements
-$requirements = \Didww\Item\Requirement::all()->getData();
+$requirements = Didww\Item\Requirement::all()->getData();
 
 // Balance (singleton)
-$balance = \Didww\Item\Balance::find()->getData();
+$balance = Didww\Item\Balance::find()->getData();
 ```
 
 ### DIDs
 
 ```php
 // List DIDs
-$dids = \Didww\Item\Did::all()->getData();
+$dids = Didww\Item\Did::all()->getData();
 
 // Update DID - assign trunk and capacity
-$did = \Didww\Item\Did::find('uuid')->getData();
+$did = Didww\Item\Did::find('uuid')->getData();
 $did->setDescription('Updated');
 $did->setCapacityLimit(20);
-$did->setVoiceInTrunk(\Didww\Item\VoiceInTrunk::build('trunk-uuid'));
+$did->setVoiceInTrunk(Didww\Item\VoiceInTrunk::build('trunk-uuid'));
 $did->save();
 ```
 
@@ -140,17 +140,17 @@ use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\TransportProtocol;
 
 // Create SIP trunk
-$sip = new \Didww\Item\Configuration\Sip([
+$sip = new Didww\Item\Configuration\Sip([
     'host' => 'sip.example.com',
     'port' => 5060,
-    'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
+    'codec_ids' => Didww\Item\Configuration\Base::getDefaultCodecIds(),
     'transport_protocol_id' => TransportProtocol::UDP,
     'sst_refresh_method_id' => SstRefreshMethod::INVITE,
     'media_encryption_mode' => MediaEncryptionMode::DISABLED,
-    'rerouting_disconnect_code_ids' => \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
+    'rerouting_disconnect_code_ids' => Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
 ]);
 
-$trunk = new \Didww\Item\VoiceInTrunk();
+$trunk = new Didww\Item\VoiceInTrunk();
 $trunk->setName('My SIP Trunk');
 $trunk->setCliFormat(CliFormat::E164);
 $trunk->setRingingTimeout(30);
@@ -170,7 +170,7 @@ $trunk->delete();
 ### Voice In Trunk Groups
 
 ```php
-$group = new \Didww\Item\VoiceInTrunkGroup();
+$group = new Didww\Item\VoiceInTrunkGroup();
 $group->setName('Primary Group');
 $group->setCapacityLimit(50);
 $groupDocument = $group->save();
@@ -181,11 +181,11 @@ $groupDocument = $group->save();
 ```php
 use Didww\Enum\OnCliMismatchAction;
 
-$trunk = new \Didww\Item\VoiceOutTrunk();
+$trunk = new Didww\Item\VoiceOutTrunk();
 $trunk->setName('My Outbound Trunk');
 $trunk->setAllowedSipIps(['0.0.0.0/0']);
 $trunk->setOnCliMismatchAction(OnCliMismatchAction::REPLACE_CLI);
-$trunk->setDefaultDid(\Didww\Item\Did::build('did-uuid'));
+$trunk->setDefaultDid(Didww\Item\Did::build('did-uuid'));
 $trunkDocument = $trunk->save();
 ```
 
@@ -195,10 +195,10 @@ $trunkDocument = $trunk->save();
 use Didww\Enum\CallbackMethod;
 
 // Order by SKU
-$order = new \Didww\Item\Order([
+$order = new Didww\Item\Order([
     'allow_back_ordering' => true,
     'items' => [
-        new \Didww\Item\OrderItem\Did(['sku_id' => 'sku-uuid', 'qty' => 2]),
+        new Didww\Item\OrderItem\Did(['sku_id' => 'sku-uuid', 'qty' => 2]),
     ],
 ]);
 $order->setCallbackUrl('https://example.com/callback');
@@ -206,9 +206,9 @@ $order->setCallbackMethod(CallbackMethod::POST);
 $orderDocument = $order->save();
 
 // Order available DID
-$order = new \Didww\Item\Order([
+$order = new Didww\Item\Order([
     'items' => [
-        new \Didww\Item\OrderItem\AvailableDid([
+        new Didww\Item\OrderItem\AvailableDid([
             'sku_id' => 'sku-uuid',
             'available_did_id' => 'available-did-uuid',
         ]),
@@ -216,9 +216,9 @@ $order = new \Didww\Item\Order([
 ]);
 
 // Order reserved DID
-$order = new \Didww\Item\Order([
+$order = new Didww\Item\Order([
     'items' => [
-        new \Didww\Item\OrderItem\ReservationDid([
+        new Didww\Item\OrderItem\ReservationDid([
             'sku_id' => 'sku-uuid',
             'did_reservation_id' => 'reservation-uuid',
         ]),
@@ -226,9 +226,9 @@ $order = new \Didww\Item\Order([
 ]);
 
 // Order capacity
-$order = new \Didww\Item\Order([
+$order = new Didww\Item\Order([
     'items' => [
-        new \Didww\Item\OrderItem\Capacity([
+        new Didww\Item\OrderItem\Capacity([
             'capacity_pool_id' => 'pool-uuid',
             'qty' => 1,
         ]),
@@ -239,9 +239,9 @@ $order = new \Didww\Item\Order([
 ### DID Reservations
 
 ```php
-$reservation = new \Didww\Item\DidReservation();
+$reservation = new Didww\Item\DidReservation();
 $reservation->setDescription('Reserved for client');
-$reservation->setAvailableDid(\Didww\Item\AvailableDid::build('available-did-uuid'));
+$reservation->setAvailableDid(Didww\Item\AvailableDid::build('available-did-uuid'));
 $reservationDocument = $reservation->save();
 
 // Delete reservation
@@ -251,10 +251,10 @@ $reservation->delete();
 ### Shared Capacity Groups
 
 ```php
-$group = new \Didww\Item\SharedCapacityGroup();
+$group = new Didww\Item\SharedCapacityGroup();
 $group->setName('Shared Group');
 $group->setSharedChannelsCount(20);
-$group->setCapacityPool(\Didww\Item\CapacityPool::build('pool-uuid'));
+$group->setCapacityPool(Didww\Item\CapacityPool::build('pool-uuid'));
 $groupDocument = $group->save();
 ```
 
@@ -263,25 +263,25 @@ $groupDocument = $group->save();
 ```php
 use Didww\Enum\IdentityType;
 
-$identity = new \Didww\Item\Identity([
+$identity = new Didww\Item\Identity([
     'first_name' => 'John',
     'last_name' => 'Doe',
     'phone_number' => '12125551234',
     'identity_type' => IdentityType::PERSONAL,
 ]);
-$identity->setCountry(\Didww\Item\Country::build('country-uuid'));
+$identity->setCountry(Didww\Item\Country::build('country-uuid'));
 $identityDocument = $identity->save();
 ```
 
 ### Addresses
 
 ```php
-$address = new \Didww\Item\Address();
+$address = new Didww\Item\Address();
 $address->setCityName('New York');
 $address->setPostalCode('10001');
 $address->setAddress('123 Main St');
-$address->setIdentity(\Didww\Item\Identity::build('identity-uuid'));
-$address->setCountry(\Didww\Item\Country::build('country-uuid'));
+$address->setIdentity(Didww\Item\Identity::build('identity-uuid'));
+$address->setCountry(Didww\Item\Country::build('country-uuid'));
 $addressDocument = $address->save();
 ```
 
@@ -290,7 +290,7 @@ $addressDocument = $address->save();
 ```php
 use Didww\Enum\ExportType;
 
-$export = new \Didww\Item\Export();
+$export = new Didww\Item\Export();
 $export->setExportType(ExportType::CDR_IN);
 $export->setFilterYear('2025');
 $export->setFilterMonth('01');
@@ -304,7 +304,7 @@ $export->download('/tmp/export.csv');
 ## Filtering, Sorting, and Pagination
 
 ```php
-$regionsDocument = \Didww\Item\Region::all([
+$regionsDocument = Didww\Item\Region::all([
     'filter' => ['country.id' => 'uuid', 'name' => 'Arizona'],
     'include' => 'country',
     'sort' => 'name',
@@ -321,10 +321,10 @@ The SDK provides PHP 8.1+ backed enum classes for all API option fields (for exa
 use Didww\Enum\CallbackMethod;
 use Didww\Enum\IdentityType;
 
-$order = new \Didww\Item\Order();
+$order = new Didww\Item\Order();
 $order->setCallbackMethod(CallbackMethod::POST);
 
-$identity = new \Didww\Item\Identity();
+$identity = new Didww\Item\Identity();
 $identity->setIdentityType(IdentityType::BUSINESS);
 ```
 
@@ -368,9 +368,9 @@ $trunk->setOnCliMismatchAction('replace_cli');
 The SDK provides an `Encrypt` utility for encrypting files before upload, using RSA-OAEP + AES-256-CBC (matching DIDWW's encryption requirements).
 
 ```php
-$publicKeys = \Didww\Item\PublicKey::all()->getData();
-$fingerprint = \Didww\Encrypt::calculateFingerprint($publicKeys);
-$encrypted = \Didww\Encrypt::encrypt($fileContents, $publicKeys);
+$publicKeys = Didww\Item\PublicKey::all()->getData();
+$fingerprint = Didww\Encrypt::calculateFingerprint($publicKeys);
+$encrypted = Didww\Encrypt::encrypt($fileContents, $publicKeys);
 ```
 
 ## Webhook Signature Validation
@@ -378,7 +378,7 @@ $encrypted = \Didww\Encrypt::encrypt($fileContents, $publicKeys);
 Validate incoming webhook callbacks from DIDWW using HMAC-SHA1 signature verification.
 
 ```php
-$validator = new \Didww\Callback\RequestValidator('YOUR_API_KEY');
+$validator = new Didww\Callback\RequestValidator('YOUR_API_KEY');
 
 $valid = $validator->validate(
     $requestUrl,      // full original URL
