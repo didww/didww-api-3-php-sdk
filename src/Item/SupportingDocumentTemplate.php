@@ -48,8 +48,8 @@ class SupportingDocumentTemplate extends BaseItem
         $return = curl_exec($ch);
         if (false === $return) {
             return curl_error($ch);
-        } else {
-            return true;
         }
+
+        return true;
     }
 }

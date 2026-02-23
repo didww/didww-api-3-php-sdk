@@ -11,7 +11,7 @@ $parameters = [
     'include' => 'country',
     'sort' => '-name', // name for asceding order
 ];
-$regionsDocument = \Didww\Item\Region::all($parameters);
+$regionsDocument = Didww\Item\Region::all($parameters);
 $regions = $regionsDocument->getData();
 foreach ($regions as $region) {
     var_dump(
@@ -23,7 +23,7 @@ foreach ($regions as $region) {
 
 // fetch the specific region
 $uuid = '8bef58e3-8e0e-43ba-8d03-1143968a6a47';
-$regionDocument = \Didww\Item\Region::find($uuid, ['include' => 'country']);
+$regionDocument = Didww\Item\Region::find($uuid, ['include' => 'country']);
 $region = $regionDocument->getData();
 var_dump(
     $region->getId(), // 8bef58e3-8e0e-43ba-8d03-1143968a6a47

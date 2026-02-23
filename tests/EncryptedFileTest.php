@@ -46,8 +46,8 @@ class EncryptedFileTest extends BaseTest
         $result = \Didww\Item\EncryptedFile::upload($fingerprint, $files, $descriptions, $boundary);
         $this->assertTrue($result->success());
         $this->assertEquals([
-           '6eed102c-66a9-4a9b-a95f-4312d70ec12a',
-           '371eafbd-ac6a-485c-aadf-9e3c5da37eb4',
+            '6eed102c-66a9-4a9b-a95f-4312d70ec12a',
+            '371eafbd-ac6a-485c-aadf-9e3c5da37eb4',
         ], $result->getIds());
 
         $encryptedFileDocument = \Didww\Item\EncryptedFile::find($result->getIds()[0]);

@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ '7.4', '8.0', '8.1' ]
+        php: [ '8.2', '8.3', '8.4', '8.5' ]
     name: Tests with PHP ${{ matrix.php }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: xdebug2
+          coverage: xdebug
       - name: Install dependencies
         run: composer install
       - name: Run tests

@@ -10,7 +10,7 @@ $parameters = [
     ],
     'include' => 'stock_keeping_units',
 ];
-$didGroupsDocument = \Didww\Item\DidGroup::all($parameters);
+$didGroupsDocument = Didww\Item\DidGroup::all($parameters);
 $didGroups = $didGroupsDocument->getData();
 
 var_dump(count($didGroups)); // 2
@@ -36,7 +36,7 @@ foreach ($didGroups as $didGroup) {
 
 // fetch the specific DID group
 $uuid = 'df73511e-3b8e-4967-9bd8-d7b88ae1a084';
-$didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'stock_keeping_units']);
+$didGroupDocument = Didww\Item\DidGroup::find($uuid, ['include' => 'stock_keeping_units']);
 $didGroup = $didGroupDocument->getData();
 var_dump(
     $didGroup->getId(), // df73511e-3b8e-4967-9bd8-d7b88ae1a084

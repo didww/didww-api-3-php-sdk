@@ -2,7 +2,7 @@
 
 require_once 'bootstrap.php';
 
-$availableDidsDocument = \Didww\Item\AvailableDid::all([
+$availableDidsDocument = Didww\Item\AvailableDid::all([
     'include' => 'did_group.stock_keeping_units',
 ]);
 $availableDids = $availableDidsDocument->getData()->all();
@@ -16,11 +16,11 @@ $skus = $stockKeepingUnitsRelation->getIncluded()->all();
 $sku = $skus[array_rand($skus)];
 var_dump($sku->getId()); // be1d31ce-c317-4a8a-85bd-5fe3915d4524
 
-$orderItem = new \Didww\Item\OrderItem\AvailableDid();
+$orderItem = new Didww\Item\OrderItem\AvailableDid();
 $orderItem->setAvailableDidId($availableDid->getId());
 $orderItem->setSku($sku);
 
-$order = new \Didww\Item\Order();
+$order = new Didww\Item\Order();
 $items = [
     $orderItem,
 ];
