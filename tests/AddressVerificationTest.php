@@ -2,6 +2,7 @@
 
 namespace Didww\Tests;
 
+use Didww\Enum\AddressVerificationStatus;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class AddressVerificationTest extends BaseTest
@@ -34,7 +35,7 @@ class AddressVerificationTest extends BaseTest
         $addressVerification = $addressVerificationDocument->getData();
         $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
         $this->assertEquals('c8e004b0-87ec-4987-b4fb-ee89db099f0e', $addressVerification->getId());
-        $this->assertEquals('Approved', $addressVerification->getStatus());
+        $this->assertEquals(AddressVerificationStatus::APPROVED, $addressVerification->getStatus());
         $this->assertEquals('SHB-485120', $addressVerification->getReference());
         $this->stopVCR();
     }

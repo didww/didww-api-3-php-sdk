@@ -2,6 +2,8 @@
 
 namespace Didww\Tests;
 
+use Didww\Enum\MediaEncryptionMode;
+
 class VoiceOutTrunkTest extends BaseTest
 {
     public function testCreateVoiceOutTrunk()
@@ -92,7 +94,7 @@ class VoiceOutTrunkTest extends BaseTest
 
         $data = $voiceOutTrunkDocument->getData();
         $this->assertInstanceOf('Didww\Item\VoiceOutTrunk', $data);
-        $this->assertEquals('disabled', $data->getMediaEncryptionMode());
+        $this->assertEquals(MediaEncryptionMode::DISABLED, $data->getMediaEncryptionMode());
 
         $this->stopVCR();
     }

@@ -2,30 +2,33 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\AreaLevel;
+use Didww\Enum\IdentityType;
+
 class Requirement extends BaseItem
 {
     use \Didww\Traits\Fetchable;
 
     protected $type = 'requirements';
 
-    public function getIdentityType(): string
+    public function getIdentityType(): IdentityType
     {
-        return $this->attributes['identity_type'];
+        return $this->enumAttribute('identity_type', IdentityType::class);
     }
 
-    public function getPersonalAreaLevel(): string
+    public function getPersonalAreaLevel(): AreaLevel
     {
-        return $this->attributes['personal_area_level'];
+        return $this->enumAttribute('personal_area_level', AreaLevel::class);
     }
 
-    public function getBusinessAreaLevel(): string
+    public function getBusinessAreaLevel(): AreaLevel
     {
-        return $this->attributes['business_area_level'];
+        return $this->enumAttribute('business_area_level', AreaLevel::class);
     }
 
-    public function getAddressAreaLevel(): string
+    public function getAddressAreaLevel(): AreaLevel
     {
-        return $this->attributes['address_area_level'];
+        return $this->enumAttribute('address_area_level', AreaLevel::class);
     }
 
     public function getPersonalProofQty(): int

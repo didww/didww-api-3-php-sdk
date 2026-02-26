@@ -2,6 +2,9 @@
 
 namespace Didww\Tests;
 
+use Didww\Enum\CallbackMethod;
+use Didww\Enum\OrderStatus;
+
 class OrderTest extends BaseTest
 {
     public function testFind()
@@ -15,7 +18,7 @@ class OrderTest extends BaseTest
         $this->assertContainsOnlyInstancesOf('Didww\Item\OrderItem\Generic', $order->getAttributes()['items']);
         $this->assertEquals($order->getAmount(), 25.07);
 
-        $this->assertEquals($order->getStatus(), 'Completed');
+        $this->assertEquals($order->getStatus(), OrderStatus::COMPLETED);
         $this->assertEquals($order->getCreatedAt(), new \DateTime('2018-08-17T09:48:48.440Z'));
         $this->assertEquals($order->getDescription(), 'Payment processing fee');
         $this->assertEquals($order->getReference(), 'SPT-474057');
@@ -291,7 +294,7 @@ class OrderTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Order', $order);
         $this->assertContainsOnlyInstancesOf('Didww\Item\OrderItem\Did', $order->getAttributes()['items']);
         $this->assertEquals($order->getCallbackUrl(), 'https://example.com/callback');
-        $this->assertEquals($order->getCallbackMethod(), 'POST');
+        $this->assertEquals($order->getCallbackMethod(), CallbackMethod::POST);
 
         $this->stopVCR();
     }

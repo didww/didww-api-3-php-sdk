@@ -42,6 +42,20 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
         return $attributes;
     }
 
+    protected function enumAttribute(string $key, string $enumClass): ?\BackedEnum
+    {
+        $val = $this->attributes[$key] ?? null;
+
+        return null !== $val ? $enumClass::from($val) : null;
+    }
+
+    protected function enumArrayAttribute(string $key, string $enumClass): ?array
+    {
+        $val = $this->attributes[$key] ?? null;
+
+        return null !== $val ? array_map(fn ($v) => $enumClass::from($v), $val) : null;
+    }
+
     protected function getWhiteListAttributesKeys()
     {
         return null;

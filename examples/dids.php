@@ -10,8 +10,8 @@ $did = Didww\Item\Did::all(['sort' => '-created_at', 'page' => ['size' => 1, 'nu
 $trunk = Didww\Item\VoiceInTrunk::all(['sort' => '-created_at', 'filter' => ['configuration.type' => 'sip_configurations']])->getData()[0];
 
 // assign trunk
-$did->setTrunk($trunk);
-$didDocument = $did->save(['include' => 'trunk']);
+$did->setVoiceInTrunk($trunk);
+$didDocument = $did->save(['include' => 'voice_in_trunk']);
 
 if ($didDocument->hasErrors()) {
     var_dump($didDocument->getErrors());

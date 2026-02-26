@@ -2,6 +2,15 @@
 
 namespace Didww\Item\Configuration;
 
+use Didww\Enum\Codec;
+use Didww\Enum\MediaEncryptionMode;
+use Didww\Enum\ReroutingDisconnectCode;
+use Didww\Enum\RxDtmfFormat;
+use Didww\Enum\SstRefreshMethod;
+use Didww\Enum\StirShakenMode;
+use Didww\Enum\TransportProtocol;
+use Didww\Enum\TxDtmfFormat;
+
 class Sip extends Base
 {
     public function getType(): string
@@ -19,19 +28,22 @@ class Sip extends Base
         return $this->attributes['port'];
     }
 
-    public function getCodecIds()
+    /**
+     * @return Codec[]|null
+     */
+    public function getCodecIds(): ?array
     {
-        return $this->attributes['codec_ids'];
+        return $this->enumArrayAttribute('codec_ids', Codec::class);
     }
 
-    public function getRxDtmfFormatId()
+    public function getRxDtmfFormatId(): ?RxDtmfFormat
     {
-        return $this->attributes['rx_dtmf_format_id'];
+        return $this->enumAttribute('rx_dtmf_format_id', RxDtmfFormat::class);
     }
 
-    public function getTxDtmfFormatId()
+    public function getTxDtmfFormatId(): ?TxDtmfFormat
     {
-        return $this->attributes['tx_dtmf_format_id'];
+        return $this->enumAttribute('tx_dtmf_format_id', TxDtmfFormat::class);
     }
 
     public function getResolveRuri()
@@ -104,9 +116,12 @@ class Sip extends Base
         return $this->attributes['force_symmetric_rtp'];
     }
 
-    public function getReroutingDisconnectCodeIds()
+    /**
+     * @return ReroutingDisconnectCode[]|null
+     */
+    public function getReroutingDisconnectCodeIds(): ?array
     {
-        return $this->attributes['rerouting_disconnect_code_ids'];
+        return $this->enumArrayAttribute('rerouting_disconnect_code_ids', ReroutingDisconnectCode::class);
     }
 
     public function getSstSessionExpires()
@@ -114,14 +129,14 @@ class Sip extends Base
         return $this->attributes['sst_session_expires'];
     }
 
-    public function getSstRefreshMethodId()
+    public function getSstRefreshMethodId(): ?SstRefreshMethod
     {
-        return $this->attributes['sst_refresh_method_id'];
+        return $this->enumAttribute('sst_refresh_method_id', SstRefreshMethod::class);
     }
 
-    public function getTransportProtocolId()
+    public function getTransportProtocolId(): ?TransportProtocol
     {
-        return $this->attributes['transport_protocol_id'];
+        return $this->enumAttribute('transport_protocol_id', TransportProtocol::class);
     }
 
     public function getMaxTransfers()
@@ -139,14 +154,14 @@ class Sip extends Base
         return $this->attributes['host'];
     }
 
-    public function getMediaEncryptionMode(): string
+    public function getMediaEncryptionMode(): ?MediaEncryptionMode
     {
-        return $this->attributes['media_encryption_mode'];
+        return $this->enumAttribute('media_encryption_mode', MediaEncryptionMode::class);
     }
 
-    public function getStirShakenMode(): string
+    public function getStirShakenMode(): ?StirShakenMode
     {
-        return $this->attributes['stir_shaken_mode'];
+        return $this->enumAttribute('stir_shaken_mode', StirShakenMode::class);
     }
 
     public function getAllowedRtpIps(): ?array
@@ -171,19 +186,25 @@ class Sip extends Base
         $this->attributes['port'] = $newPort;
     }
 
-    public function setCodecIds($newCodecIds)
+    /**
+     * @param array<Codec|int> $newCodecIds
+     */
+    public function setCodecIds(array $newCodecIds)
     {
-        $this->attributes['codec_ids'] = $newCodecIds;
+        $this->attributes['codec_ids'] = array_map(
+            fn ($v) => $v instanceof Codec ? $v->value : $v,
+            $newCodecIds
+        );
     }
 
-    public function setRxDtmfFormatId($newRxDtmfFormatId)
+    public function setRxDtmfFormatId(RxDtmfFormat|int $newRxDtmfFormatId)
     {
-        $this->attributes['rx_dtmf_format_id'] = $newRxDtmfFormatId;
+        $this->attributes['rx_dtmf_format_id'] = $newRxDtmfFormatId instanceof RxDtmfFormat ? $newRxDtmfFormatId->value : $newRxDtmfFormatId;
     }
 
-    public function setTxDtmfFormatId($newTxDtmfFormatId)
+    public function setTxDtmfFormatId(TxDtmfFormat|int $newTxDtmfFormatId)
     {
-        $this->attributes['tx_dtmf_format_id'] = $newTxDtmfFormatId;
+        $this->attributes['tx_dtmf_format_id'] = $newTxDtmfFormatId instanceof TxDtmfFormat ? $newTxDtmfFormatId->value : $newTxDtmfFormatId;
     }
 
     public function setResolveRuri($newResolveRuri)
@@ -221,9 +242,9 @@ class Sip extends Base
         $this->attributes['sst_enabled'] = $newSstEnabled;
     }
 
-    public function setSstRefreshMethodId($newSstRefreshMethodId)
+    public function setSstRefreshMethodId(SstRefreshMethod|int $newSstRefreshMethodId)
     {
-        $this->attributes['sst_refresh_method_id'] = $newSstRefreshMethodId;
+        $this->attributes['sst_refresh_method_id'] = $newSstRefreshMethodId instanceof SstRefreshMethod ? $newSstRefreshMethodId->value : $newSstRefreshMethodId;
     }
 
     public function setSstMinTimer($newSstMinTimer)
@@ -261,9 +282,15 @@ class Sip extends Base
         $this->attributes['force_symmetric_rtp'] = $newForceSymmetricRtp;
     }
 
-    public function setReroutingDisconnectCodeIds($newReroutingDisconnectCodeIds)
+    /**
+     * @param array<ReroutingDisconnectCode|int> $newReroutingDisconnectCodeIds
+     */
+    public function setReroutingDisconnectCodeIds(array $newReroutingDisconnectCodeIds)
     {
-        $this->attributes['rerouting_disconnect_code_ids'] = $newReroutingDisconnectCodeIds;
+        $this->attributes['rerouting_disconnect_code_ids'] = array_map(
+            fn ($v) => $v instanceof ReroutingDisconnectCode ? $v->value : $v,
+            $newReroutingDisconnectCodeIds
+        );
     }
 
     public function setSstSessionExpires($newSstSessionExpires)
@@ -271,9 +298,9 @@ class Sip extends Base
         $this->attributes['sst_session_expires'] = $newSstSessionExpires;
     }
 
-    public function setTransportProtocolId($newTransportProtocolId)
+    public function setTransportProtocolId(TransportProtocol|int $newTransportProtocolId)
     {
-        $this->attributes['transport_protocol_id'] = $newTransportProtocolId;
+        $this->attributes['transport_protocol_id'] = $newTransportProtocolId instanceof TransportProtocol ? $newTransportProtocolId->value : $newTransportProtocolId;
     }
 
     public function setMaxTransfers($newMaxTransfers)
@@ -286,14 +313,14 @@ class Sip extends Base
         $this->attributes['max_30x_redirects'] = $newMax30xRedirects;
     }
 
-    public function setMediaEncryptionMode(string $mediaEncryptionMode)
+    public function setMediaEncryptionMode(MediaEncryptionMode|string $mediaEncryptionMode)
     {
-        $this->attributes['media_encryption_mode'] = $mediaEncryptionMode;
+        $this->attributes['media_encryption_mode'] = $mediaEncryptionMode instanceof MediaEncryptionMode ? $mediaEncryptionMode->value : $mediaEncryptionMode;
     }
 
-    public function setStirShakenMode(string $stirShakenMode)
+    public function setStirShakenMode(StirShakenMode|string $stirShakenMode)
     {
-        $this->attributes['stir_shaken_mode'] = $stirShakenMode;
+        $this->attributes['stir_shaken_mode'] = $stirShakenMode instanceof StirShakenMode ? $stirShakenMode->value : $stirShakenMode;
     }
 
     public function setAllowedRtpIps(?array $allowedRtpIps)

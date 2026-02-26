@@ -2,6 +2,8 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\IdentityType;
+
 class Identity extends BaseItem
 {
     use \Didww\Traits\Fetchable;
@@ -110,14 +112,14 @@ class Identity extends BaseItem
         $this->attributes['personal_tax_id'] = $personalTaxId;
     }
 
-    public function getIdentityType(): string
+    public function getIdentityType(): IdentityType
     {
-        return $this->attributes['identity_type'];
+        return $this->enumAttribute('identity_type', IdentityType::class);
     }
 
-    public function setIdentityType(string $identityType)
+    public function setIdentityType(IdentityType|string $identityType)
     {
-        $this->attributes['identity_type'] = $identityType;
+        $this->attributes['identity_type'] = $identityType instanceof IdentityType ? $identityType->value : $identityType;
     }
 
     public function getExternalReferenceId(): ?string

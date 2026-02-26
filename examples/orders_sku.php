@@ -2,9 +2,14 @@
 
 require_once 'bootstrap.php';
 
-// to get different sku_id see examples\did_groups.php
+// fetch first available SKU from DID groups
+$didGroups = Didww\Item\DidGroup::all(['include' => 'stock_keeping_units', 'page' => ['size' => 1, 'number' => 1]])->getData();
+$skus = $didGroups[0]->stockKeepingUnits()->getIncluded()->all();
+$skuId = $skus[0]->getId();
+echo "Using SKU: $skuId\n";
+
 $orderItemAttributes = [
-    'sku_id' => '82460535-2b3f-43a6-bcdd-62f3da0d9fa6',
+    'sku_id' => $skuId,
     'qty' => 2,
 ];
 $orderAttributes = [

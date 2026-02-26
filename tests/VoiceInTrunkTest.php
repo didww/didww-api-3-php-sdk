@@ -2,6 +2,9 @@
 
 namespace Didww\Tests;
 
+use Didww\Enum\MediaEncryptionMode;
+use Didww\Enum\SstRefreshMethod;
+use Didww\Enum\StirShakenMode;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class VoiceInTrunkTest extends BaseTest
@@ -98,13 +101,13 @@ class VoiceInTrunkTest extends BaseTest
         $this->assertArraySubset($attributes['configuration']->getAttributes(), $sipConfiguration->getAttributes());
 
         $this->assertEquals('216.58.215.110', $sipConfiguration->getHost());
-        $this->assertEquals(1, $sipConfiguration->getSstRefreshMethodId());
+        $this->assertEquals(SstRefreshMethod::INVITE, $sipConfiguration->getSstRefreshMethodId());
         $this->assertEquals(5060, $sipConfiguration->getPort());
         $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultCodecIds(), $sipConfiguration->getCodecIds());
         $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(), $sipConfiguration->getReroutingDisconnectCodeIds());
         $this->assertEquals('username', $sipConfiguration->getUsername());
-        $this->assertEquals('zrtp', $sipConfiguration->getMediaEncryptionMode());
-        $this->assertEquals('pai', $sipConfiguration->getStirShakenMode());
+        $this->assertEquals(MediaEncryptionMode::ZRTP, $sipConfiguration->getMediaEncryptionMode());
+        $this->assertEquals(StirShakenMode::PAI, $sipConfiguration->getStirShakenMode());
         $this->assertEquals(['127.0.0.1'], $sipConfiguration->getAllowedRtpIps());
         $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
         $this->stopVCR();

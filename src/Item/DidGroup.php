@@ -2,6 +2,8 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\Feature;
+
 class DidGroup extends BaseItem
 {
     use \Didww\Traits\Fetchable;
@@ -43,9 +45,12 @@ class DidGroup extends BaseItem
         return $this->getAttributes()['prefix'];
     }
 
+    /**
+     * @return Feature[]
+     */
     public function getFeatures(): array
     {
-        return $this->getAttributes()['features'];
+        return $this->enumArrayAttribute('features', Feature::class) ?? [];
     }
 
     public function getIsMetered(): bool
