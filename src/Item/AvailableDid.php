@@ -13,6 +13,11 @@ class AvailableDid extends BaseItem
         return $this->hasOne(DidGroup::class);
     }
 
+    public function nanpaPrefix()
+    {
+        return $this->hasOne(NanpaPrefix::class);
+    }
+
     public function getNumber(): string
     {
         return $this->getAttributes()['number'];

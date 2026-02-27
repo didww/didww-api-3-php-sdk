@@ -114,6 +114,11 @@ class Did extends BaseItem
         return $this->hasOne(SharedCapacityGroup::class);
     }
 
+    public function addressVerification()
+    {
+        return $this->hasOne(AddressVerification::class);
+    }
+
     public function setVoiceInTrunkGroup(VoiceInTrunkGroup $voiceInTrunkGroup)
     {
         $this->voiceInTrunkGroup()->associate($voiceInTrunkGroup);

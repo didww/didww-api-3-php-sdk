@@ -105,3 +105,38 @@
             X-Runtime: '0.189704'
             Transfer-Encoding: chunked
         body: '{"data":[{"id":"aa13b01c-36c8-405c-b5a8-1427aa7966ea","type":"available_dids","attributes":{"number":"18649204444"},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/available_dids/aa13b01c-36c8-405c-b5a8-1427aa7966ea/relationships/did_group","related":"https://sandbox-api.didww.com/v3/available_dids/aa13b01c-36c8-405c-b5a8-1427aa7966ea/did_group"}},"nanpa_prefix":{"links":{"self":"https://sandbox-api.didww.com/v3/available_dids/aa13b01c-36c8-405c-b5a8-1427aa7966ea/relationships/nanpa_prefix","related":"https://sandbox-api.didww.com/v3/available_dids/aa13b01c-36c8-405c-b5a8-1427aa7966ea/nanpa_prefix"}}}}],"meta":{"total_count":1,"api_version":"2022-05-09"}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/available_dids/0e1c548e-c6b5-43b0-9c12-2e300178e820?include=nanpa_prefix'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Fri, 27 Feb 2026 14:12:58 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '0'
+            X-Content-Type-Options: nosniff
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            Vary: Accept
+            ETag: 'W/"6d4e2a97a7414db8335866440fda7e4e"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: d2b0ff65-a557-430b-ae19-d5555a34ad68
+            X-Runtime: '0.031184'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"0e1c548e-c6b5-43b0-9c12-2e300178e820","type":"available_dids","attributes":{"number":"12012213879"},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/available_dids/0e1c548e-c6b5-43b0-9c12-2e300178e820/relationships/did_group","related":"https://sandbox-api.didww.com/v3/available_dids/0e1c548e-c6b5-43b0-9c12-2e300178e820/did_group"}},"nanpa_prefix":{"links":{"self":"https://sandbox-api.didww.com/v3/available_dids/0e1c548e-c6b5-43b0-9c12-2e300178e820/relationships/nanpa_prefix","related":"https://sandbox-api.didww.com/v3/available_dids/0e1c548e-c6b5-43b0-9c12-2e300178e820/nanpa_prefix"},"data":{"type":"nanpa_prefixes","id":"1e622e21-c740-4d3f-a615-2a7ef4991922"}}}},"included":[{"id":"1e622e21-c740-4d3f-a615-2a7ef4991922","type":"nanpa_prefixes","attributes":{"npa":"201","nxx":"221"},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/nanpa_prefixes/1e622e21-c740-4d3f-a615-2a7ef4991922/relationships/country","related":"https://sandbox-api.didww.com/v3/nanpa_prefixes/1e622e21-c740-4d3f-a615-2a7ef4991922/country"}},"region":{"links":{"self":"https://sandbox-api.didww.com/v3/nanpa_prefixes/1e622e21-c740-4d3f-a615-2a7ef4991922/relationships/region","related":"https://sandbox-api.didww.com/v3/nanpa_prefixes/1e622e21-c740-4d3f-a615-2a7ef4991922/region"}}}}],"meta":{"api_version":"2022-05-10"}}'

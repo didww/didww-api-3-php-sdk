@@ -24,6 +24,27 @@ class AvailableDidTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testFindWithNanpaPrefix()
+    {
+        $this->startVCR('available_dids.yml');
+
+        $uuid = '0e1c548e-c6b5-43b0-9c12-2e300178e820';
+        $availableDidDocument = \Didww\Item\AvailableDid::find($uuid, ['include' => 'nanpa_prefix']);
+
+        $this->assertInstanceOf('Didww\Item\AvailableDid', $availableDidDocument->getData());
+        $this->assertEquals('12012213879', $availableDidDocument->getData()->getNumber());
+
+        $nanpaPrefix = $availableDidDocument->getData()->nanpaPrefix()->getIncluded();
+        $this->assertInstanceOf('Didww\Item\NanpaPrefix', $nanpaPrefix);
+        $this->assertEquals('1e622e21-c740-4d3f-a615-2a7ef4991922', $nanpaPrefix->getId());
+        $this->assertEquals([
+            'npa' => '201',
+            'nxx' => '221',
+        ], $nanpaPrefix->getAttributes());
+
+        $this->stopVCR();
+    }
+
     public function testFind()
     {
         $this->startVCR('available_dids.yml');
