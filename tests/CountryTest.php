@@ -14,6 +14,25 @@ class CountryTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testFindWithRegions()
+    {
+        $this->startVCR('countries.yml');
+
+        $uuid = '661d8448-8897-4765-acda-00cc1740148d';
+        $countryDocument = \Didww\Item\Country::find($uuid, ['include' => 'regions']);
+        $country = $countryDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Country', $country);
+        $this->assertEquals('Lithuania', $country->getName());
+        $this->assertEquals('LT', $country->getIso());
+
+        $regions = $country->regions()->getIncluded();
+        $this->assertContainsOnlyInstancesOf('Didww\Item\Region', $regions->all());
+        $this->assertCount(10, $regions->all());
+        $this->assertEquals('Alytaus Apskritis', $regions->all()[0]->getName());
+
+        $this->stopVCR();
+    }
+
     public function testFind()
     {
         $this->startVCR('countries.yml');

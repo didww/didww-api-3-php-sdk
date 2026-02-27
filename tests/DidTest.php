@@ -122,6 +122,31 @@ class DidTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testFindWithAddressVerificationAndDidGroup()
+    {
+        $this->startVCR('dids.yml');
+
+        $uuid = '21d0b02c-b556-4d3e-acbf-504b78295dbe';
+        $didDocument = \Didww\Item\Did::find($uuid, ['include' => 'address_verification,did_group']);
+        $did = $didDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Did', $did);
+
+        $addressVerification = $did->addressVerification()->getIncluded();
+        $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
+        $this->assertEquals('75dc8d39-5e17-4470-a6f3-df42642c975f', $addressVerification->getId());
+        $this->assertEquals('Approved', $addressVerification->getAttributes()['status']);
+
+        $didGroup = $did->didGroup()->getIncluded();
+        $this->assertInstanceOf('Didww\Item\DidGroup', $didGroup);
+        $this->assertEquals('2b60bb9a-d382-4d35-84c6-61689f45f2f5', $didGroup->getId());
+        $this->assertEquals('4', $didGroup->getPrefix());
+        $this->assertEquals('Mobile', $didGroup->getAreaName());
+        $this->assertEquals(false, $didGroup->getIsMetered());
+        $this->assertEquals(false, $didGroup->getAllowAdditionalChannels());
+
+        $this->stopVCR();
+    }
+
     public function testBooleans()
     {
         $this->startVCR('dids.yml');

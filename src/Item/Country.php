@@ -22,4 +22,9 @@ class Country extends BaseItem
     {
         return $this->getAttributes()['iso'];
     }
+
+    public function regions()
+    {
+        return $this->hasMany(Region::class);
+    }
 }
