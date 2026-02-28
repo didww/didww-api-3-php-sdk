@@ -90,44 +90,6 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","attributes":{"capacity_pools_id":"f288d07c-e2fc-4ae6-9837-b18fb469c324"},"relationships":{"capacity_pool":{"data":{"type":"capacity_pools","id":"f288d07c-e2fc-4ae6-9837-b18fb469c324"}}}}}'
-    response:
-        status:
-            http_version: '1.1'
-            code: '400'
-            message: 'Bad Request'
-        headers:
-            Server: nginx
-            Date: 'Fri, 28 Dec 2018 12:25:08 GMT'
-            Content-Type: application/vnd.api+json
-            Transfer-Encoding: chunked
-            Connection: keep-alive
-            X-Frame-Options: SAMEORIGIN
-            X-XSS-Protection: '1; mode=block'
-            X-Content-Type-Options: nosniff
-            X-Download-Options: noopen
-            X-Permitted-Cross-Domain-Policies: none
-            Referrer-Policy: strict-origin-when-cross-origin
-            Cache-Control: no-cache
-            X-Request-Id: 35b70178-8092-461f-90e2-81a5324a82ec
-            X-Runtime: '0.035538'
-            Access-Control-Allow-Origin: '*'
-            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
-            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
-            Access-Control-Allow-Credentials: 'true'
-        body: '{"errors":[{"title":"Param not allowed","detail":"capacity_pools_id is not allowed.","code":"105","status":"400"}]}'
--
-    request:
-        method: PATCH
-        url: 'https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b'
-        headers:
-            Host: sandbox-api.didww.com
-            Expect: null
-            Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
-            Accept: application/vnd.api+json
-            Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
         body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","relationships":{"capacity_pool":{"data":{"type":"capacity_pools","id":"f288d07c-e2fc-4ae6-9837-b18fb469c324"}}}}}'
     response:
         status:

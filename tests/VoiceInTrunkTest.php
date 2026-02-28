@@ -147,7 +147,7 @@ class VoiceInTrunkTest extends BaseTest
         $this->stopVCR();
     }
 
-    public function testUpdateRelashionships()
+    public function testUpdateRelationships()
     {
         $this->startVCR('voice_in_trunks.yml');
         $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('a80006b6-4183-4865-8b99-7ebbd359a762');
