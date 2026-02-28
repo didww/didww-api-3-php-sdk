@@ -118,42 +118,6 @@
 -
     request:
         method: DELETE
-        url: 'https://sandbox-api.didww.com/v3/did_reservations/fd38d3ff-80cf-4e67-a605-609a2884a5c4'
-        headers:
-            Host: sandbox-api.didww.com
-            Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
-            Accept: application/vnd.api+json
-            Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
-    response:
-        status:
-            http_version: '1.1'
-            code: '404'
-            message: 'Not Found'
-        headers:
-            Server: nginx
-            Date: 'Fri, 28 Dec 2018 16:30:21 GMT'
-            Content-Type: application/vnd.api+json
-            Transfer-Encoding: chunked
-            Connection: keep-alive
-            X-Frame-Options: SAMEORIGIN
-            X-XSS-Protection: '1; mode=block'
-            X-Content-Type-Options: nosniff
-            X-Download-Options: noopen
-            X-Permitted-Cross-Domain-Policies: none
-            Referrer-Policy: strict-origin-when-cross-origin
-            Cache-Control: no-cache
-            X-Request-Id: f05e7b0c-02d6-4ca5-ab52-9f82c3de9335
-            X-Runtime: '0.039878'
-            Access-Control-Allow-Origin: '*'
-            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
-            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
-            Access-Control-Allow-Credentials: 'true'
-        body: '{"errors":[{"title":"Record not found","detail":"The record identified by fd38d3ff-80cf-4e67-a605-609a2884a5c4 could not be found.","code":"404","status":"404"}]}'
--
-    request:
-        method: DELETE
         url: 'https://sandbox-api.didww.com/v3/did_reservations/8a18a19f-b082-42f3-acca-99ea402a4e5d'
         headers:
             Host: sandbox-api.didww.com
