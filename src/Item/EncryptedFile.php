@@ -45,7 +45,7 @@ class EncryptedFile extends BaseItem
     public static function upload(string $fingerprint, array $filesContent, array $descriptions = [], $boundary = null): UploadResult
     {
         $apiKey = \Didww\Configuration::getApiKey();
-        $apiVersion = \Didww\Configuration::getCredentials()->getVersion() ?? "2022-05-10";
+        $apiVersion = \Didww\Configuration::getCredentials()->getVersion() ?? '2022-05-10';
         $baseUri = \Didww\Configuration::getBaseUri();
         $url = $baseUri.'/encrypted_files';
 
