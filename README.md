@@ -13,6 +13,8 @@ The DIDWW API v3 is a fully compliant implementation of the [JSON API specificat
 
 Read more https://doc.didww.com/api
 
+By default, this SDK sends the `X-DIDWW-API-Version: 2022-05-10` header with each request.
+
 ## Requirements
 
 - PHP 8.2+
@@ -42,7 +44,7 @@ $didGroups = Didww\Item\DidGroup::all([
 
 For more examples visit [examples/](examples/).
 
-For details on obtaining your API key please visit https://doc.didww.com/api#introduction-api-keys
+For details on obtaining your API key please visit https://doc.didww.com/api3/configuration.html
 
 ## Examples
 
