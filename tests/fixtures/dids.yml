@@ -243,7 +243,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","attributes":{"capacity_limit":2,"description":"something","terminated":true,"billing_cycles_count":0,"dedicated_channels_count":0}}}'
+        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","attributes":{"description":"something","terminated":true,"billing_cycles_count":0}}}'
     response:
         status:
             http_version: '1.1'
