@@ -45,6 +45,7 @@ class EncryptedFile extends BaseItem
     public static function upload(string $fingerprint, array $filesContent, array $descriptions = [], $boundary = null): UploadResult
     {
         $apiKey = \Didww\Configuration::getApiKey();
+        $apiVersion = \Didww\Configuration::getCredentials()->getVersion() ?? '2022-05-10';
         $baseUri = \Didww\Configuration::getBaseUri();
         $url = $baseUri.'/encrypted_files';
 
@@ -83,6 +84,7 @@ class EncryptedFile extends BaseItem
             CURLOPT_POSTFIELDS => $postData,
             CURLOPT_HTTPHEADER => [
                 "Api-Key: $apiKey",
+                "X-DIDWW-API-Version: $apiVersion",
                 'Content-Type: multipart/form-data; boundary='.$delimiter,
                 'Content-Length: '.strlen($postData),
                 'Accept: application/json',
