@@ -184,4 +184,130 @@ class DidTest extends BaseTest
 
         $this->stopVCR();
     }
+
+    public function testUpdateBuiltSingleAttribute()
+    {
+        $this->startVCR('dids.yml');
+
+        $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
+        $did->setCapacityLimit(10);
+        $didDocument = $did->save();
+
+        $did = $didDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Did', $did);
+        $this->assertEquals(10, $did->getCapacityLimit());
+
+        $this->stopVCR();
+    }
+
+    public function testUpdateClearDescription()
+    {
+        $this->startVCR('dids.yml');
+
+        $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
+        $did->setDescription(null);
+        $didDocument = $did->save();
+
+        $did = $didDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Did', $did);
+        $this->assertNull($did->getDescription());
+
+        $this->stopVCR();
+    }
+
+    public function testUpdateTerminated()
+    {
+        $this->startVCR('dids.yml');
+
+        $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
+        $did->setTerminated(true);
+        $didDocument = $did->save();
+
+        $did = $didDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Did', $did);
+        $this->assertTrue($did->getTerminated());
+
+        $this->stopVCR();
+    }
+
+    public function testUpdateSetVoiceInTrunk()
+    {
+        $this->startVCR('dids.yml');
+
+        $voiceInTrunk = new \Didww\Item\VoiceInTrunk();
+        $voiceInTrunk->setId('7939589c-4cac-4f70-8ba8-ee8e1a0aa3e9');
+
+        $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
+        $did->setVoiceInTrunk($voiceInTrunk);
+        $didDocument = $did->save();
+
+        $did = $didDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Did', $did);
+
+        $this->stopVCR();
+    }
+
+    public function testUpdateFromLoaded()
+    {
+        $this->startVCR('dids.yml');
+
+        $didDocument = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b');
+        $did = $didDocument->getData();
+        $this->assertNull($did->getDescription());
+
+        $did->setDescription('updated');
+        $didDocument = $did->save();
+
+        $did = $didDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Did', $did);
+        $this->assertEquals('updated', $did->getDescription());
+
+        $this->stopVCR();
+    }
+
+    public function testUpdateFromLoadedSetVoiceInTrunk()
+    {
+        $this->startVCR('dids.yml');
+
+        $didDocument = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b');
+        $did = $didDocument->getData();
+
+        $voiceInTrunk = new \Didww\Item\VoiceInTrunk();
+        $voiceInTrunk->setId('7939589c-4cac-4f70-8ba8-ee8e1a0aa3e9');
+        $did->setVoiceInTrunk($voiceInTrunk);
+        $didDocument = $did->save();
+
+        $did = $didDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Did', $did);
+
+        $this->stopVCR();
+    }
+
+    public function testFindWithIncludedHasCleanDirtyState()
+    {
+        $this->startVCR('dids.yml');
+
+        $uuid = '21d0b02c-b556-4d3e-acbf-504b78295dbe';
+        $didDocument = \Didww\Item\Did::find($uuid, ['include' => 'address_verification,did_group']);
+        $did = $didDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Did', $did);
+
+        // Main resource should have clean dirty state
+        $patch = $did->toJsonApiPatchArray();
+        $this->assertArrayNotHasKey('attributes', $patch);
+        $this->assertArrayNotHasKey('relationships', $patch);
+
+        // Included resources should also have clean dirty state
+        $didGroup = $did->didGroup()->getIncluded();
+        $this->assertInstanceOf('Didww\Item\DidGroup', $didGroup);
+        $didGroupPatch = $didGroup->toJsonApiPatchArray();
+        $this->assertArrayNotHasKey('attributes', $didGroupPatch);
+
+        $addressVerification = $did->addressVerification()->getIncluded();
+        $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
+        $addressVerificationPatch = $addressVerification->toJsonApiPatchArray();
+        $this->assertArrayNotHasKey('attributes', $addressVerificationPatch);
+
+        $this->stopVCR();
+    }
 }

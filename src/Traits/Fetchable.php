@@ -17,6 +17,11 @@ trait Fetchable
                 }
             }
         }
+        foreach ($document->getIncluded() as $included) {
+            if ($included instanceof BaseItem) {
+                $included->syncPersistedState();
+            }
+        }
 
         return $document;
     }
@@ -27,6 +32,11 @@ trait Fetchable
         $data = $document->getData();
         if ($data instanceof BaseItem) {
             $data->syncPersistedState();
+        }
+        foreach ($document->getIncluded() as $included) {
+            if ($included instanceof BaseItem) {
+                $included->syncPersistedState();
+            }
         }
 
         return $document;

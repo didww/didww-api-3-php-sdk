@@ -27,19 +27,6 @@ class PatchItemDocument extends ItemDocument
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-        $document = [];
-
-        $item = $this->getData();
-        if ($item instanceof Item\BaseItem) {
-            $document['data'] = $item->toJsonApiPatchArray();
-        } else {
-            $document['data'] = $item->toJsonApiArray();
-        }
-
-        if ($this->getIncluded()->isNotEmpty()) {
-            $document['included'] = $this->getIncluded()->toJsonApiArray();
-        }
-
-        return (object) $document;
+        return (object) $this->toArray();
     }
 }
