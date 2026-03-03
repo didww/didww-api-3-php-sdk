@@ -24,8 +24,7 @@ class PatchItemDocument extends ItemDocument
         return $document;
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return (object) $this->toArray();
     }

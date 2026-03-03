@@ -26,7 +26,7 @@ class Repository extends \Swis\JsonApi\Client\Repository
         $document->setData($item);
         $document->setIncluded($this->documentFactory->make($item)->getIncluded());
 
-        $uri = $this->getEndpoint().'/'.urlencode($item->getId());
+        $uri = $this->getEndpoint().'/'.rawurlencode($item->getId());
         $queryString = http_build_query($parameters);
         if ('' !== $queryString) {
             $uri .= '?'.$queryString;
