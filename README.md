@@ -140,21 +140,21 @@ When updating resources, the SDK tracks which attributes and relationships have 
 // Load a DID from the API - all fields are marked as persisted
 $did = Didww\Item\Did::find('uuid')->getData();
 
-// Change only the description
+// Change only the description - only dirty fields are sent
 $did->setDescription('New description');
-$did->save();
+$did = $did->save()->getData(); // reassign to get synced persisted state
 // PATCH body: {"data":{"type":"dids","id":"...","attributes":{"description":"New description"}}}
 
 // Build a resource by ID and set a single field
 $did = Didww\Item\Did::build('uuid');
 $did->setCapacityLimit(10);
-$did->save();
+$did = $did->save()->getData();
 // PATCH body: {"data":{"type":"dids","id":"...","attributes":{"capacity_limit":10}}}
 
 // Explicitly clear a field by setting it to null
 $did = Didww\Item\Did::build('uuid');
 $did->setDescription(null);
-$did->save();
+$did = $did->save()->getData();
 // PATCH body: {"data":{"type":"dids","id":"...","attributes":{"description":null}}}
 
 // Included resources also start with clean dirty state
@@ -162,7 +162,7 @@ $didDocument = Didww\Item\Did::find('uuid', ['include' => 'voice_in_trunk']);
 $trunk = $didDocument->getData()->voiceInTrunk()->getIncluded();
 // $trunk has persisted state synced - modifying and saving it sends only dirty fields
 $trunk->setName('Renamed trunk');
-$trunk->save();
+$trunk = $trunk->save()->getData();
 // PATCH body: {"data":{"type":"voice_in_trunks","id":"...","attributes":{"name":"Renamed trunk"}}}
 ```
 
