@@ -5,6 +5,11 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -22,10 +27,64 @@ jobs:
         run: composer install
       - name: Run tests
         run: composer test && composer check-style
-      - name: Upload coverage results to Coveralls
-        continue-on-error: true
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_PARALLEL: true
-          COVERALLS_FLAG_NAME: ${{ matrix.php }}
-        run: vendor/bin/php-coveralls -v
+
+      - name: Generate badge.json
+        if: matrix.php == '8.4'
+        run: |
+          CLOVER="build/logs/clover.xml"
+          if [ ! -f "$CLOVER" ]; then
+            mkdir -p badge
+            echo '{"schemaVersion":1,"label":"coverage","message":"unknown","color":"lightgrey"}' > badge/badge.json
+            exit 0
+          fi
+          PERCENT=$(php -r "
+            \$xml = simplexml_load_file('$CLOVER');
+            \$metrics = \$xml->project->metrics;
+            \$stmts = (int)\$metrics['statements'];
+            \$covered = (int)\$metrics['coveredstatements'];
+            if (\$stmts > 0) {
+              printf('%.1f', (\$covered / \$stmts) * 100);
+            } else {
+              echo '0';
+            }
+          ")
+          if [ "$(echo "$PERCENT >= 90" | bc)" -eq 1 ]; then COLOR="brightgreen"
+          elif [ "$(echo "$PERCENT >= 75" | bc)" -eq 1 ]; then COLOR="green"
+          elif [ "$(echo "$PERCENT >= 60" | bc)" -eq 1 ]; then COLOR="yellow"
+          else COLOR="red"; fi
+          mkdir -p badge
+          echo "{\"schemaVersion\":1,\"label\":\"coverage\",\"message\":\"${PERCENT}%\",\"color\":\"${COLOR}\"}" > badge/badge.json
+
+      - name: Upload badge artifact
+        if: matrix.php == '8.4'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-badge
+          path: badge
+
+  deploy-coverage:
+    needs: test
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Download coverage badge
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-badge
+          path: coverage
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: coverage
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
