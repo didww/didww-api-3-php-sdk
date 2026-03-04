@@ -243,7 +243,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","attributes":{"capacity_limit":2,"description":"something","terminated":true,"billing_cycles_count":0,"dedicated_channels_count":0}}}'
+        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","attributes":{"description":"something","terminated":true,"billing_cycles_count":0}}}'
     response:
         status:
             http_version: '1.1'
@@ -305,3 +305,198 @@
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
         body: '{"data":{"id":"21d0b02c-b556-4d3e-acbf-504b78295dbe","type":"dids","attributes":{"blocked":false,"capacity_limit":null,"description":null,"terminated":false,"awaiting_registration":false,"created_at":"2026-02-25T15:01:06.000Z","billing_cycles_count":null,"number":"61488943592","expires_at":"2026-03-27T13:48:55.974Z","channels_included_count":2,"dedicated_channels_count":0},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/relationships/did_group","related":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/did_group"},"data":{"type":"did_groups","id":"2b60bb9a-d382-4d35-84c6-61689f45f2f5"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/relationships/order","related":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/order"}},"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/capacity_pool"}},"shared_capacity_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/relationships/shared_capacity_group","related":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/shared_capacity_group"}},"address_verification":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/relationships/address_verification","related":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/address_verification"},"data":{"type":"address_verifications","id":"75dc8d39-5e17-4470-a6f3-df42642c975f"}},"voice_in_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/relationships/voice_in_trunk","related":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/voice_in_trunk"}},"voice_in_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/relationships/voice_in_trunk_group","related":"https://sandbox-api.didww.com/v3/dids/21d0b02c-b556-4d3e-acbf-504b78295dbe/voice_in_trunk_group"}}}},"included":[{"id":"2b60bb9a-d382-4d35-84c6-61689f45f2f5","type":"did_groups","attributes":{"prefix":"4","features":["voice_in","voice_out","sms_in","sms_out","t38"],"is_metered":false,"area_name":"Mobile","allow_additional_channels":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/relationships/country","related":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/country"}},"city":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/relationships/city","related":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/city"}},"did_group_type":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/relationships/did_group_type","related":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/did_group_type"}},"region":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/relationships/region","related":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/region"}},"stock_keeping_units":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/relationships/stock_keeping_units","related":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/stock_keeping_units"}},"requirement":{"links":{"self":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/relationships/requirement","related":"https://sandbox-api.didww.com/v3/did_groups/2b60bb9a-d382-4d35-84c6-61689f45f2f5/requirement"}}},"meta":{"available_dids_enabled":true,"needs_registration":true,"is_available":true,"total_count":500}},{"id":"75dc8d39-5e17-4470-a6f3-df42642c975f","type":"address_verifications","attributes":{"service_description":"Address verification for registration 01kjan2paw2wfqndqdkd2m3hyc","callback_url":"https://didwwwebhook.aurora-dev.sinchlab.com/AuroraDIDWWWebhookService/api/didww/verification/callback/119881627","callback_method":"POST","status":"Approved","reject_reasons":null,"reference":"AHB-291174","created_at":"2026-02-27T13:48:55.368Z"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/75dc8d39-5e17-4470-a6f3-df42642c975f/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/75dc8d39-5e17-4470-a6f3-df42642c975f/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/75dc8d39-5e17-4470-a6f3-df42642c975f/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/75dc8d39-5e17-4470-a6f3-df42642c975f/address"}}}}],"meta":{"api_version":"2022-05-10"}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.65.0 PHP/7.1.29'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","attributes":{"capacity_limit":10}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Tue, 05 Nov 2019 11:20:01 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: b1a2c3d4-e5f6-7890-abcd-ef1234567890
+            X-Runtime: '0.098765'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","type":"dids","attributes":{"blocked":false,"capacity_limit":10,"description":null,"terminated":false,"awaiting_registration":false,"created_at":"2018-12-27T09:59:55.015Z","number":"16091609123456797","expires_at":"2019-11-27T10:00:04.755Z","channels_included_count":0,"billing_cycles_count":null,"dedicated_channels_count":0},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/did_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/did_group"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/order","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/order"}},"voice_in_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/voice_in_trunk","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/voice_in_trunk"}},"voice_in_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/voice_in_trunk_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/voice_in_trunk_group"}},"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/capacity_pool"}},"shared_capacity_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/shared_capacity_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/shared_capacity_group"}}}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.65.0 PHP/7.1.29'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","attributes":{"description":null}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Tue, 05 Nov 2019 11:21:01 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: c2d3e4f5-a6b7-c8d9-e0f1-a2b3c4d5e6f7
+            X-Runtime: '0.087654'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","type":"dids","attributes":{"blocked":false,"capacity_limit":2,"description":null,"terminated":false,"awaiting_registration":false,"created_at":"2018-12-27T09:59:55.015Z","number":"16091609123456797","expires_at":"2019-11-27T10:00:04.755Z","channels_included_count":0,"billing_cycles_count":null,"dedicated_channels_count":0},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/did_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/did_group"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/order","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/order"}},"voice_in_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/voice_in_trunk","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/voice_in_trunk"}},"voice_in_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/voice_in_trunk_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/voice_in_trunk_group"}},"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/capacity_pool"}},"shared_capacity_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/shared_capacity_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/shared_capacity_group"}}}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.65.0 PHP/7.1.29'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","attributes":{"terminated":true}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Tue, 05 Nov 2019 11:22:01 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: d3e4f5a6-b7c8-d9e0-f1a2-b3c4d5e6f7a8
+            X-Runtime: '0.112345'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","type":"dids","attributes":{"blocked":true,"capacity_limit":2,"description":null,"terminated":true,"awaiting_registration":false,"created_at":"2018-12-27T09:59:55.015Z","number":"16091609123456797","expires_at":"2019-11-27T10:00:04.755Z","channels_included_count":0,"billing_cycles_count":null,"dedicated_channels_count":0},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/did_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/did_group"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/order","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/order"}},"voice_in_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/voice_in_trunk","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/voice_in_trunk"}},"voice_in_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/voice_in_trunk_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/voice_in_trunk_group"}},"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/capacity_pool"}},"shared_capacity_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/shared_capacity_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/shared_capacity_group"}}}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.65.0 PHP/7.1.29'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","relationships":{"voice_in_trunk":{"data":{"type":"voice_in_trunks","id":"7939589c-4cac-4f70-8ba8-ee8e1a0aa3e9"}},"voice_in_trunk_group":{"data":null}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Tue, 05 Nov 2019 11:23:01 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: e4f5a6b7-c8d9-e0f1-a2b3-c4d5e6f7a8b9
+            X-Runtime: '0.095432'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","type":"dids","attributes":{"blocked":false,"capacity_limit":2,"description":null,"terminated":false,"awaiting_registration":false,"created_at":"2018-12-27T09:59:55.015Z","number":"16091609123456797","expires_at":"2019-11-27T10:00:04.755Z","channels_included_count":0,"billing_cycles_count":null,"dedicated_channels_count":0},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/did_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/did_group"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/order","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/order"}},"voice_in_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/voice_in_trunk","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/voice_in_trunk"}},"voice_in_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/voice_in_trunk_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/voice_in_trunk_group"}},"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/capacity_pool"}},"shared_capacity_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/shared_capacity_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/shared_capacity_group"}}}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.65.0 PHP/7.1.29'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","attributes":{"description":"updated"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Tue, 05 Nov 2019 11:24:01 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            X-Download-Options: noopen
+            X-Permitted-Cross-Domain-Policies: none
+            Referrer-Policy: strict-origin-when-cross-origin
+            ETag: 'W/"f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: f5a6b7c8-d9e0-f1a2-b3c4-d5e6f7a8b9c0
+            X-Runtime: '0.089012'
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"9df99644-f1a5-4a3c-99a4-559d758eb96b","type":"dids","attributes":{"blocked":false,"capacity_limit":2,"description":"updated","terminated":false,"awaiting_registration":false,"created_at":"2018-12-27T09:59:55.015Z","number":"16091609123456797","expires_at":"2019-11-27T10:00:04.755Z","channels_included_count":0,"billing_cycles_count":null,"dedicated_channels_count":0},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/did_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/did_group"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/order","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/order"}},"voice_in_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/voice_in_trunk","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/voice_in_trunk"}},"voice_in_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/voice_in_trunk_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/voice_in_trunk_group"}},"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/capacity_pool"}},"shared_capacity_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/relationships/shared_capacity_group","related":"https://sandbox-api.didww.com/v3/dids/9df99644-f1a5-4a3c-99a4-559d758eb96b/shared_capacity_group"}}}}}'

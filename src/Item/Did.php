@@ -29,7 +29,7 @@ class Did extends BaseItem
         $this->attributes['terminated'] = $terminated;
     }
 
-    public function setDescription(string $desc)
+    public function setDescription(?string $desc)
     {
         $this->attributes['description'] = $desc;
     }

@@ -32,7 +32,9 @@ abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
     {
         $creatableAttributes = [];
         foreach ($this->getCreatableAttributesKeys() as $key) {
-            $creatableAttributes[$key] = $this->getAttributes()[$key];
+            if (array_key_exists($key, $this->getAttributes())) {
+                $creatableAttributes[$key] = $this->getAttributes()[$key];
+            }
         }
 
         return $creatableAttributes;
