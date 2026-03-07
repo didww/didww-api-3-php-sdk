@@ -99,6 +99,52 @@ class Export extends BaseItem
         return true;
     }
 
+    public function downloadAndDecompress($dest)
+    {
+        $tmpFile = tempnam(sys_get_temp_dir(), 'didww_export_') . '.csv.gz';
+        $tmpHandle = fopen($tmpFile, 'w');
+        $apiKey = \Didww\Configuration::getCredentials()->getApiKey();
+
+        $options = [
+            CURLOPT_HTTPHEADER => ["api-key: $apiKey"],
+            CURLOPT_FILE => $tmpHandle,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_URL => $this->getAttributes()['url'],
+            CURLOPT_VERBOSE => true,
+            CURLOPT_FAILONERROR => true,
+        ];
+        $ch = curl_init();
+        curl_setopt_array($ch, $options);
+        $return = curl_exec($ch);
+        fclose($tmpHandle);
+        if (false === $return) {
+            $error = curl_error($ch);
+            unlink($tmpFile);
+
+            return $error;
+        }
+
+        $gz = gzopen($tmpFile, 'rb');
+        if (false === $gz) {
+            unlink($tmpFile);
+
+            return 'Failed to open gzip file for decompression';
+        }
+
+        $destHandle = is_resource($dest) ? $dest : fopen($dest, 'w');
+        while (!gzeof($gz)) {
+            $data = gzread($gz, 8192);
+            fwrite($destHandle, $data);
+        }
+        gzclose($gz);
+        if (!is_resource($dest)) {
+            fclose($destHandle);
+        }
+        unlink($tmpFile);
+
+        return true;
+    }
+
     /** @return array [
      * ]
      * 'status' => string

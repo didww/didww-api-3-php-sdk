@@ -102,7 +102,7 @@ class ExportTest extends BaseTest
         $this->assertEquals($export->getAttributes(), [
             'created_at' => '2019-01-02T10:23:00.897Z',
             'status' => 'Completed',
-            'url' => 'https://sandbox-api.didww.com/v3/exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv',
+            'url' => 'https://sandbox-api.didww.com/v3/exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv.gz',
             'callback_url' => null,
             'callback_method' => null,
             'export_type' => 'cdr_in',
@@ -117,7 +117,7 @@ class ExportTest extends BaseTest
         $uuid = '5a03dd1e-6018-44c6-b98b-084999b376ce';
 
         $csvFixture = 'tests/fixtures/csv/export.csv';
-        $export = \Didww\Item\Export::build($uuid, ['url' => 'https://sandbox-api.didww.com/v3/exports/02bf6df4-3af9-416c-96be-16e5b7eeb651.csv']);
+        $export = \Didww\Item\Export::build($uuid, ['url' => 'https://sandbox-api.didww.com/v3/exports/02bf6df4-3af9-416c-96be-16e5b7eeb651.csv.gz']);
 
         $result = $export->download($csvFixture);
         $this->assertTrue($result);
