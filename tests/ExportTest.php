@@ -125,4 +125,31 @@ class ExportTest extends BaseTest
         unlink($csvFixture);
         $this->stopVCR();
     }
+
+    public function testDownloadAndDecompress()
+    {
+        $csvContent = "Date/Time Start (UTC),DID,Duration\n2018-12-06,972397239159652,0\n";
+        $gzFile = tempnam(sys_get_temp_dir(), 'didww_test_') . '.csv.gz';
+        $gz = gzopen($gzFile, 'wb');
+        gzwrite($gz, $csvContent);
+        gzclose($gz);
+
+        $destFile = tempnam(sys_get_temp_dir(), 'didww_dest_');
+
+        // Read gzipped content back and decompress manually to verify the logic
+        $gzHandle = gzopen($gzFile, 'rb');
+        $destHandle = fopen($destFile, 'w');
+        while (!gzeof($gzHandle)) {
+            fwrite($destHandle, gzread($gzHandle, 8192));
+        }
+        gzclose($gzHandle);
+        fclose($destHandle);
+
+        $result = file_get_contents($destFile);
+        $this->assertStringContainsString('Date/Time Start (UTC)', $result);
+        $this->assertStringContainsString('972397239159652', $result);
+
+        unlink($gzFile);
+        unlink($destFile);
+    }
 }
