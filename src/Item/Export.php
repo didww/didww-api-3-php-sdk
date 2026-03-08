@@ -102,26 +102,10 @@ class Export extends BaseItem
     public function downloadAndDecompress($dest)
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'didww_export_') . '.csv.gz';
-        $tmpHandle = fopen($tmpFile, 'w');
-        $apiKey = \Didww\Configuration::getCredentials()->getApiKey();
-
-        $options = [
-            CURLOPT_HTTPHEADER => ["api-key: $apiKey"],
-            CURLOPT_FILE => $tmpHandle,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_URL => $this->getAttributes()['url'],
-            CURLOPT_VERBOSE => true,
-            CURLOPT_FAILONERROR => true,
-        ];
-        $ch = curl_init();
-        curl_setopt_array($ch, $options);
-        $return = curl_exec($ch);
-        fclose($tmpHandle);
-        if (false === $return) {
-            $error = curl_error($ch);
-            unlink($tmpFile);
-
-            return $error;
+        $result = $this->download($tmpFile);
+        if (true !== $result) {
+            @unlink($tmpFile);
+            return $result;
         }
 
         $gz = gzopen($tmpFile, 'rb');
@@ -133,8 +117,7 @@ class Export extends BaseItem
 
         $destHandle = is_resource($dest) ? $dest : fopen($dest, 'w');
         while (!gzeof($gz)) {
-            $data = gzread($gz, 8192);
-            fwrite($destHandle, $data);
+            fwrite($destHandle, gzread($gz, 8192));
         }
         gzclose($gz);
         if (!is_resource($dest)) {
