@@ -99,6 +99,45 @@ class Export extends BaseItem
         return true;
     }
 
+    public function downloadAndDecompress($dest)
+    {
+        $tmpFile = tempnam(sys_get_temp_dir(), 'didww_export_');
+        if (false === $tmpFile) {
+            return 'Failed to create temporary file';
+        }
+        $result = $this->download($tmpFile);
+        if (true !== $result) {
+            @unlink($tmpFile);
+
+            return $result;
+        }
+
+        $gz = gzopen($tmpFile, 'rb');
+        if (false === $gz) {
+            unlink($tmpFile);
+
+            return 'Failed to open gzip file for decompression';
+        }
+
+        $destHandle = is_resource($dest) ? $dest : fopen($dest, 'w');
+        if (!is_resource($dest) && false === $destHandle) {
+            gzclose($gz);
+            unlink($tmpFile);
+
+            return 'Failed to open destination file for writing';
+        }
+        while (!gzeof($gz)) {
+            fwrite($destHandle, gzread($gz, 8192));
+        }
+        gzclose($gz);
+        if (!is_resource($dest)) {
+            fclose($destHandle);
+        }
+        unlink($tmpFile);
+
+        return true;
+    }
+
     /** @return array [
      * ]
      * 'status' => string
