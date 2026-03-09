@@ -27,6 +27,7 @@ class Configuration
         $client = new Client($httpClient);
         $client->setBaseUri($credentials->getEndpoint());
         $client->setApiKey($credentials->getApiKey());
+        $client->setUserAgent('didww-php-sdk/'.Client::sdkVersion());
         $version = $credentials->getVersion();
         if (null != $version) {
             $client->setVersion($version);
