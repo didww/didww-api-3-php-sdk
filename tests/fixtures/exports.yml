@@ -171,7 +171,7 @@
             Server: nginx
             Date: 'Wed, 02 Jan 2019 12:09:13 GMT'
             Content-Type: application/octet-stream
-            Content-Length: '129860'
+            Content-Transfer-Encoding: binary
             Connection: keep-alive
             Content-Disposition: 'attachment; filename="02bf6df4-3af9-416c-96be-16e5b7eeb651.csv.gz"'
             Cache-Control: no-cache
@@ -182,4 +182,4 @@
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: "Date/Time Start (UTC),Date/Time Connect (UTC),Date/Time End (UTC),Source,DID,Destination,Duration (secs),Disconnect Initiator,Disconnect Code,Response,TollFree Amount (USD),Termination Amount (USD),Metered Channels Amount (USD),Customer ID,Sell Amount (Points)\n2018-12-06 05:20:58,,,4,972397239159652,sip:972397239159652@didww.com,0,Destination,408,SIP transaction timeout,0.000,0.000,0.000,,0.000\n2018-12-06 05:20:58,4,972397239159652,sip:test@didww.com,0,Destination,408,SIP transaction timeout,0.000,0.000,0.000,,0.000\n"
+        body: 'H4sIAAAAAAAAE62QwWrDMBBE7/0KHWPYpLIbp45PLVYLPhRC7XyAkBcqsLVBuya/Xzc1oW5z7EHS8gbNjGSs4H3rB1SN2ChqdWyrBMyVVhQCur/8JXQza2iMDsHUBgyy+GDFUwAzxsugVoyOp6ue3exVBy/eCsWfsKIO4R35RIERWur714iongcaw1d8YxJoMQ6z/1J4Q8GInao+7OTW81KtRhYaMKqpYoN9f1UP5INwcpfptFin2VrvlM7LTJd5AQBb2D9mD5eV5vtdngH7U/mLPXW+O583jgbQi/dvdQFNfVASbWDrLp1l+jkaBfRGa73Yv4+bRW7XkCnqf7M/AdMMsWsKAgAA'
