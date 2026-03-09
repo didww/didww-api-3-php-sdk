@@ -101,7 +101,10 @@ class Export extends BaseItem
 
     public function downloadAndDecompress($dest)
     {
-        $tmpFile = tempnam(sys_get_temp_dir(), 'didww_export_') . '.csv.gz';
+        $tmpFile = tempnam(sys_get_temp_dir(), 'didww_export_');
+        if (false === $tmpFile) {
+            return 'Failed to create temporary file';
+        }
         $result = $this->download($tmpFile);
         if (true !== $result) {
             @unlink($tmpFile);
@@ -116,6 +119,12 @@ class Export extends BaseItem
         }
 
         $destHandle = is_resource($dest) ? $dest : fopen($dest, 'w');
+        if (!is_resource($dest) && false === $destHandle) {
+            gzclose($gz);
+            unlink($tmpFile);
+
+            return 'Failed to open destination file for writing';
+        }
         while (!gzeof($gz)) {
             fwrite($destHandle, gzread($gz, 8192));
         }

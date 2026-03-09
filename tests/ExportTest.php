@@ -129,20 +129,21 @@ class ExportTest extends BaseTest
     public function testDownloadAndDecompress()
     {
         $csvContent = "Date/Time Start (UTC),DID,Duration\n2018-12-06,972397239159652,0\n";
-        $gzFile = tempnam(sys_get_temp_dir(), 'didww_test_') . '.csv.gz';
+        $gzFile = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid('didww_test_', true) . '.csv.gz';
         $gz = gzopen($gzFile, 'wb');
         gzwrite($gz, $csvContent);
         gzclose($gz);
 
         $destFile = tempnam(sys_get_temp_dir(), 'didww_dest_');
 
-        // Read gzipped content back and decompress manually to verify the logic
-        $gzHandle = gzopen($gzFile, 'rb');
+        // Test the decompression logic directly (download is tested separately via VCR in testDownload)
+        $gz = gzopen($gzFile, 'rb');
+        $this->assertNotFalse($gz, 'Failed to open gzip file');
         $destHandle = fopen($destFile, 'w');
-        while (!gzeof($gzHandle)) {
-            fwrite($destHandle, gzread($gzHandle, 8192));
+        while (!gzeof($gz)) {
+            fwrite($destHandle, gzread($gz, 8192));
         }
-        gzclose($gzHandle);
+        gzclose($gz);
         fclose($destHandle);
 
         $result = file_get_contents($destFile);
