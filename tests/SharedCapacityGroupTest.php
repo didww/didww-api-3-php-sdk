@@ -23,13 +23,18 @@ class SharedCapacityGroupTest extends BaseTest
         $didsRelation = $sharedCapacityGroupDocument->getData()->dids();
         $capacityPoolRelation = $sharedCapacityGroupDocument->getData()->capacityPool();
 
-        $this->assertInstanceOf('Didww\Item\SharedCapacityGroup', $sharedCapacityGroupDocument->getData());
-        $this->assertEquals($sharedCapacityGroupDocument->getData()->getAttributes(), [
+        $group = $sharedCapacityGroupDocument->getData();
+        $this->assertInstanceOf('Didww\Item\SharedCapacityGroup', $group);
+        $this->assertEquals($group->getAttributes(), [
             'name' => 'didww',
             'shared_channels_count' => 19,
             'metered_channels_count' => 0,
             'created_at' => '2018-06-19T11:41:21.644Z',
         ]);
+        $this->assertEquals('didww', $group->getName());
+        $this->assertEquals(19, $group->getSharedChannelsCount());
+        $this->assertEquals(0, $group->getMeteredChannelsCount());
+        $this->assertInstanceOf(\DateTime::class, $group->getCreatedAt());
 
         $this->assertContainsOnlyInstancesOf('Didww\Item\Did', $didsRelation->getIncluded()->all());
         $this->assertEquals(array_map(
@@ -184,5 +189,19 @@ class SharedCapacityGroupTest extends BaseTest
         $this->assertFalse($sharedCapacityGroupDocument->hasErrors());
 
         $this->stopVCR();
+    }
+
+    public function testSharedCapacityGroupSetters()
+    {
+        $group = new \Didww\Item\SharedCapacityGroup();
+
+        $group->setName('test-group');
+        $this->assertEquals('test-group', $group->getName());
+
+        $group->setSharedChannelsCount(10);
+        $this->assertEquals(10, $group->getSharedChannelsCount());
+
+        $group->setMeteredChannelsCount(5);
+        $this->assertEquals(5, $group->getMeteredChannelsCount());
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Didww\Tests;
 
+use Didww\Enum\AreaLevel;
+
 class RequirementTest extends BaseTest
 {
     public function testAllWithIncludesAndPagination()
@@ -53,6 +55,29 @@ class RequirementTest extends BaseTest
             'service_description_required' => true,
             'restriction_message' => 'End User Registration is Required',
         ], $requirement->getAttributes());
+
+        // Typed getter assertions
+        $this->assertEquals(AreaLevel::WORLDWIDE, $requirement->getPersonalAreaLevel());
+        $this->assertEquals(AreaLevel::WORLDWIDE, $requirement->getBusinessAreaLevel());
+        $this->assertEquals(AreaLevel::WORLDWIDE, $requirement->getAddressAreaLevel());
+        $this->assertEquals(1, $requirement->getPersonalProofQty());
+        $this->assertEquals(1, $requirement->getBusinessProofQty());
+        $this->assertEquals(1, $requirement->getAddressProofQty());
+        $this->assertEquals(['Birth Date', 'Country', 'Personal Tax ID'], $requirement->getPersonalMandatoryFields());
+        $this->assertEquals(['Proof of ID', 'VAT Number / TAX Code', 'Country', 'Company ID', 'Representative Tax ID'], $requirement->getBusinessMandatoryFields());
+        $this->assertTrue($requirement->getServiceDescriptionRequired());
+        $this->assertEquals('End User Registration is Required', $requirement->getRestrictionMessage());
+
+        // Relationship method assertions
+        $this->assertNotNull($requirement->country());
+        $this->assertNotNull($requirement->didGroupType());
+        $this->assertNotNull($requirement->personalPermanentDocument());
+        $this->assertNotNull($requirement->businessPermanentDocument());
+        $this->assertNotNull($requirement->personalOnetimeDocument());
+        $this->assertNotNull($requirement->businessOnetimeDocument());
+        $this->assertNotNull($requirement->personalProofTypes());
+        $this->assertNotNull($requirement->businessProofTypes());
+        $this->assertNotNull($requirement->addressProofTypes());
 
         $this->stopVCR();
     }

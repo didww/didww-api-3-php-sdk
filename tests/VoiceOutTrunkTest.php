@@ -2,7 +2,10 @@
 
 namespace Didww\Tests;
 
+use Didww\Enum\DefaultDstAction;
 use Didww\Enum\MediaEncryptionMode;
+use Didww\Enum\OnCliMismatchAction;
+use Didww\Enum\VoiceOutTrunkStatus;
 
 class VoiceOutTrunkTest extends BaseTest
 {
@@ -49,6 +52,22 @@ class VoiceOutTrunkTest extends BaseTest
             ],
             $data->getAttributes()
         );
+
+        // Typed getter assertions
+        $this->assertEquals('php-test', $data->getName());
+        $this->assertEquals(['0.0.0.0/0'], $data->getAllowedSipIps());
+        $this->assertEquals(OnCliMismatchAction::REPLACE_CLI, $data->getOnCliMismatchAction());
+        $this->assertNull($data->getAllowedRtpIps());
+        $this->assertFalse($data->getAllowAnyDidAsCli());
+        $this->assertEquals(VoiceOutTrunkStatus::ACTIVE, $data->getStatus());
+        $this->assertEquals(MediaEncryptionMode::DISABLED, $data->getMediaEncryptionMode());
+        $this->assertEquals(DefaultDstAction::ALLOW_ALL, $data->getDefaultDstAction());
+        $this->assertEquals([], $data->getDstPrefixes());
+        $this->assertFalse($data->getForceSymmetricRtp());
+        $this->assertFalse($data->getRtpPing());
+        $this->assertNull($data->getCallbackUrl());
+        $this->assertNull($data->getThresholdAmount());
+        $this->assertInstanceOf(\DateTime::class, $data->getCreatedAt());
 
         $this->stopVCR();
     }
@@ -109,5 +128,52 @@ class VoiceOutTrunkTest extends BaseTest
         $this->assertFalse($voiceOutTrunkDocument->hasErrors());
 
         $this->stopVCR();
+    }
+
+    public function testVoiceOutTrunkSetters()
+    {
+        $trunk = new \Didww\Item\VoiceOutTrunk();
+
+        $trunk->setName('my-trunk');
+        $this->assertEquals('my-trunk', $trunk->getName());
+
+        $trunk->setAllowedSipIps(['10.0.0.1/32']);
+        $this->assertEquals(['10.0.0.1/32'], $trunk->getAllowedSipIps());
+
+        $trunk->setOnCliMismatchAction('reject_call');
+        $this->assertEquals(OnCliMismatchAction::REJECT_CALL, $trunk->getOnCliMismatchAction());
+
+        $trunk->setAllowedRtpIps(['192.168.0.1']);
+        $this->assertEquals(['192.168.0.1'], $trunk->getAllowedRtpIps());
+
+        $trunk->setAllowAnyDidAsCli(true);
+        $this->assertTrue($trunk->getAllowAnyDidAsCli());
+
+        $trunk->setStatus('active');
+        $this->assertEquals(VoiceOutTrunkStatus::ACTIVE, $trunk->getStatus());
+
+        $trunk->setMediaEncryptionMode('disabled');
+        $this->assertEquals(MediaEncryptionMode::DISABLED, $trunk->getMediaEncryptionMode());
+
+        $trunk->setDefaultDstAction('reject_all');
+        $this->assertEquals(DefaultDstAction::REJECT_ALL, $trunk->getDefaultDstAction());
+
+        $trunk->setDstPrefixes(['1', '44']);
+        $this->assertEquals(['1', '44'], $trunk->getDstPrefixes());
+
+        $trunk->setForceSymmetricRtp(true);
+        $this->assertTrue($trunk->getForceSymmetricRtp());
+
+        $trunk->setRtpPing(true);
+        $this->assertTrue($trunk->getRtpPing());
+
+        $trunk->setCallbackUrl('https://example.com/cb');
+        $this->assertEquals('https://example.com/cb', $trunk->getCallbackUrl());
+
+        $trunk->setThresholdAmount('100.00');
+        $this->assertEquals('100.00', $trunk->getThresholdAmount());
+
+        $trunk->setCapacityLimit('50');
+        $this->assertEquals('50', $trunk->getCapacityLimit());
     }
 }

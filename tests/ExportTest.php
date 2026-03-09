@@ -2,6 +2,8 @@
 
 namespace Didww\Tests;
 
+use Didww\Enum\ExportType;
+
 class ExportTest extends BaseTest
 {
     public function testCdrExportCreateCdrIn()
@@ -107,6 +109,9 @@ class ExportTest extends BaseTest
             'callback_method' => null,
             'export_type' => 'cdr_in',
         ]);
+        $this->assertEquals(ExportType::CDR_IN, $export->getExportType());
+        $this->assertNull($export->getCallbackUrl());
+        $this->assertNull($export->getCallbackMethod());
         $this->stopVCR();
     }
 
@@ -144,5 +149,19 @@ class ExportTest extends BaseTest
         $this->assertStringContainsString('972397239159652', $content);
         unlink($destFile);
         $this->stopVCR();
+    }
+
+    public function testExportSetters()
+    {
+        $export = new \Didww\Item\Export();
+
+        $export->setExportType('cdr_out');
+        $this->assertEquals(ExportType::CDR_OUT, $export->getExportType());
+
+        $export->setCallbackUrl('https://example.com/hook');
+        $this->assertEquals('https://example.com/hook', $export->getCallbackUrl());
+
+        $export->setCallbackMethod('POST');
+        $this->assertEquals(\Didww\Enum\CallbackMethod::POST, $export->getCallbackMethod());
     }
 }

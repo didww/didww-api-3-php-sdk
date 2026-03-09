@@ -57,12 +57,18 @@ class DidReservationTest extends BaseTest
         $didGroupRelation = $availableDidRelation->getIncluded()->didGroup();
         $stockKeepingUnitsRelation = $didGroupRelation->getIncluded()->stockKeepingUnits();
 
-        $this->assertInstanceOf('Didww\Item\DidReservation', $didReservationDocument->getData());
-        $this->assertEquals($didReservationDocument->getData()->getAttributes(), [
+        $reservation = $didReservationDocument->getData();
+        $this->assertInstanceOf('Didww\Item\DidReservation', $reservation);
+        $this->assertEquals($reservation->getAttributes(), [
             'description' => 'DIDWW',
             'expire_at' => '2018-12-28T16:22:00.417Z',
             'created_at' => '2018-12-28T16:12:00.440Z',
         ]);
+        $this->assertEquals('DIDWW', $reservation->getDescription());
+        $this->assertInstanceOf(\DateTime::class, $reservation->getExpireAt());
+        $this->assertEquals(new \DateTime('2018-12-28T16:22:00.417Z'), $reservation->getExpireAt());
+        $this->assertInstanceOf(\DateTime::class, $reservation->getCreatedAt());
+        $this->assertEquals(new \DateTime('2018-12-28T16:12:00.440Z'), $reservation->getCreatedAt());
         $this->assertInstanceOf('Didww\Item\DidGroup', $didGroupRelation->getIncluded());
         $this->assertEquals($didGroupRelation->getIncluded()->getAttributes(), [
             'prefix' => '949',

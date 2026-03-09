@@ -2,9 +2,13 @@
 
 namespace Didww\Tests;
 
+use Didww\Enum\CliFormat;
 use Didww\Enum\MediaEncryptionMode;
+use Didww\Enum\RxDtmfFormat;
 use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\StirShakenMode;
+use Didww\Enum\TransportProtocol;
+use Didww\Enum\TxDtmfFormat;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class VoiceInTrunkTest extends BaseTest
@@ -110,6 +114,35 @@ class VoiceInTrunkTest extends BaseTest
         $this->assertEquals(StirShakenMode::PAI, $sipConfiguration->getStirShakenMode());
         $this->assertEquals(['127.0.0.1'], $sipConfiguration->getAllowedRtpIps());
         $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
+
+        // Additional SIP getter assertions
+        $this->assertFalse($sipConfiguration->getAuthEnabled());
+        $this->assertNull($sipConfiguration->getAuthUser());
+        $this->assertNull($sipConfiguration->getAuthPassword());
+        $this->assertNull($sipConfiguration->getAuthFromUser());
+        $this->assertNull($sipConfiguration->getAuthFromDomain());
+        $this->assertFalse($sipConfiguration->getSstEnabled());
+        $this->assertEquals(600, $sipConfiguration->getSstMinTimer());
+        $this->assertEquals(900, $sipConfiguration->getSstMaxTimer());
+        $this->assertTrue($sipConfiguration->getSstAccept501());
+        $this->assertNull($sipConfiguration->getSstSessionExpires());
+        $this->assertEquals(8000, $sipConfiguration->getSipTimerB());
+        $this->assertEquals(2000, $sipConfiguration->getDnsFailoverTimer());
+        $this->assertFalse($sipConfiguration->getRtpPing());
+        $this->assertFalse($sipConfiguration->getForceSymmetricRtp());
+        $this->assertFalse($sipConfiguration->getResolveRuri());
+        $this->assertEquals(RxDtmfFormat::RFC_2833, $sipConfiguration->getRxDtmfFormatId());
+        $this->assertEquals(TxDtmfFormat::RFC_2833, $sipConfiguration->getTxDtmfFormatId());
+        $this->assertEquals(TransportProtocol::UDP, $sipConfiguration->getTransportProtocolId());
+        $this->assertEquals(0, $sipConfiguration->getMaxTransfers());
+        $this->assertEquals(0, $sipConfiguration->getMax30xRedirects());
+
+        // VoiceInTrunk-level getter assertions
+        $this->assertEquals(1, $voiceInTrunk->getPriority());
+        $this->assertEquals(65535, $voiceInTrunk->getWeight());
+        $this->assertInstanceOf(\DateTime::class, $voiceInTrunk->getCreatedAt());
+        $this->assertEquals(CliFormat::E164, $voiceInTrunk->getCliFormat());
+
         $this->stopVCR();
     }
 
@@ -166,5 +199,130 @@ class VoiceInTrunkTest extends BaseTest
         $this->assertEquals('837c5764-a6c3-456f-aa37-71fc8f8ca07b', $voiceInTrunkGroup->getId());
 
         $this->stopVCR();
+    }
+
+    public function testSipSetters()
+    {
+        $sip = new \Didww\Item\Configuration\Sip();
+
+        $sip->setHost('10.0.0.1');
+        $this->assertEquals('10.0.0.1', $sip->getHost());
+
+        $sip->setUsername('testuser');
+        $this->assertEquals('testuser', $sip->getUsername());
+
+        $sip->setPort(5061);
+        $this->assertEquals(5061, $sip->getPort());
+
+        $sip->setCodecIds([9, 10]);
+        $this->assertEquals([\Didww\Enum\Codec::PCMU, \Didww\Enum\Codec::PCMA], $sip->getCodecIds());
+
+        $sip->setRxDtmfFormatId(1);
+        $this->assertEquals(RxDtmfFormat::RFC_2833, $sip->getRxDtmfFormatId());
+
+        $sip->setTxDtmfFormatId(1);
+        $this->assertEquals(TxDtmfFormat::RFC_2833, $sip->getTxDtmfFormatId());
+
+        $sip->setResolveRuri(true);
+        $this->assertTrue($sip->getResolveRuri());
+
+        $sip->setAuthEnabled(true);
+        $this->assertTrue($sip->getAuthEnabled());
+
+        $sip->setAuthUser('user');
+        $this->assertEquals('user', $sip->getAuthUser());
+
+        $sip->setAuthPassword('pass');
+        $this->assertEquals('pass', $sip->getAuthPassword());
+
+        $sip->setAuthFromUser('from_user');
+        $this->assertEquals('from_user', $sip->getAuthFromUser());
+
+        $sip->setAuthFromDomain('example.com');
+        $this->assertEquals('example.com', $sip->getAuthFromDomain());
+
+        $sip->setSstEnabled(true);
+        $this->assertTrue($sip->getSstEnabled());
+
+        $sip->setSstRefreshMethodId(1);
+        $this->assertEquals(SstRefreshMethod::INVITE, $sip->getSstRefreshMethodId());
+
+        $sip->setSstMinTimer(300);
+        $this->assertEquals(300, $sip->getSstMinTimer());
+
+        $sip->setSstMaxTimer(1800);
+        $this->assertEquals(1800, $sip->getSstMaxTimer());
+
+        $sip->setSstAccept501(false);
+        $this->assertFalse($sip->getSstAccept501());
+
+        $sip->setSstSessionExpires(1800);
+        $this->assertEquals(1800, $sip->getSstSessionExpires());
+
+        $sip->setSipTimerB(16000);
+        $this->assertEquals(16000, $sip->getSipTimerB());
+
+        $sip->setDnsFailoverTimer(4000);
+        $this->assertEquals(4000, $sip->getDnsFailoverTimer());
+
+        $sip->setRtpPing(true);
+        $this->assertTrue($sip->getRtpPing());
+
+        $sip->setForceSymmetricRtp(true);
+        $this->assertTrue($sip->getForceSymmetricRtp());
+
+        $sip->setReroutingDisconnectCodeIds([56, 58]);
+        $this->assertEquals(
+            [\Didww\Enum\ReroutingDisconnectCode::SIP_400_BAD_REQUEST, \Didww\Enum\ReroutingDisconnectCode::SIP_402_PAYMENT_REQUIRED],
+            $sip->getReroutingDisconnectCodeIds()
+        );
+
+        $sip->setTransportProtocolId(1);
+        $this->assertEquals(TransportProtocol::UDP, $sip->getTransportProtocolId());
+
+        $sip->setMaxTransfers(3);
+        $this->assertEquals(3, $sip->getMaxTransfers());
+
+        $sip->setMax30xRedirects(2);
+        $this->assertEquals(2, $sip->getMax30xRedirects());
+
+        $sip->setMediaEncryptionMode('zrtp');
+        $this->assertEquals(MediaEncryptionMode::ZRTP, $sip->getMediaEncryptionMode());
+
+        $sip->setStirShakenMode('pai');
+        $this->assertEquals(StirShakenMode::PAI, $sip->getStirShakenMode());
+
+        $sip->setAllowedRtpIps(['192.168.1.1']);
+        $this->assertEquals(['192.168.1.1'], $sip->getAllowedRtpIps());
+    }
+
+    public function testVoiceInTrunkSetters()
+    {
+        $trunk = new \Didww\Item\VoiceInTrunk();
+
+        $trunk->setName('test trunk');
+        $this->assertEquals('test trunk', $trunk->getName());
+
+        $trunk->setPriority(2);
+        $this->assertEquals(2, $trunk->getPriority());
+
+        $trunk->setWeight(100);
+        $this->assertEquals(100, $trunk->getWeight());
+
+        $trunk->setCliFormat('raw');
+        $this->assertEquals(CliFormat::RAW, $trunk->getCliFormat());
+
+        $trunk->setCliPrefix('+1');
+        $this->assertEquals('+1', $trunk->getCliPrefix());
+
+        $trunk->setDescription('test description');
+        $this->assertEquals('test description', $trunk->getDescription());
+
+        $trunk->setRingingTimeout(30);
+        $this->assertEquals(30, $trunk->getRingingTimeout());
+
+        $config = new \Didww\Item\Configuration\Sip(['host' => '1.2.3.4']);
+        $trunk->setConfiguration($config);
+        $this->assertSame($config, $trunk->getConfiguration());
     }
 }

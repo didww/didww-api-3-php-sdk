@@ -22,10 +22,10 @@ class RegionTest extends BaseTest
         $regionDocument = \Didww\Item\Region::find($uuid, ['include' => 'country']);
         $countryRelation = $regionDocument->getData()->country();
 
-        $this->assertInstanceOf('Didww\Item\Region', $regionDocument->getData());
-        $this->assertEquals($regionDocument->getData()->getAttributes(), [
-            'name' => 'California',
-        ]);
+        $region = $regionDocument->getData();
+        $this->assertInstanceOf('Didww\Item\Region', $region);
+        $this->assertEquals('California', $region->getName());
+        $this->assertEquals('US-CA', $region->getIso());
         $this->assertInstanceOf('Didww\Item\Country', $countryRelation->getIncluded());
         $this->assertEquals($countryRelation->getIncluded()->getAttributes(), [
             'iso' => 'US',

@@ -130,6 +130,8 @@ class DidTest extends BaseTest
         $didDocument = \Didww\Item\Did::find($uuid, ['include' => 'address_verification,did_group']);
         $did = $didDocument->getData();
         $this->assertInstanceOf('Didww\Item\Did', $did);
+        $this->assertInstanceOf(\DateTime::class, $did->getCreatedAt());
+        $this->assertInstanceOf(\DateTime::class, $did->getExpiresAt());
 
         $addressVerification = $did->addressVerification()->getIncluded();
         $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
