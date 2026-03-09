@@ -298,4 +298,58 @@ class OrderTest extends BaseTest
 
         $this->stopVCR();
     }
+
+    public function testAvailableDidOrderItemSetters()
+    {
+        $item = new \Didww\Item\OrderItem\AvailableDid();
+
+        $item->setSkuId('sku-123');
+        $this->assertEquals('sku-123', $item->getSkuId());
+
+        $item->setAvailableDidId('did-456');
+        $this->assertEquals('did-456', $item->getAttributes()['available_did_id']);
+
+        $availableDid = new \Didww\Item\AvailableDid();
+        $availableDid->setId('did-789');
+        $item->setAvailableDid($availableDid);
+        $this->assertEquals('did-789', $item->getAttributes()['available_did_id']);
+
+        $this->assertEquals('did_order_items', $item->getType());
+    }
+
+    public function testReservationDidOrderItemSetters()
+    {
+        $item = new \Didww\Item\OrderItem\ReservationDid();
+
+        $item->setSkuId('sku-abc');
+        $this->assertEquals('sku-abc', $item->getSkuId());
+
+        $item->setDidReservationId('res-123');
+        $this->assertEquals('res-123', $item->getAttributes()['did_reservation_id']);
+
+        $reservation = new \Didww\Item\DidReservation();
+        $reservation->setId('res-456');
+        $item->setDidReservation($reservation);
+        $this->assertEquals('res-456', $item->getAttributes()['did_reservation_id']);
+
+        $this->assertEquals('did_order_items', $item->getType());
+    }
+
+    public function testCapacityOrderItemSetters()
+    {
+        $item = new \Didww\Item\OrderItem\Capacity();
+
+        $item->setQty(5);
+        $this->assertEquals(5, $item->getQty());
+
+        $item->setCapacityPoolId('pool-123');
+        $this->assertEquals('pool-123', $item->getCapacityPoolId());
+
+        $pool = new \Didww\Item\CapacityPool();
+        $pool->setId('pool-456');
+        $item->setCapacityPool($pool);
+        $this->assertEquals('pool-456', $item->getCapacityPoolId());
+
+        $this->assertEquals('capacity_order_items', $item->getType());
+    }
 }

@@ -40,5 +40,7 @@ class NanpaPrefixTest extends BaseTest
         $nanpaPrefixDocument = \Didww\Item\NanpaPrefix::find($uuid, ['include' => 'country']);
         $data = $nanpaPrefixDocument->getData();
         $this->assertEquals(['npa' => '864', 'nxx' => '920'], $data->getAttributes());
+        $this->assertEquals('864', $data->getNPA());
+        $this->assertEquals('920', $data->getNXX());
     }
 }

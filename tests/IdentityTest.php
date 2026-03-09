@@ -55,6 +55,23 @@ class IdentityTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Identity', $identity);
         $this->assertInstanceOf('Didww\Item\Country', $identity->country()->getIncluded());
 
+        // Typed getter assertions
+        $this->assertEquals('John', $identity->getFirstName());
+        $this->assertEquals('Doe', $identity->getLastName());
+        $this->assertEquals('123456789', $identity->getPhoneNumber());
+        $this->assertEquals('ABC1234', $identity->getIdNumber());
+        $this->assertInstanceOf(\DateTime::class, $identity->getBirthDate());
+        $this->assertEquals('1970-01-01', $identity->getBirthDate()->format('Y-m-d'));
+        $this->assertEquals('Test Company Limited', $identity->getCompanyName());
+        $this->assertEquals('543221', $identity->getCompanyRegNumber());
+        $this->assertEquals('GB1234', $identity->getVatId());
+        $this->assertEquals('test identity', $identity->getDescription());
+        $this->assertEquals('987654321', $identity->getPersonalTaxId());
+        $this->assertEquals(\Didww\Enum\IdentityType::BUSINESS, $identity->getIdentityType());
+        $this->assertEquals('111', $identity->getExternalReferenceId());
+        $this->assertInstanceOf(\DateTime::class, $identity->getCreatedAt());
+        $this->assertIsBool($identity->getVerified());
+
         $this->stopVCR();
     }
 
@@ -135,5 +152,46 @@ class IdentityTest extends BaseTest
 
         $this->assertFalse($identityDocument->hasErrors());
         $this->stopVCR();
+    }
+
+    public function testIdentitySetters()
+    {
+        $identity = new \Didww\Item\Identity();
+
+        $identity->setFirstName('Jane');
+        $this->assertEquals('Jane', $identity->getFirstName());
+
+        $identity->setLastName('Smith');
+        $this->assertEquals('Smith', $identity->getLastName());
+
+        $identity->setPhoneNumber('555-1234');
+        $this->assertEquals('555-1234', $identity->getPhoneNumber());
+
+        $identity->setIdNumber('XYZ789');
+        $this->assertEquals('XYZ789', $identity->getIdNumber());
+
+        $identity->setBirthDate('1985-06-15');
+        $this->assertEquals('1985-06-15', $identity->getBirthDate()->format('Y-m-d'));
+
+        $identity->setCompanyName('Acme Inc');
+        $this->assertEquals('Acme Inc', $identity->getCompanyName());
+
+        $identity->setCompanyRegNumber('REG123');
+        $this->assertEquals('REG123', $identity->getCompanyRegNumber());
+
+        $identity->setVatId('VAT456');
+        $this->assertEquals('VAT456', $identity->getVatId());
+
+        $identity->setDescription('some desc');
+        $this->assertEquals('some desc', $identity->getDescription());
+
+        $identity->setPersonalTaxId('TAX789');
+        $this->assertEquals('TAX789', $identity->getPersonalTaxId());
+
+        $identity->setIdentityType('Personal');
+        $this->assertEquals(\Didww\Enum\IdentityType::PERSONAL, $identity->getIdentityType());
+
+        $identity->setExternalReferenceId('EXT-001');
+        $this->assertEquals('EXT-001', $identity->getExternalReferenceId());
     }
 }

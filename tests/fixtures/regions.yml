@@ -35,7 +35,7 @@
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"c11b1f34-16cf-4ba6-8497-f305b53d5b01","type":"regions","attributes":{"name":"California"},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/regions/c11b1f34-16cf-4ba6-8497-f305b53d5b01/relationships/country","related":"https://sandbox-api.didww.com/v3/regions/c11b1f34-16cf-4ba6-8497-f305b53d5b01/country"},"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}}}},"included":[{"id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9","type":"countries","attributes":{"name":"United States","prefix":"1","iso":"US"}}]}'
+        body: '{"data":{"id":"c11b1f34-16cf-4ba6-8497-f305b53d5b01","type":"regions","attributes":{"name":"California","iso":"US-CA"},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/regions/c11b1f34-16cf-4ba6-8497-f305b53d5b01/relationships/country","related":"https://sandbox-api.didww.com/v3/regions/c11b1f34-16cf-4ba6-8497-f305b53d5b01/country"},"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}}}},"included":[{"id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9","type":"countries","attributes":{"name":"United States","prefix":"1","iso":"US"}}]}'
 
 -
     request:

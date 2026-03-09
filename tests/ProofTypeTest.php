@@ -14,6 +14,15 @@ class ProofTypeTest extends BaseTest
         $this->assertContainsOnlyInstancesOf('Didww\Item\ProofType', $proofTypes);
 
         $this->assertEquals(17, $proofTypesDocument->getMeta()['total_records']);
+
+        $first = $proofTypes[0];
+        $this->assertEquals('Utility Bill', $first->getName());
+        $this->assertEquals('Address', $first->getEntityType());
+
+        $fourth = $proofTypes[3];
+        $this->assertEquals('Drivers License', $fourth->getName());
+        $this->assertEquals('Personal', $fourth->getEntityType());
+
         $this->stopVCR();
     }
 }
