@@ -108,6 +108,7 @@ class Export extends BaseItem
         $result = $this->download($tmpFile);
         if (true !== $result) {
             @unlink($tmpFile);
+
             return $result;
         }
 

@@ -129,7 +129,7 @@ class ExportTest extends BaseTest
     public function testDownloadAndDecompress()
     {
         $csvContent = "Date/Time Start (UTC),DID,Duration\n2018-12-06,972397239159652,0\n";
-        $gzFile = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid('didww_test_', true) . '.csv.gz';
+        $gzFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('didww_test_', true).'.csv.gz';
         $gz = gzopen($gzFile, 'wb');
         gzwrite($gz, $csvContent);
         gzclose($gz);
