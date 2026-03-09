@@ -115,42 +115,34 @@ class ExportTest extends BaseTest
         $this->startVCR('exports.yml');
 
         $uuid = '5a03dd1e-6018-44c6-b98b-084999b376ce';
+        $destFile = tempnam(sys_get_temp_dir(), 'didww_test_');
 
-        $csvFixture = 'tests/fixtures/csv/export.csv';
         $export = \Didww\Item\Export::build($uuid, ['url' => 'https://sandbox-api.didww.com/v3/exports/02bf6df4-3af9-416c-96be-16e5b7eeb651.csv.gz']);
 
-        $result = $export->download($csvFixture);
+        $result = $export->download($destFile);
         $this->assertTrue($result);
-        $this->assertStringNotEqualsFile($csvFixture, '');
-        unlink($csvFixture);
+        // Verify gzip magic bytes
+        $magic = file_get_contents($destFile, false, null, 0, 2);
+        $this->assertEquals("\x1f\x8b", $magic);
+        unlink($destFile);
         $this->stopVCR();
     }
 
     public function testDownloadAndDecompress()
     {
-        $csvContent = "Date/Time Start (UTC),DID,Duration\n2018-12-06,972397239159652,0\n";
-        $gzFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('didww_test_', true).'.csv.gz';
-        $gz = gzopen($gzFile, 'wb');
-        gzwrite($gz, $csvContent);
-        gzclose($gz);
+        $this->startVCR('exports.yml');
 
+        $uuid = '5a03dd1e-6018-44c6-b98b-084999b376ce';
         $destFile = tempnam(sys_get_temp_dir(), 'didww_dest_');
 
-        // Test the decompression logic directly (download is tested separately via VCR in testDownload)
-        $gz = gzopen($gzFile, 'rb');
-        $this->assertNotFalse($gz, 'Failed to open gzip file');
-        $destHandle = fopen($destFile, 'w');
-        while (!gzeof($gz)) {
-            fwrite($destHandle, gzread($gz, 8192));
-        }
-        gzclose($gz);
-        fclose($destHandle);
+        $export = \Didww\Item\Export::build($uuid, ['url' => 'https://sandbox-api.didww.com/v3/exports/02bf6df4-3af9-416c-96be-16e5b7eeb651.csv.gz']);
 
-        $result = file_get_contents($destFile);
-        $this->assertStringContainsString('Date/Time Start (UTC)', $result);
-        $this->assertStringContainsString('972397239159652', $result);
-
-        unlink($gzFile);
+        $result = $export->downloadAndDecompress($destFile);
+        $this->assertTrue($result);
+        $content = file_get_contents($destFile);
+        $this->assertStringContainsString('Date/Time Start (UTC)', $content);
+        $this->assertStringContainsString('972397239159652', $content);
         unlink($destFile);
+        $this->stopVCR();
     }
 }
