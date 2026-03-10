@@ -40,6 +40,19 @@ class AddressVerificationTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testFindRejectedAddressVerification()
+    {
+        $this->startVCR('address_verifications.yml');
+        $addressVerificationDocument = \Didww\Item\AddressVerification::find('429e6d4e-2ee9-4953-aa98-0b3ac07f0f96');
+        $addressVerification = $addressVerificationDocument->getData();
+        $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
+        $this->assertEquals('429e6d4e-2ee9-4953-aa98-0b3ac07f0f96', $addressVerification->getId());
+        $this->assertEquals(AddressVerificationStatus::REJECTED, $addressVerification->getStatus());
+        $this->assertEquals(['Address cannot be validated', 'Proof of address should be not older than of 6 months'], $addressVerification->getRejectReasons());
+        $this->assertEquals('ODW-879912', $addressVerification->getReference());
+        $this->stopVCR();
+    }
+
     public function testCreateAddressVerification()
     {
         $this->startVCR('address_verifications.yml');
