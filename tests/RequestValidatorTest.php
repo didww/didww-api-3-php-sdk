@@ -85,4 +85,43 @@ class RequestValidatorTest extends BaseTest
             $signature
         ));
     }
+
+    public function urlNormalizationProvider(): array
+    {
+        return [
+            'http plain' => ['http://foo.com/bar', '4d1ce2be656d20d064183bec2ab98a2ff3981f73'],
+            'http default port 80' => ['http://foo.com:80/bar', '4d1ce2be656d20d064183bec2ab98a2ff3981f73'],
+            'http port 443' => ['http://foo.com:443/bar', '904eaa65c0759afac0e4d8912de424e2dfb96ea1'],
+            'http port 8182' => ['http://foo.com:8182/bar', 'eb8fcfb3d7ed4b4c2265d73cf93c31ba614384d1'],
+            'no schema' => ['foo.com/bar', '4d1ce2be656d20d064183bec2ab98a2ff3981f73'],
+            'http with query' => ['http://foo.com/bar?baz=boo', '78b00717a86ce9df06abf45ff818aa94537e1729'],
+            'http with userinfo' => ['http://user:pass@foo.com/bar', '88615a11a78c021c1da2e1e0bfb8cc165170afc5'],
+            'http with fragment' => ['http://foo.com/bar#test', 'b1c4391fcdab7c0521bb5b9eb4f41f08529b8418'],
+            'https plain' => ['https://foo.com/bar', 'f26a771c302319a7094accbe2989bad67fff2928'],
+            'https default port 443' => ['https://foo.com:443/bar', 'f26a771c302319a7094accbe2989bad67fff2928'],
+            'https port 80' => ['https://foo.com:80/bar', 'bd45af5253b72f6383c6af7dc75250f12b73a4e1'],
+            'https port 8384' => ['https://foo.com:8384/bar', '9c9fec4b7ebd6e1c461cb8e4ffe4f2987a19a5d3'],
+            'https with query' => ['https://foo.com/bar?qwe=asd', '4a0e98ddf286acadd1d5be1b0ed85a4e541c3137'],
+            'https with userinfo' => ['https://qwe:asd@foo.com/bar', '7a8cd4a6c349910dfecaf9807e56a63787250bbd'],
+            'https with fragment' => ['https://foo.com/bar#baz', '5024919770ea5ca2e3ccc07cb940323d79819508'],
+        ];
+    }
+
+    /**
+     * @dataProvider urlNormalizationProvider
+     */
+    public function testUrlNormalization(string $url, string $expectedSignature)
+    {
+        $apiKey = 'SOMEAPIKEY';
+        $validator = new \Didww\Callback\RequestValidator($apiKey);
+        $this->assertTrue($validator->validate(
+            $url,
+            [
+                'id' => '1dd7a68b-e235-402b-8912-fe73ee14243a',
+                'status' => 'completed',
+                'type' => 'orders',
+            ],
+            $expectedSignature
+        ));
+    }
 }

@@ -47,6 +47,10 @@ class RequestValidator
 
     private function normalizeUrl(string $url): string
     {
+        if (!preg_match('#^[a-zA-Z]+://#', $url)) {
+            $url = 'http://' . $url;
+        }
+
         $parsedUrl = parse_url($url);
         if (false == $parsedUrl) {
             return '';
@@ -54,8 +58,8 @@ class RequestValidator
 
         $scheme = $parsedUrl['scheme'];
 
-        if (array_key_exists('user', $parsedUrl) && array_key_exists('password', $parsedUrl)) {
-            $userInfo = $parsedUrl['user'].':'.$parsedUrl['password'].'@';
+        if (array_key_exists('user', $parsedUrl) && array_key_exists('pass', $parsedUrl)) {
+            $userInfo = $parsedUrl['user'].':'.$parsedUrl['pass'].'@';
         } elseif (array_key_exists('user', $parsedUrl)) {
             $userInfo = $parsedUrl['user'].'@';
         } else {
