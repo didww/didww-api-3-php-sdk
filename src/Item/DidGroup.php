@@ -35,6 +35,11 @@ class DidGroup extends BaseItem
         return $this->hasOne(DidGroupType::class);
     }
 
+    public function requirement()
+    {
+        return $this->hasOne(Requirement::class);
+    }
+
     public function getAreaName(): string
     {
         return $this->getAttributes()['area_name'];
