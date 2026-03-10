@@ -86,7 +86,6 @@ class Export extends BaseItem
             CURLOPT_FILE => is_resource($dest) ? $dest : fopen($dest, 'w'),
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_URL => $this->getAttributes()['url'],
-            CURLOPT_VERBOSE => true,
             CURLOPT_FAILONERROR => true, // HTTP code > 400 will throw curl error
         ];
         $ch = curl_init();
