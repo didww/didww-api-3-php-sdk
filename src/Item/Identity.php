@@ -167,7 +167,7 @@ class Identity extends BaseItem
      * 'identity_type' => string // 'Personal' or 'Business'
      * 'created_at' => string // creation timestamp
      * 'external_reference_id' => string // custom identifier
-     * 'contact_email' => string // contact email address
+     * 'contact_email' => string|null // contact email address
      * 'verified' => bool
      */
     public function getAttributes(): array
