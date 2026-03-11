@@ -97,13 +97,13 @@ class RequestValidatorTest extends BaseTest
             'http with query' => ['http://foo.com/bar?baz=boo', '78b00717a86ce9df06abf45ff818aa94537e1729'], // NOSONAR
             'http with userinfo' => ['http://user:pass@foo.com/bar', '88615a11a78c021c1da2e1e0bfb8cc165170afc5'], // NOSONAR
             'http with fragment' => ['http://foo.com/bar#test', 'b1c4391fcdab7c0521bb5b9eb4f41f08529b8418'], // NOSONAR
-            'https plain' => ['https://foo.com/bar', 'f26a771c302319a7094accbe2989bad67fff2928'],
-            'https default port 443' => ['https://foo.com:443/bar', 'f26a771c302319a7094accbe2989bad67fff2928'],
-            'https port 80' => ['https://foo.com:80/bar', 'bd45af5253b72f6383c6af7dc75250f12b73a4e1'],
-            'https port 8384' => ['https://foo.com:8384/bar', '9c9fec4b7ebd6e1c461cb8e4ffe4f2987a19a5d3'],
-            'https with query' => ['https://foo.com/bar?qwe=asd', '4a0e98ddf286acadd1d5be1b0ed85a4e541c3137'],
-            'https with userinfo' => ['https://qwe:asd@foo.com/bar', '7a8cd4a6c349910dfecaf9807e56a63787250bbd'],
-            'https with fragment' => ['https://foo.com/bar#baz', '5024919770ea5ca2e3ccc07cb940323d79819508'],
+            'https plain' => ['https://foo.com/bar', 'f26a771c302319a7094accbe2989bad67fff2928'], // NOSONAR
+            'https default port 443' => ['https://foo.com:443/bar', 'f26a771c302319a7094accbe2989bad67fff2928'], // NOSONAR
+            'https port 80' => ['https://foo.com:80/bar', 'bd45af5253b72f6383c6af7dc75250f12b73a4e1'], // NOSONAR
+            'https port 8384' => ['https://foo.com:8384/bar', '9c9fec4b7ebd6e1c461cb8e4ffe4f2987a19a5d3'], // NOSONAR
+            'https with query' => ['https://foo.com/bar?qwe=asd', '4a0e98ddf286acadd1d5be1b0ed85a4e541c3137'], // NOSONAR
+            'https with userinfo' => ['https://qwe:asd@foo.com/bar', '7a8cd4a6c349910dfecaf9807e56a63787250bbd'], // NOSONAR
+            'https with fragment' => ['https://foo.com/bar#baz', '5024919770ea5ca2e3ccc07cb940323d79819508'], // NOSONAR
         ];
     }
 
