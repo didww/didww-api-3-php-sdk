@@ -36,10 +36,8 @@ class PublicKeyTest extends BaseTest
 
     private function getClientAndBuildRequest(): array
     {
-        $documentClient = \Didww\Configuration::getDocumentClient();
-        $reflection = new \ReflectionProperty($documentClient, 'client');
-        $reflection->setAccessible(true);
-        $client = $reflection->getValue($documentClient);
+        $client = new \Didww\Client();
+        $client->setApiKey('test-api-key');
 
         $buildRequest = new \ReflectionMethod($client, 'buildRequest');
         $buildRequest->setAccessible(true);
