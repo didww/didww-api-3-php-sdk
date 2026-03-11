@@ -43,4 +43,22 @@ class NanpaPrefixTest extends BaseTest
         $this->assertEquals('864', $data->getNPA());
         $this->assertEquals('920', $data->getNXX());
     }
+
+    public function testFindWithIncludeRegion()
+    {
+        $uuid = '1e622e21-c740-4d3f-a615-2a7ef4991922';
+        $nanpaPrefixDocument = \Didww\Item\NanpaPrefix::find($uuid, ['include' => 'region']);
+        $data = $nanpaPrefixDocument->getData();
+
+        $this->assertInstanceOf('Didww\Item\NanpaPrefix', $data);
+        $this->assertEquals('201', $data->getNPA());
+        $this->assertEquals('221', $data->getNXX());
+
+        $regionRelation = $data->region();
+        $region = $regionRelation->getIncluded();
+
+        $this->assertInstanceOf('Didww\Item\Region', $region);
+        $this->assertEquals('New Jersey', $region->getName());
+        $this->assertEquals('US-NJ', $region->getIso());
+    }
 }
