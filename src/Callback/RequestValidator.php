@@ -47,10 +47,6 @@ class RequestValidator
 
     private function normalizeUrl(string $url): string
     {
-        if (!preg_match('#^[a-zA-Z]+://#', $url)) {
-            $url = 'http://'.$url; // NOSONAR
-        }
-
         $parsedUrl = parse_url($url);
         if (false == $parsedUrl) {
             return '';
