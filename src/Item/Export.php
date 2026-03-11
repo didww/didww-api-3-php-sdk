@@ -84,8 +84,8 @@ class Export extends BaseItem
         $options = [
             CURLOPT_HTTPHEADER => [
                 "Api-Key: $apiKey",
-                'User-Agent: didww-php-sdk/' . \Didww\Client::sdkVersion(),
-                'X-DIDWW-API-Version: ' . (\Didww\Configuration::getCredentials()->getVersion() ?? '2022-05-10'),
+                'User-Agent: didww-php-sdk/'.\Didww\Client::sdkVersion(),
+                'X-DIDWW-API-Version: '.(\Didww\Configuration::getCredentials()->getVersion() ?? '2022-05-10'),
             ],
             CURLOPT_FILE => is_resource($dest) ? $dest : fopen($dest, 'w'),
             CURLOPT_FOLLOWLOCATION => true,
