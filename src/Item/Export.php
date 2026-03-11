@@ -129,8 +129,9 @@ class Export extends BaseItem
             return 'Failed to open gzip file for decompression';
         }
 
-        $destHandle = is_resource($dest) ? $dest : fopen($dest, 'w');
-        if (!is_resource($dest) && false === $destHandle) {
+        $ownHandle = !is_resource($dest);
+        $destHandle = $ownHandle ? fopen($dest, 'wb') : $dest;
+        if ($ownHandle && false === $destHandle) {
             gzclose($gz);
             unlink($tmpFile);
 
@@ -140,7 +141,7 @@ class Export extends BaseItem
             fwrite($destHandle, gzread($gz, 8192));
         }
         gzclose($gz);
-        if (!is_resource($dest)) {
+        if ($ownHandle) {
             fclose($destHandle);
         }
         unlink($tmpFile);
