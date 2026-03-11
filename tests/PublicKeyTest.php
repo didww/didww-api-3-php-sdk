@@ -22,7 +22,7 @@ class PublicKeyTest extends BaseTest
     {
         [$client, $buildRequest] = $this->getClientAndBuildRequest();
 
-        $request = $buildRequest->invoke($client, 'GET', 'public_keys');
+        $request = $buildRequest->invoke($client, 'GET', '/public_keys');
         $this->assertFalse($request->hasHeader('api-key'), 'public_keys request should not include api-key header');
     }
 
@@ -30,7 +30,7 @@ class PublicKeyTest extends BaseTest
     {
         [$client, $buildRequest] = $this->getClientAndBuildRequest();
 
-        $request = $buildRequest->invoke($client, 'GET', 'dids');
+        $request = $buildRequest->invoke($client, 'GET', '/dids');
         $this->assertTrue($request->hasHeader('api-key'), 'non-public_keys request should include api-key header');
     }
 

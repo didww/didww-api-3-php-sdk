@@ -4,13 +4,13 @@ namespace Didww;
 
 class Client extends \Swis\JsonApi\Client\Client
 {
-    private const PUBLIC_KEYS_ENDPOINT = 'public_keys';
+    private const PUBLIC_KEYS_ENDPOINT = '/public_keys';
 
     protected function buildRequest(string $method, string $endpoint, $body = null, array $headers = []): \Psr\Http\Message\RequestInterface
     {
         $request = parent::buildRequest($method, $endpoint, $body, $headers);
 
-        if (self::PUBLIC_KEYS_ENDPOINT === $endpoint || str_starts_with($endpoint, self::PUBLIC_KEYS_ENDPOINT.'/')) {
+        if (self::PUBLIC_KEYS_ENDPOINT === $endpoint) {
             $request = $request->withoutHeader('api-key');
         }
 
