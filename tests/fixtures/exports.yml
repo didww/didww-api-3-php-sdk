@@ -161,7 +161,7 @@
         url: 'https://sandbox-api.didww.com/v3/exports/02bf6df4-3af9-416c-96be-16e5b7eeb651.csv.gz'
         headers:
             Host: sandbox-api.didww.com
-            Api-Key: PLACEYOURAPIKEYHERE
+            api-key: PLACEYOURAPIKEYHERE
             User-Agent: didww-php-sdk/dev-master
             X-DIDWW-API-Version: '2022-05-10'
     response:
