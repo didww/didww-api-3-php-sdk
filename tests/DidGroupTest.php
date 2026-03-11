@@ -76,8 +76,10 @@ class DidGroupTest extends BaseTest
         $this->assertEquals(2, $stockKeepingUnits[1]->getChannelsIncludedCount());
 
         $requirementRelation = $didGroupDocument->getData()->requirement();
-        $this->assertInstanceOf('Didww\Item\Requirement', $requirementRelation->getIncluded());
-        $this->assertEquals('Any', $requirementRelation->getIncluded()->getAttributes()['identity_type']);
+        $requirement = $requirementRelation->getIncluded();
+        $this->assertInstanceOf('Didww\Item\Requirement', $requirement);
+        $this->assertEquals('Any', $requirement->getAttributes()['identity_type']);
+        $this->assertSame(\Didww\Enum\IdentityType::ANY, $requirement->getIdentityType());
 
         $this->stopVCR();
     }

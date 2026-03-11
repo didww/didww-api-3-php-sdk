@@ -30,6 +30,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $cases = [
             [CliFormat::class, 'raw', CliFormat::RAW],
             [IdentityType::class, 'Personal', IdentityType::PERSONAL],
+            [IdentityType::class, 'Any', IdentityType::ANY],
             [OrderStatus::class, 'Completed', OrderStatus::COMPLETED],
             [CallbackMethod::class, 'POST', CallbackMethod::POST],
             [ExportType::class, 'cdr_in', ExportType::CDR_IN],
