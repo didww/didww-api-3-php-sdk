@@ -80,6 +80,11 @@ class Export extends BaseItem
     public function download($dest)
     {
         $apiKey = \Didww\Configuration::getCredentials()->getApiKey();
+        $ownHandle = !is_resource($dest);
+        $destHandle = $ownHandle ? fopen($dest, 'w') : $dest;
+        if (false === $destHandle) {
+            return 'Failed to open destination file for writing';
+        }
 
         $options = [
             CURLOPT_HTTPHEADER => [
@@ -87,7 +92,7 @@ class Export extends BaseItem
                 'User-Agent: didww-php-sdk/'.\Didww\Client::sdkVersion(),
                 'X-DIDWW-API-Version: '.(\Didww\Configuration::getCredentials()->getVersion() ?? '2022-05-10'),
             ],
-            CURLOPT_FILE => is_resource($dest) ? $dest : fopen($dest, 'w'),
+            CURLOPT_FILE => $destHandle,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_URL => $this->getAttributes()['url'],
             CURLOPT_FAILONERROR => true, // HTTP code > 400 will throw curl error
@@ -95,11 +100,13 @@ class Export extends BaseItem
         $ch = curl_init();
         curl_setopt_array($ch, $options);
         $return = curl_exec($ch);
-        if (false === $return) {
-            return curl_error($ch);
+        $error = false === $return ? curl_error($ch) : null;
+        curl_close($ch);
+        if ($ownHandle) {
+            fclose($destHandle);
         }
 
-        return true;
+        return $error ?? true;
     }
 
     public function downloadAndDecompress($dest)
