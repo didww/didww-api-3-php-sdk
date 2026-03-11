@@ -40,7 +40,6 @@ class PublicKeyTest extends BaseTest
         $client->setApiKey('test-api-key');
 
         $buildRequest = new \ReflectionMethod($client, 'buildRequest');
-        $buildRequest->setAccessible(true);
 
         return [$client, $buildRequest];
     }
