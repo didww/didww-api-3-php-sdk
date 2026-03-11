@@ -50,9 +50,10 @@ class AddressVerification extends BaseItem
     public function getRejectReasons(): ?array
     {
         $reasons = $this->attributes['reject_reasons'] ?? null;
-        if ($reasons === null) {
+        if (null === $reasons) {
             return null;
         }
+
         return explode('; ', $reasons);
     }
 
