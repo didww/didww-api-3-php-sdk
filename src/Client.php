@@ -10,7 +10,7 @@ class Client extends \Swis\JsonApi\Client\Client
     {
         $request = parent::buildRequest($method, $endpoint, $body, $headers);
 
-        if ($endpoint === self::PUBLIC_KEYS_ENDPOINT || str_starts_with($endpoint, self::PUBLIC_KEYS_ENDPOINT . '/')) {
+        if (self::PUBLIC_KEYS_ENDPOINT === $endpoint || str_starts_with($endpoint, self::PUBLIC_KEYS_ENDPOINT.'/')) {
             $request = $request->withoutHeader('api-key');
         }
 
