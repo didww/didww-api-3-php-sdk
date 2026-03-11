@@ -83,10 +83,7 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
         $this->persistedRelationships = $this->extractRelationshipData($current['relationships'] ?? []);
     }
 
-    protected function attribute(string $key): mixed
-    {
-        return $this->attributes[$key] ?? null;
-    }
+    use \Didww\Traits\HasSafeAttributes;
 
     protected function enumAttribute(string $key, string $enumClass): ?\BackedEnum
     {

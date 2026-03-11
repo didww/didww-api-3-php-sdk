@@ -4,6 +4,8 @@ namespace Didww\Item\OrderItem;
 
 abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
 {
+    use \Didww\Traits\HasSafeAttributes;
+
     protected $attributes = [];
 
     abstract public function getType(): string;
