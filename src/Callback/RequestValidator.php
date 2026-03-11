@@ -75,7 +75,7 @@ class RequestValidator
         if (array_key_exists('path', $parsedUrl) && '' !== $parsedUrl['path']) {
             $path = $parsedUrl['path'];
         } else {
-            $path = '/';
+            $path = '';
         }
 
         if (array_key_exists('query', $parsedUrl)) {
