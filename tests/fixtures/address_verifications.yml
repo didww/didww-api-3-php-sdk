@@ -100,3 +100,26 @@
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
         body: '{"data":{"id":"78182ef2-8377-41cd-89e1-26e8266c9c94","type":"address_verifications","attributes":{"service_description":null,"callback_url":"http://example.com","callback_method":"GET","status":"Pending","reject_reasons":null,"created_at":"2021-04-01T15:01:32.668Z"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/address"},"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}}}},"included":[{"id":"d3414687-40f4-4346-a267-c2c65117d28c","type":"addresses","attributes":{"city_name":"Chicago","postal_code":"1234","address":"Main street","description":"some address","created_at":"2021-04-01T13:12:56.632Z"},"relationships":{"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/identity","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/identity"}},"country":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/country","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/proofs","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/proofs"}}}}],"meta":{"api_version":"2021-04-19"}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Tue, 03 Aug 2021 13:45:30 GMT'
+            Content-Type: application/vnd.api+json
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+        body: '{"data":{"id":"429e6d4e-2ee9-4953-aa98-0b3ac07f0f96","type":"address_verifications","attributes":{"service_description":null,"callback_url":null,"callback_method":null,"status":"Rejected","reject_reasons":"Address cannot be validated; Proof of address should be not older than of 6 months","reference":"ODW-879912","created_at":"2020-10-28T08:29:29.960Z"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/address"}}}},"meta":{"api_version":"2022-05-10"}}'

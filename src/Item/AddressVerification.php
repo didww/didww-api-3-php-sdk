@@ -47,9 +47,14 @@ class AddressVerification extends BaseItem
         return $this->enumAttribute('status', AddressVerificationStatus::class);
     }
 
-    public function getRejectReasons(): ?string
+    public function getRejectReasons(): ?array
     {
-        return $this->attributes['reject_reasons'];
+        $reasons = $this->attributes['reject_reasons'] ?? null;
+        if (null === $reasons) {
+            return null;
+        }
+
+        return explode('; ', $reasons);
     }
 
     public function getReference(): ?string
@@ -68,7 +73,7 @@ class AddressVerification extends BaseItem
      * 'callback_url' => string or null
      * 'callback_method' => string or null
      * 'status' => string
-     * 'reject_reasons' => string or null
+     * 'reject_reasons' => string[] or null
      * 'created_at' => string // creation timestamp
      */
     public function getAttributes(): array
