@@ -14,7 +14,7 @@ class AddressVerification extends BaseItem
 
     public function getServiceDescription(): ?string
     {
-        return $this->attributes['service_description'];
+        return $this->attribute('service_description');
     }
 
     public function setServiceDescription(string $serviceDescription)
@@ -24,7 +24,7 @@ class AddressVerification extends BaseItem
 
     public function getCallbackUrl(): ?string
     {
-        return $this->attributes['callback_url'];
+        return $this->attribute('callback_url');
     }
 
     public function setCallbackUrl(string $callbackUrl)
@@ -49,7 +49,7 @@ class AddressVerification extends BaseItem
 
     public function getRejectReasons(): ?array
     {
-        $reasons = $this->attributes['reject_reasons'] ?? null;
+        $reasons = $this->attribute('reject_reasons');
         if (null === $reasons) {
             return null;
         }
@@ -59,7 +59,7 @@ class AddressVerification extends BaseItem
 
     public function getReference(): ?string
     {
-        return $this->attributes['reference'] ?? null;
+        return $this->attribute('reference');
     }
 
     public function getCreatedAt(): \DateTime

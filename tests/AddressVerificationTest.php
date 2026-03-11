@@ -53,6 +53,16 @@ class AddressVerificationTest extends BaseTest
         $this->stopVCR();
     }
 
+    public function testNullableGettersReturnNullOnEmptyObject()
+    {
+        $av = new \Didww\Item\AddressVerification();
+        $this->assertNull($av->getServiceDescription());
+        $this->assertNull($av->getCallbackUrl());
+        $this->assertNull($av->getCallbackMethod());
+        $this->assertNull($av->getRejectReasons());
+        $this->assertNull($av->getReference());
+    }
+
     public function testCreateAddressVerification()
     {
         $this->startVCR('address_verifications.yml');

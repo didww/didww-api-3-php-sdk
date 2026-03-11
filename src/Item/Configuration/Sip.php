@@ -166,7 +166,7 @@ class Sip extends Base
 
     public function getAllowedRtpIps(): ?array
     {
-        return $this->attributes['allowed_rtp_ips'];
+        return $this->attribute('allowed_rtp_ips');
     }
 
     // ##

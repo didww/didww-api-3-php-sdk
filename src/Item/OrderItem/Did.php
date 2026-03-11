@@ -42,6 +42,6 @@ class Did extends Base
 
     public function getBillingCyclesCount(): ?int
     {
-        return $this->attributes['billing_cycles_count'];
+        return $this->attribute('billing_cycles_count');
     }
 }

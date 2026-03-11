@@ -198,10 +198,18 @@ class IdentityTest extends BaseTest
         $this->assertEquals('john@example.com', $identity->getContactEmail());
     }
 
-    public function testContactEmailGetterReturnsNullWhenNotSet()
+    public function testNullableGettersReturnNullOnEmptyObject()
     {
-        $identity = new \Didww\Item\Identity(['contact_email' => null]);
+        $identity = new \Didww\Item\Identity();
+        $this->assertNull($identity->getIdNumber());
+        $this->assertNull($identity->getCompanyName());
+        $this->assertNull($identity->getCompanyRegNumber());
+        $this->assertNull($identity->getVatId());
+        $this->assertNull($identity->getDescription());
+        $this->assertNull($identity->getPersonalTaxId());
+        $this->assertNull($identity->getExternalReferenceId());
         $this->assertNull($identity->getContactEmail());
+        $this->assertNull($identity->getBirthDate());
     }
 
     public function testContactEmailInWhitelist()

@@ -44,7 +44,7 @@ class Identity extends BaseItem
 
     public function getIdNumber(): ?string
     {
-        return $this->attributes['id_number'];
+        return $this->attribute('id_number');
     }
 
     public function setIdNumber(string $idNumber)
@@ -64,7 +64,7 @@ class Identity extends BaseItem
 
     public function getCompanyName(): ?string
     {
-        return $this->attributes['company_name'];
+        return $this->attribute('company_name');
     }
 
     public function setCompanyName(string $companyName)
@@ -74,7 +74,7 @@ class Identity extends BaseItem
 
     public function getCompanyRegNumber(): ?string
     {
-        return $this->attributes['company_reg_number'];
+        return $this->attribute('company_reg_number');
     }
 
     public function setCompanyRegNumber(string $companyRegNumber)
@@ -84,7 +84,7 @@ class Identity extends BaseItem
 
     public function getVatId(): ?string
     {
-        return $this->attributes['vat_id'];
+        return $this->attribute('vat_id');
     }
 
     public function setVatId(string $vatId)
@@ -94,7 +94,7 @@ class Identity extends BaseItem
 
     public function getDescription(): ?string
     {
-        return $this->attributes['description'];
+        return $this->attribute('description');
     }
 
     public function setDescription(string $description)
@@ -104,7 +104,7 @@ class Identity extends BaseItem
 
     public function getPersonalTaxId(): ?string
     {
-        return $this->attributes['personal_tax_id'];
+        return $this->attribute('personal_tax_id');
     }
 
     public function setPersonalTaxId(string $personalTaxId)
@@ -124,7 +124,7 @@ class Identity extends BaseItem
 
     public function getExternalReferenceId(): ?string
     {
-        return $this->attributes['external_reference_id'];
+        return $this->attribute('external_reference_id');
     }
 
     public function setExternalReferenceId(string $externalReferenceId)
@@ -134,7 +134,7 @@ class Identity extends BaseItem
 
     public function getContactEmail(): ?string
     {
-        return $this->attributes['contact_email'];
+        return $this->attribute('contact_email');
     }
 
     public function setContactEmail(string $contactEmail)

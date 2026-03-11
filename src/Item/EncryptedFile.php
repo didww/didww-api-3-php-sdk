@@ -13,7 +13,7 @@ class EncryptedFile extends BaseItem
 
     public function getDescription(): ?string
     {
-        return $this->attributes['description'];
+        return $this->attribute('description');
     }
 
     public function getExpireAt(): \DateTime

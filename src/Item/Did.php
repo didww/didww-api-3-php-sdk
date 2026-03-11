@@ -36,7 +36,7 @@ class Did extends BaseItem
 
     public function getDescription(): ?string
     {
-        return $this->attributes['description'];
+        return $this->attribute('description');
     }
 
     public function setBillingCyclesCount(?int $billingCyclesCount)
@@ -46,7 +46,7 @@ class Did extends BaseItem
 
     public function getBillingCyclesCount(): ?int
     {
-        return $this->attributes['billing_cycles_count'];
+        return $this->attribute('billing_cycles_count');
     }
 
     public function setCapacityLimit(int $capacityLimit)

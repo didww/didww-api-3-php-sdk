@@ -26,6 +26,6 @@ class Region extends BaseItem
      */
     public function getIso(): ?string
     {
-        return $this->getAttributes()['iso'];
+        return $this->attribute('iso');
     }
 }
