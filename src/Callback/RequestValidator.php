@@ -30,7 +30,7 @@ class RequestValidator
             return false;
         }
 
-        return $this->validSignature($url, $payload) == $signature;
+        return hash_equals($this->validSignature($url, $payload), $signature);
     }
 
     private function validSignature(string $url, array $payload): string
