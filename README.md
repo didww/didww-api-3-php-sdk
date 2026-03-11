@@ -406,9 +406,11 @@ $trunk->setOnCliMismatchAction('replace_cli');
 The SDK provides an `Encrypt` utility for encrypting files before upload, using RSA-OAEP + AES-256-CBC (matching DIDWW's encryption requirements).
 
 ```php
-$publicKeys = Didww\Item\PublicKey::all()->getData();
-$fingerprint = Didww\Encrypt::calculateFingerprint($publicKeys);
-$encrypted = Didww\Encrypt::encrypt($fileContents, $publicKeys);
+$fileContents = file_get_contents('/path/to/document.pdf');
+$enc = new Didww\Encrypt();
+$fingerprint = $enc->getFingerprint();
+$encData = $enc->encrypt($fileContents);
+$uploadResult = Didww\Item\EncryptedFile::upload($fingerprint, [$encData], ['file description']);
 ```
 
 ## Webhook Signature Validation
