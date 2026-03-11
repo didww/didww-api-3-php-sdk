@@ -73,7 +73,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     public function testEnumCaseCounts()
     {
         $this->assertCount(3, CliFormat::cases());
-        $this->assertCount(2, IdentityType::cases());
+        $this->assertCount(3, IdentityType::cases());
         $this->assertCount(3, OrderStatus::cases());
         $this->assertCount(2, CallbackMethod::cases());
         $this->assertCount(2, ExportType::cases());
