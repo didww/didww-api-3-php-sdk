@@ -81,7 +81,7 @@ class Export extends BaseItem
     {
         $apiKey = \Didww\Configuration::getCredentials()->getApiKey();
         $ownHandle = !is_resource($dest);
-        $destHandle = $ownHandle ? fopen($dest, 'w') : $dest;
+        $destHandle = $ownHandle ? fopen($dest, 'wb') : $dest;
         if (false === $destHandle) {
             return 'Failed to open destination file for writing';
         }
