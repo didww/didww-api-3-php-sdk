@@ -6,6 +6,8 @@ use Illuminate\Support\Str;
 
 abstract class BaseItem extends \Swis\JsonApi\Client\Item
 {
+    use \Didww\Traits\HasSafeAttributes;
+
     protected array $persistedAttributes = [];
 
     protected array $persistedRelationships = [];
@@ -82,8 +84,6 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
         $this->persistedAttributes = $current['attributes'] ?? [];
         $this->persistedRelationships = $this->extractRelationshipData($current['relationships'] ?? []);
     }
-
-    use \Didww\Traits\HasSafeAttributes;
 
     protected function enumAttribute(string $key, string $enumClass): ?\BackedEnum
     {
