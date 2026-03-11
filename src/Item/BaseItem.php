@@ -83,16 +83,21 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
         $this->persistedRelationships = $this->extractRelationshipData($current['relationships'] ?? []);
     }
 
+    protected function attribute(string $key): mixed
+    {
+        return $this->attributes[$key] ?? null;
+    }
+
     protected function enumAttribute(string $key, string $enumClass): ?\BackedEnum
     {
-        $val = $this->attributes[$key] ?? null;
+        $val = $this->attribute($key);
 
         return null !== $val ? $enumClass::from($val) : null;
     }
 
     protected function enumArrayAttribute(string $key, string $enumClass): ?array
     {
-        $val = $this->attributes[$key] ?? null;
+        $val = $this->attribute($key);
 
         return null !== $val ? array_map(fn ($v) => $enumClass::from($v), $val) : null;
     }

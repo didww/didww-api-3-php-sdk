@@ -47,7 +47,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function getAllowedRtpIps(): ?array
     {
-        return $this->attributes['allowed_rtp_ips'];
+        return $this->attribute('allowed_rtp_ips');
     }
 
     public function setAllowedRtpIps(?array $allowedRtpIps)
@@ -87,7 +87,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function getThresholdAmount(): ?string
     {
-        return $this->attributes['threshold_amount'];
+        return $this->attribute('threshold_amount');
     }
 
     public function setThresholdAmount(?string $thresholdAmount)
@@ -147,7 +147,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function getCallbackUrl(): ?string
     {
-        return $this->attributes['callback_url'];
+        return $this->attribute('callback_url');
     }
 
     public function setCallbackUrl(?string $callbackUrl)

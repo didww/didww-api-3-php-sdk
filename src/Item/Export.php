@@ -59,7 +59,7 @@ class Export extends BaseItem
 
     public function getCallbackUrl(): ?string
     {
-        return $this->attributes['callback_url'];
+        return $this->attribute('callback_url');
     }
 
     public function setCallbackUrl(string $callbackUrl)
