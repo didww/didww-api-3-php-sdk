@@ -17,4 +17,30 @@ class PublicKeyTest extends BaseTest
         $this->assertCount(2, $publicKeys);
         $this->stopVCR();
     }
+
+    public function testPublicKeysRequestOmitsApiKeyHeader()
+    {
+        [$client, $buildRequest] = $this->getClientAndBuildRequest();
+
+        $request = $buildRequest->invoke($client, 'GET', '/public_keys');
+        $this->assertFalse($request->hasHeader('api-key'), 'public_keys request should not include api-key header');
+    }
+
+    public function testOtherRequestsIncludeApiKeyHeader()
+    {
+        [$client, $buildRequest] = $this->getClientAndBuildRequest();
+
+        $request = $buildRequest->invoke($client, 'GET', '/dids');
+        $this->assertTrue($request->hasHeader('api-key'), 'non-public_keys request should include api-key header');
+    }
+
+    private function getClientAndBuildRequest(): array
+    {
+        $client = new \Didww\Client();
+        $client->setApiKey('test-api-key');
+
+        $buildRequest = new \ReflectionMethod($client, 'buildRequest');
+
+        return [$client, $buildRequest];
+    }
 }
