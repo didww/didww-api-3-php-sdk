@@ -132,6 +132,16 @@ class Identity extends BaseItem
         $this->attributes['external_reference_id'] = $externalReferenceId;
     }
 
+    public function getContactEmail(): ?string
+    {
+        return $this->attributes['contact_email'];
+    }
+
+    public function setContactEmail(string $contactEmail)
+    {
+        $this->attributes['contact_email'] = $contactEmail;
+    }
+
     public function getCreatedAt(): \DateTime
     {
         return new \DateTime($this->attributes['created_at']);
@@ -157,6 +167,7 @@ class Identity extends BaseItem
      * 'identity_type' => string // 'Personal' or 'Business'
      * 'created_at' => string // creation timestamp
      * 'external_reference_id' => string // custom identifier
+     * 'contact_email' => string|null // contact email address
      * 'verified' => bool
      */
     public function getAttributes(): array
@@ -204,6 +215,7 @@ class Identity extends BaseItem
             'personal_tax_id',
             'identity_type',
             'external_reference_id',
+            'contact_email',
         ];
     }
 }

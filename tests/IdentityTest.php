@@ -193,5 +193,22 @@ class IdentityTest extends BaseTest
 
         $identity->setExternalReferenceId('EXT-001');
         $this->assertEquals('EXT-001', $identity->getExternalReferenceId());
+
+        $identity->setContactEmail('john@example.com');
+        $this->assertEquals('john@example.com', $identity->getContactEmail());
+    }
+
+    public function testContactEmailGetterReturnsNullWhenNotSet()
+    {
+        $identity = new \Didww\Item\Identity(['contact_email' => null]);
+        $this->assertNull($identity->getContactEmail());
+    }
+
+    public function testContactEmailInWhitelist()
+    {
+        $identity = new \Didww\Item\Identity();
+        $identity->setContactEmail('test@example.com');
+        $attributes = $identity->getAttributes();
+        $this->assertEquals('test@example.com', $attributes['contact_email']);
     }
 }
