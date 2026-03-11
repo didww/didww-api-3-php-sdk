@@ -9,7 +9,6 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
     response:
         status:
             http_version: '1.1'
