@@ -80,10 +80,19 @@ class Export extends BaseItem
     public function download($dest)
     {
         $apiKey = \Didww\Configuration::getCredentials()->getApiKey();
+        $ownHandle = !is_resource($dest);
+        $destHandle = $ownHandle ? fopen($dest, 'wb') : $dest;
+        if (false === $destHandle) {
+            return 'Failed to open destination file for writing';
+        }
 
         $options = [
-            CURLOPT_HTTPHEADER => ["api-key: $apiKey"],
-            CURLOPT_FILE => is_resource($dest) ? $dest : fopen($dest, 'w'),
+            CURLOPT_HTTPHEADER => [
+                "Api-Key: $apiKey",
+                'User-Agent: didww-php-sdk/'.\Didww\Client::sdkVersion(),
+                'X-DIDWW-API-Version: '.(\Didww\Configuration::getCredentials()->getVersion() ?? '2022-05-10'),
+            ],
+            CURLOPT_FILE => $destHandle,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_URL => $this->getAttributes()['url'],
             CURLOPT_FAILONERROR => true, // HTTP code > 400 will throw curl error
@@ -91,11 +100,13 @@ class Export extends BaseItem
         $ch = curl_init();
         curl_setopt_array($ch, $options);
         $return = curl_exec($ch);
-        if (false === $return) {
-            return curl_error($ch);
+        $error = false === $return ? curl_error($ch) : null;
+        curl_close($ch);
+        if ($ownHandle) {
+            fclose($destHandle);
         }
 
-        return true;
+        return $error ?? true;
     }
 
     public function downloadAndDecompress($dest)
@@ -118,8 +129,9 @@ class Export extends BaseItem
             return 'Failed to open gzip file for decompression';
         }
 
-        $destHandle = is_resource($dest) ? $dest : fopen($dest, 'w');
-        if (!is_resource($dest) && false === $destHandle) {
+        $ownHandle = !is_resource($dest);
+        $destHandle = $ownHandle ? fopen($dest, 'wb') : $dest;
+        if ($ownHandle && false === $destHandle) {
             gzclose($gz);
             unlink($tmpFile);
 
@@ -129,7 +141,7 @@ class Export extends BaseItem
             fwrite($destHandle, gzread($gz, 8192));
         }
         gzclose($gz);
-        if (!is_resource($dest)) {
+        if ($ownHandle) {
             fclose($destHandle);
         }
         unlink($tmpFile);
