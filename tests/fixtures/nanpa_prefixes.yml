@@ -39,6 +39,43 @@
 -
   request:
     method: GET
+    url: 'https://sandbox-api.didww.com/v3/nanpa_prefixes/1e622e21-c740-4d3f-a615-2a7ef4991922?include=region'
+    headers:
+      Host: sandbox-api.didww.com
+      Accept-Encoding: null
+      User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
+      Accept: application/vnd.api+json
+      Content-Type: application/vnd.api+json
+      api-key: PLACEYOURAPIKEYHERE
+  response:
+    status:
+      http_version: '1.1'
+      code: '200'
+      message: OK
+    headers:
+      Server: nginx
+      Date: 'Tue, 10 Mar 2026 10:00:00 GMT'
+      Content-Type: application/vnd.api+json
+      Transfer-Encoding: chunked
+      Connection: keep-alive
+      X-Frame-Options: SAMEORIGIN
+      X-XSS-Protection: '1; mode=block'
+      X-Content-Type-Options: nosniff
+      X-Download-Options: noopen
+      X-Permitted-Cross-Domain-Policies: none
+      Referrer-Policy: strict-origin-when-cross-origin
+      ETag: 'W/"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"'
+      Cache-Control: 'max-age=0, private, must-revalidate'
+      X-Request-Id: b2c3d4e5-f6a7-b8c9-d0e1-f2a3b4c5d6e7
+      X-Runtime: '0.038412'
+      Access-Control-Allow-Origin: '*'
+      Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
+      Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+      Access-Control-Allow-Credentials: 'true'
+    body: '{ "data": { "id": "1e622e21-c740-4d3f-a615-2a7ef4991922", "type": "nanpa_prefixes", "attributes": { "npa": "201", "nxx": "221" }, "relationships": { "country": { "links": { "self": "https://sandbox-api.didww.com/v3/nanpa_prefixes/1e622e21-c740-4d3f-a615-2a7ef4991922/relationships/country", "related": "https://sandbox-api.didww.com/v3/nanpa_prefixes/1e622e21-c740-4d3f-a615-2a7ef4991922/country" } }, "region": { "links": { "self": "https://sandbox-api.didww.com/v3/nanpa_prefixes/1e622e21-c740-4d3f-a615-2a7ef4991922/relationships/region", "related": "https://sandbox-api.didww.com/v3/nanpa_prefixes/1e622e21-c740-4d3f-a615-2a7ef4991922/region" }, "data": { "type": "regions", "id": "346e64c8-18c2-4a12-b1e2-20e090043fca" } } } }, "included": [ { "id": "346e64c8-18c2-4a12-b1e2-20e090043fca", "type": "regions", "attributes": { "name": "New Jersey", "iso": "US-NJ" }, "relationships": { "country": { "links": { "self": "https://sandbox-api.didww.com/v3/regions/346e64c8-18c2-4a12-b1e2-20e090043fca/relationships/country", "related": "https://sandbox-api.didww.com/v3/regions/346e64c8-18c2-4a12-b1e2-20e090043fca/country" } } } } ], "meta": { "api_version": "2022-05-09" } }'
+-
+  request:
+    method: GET
     url: 'https://sandbox-api.didww.com/v3/nanpa_prefixes'
     headers:
       Host: sandbox-api.didww.com
