@@ -72,10 +72,10 @@ class RequestValidator
             $port = 80;
         }
 
-        if (array_key_exists('path', $parsedUrl)) {
+        if (array_key_exists('path', $parsedUrl) && '' !== $parsedUrl['path']) {
             $path = $parsedUrl['path'];
         } else {
-            $path = '';
+            $path = '/';
         }
 
         if (array_key_exists('query', $parsedUrl)) {
