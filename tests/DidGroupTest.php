@@ -29,7 +29,7 @@ class DidGroupTest extends BaseTest
         $this->startVCR('did_groups.yml');
 
         $uuid = '2187c36d-28fb-436f-8861-5a0f5b5a3ee1';
-        $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,did_group_type,stock_keeping_units']);
+        $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,did_group_type,stock_keeping_units,requirement']);
         $countryRelation = $didGroupDocument->getData()->country();
         $regionRelation = $didGroupDocument->getData()->region();
         $cityRelation = $didGroupDocument->getData()->city();
@@ -74,6 +74,12 @@ class DidGroupTest extends BaseTest
         $this->assertEquals(1.0, $stockKeepingUnits[1]->getSetupPrice());
         $this->assertEquals(4.8, $stockKeepingUnits[1]->getMonthlyPrice());
         $this->assertEquals(2, $stockKeepingUnits[1]->getChannelsIncludedCount());
+
+        $requirementRelation = $didGroupDocument->getData()->requirement();
+        $requirement = $requirementRelation->getIncluded();
+        $this->assertInstanceOf('Didww\Item\Requirement', $requirement);
+        $this->assertEquals('Any', $requirement->getAttributes()['identity_type']);
+        $this->assertSame(\Didww\Enum\IdentityType::ANY, $requirement->getIdentityType());
 
         $this->stopVCR();
     }

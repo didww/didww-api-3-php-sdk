@@ -6,4 +6,5 @@ enum IdentityType: string
 {
     case PERSONAL = 'Personal';
     case BUSINESS = 'Business';
+    case ANY = 'Any';
 }
