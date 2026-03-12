@@ -14,14 +14,6 @@ class PermanentSupportingDocument extends BaseItem
         return $this->dateAttribute('created_at');
     }
 
-    /** @return array [
-     * ]
-     * 'created_at' => string // creation timestamp
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
-    }
 
     public function identity()
     {

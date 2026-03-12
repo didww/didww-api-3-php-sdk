@@ -13,12 +13,4 @@ class PublicKey extends BaseItem
         return $this->attributes['key'];
     }
 
-    /** @return array [
-     * ]
-     * 'key' => string // RSA public key in PEM format
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
-    }
 }

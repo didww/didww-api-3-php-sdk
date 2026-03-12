@@ -23,16 +23,6 @@ class SupportingDocumentTemplate extends BaseItem
         return $this->attributes['url'];
     }
 
-    /** @return array [
-     * ]
-     * 'name' => string // friendly name
-     * 'permanent' => bool // if true than should be used as identity permanent document template, otherwise false
-     * 'url' => string // public URL for downloading document form
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
-    }
 
     public function download($dest)
     {

@@ -66,24 +66,6 @@ class Requirement extends BaseItem
         return $this->attributes['restriction_message'];
     }
 
-    /** @return array [
-     * ]
-     * 'identity_type' => string
-     * 'personal_area_level' => string
-     * 'business_area_level' => string
-     * 'address_area_level' => string
-     * 'personal_proof_qty' => int
-     * 'business_proof_qty' => int
-     * 'address_proof_qty' => int
-     * 'personal_mandatory_fields' => array[string]
-     * 'business_mandatory_fields' => array[string]
-     * 'service_description_required' => bool
-     * 'restriction_message' => string
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
-    }
 
     public function country()
     {

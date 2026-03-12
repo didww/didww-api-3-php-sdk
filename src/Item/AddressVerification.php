@@ -67,19 +67,6 @@ class AddressVerification extends BaseItem
         return $this->dateAttribute('created_at');
     }
 
-    /** @return array [
-     * ]
-     * 'service_description' => string or null
-     * 'callback_url' => string or null
-     * 'callback_method' => string or null
-     * 'status' => string
-     * 'reject_reasons' => string[] or null
-     * 'created_at' => string // creation timestamp
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
-    }
 
     public function address()
     {

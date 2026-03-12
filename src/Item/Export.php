@@ -149,19 +149,6 @@ class Export extends BaseItem
         return true;
     }
 
-    /** @return array [
-     * ]
-     * 'status' => string
-     * 'url' => string
-     * 'callback_url' => string
-     * 'callback_method' => string
-     * 'export_type' => string
-     * 'created_at' => string // creation timestamp
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
-    }
 
     protected function getWhiteListAttributesKeys(): array
     {

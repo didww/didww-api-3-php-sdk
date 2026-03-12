@@ -19,15 +19,6 @@ class Proof extends BaseItem
         return $this->dateAttribute('expires_at');
     }
 
-    /** @return array [
-     * ]
-     * 'created_at' => string // creation timestamp
-     * 'expires_at' => string or null // expiration timestamp
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
-    }
 
     public function entity()
     {

@@ -26,16 +26,6 @@ class EncryptedFile extends BaseItem
         return $this->dateAttribute('created_at');
     }
 
-    /** @return array [
-     * ]
-     * 'description' => string
-     * 'expire_at' => string // timestamp when file will be deleted
-     * 'created_at' => string // creation timestamp
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
-    }
 
     /* POST /v3/encrypted_files
      * encrypted_files[encryption_fingerprint] required
