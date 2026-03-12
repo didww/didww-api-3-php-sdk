@@ -39,7 +39,7 @@ class AddressVerification extends BaseItem
 
     public function setCallbackMethod(CallbackMethod|string $callbackMethod)
     {
-        $this->attributes['callback_method'] = $callbackMethod instanceof CallbackMethod ? $callbackMethod->value : $callbackMethod;
+        $this->setEnumAttribute('callback_method', $callbackMethod);
     }
 
     public function getStatus(): AddressVerificationStatus
@@ -64,7 +64,7 @@ class AddressVerification extends BaseItem
 
     public function getCreatedAt(): \DateTime
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     /** @return array [

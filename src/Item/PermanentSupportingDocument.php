@@ -11,7 +11,7 @@ class PermanentSupportingDocument extends BaseItem
 
     public function getCreatedAt(): \DateTime
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     /** @return array [

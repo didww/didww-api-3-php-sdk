@@ -22,12 +22,12 @@ class DidReservation extends BaseItem
 
     public function getExpireAt(): \DateTime
     {
-        return new \DateTime($this->getAttributes()['expire_at']);
+        return $this->dateAttribute('expire_at');
     }
 
     public function getCreatedAt(): \DateTime
     {
-        return new \DateTime($this->getAttributes()['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     public function getDescription(): string

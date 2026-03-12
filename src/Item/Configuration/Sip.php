@@ -199,12 +199,12 @@ class Sip extends Base
 
     public function setRxDtmfFormatId(RxDtmfFormat|int $newRxDtmfFormatId)
     {
-        $this->attributes['rx_dtmf_format_id'] = $newRxDtmfFormatId instanceof RxDtmfFormat ? $newRxDtmfFormatId->value : $newRxDtmfFormatId;
+        $this->setEnumAttribute('rx_dtmf_format_id', $newRxDtmfFormatId);
     }
 
     public function setTxDtmfFormatId(TxDtmfFormat|int $newTxDtmfFormatId)
     {
-        $this->attributes['tx_dtmf_format_id'] = $newTxDtmfFormatId instanceof TxDtmfFormat ? $newTxDtmfFormatId->value : $newTxDtmfFormatId;
+        $this->setEnumAttribute('tx_dtmf_format_id', $newTxDtmfFormatId);
     }
 
     public function setResolveRuri($newResolveRuri)
@@ -244,7 +244,7 @@ class Sip extends Base
 
     public function setSstRefreshMethodId(SstRefreshMethod|int $newSstRefreshMethodId)
     {
-        $this->attributes['sst_refresh_method_id'] = $newSstRefreshMethodId instanceof SstRefreshMethod ? $newSstRefreshMethodId->value : $newSstRefreshMethodId;
+        $this->setEnumAttribute('sst_refresh_method_id', $newSstRefreshMethodId);
     }
 
     public function setSstMinTimer($newSstMinTimer)
@@ -300,7 +300,7 @@ class Sip extends Base
 
     public function setTransportProtocolId(TransportProtocol|int $newTransportProtocolId)
     {
-        $this->attributes['transport_protocol_id'] = $newTransportProtocolId instanceof TransportProtocol ? $newTransportProtocolId->value : $newTransportProtocolId;
+        $this->setEnumAttribute('transport_protocol_id', $newTransportProtocolId);
     }
 
     public function setMaxTransfers($newMaxTransfers)
@@ -315,12 +315,12 @@ class Sip extends Base
 
     public function setMediaEncryptionMode(MediaEncryptionMode|string $mediaEncryptionMode)
     {
-        $this->attributes['media_encryption_mode'] = $mediaEncryptionMode instanceof MediaEncryptionMode ? $mediaEncryptionMode->value : $mediaEncryptionMode;
+        $this->setEnumAttribute('media_encryption_mode', $mediaEncryptionMode);
     }
 
     public function setStirShakenMode(StirShakenMode|string $stirShakenMode)
     {
-        $this->attributes['stir_shaken_mode'] = $stirShakenMode instanceof StirShakenMode ? $stirShakenMode->value : $stirShakenMode;
+        $this->setEnumAttribute('stir_shaken_mode', $stirShakenMode);
     }
 
     public function setAllowedRtpIps(?array $allowedRtpIps)

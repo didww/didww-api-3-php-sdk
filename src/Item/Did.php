@@ -76,12 +76,12 @@ class Did extends BaseItem
 
     public function getCreatedAt()
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     public function getExpiresAt()
     {
-        return new \DateTime($this->attributes['expires_at']);
+        return $this->dateAttribute('expires_at');
     }
 
     public function order()

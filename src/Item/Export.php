@@ -54,7 +54,7 @@ class Export extends BaseItem
 
     public function setExportType(ExportType|string $exportType)
     {
-        $this->attributes['export_type'] = $exportType instanceof ExportType ? $exportType->value : $exportType;
+        $this->setEnumAttribute('export_type', $exportType);
     }
 
     public function getCallbackUrl(): ?string
@@ -74,7 +74,7 @@ class Export extends BaseItem
 
     public function setCallbackMethod(CallbackMethod|string $callbackMethod)
     {
-        $this->attributes['callback_method'] = $callbackMethod instanceof CallbackMethod ? $callbackMethod->value : $callbackMethod;
+        $this->setEnumAttribute('callback_method', $callbackMethod);
     }
 
     public function download($dest)

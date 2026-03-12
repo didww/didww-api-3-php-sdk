@@ -54,7 +54,7 @@ class Identity extends BaseItem
 
     public function getBirthDate(): ?\DateTime
     {
-        return isset($this->attributes['birth_date']) ? new \DateTime($this->attributes['birth_date']) : null;
+        return $this->dateAttribute('birth_date');
     }
 
     public function setBirthDate(string $birthDate)
@@ -119,7 +119,7 @@ class Identity extends BaseItem
 
     public function setIdentityType(IdentityType|string $identityType)
     {
-        $this->attributes['identity_type'] = $identityType instanceof IdentityType ? $identityType->value : $identityType;
+        $this->setEnumAttribute('identity_type', $identityType);
     }
 
     public function getExternalReferenceId(): ?string
@@ -144,7 +144,7 @@ class Identity extends BaseItem
 
     public function getCreatedAt(): \DateTime
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     public function getVerified(): bool

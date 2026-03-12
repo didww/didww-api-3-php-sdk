@@ -92,7 +92,7 @@ class Order extends BaseItem
 
     public function getCreatedAt(): \DateTime
     {
-        return new \DateTime($this->getAttributes()['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     public function getDescription(): string
@@ -132,6 +132,6 @@ class Order extends BaseItem
 
     public function setCallbackMethod(CallbackMethod|string $callbackMethod)
     {
-        $this->attributes['callback_method'] = $callbackMethod instanceof CallbackMethod ? $callbackMethod->value : $callbackMethod;
+        $this->setEnumAttribute('callback_method', $callbackMethod);
     }
 }

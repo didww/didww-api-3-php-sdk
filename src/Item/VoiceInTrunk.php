@@ -39,7 +39,7 @@ class VoiceInTrunk extends BaseItem
 
     public function setCliFormat(CliFormat|string $cliFormat)
     {
-        $this->attributes['cli_format'] = $cliFormat instanceof CliFormat ? $cliFormat->value : $cliFormat;
+        $this->setEnumAttribute('cli_format', $cliFormat);
     }
 
     public function getCliPrefix(): string
@@ -84,7 +84,7 @@ class VoiceInTrunk extends BaseItem
 
     public function getCreatedAt()
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     /** @return array [

@@ -52,7 +52,7 @@ class Address extends BaseItem
 
     public function getCreatedAt(): \DateTime
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     public function getVerified(): bool
