@@ -2,22 +2,21 @@
 
 namespace Didww\Tests;
 
-class RegionTest extends BaseTest
+class RegionTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'regions.yml';
+    }
+
     public function testAll()
     {
-        $this->startVCR('regions.yml');
-
         $regionsDocument = \Didww\Item\Region::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\Region', $regionsDocument->getData());
-
-        $this->stopVCR();
     }
 
     public function testFind()
     {
-        $this->startVCR('regions.yml');
-
         $uuid = 'c11b1f34-16cf-4ba6-8497-f305b53d5b01';
         $regionDocument = \Didww\Item\Region::find($uuid, ['include' => 'country']);
         $countryRelation = $regionDocument->getData()->country();
@@ -32,7 +31,5 @@ class RegionTest extends BaseTest
             'prefix' => '1',
             'name' => 'United States',
         ]);
-
-        $this->stopVCR();
     }
 }

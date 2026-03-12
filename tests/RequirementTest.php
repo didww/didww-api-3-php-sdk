@@ -4,11 +4,15 @@ namespace Didww\Tests;
 
 use Didww\Enum\AreaLevel;
 
-class RequirementTest extends BaseTest
+class RequirementTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'requirements.yml';
+    }
+
     public function testAllWithIncludesAndPagination()
     {
-        $this->startVCR('requirements.yml');
         $requirementsDocument = \Didww\Item\Requirement::all(
             ['page' => ['size' => 5, 'number' => 1]]
         );
@@ -16,12 +20,10 @@ class RequirementTest extends BaseTest
         $this->assertContainsOnlyInstancesOf('Didww\Item\Requirement', $requirements);
 
         $this->assertEquals(73, $requirementsDocument->getMeta()['total_records']);
-        $this->stopVCR();
     }
 
     public function testFindWithIncludes()
     {
-        $this->startVCR('requirements.yml');
         $includes = [
             'country',
             'did_group_type',
@@ -78,7 +80,5 @@ class RequirementTest extends BaseTest
         $this->assertNotNull($requirement->personalProofTypes());
         $this->assertNotNull($requirement->businessProofTypes());
         $this->assertNotNull($requirement->addressProofTypes());
-
-        $this->stopVCR();
     }
 }

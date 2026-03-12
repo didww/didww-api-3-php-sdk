@@ -11,14 +11,17 @@ use Didww\Enum\TransportProtocol;
 use Didww\Enum\TxDtmfFormat;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
-class VoiceInTrunkTest extends BaseTest
+class VoiceInTrunkTest extends CassetteTest
 {
     use ArraySubsetAsserts;
 
+    protected function getCassetteName(): string
+    {
+        return 'voice_in_trunks.yml';
+    }
+
     public function testAllWithIncludesAndPagination()
     {
-        $this->startVCR('voice_in_trunks.yml');
-
         $voiceInTrunksDocument = \Didww\Item\VoiceInTrunk::all(['sort' => '-created_at', 'include' => 'trunk_group,pop', 'page' => ['size' => 4, 'number' => 1]]);
         $voiceInTrunks = $voiceInTrunksDocument->getData();
         $this->assertContainsOnlyInstancesOf('Didww\Item\VoiceInTrunk', $voiceInTrunks);
@@ -34,13 +37,10 @@ class VoiceInTrunkTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Configuration\Sip', $voiceInTrunks[1]->getConfiguration());
 
         $this->assertEquals($voiceInTrunksDocument->getMeta()['total_records'], 68);
-
-        $this->stopVCR();
     }
 
     public function testCreatePstnTrunk()
     {
-        $this->startVCR('voice_in_trunks.yml');
         $attributes = [
             'configuration' => new \Didww\Item\Configuration\PSTN([
                 'dst' => '558540420024',
@@ -55,12 +55,10 @@ class VoiceInTrunkTest extends BaseTest
         $this->assertEquals('41b94706-325e-4704-a433-d65105758836', $voiceInTrunk->getId());
         $this->assertEquals($attributes['configuration']->getAttributes(), $voiceInTrunk->getConfiguration()->getAttributes());
         $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
-        $this->stopVCR();
     }
 
     public function testUpdatePstnTrunk()
     {
-        $this->startVCR('voice_in_trunks.yml');
         $attributes = [
             'configuration' => new \Didww\Item\Configuration\PSTN([
                 'dst' => '558540420025',
@@ -74,12 +72,10 @@ class VoiceInTrunkTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Configuration\Pstn', $voiceInTrunk->getConfiguration());
         $this->assertEquals('558540420025', $voiceInTrunk->getConfiguration()->getDst());
         $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
-        $this->stopVCR();
     }
 
     public function testCreateSipTrunk()
     {
-        $this->startVCR('voice_in_trunks.yml');
         $attributes = [
             'configuration' => new \Didww\Item\Configuration\Sip([
                 'username' => 'username',
@@ -142,13 +138,10 @@ class VoiceInTrunkTest extends BaseTest
         $this->assertEquals(65535, $voiceInTrunk->getWeight());
         $this->assertInstanceOf(\DateTime::class, $voiceInTrunk->getCreatedAt());
         $this->assertEquals(CliFormat::E164, $voiceInTrunk->getCliFormat());
-
-        $this->stopVCR();
     }
 
     public function testUpdateSipTrunk()
     {
-        $this->startVCR('voice_in_trunks.yml');
         $attributes = [
             'configuration' => new \Didww\Item\Configuration\Sip([
                 'username' => 'new-username',
@@ -165,24 +158,19 @@ class VoiceInTrunkTest extends BaseTest
         $this->assertArraySubset($attributes['configuration']->getAttributes(), $voiceInTrunk->getConfiguration()->getAttributes());
         $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
         $this->assertEquals($attributes['description'], $voiceInTrunk->getDescription());
-        $this->stopVCR();
     }
 
     public function testDeleteTrunk()
     {
-        $this->startVCR('voice_in_trunks.yml');
-
         $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('41b94706-325e-4704-a433-d65105758836');
 
         $voiceInTrunkDocument = $voiceInTrunk->delete();
 
         $this->assertFalse($voiceInTrunkDocument->hasErrors());
-        $this->stopVCR();
     }
 
     public function testUpdateRelationships()
     {
-        $this->startVCR('voice_in_trunks.yml');
         $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('a80006b6-4183-4865-8b99-7ebbd359a762');
         $voiceInTrunk->setPop(\Didww\Item\Pop::build('ba7ccbef-82ac-4372-9391-eac90d5c9479'));
         $voiceInTrunk->setVoiceInTrunkGroup(\Didww\Item\VoiceInTrunkGroup::build('837c5764-a6c3-456f-aa37-71fc8f8ca07b'));
@@ -197,8 +185,6 @@ class VoiceInTrunkTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
         $this->assertEquals('ba7ccbef-82ac-4372-9391-eac90d5c9479', $pop->getId());
         $this->assertEquals('837c5764-a6c3-456f-aa37-71fc8f8ca07b', $voiceInTrunkGroup->getId());
-
-        $this->stopVCR();
     }
 
     public function testSipSetters()

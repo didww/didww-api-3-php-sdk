@@ -2,11 +2,15 @@
 
 namespace Didww\Tests;
 
-class ProofTest extends BaseTest
+class ProofTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'proofs.yml';
+    }
+
     public function testCreateProof()
     {
-        $this->startVCR('proofs.yml');
         $identity = \Didww\Item\Identity::build('5e9df058-50d2-4e34-b0d4-d1746b86f41a');
         $proofType = \Didww\Item\ProofType::build('19cd7b22-559b-41d4-99c9-7ad7ad63d5d1');
         $encryptedFiles = new \Swis\JsonApi\Client\Collection([
@@ -21,8 +25,6 @@ class ProofTest extends BaseTest
         $proof = $proofDocument->getData();
         $this->assertInstanceOf('Didww\Item\Proof', $proof);
         $this->assertInstanceOf('Didww\Item\ProofType', $proof->proofType()->getIncluded());
-
-        $this->stopVCR();
     }
 
     public function testGetExpiresAtReturnsNullWhenNull()
@@ -41,13 +43,10 @@ class ProofTest extends BaseTest
 
     public function testDeleteProof()
     {
-        $this->startVCR('proofs.yml');
-
         $proof = \Didww\Item\Proof::build('ed46925b-a830-482d-917d-015858cf7ab9');
 
         $proofDocument = $proof->delete();
 
         $this->assertFalse($proofDocument->hasErrors());
-        $this->stopVCR();
     }
 }

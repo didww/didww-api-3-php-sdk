@@ -9,24 +9,14 @@ class Proof extends BaseItem
 
     protected $type = 'proofs';
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     public function getExpiresAt(): ?\DateTime
     {
-        return isset($this->attributes['expires_at']) ? new \DateTime($this->attributes['expires_at']) : null;
-    }
-
-    /** @return array [
-     * ]
-     * 'created_at' => string // creation timestamp
-     * 'expires_at' => string or null // expiration timestamp
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
+        return $this->dateAttribute('expires_at');
     }
 
     public function entity()

@@ -92,6 +92,18 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
         return null !== $val ? $enumClass::from($val) : null;
     }
 
+    protected function setEnumAttribute(string $key, mixed $value): void
+    {
+        $this->attributes[$key] = $value instanceof \BackedEnum ? $value->value : $value;
+    }
+
+    protected function dateAttribute(string $key): ?\DateTime
+    {
+        $val = $this->attribute($key);
+
+        return null !== $val ? new \DateTime($val) : null;
+    }
+
     protected function enumArrayAttribute(string $key, string $enumClass): ?array
     {
         $val = $this->attribute($key);

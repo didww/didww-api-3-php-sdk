@@ -2,12 +2,15 @@
 
 namespace Didww\Tests;
 
-class VoiceOutTrunkRegenerateCredentialTest extends BaseTest
+class VoiceOutTrunkRegenerateCredentialTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'voice_out_trunk_regenerate_credentials.yml';
+    }
+
     public function testVoiceOutTrunkRegenerateCredential()
     {
-        $this->startVCR('voice_out_trunk_regenerate_credentials.yml');
-
         $voiceOutTrunk = \Didww\Item\VoiceOutTrunk::build('5fc59e7e-79eb-498a-8779-800416b5c68a');
         $regenerateCredentials = new \Didww\Item\VoiceOutTrunkRegenerateCredential();
         $regenerateCredentials->setVoiceOutTrunk($voiceOutTrunk);
@@ -23,7 +26,5 @@ class VoiceOutTrunkRegenerateCredentialTest extends BaseTest
             [],
             $data->getAttributes()
         );
-
-        $this->stopVCR();
     }
 }

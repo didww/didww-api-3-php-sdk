@@ -2,8 +2,13 @@
 
 namespace Didww\Tests;
 
-class EncryptTest extends BaseTest
+class EncryptTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'public_keys.yml';
+    }
+
     private function decrypt(string $binary, string $privateKey, int $keyIndex): string
     {
         $encryptedAesCredentials = 0 == $keyIndex ? substr($binary, 0, 512) : substr($binary, 512, 512);
@@ -21,7 +26,6 @@ class EncryptTest extends BaseTest
 
     public function testAll()
     {
-        $this->startVCR('public_keys.yml');
         $encrypt = new \Didww\Encrypt();
 
         $fingerprint = $encrypt->getFingerprint();
@@ -48,7 +52,5 @@ class EncryptTest extends BaseTest
 
         $decryptedB = $this->decrypt($encryptedData, $privateKeys['private_key_b'], 1);
         $this->assertEquals($data, $decryptedB);
-
-        $this->stopVCR();
     }
 }

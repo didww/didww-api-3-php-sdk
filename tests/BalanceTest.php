@@ -2,12 +2,15 @@
 
 namespace Didww\Tests;
 
-class BalanceTest extends BaseTest
+class BalanceTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'balance.yml';
+    }
+
     public function testFind()
     {
-        $this->startVCR('balance.yml');
-
         $balanceDocument = \Didww\Item\Balance::find();
         $balance = $balanceDocument->getData();
         $this->assertInstanceOf('Didww\Item\Balance', $balance);
@@ -20,7 +23,5 @@ class BalanceTest extends BaseTest
         $this->assertEquals($balance->getTotalBalance(), 60.00);
         $this->assertEquals($balance->getCredit(), 10.00);
         $this->assertEquals($balance->getBalance(), 50.00);
-
-        $this->stopVCR();
     }
 }

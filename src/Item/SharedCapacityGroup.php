@@ -42,7 +42,7 @@ class SharedCapacityGroup extends BaseItem
 
     public function getCreatedAt()
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     public function capacityPool()

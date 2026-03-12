@@ -2,11 +2,15 @@
 
 namespace Didww\Tests;
 
-class PublicKeyTest extends BaseTest
+class PublicKeyTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'public_keys.yml';
+    }
+
     public function testAll()
     {
-        $this->startVCR('public_keys.yml');
         $publicKeysDocument = \Didww\Item\PublicKey::all();
         $publicKeys = $publicKeysDocument->getData();
         $this->assertContainsOnlyInstancesOf('Didww\Item\PublicKey', $publicKeys);
@@ -15,7 +19,6 @@ class PublicKeyTest extends BaseTest
         $this->assertStringContainsString('PUBLIC KEY', $publicKeys[1]->getKey());
 
         $this->assertCount(2, $publicKeys);
-        $this->stopVCR();
     }
 
     public function testPublicKeysRequestOmitsApiKeyHeader()

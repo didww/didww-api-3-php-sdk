@@ -2,32 +2,27 @@
 
 namespace Didww\Tests;
 
-class DidGroupTest extends BaseTest
+class DidGroupTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'did_groups.yml';
+    }
+
     public function testAll()
     {
-        $this->startVCR('did_groups.yml');
-
         $didGroupDocument = \Didww\Item\DidGroup::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\DidGroup', $didGroupDocument->getData());
-
-        $this->stopVCR();
     }
 
     public function testFilterByNanpaPrefix()
     {
-        $this->startVCR('did_groups.yml');
-
         $didGroupDocument = \Didww\Item\DidGroup::all(['filter' => ['nanpa_prefix.id' => 'eeed293b-f3d8-4ef8-91ef-1b077d174b3b']]);
         $this->assertContainsOnlyInstancesOf('Didww\Item\DidGroup', $didGroupDocument->getData());
-
-        $this->stopVCR();
     }
 
     public function testFind()
     {
-        $this->startVCR('did_groups.yml');
-
         $uuid = '2187c36d-28fb-436f-8861-5a0f5b5a3ee1';
         $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,did_group_type,stock_keeping_units,requirement']);
         $countryRelation = $didGroupDocument->getData()->country();
@@ -80,7 +75,5 @@ class DidGroupTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Requirement', $requirement);
         $this->assertEquals('Any', $requirement->getAttributes()['identity_type']);
         $this->assertSame(\Didww\Enum\IdentityType::ANY, $requirement->getIdentityType());
-
-        $this->stopVCR();
     }
 }

@@ -2,13 +2,11 @@
 
 namespace Didww\Item\OrderItem;
 
-class AvailableDid extends Did
+class AvailableDid extends AbstractReferencedDidOrderItem
 {
-    use Traits\Sku;
-
-    protected function getCreatableAttributesKeys()
+    protected function getReferencedIdKey(): string
     {
-        return $this->withOptionalKeys(['available_did_id', 'sku_id']);
+        return 'available_did_id';
     }
 
     public function setAvailableDidId(string $uuid)

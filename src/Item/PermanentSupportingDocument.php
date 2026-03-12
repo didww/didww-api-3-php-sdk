@@ -9,18 +9,9 @@ class PermanentSupportingDocument extends BaseItem
 
     protected $type = 'permanent_supporting_documents';
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
-        return new \DateTime($this->attributes['created_at']);
-    }
-
-    /** @return array [
-     * ]
-     * 'created_at' => string // creation timestamp
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
+        return $this->dateAttribute('created_at');
     }
 
     public function identity()

@@ -50,28 +50,14 @@ class Address extends BaseItem
         $this->attributes['description'] = $description;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     public function getVerified(): bool
     {
         return $this->attributes['verified'];
-    }
-
-    /** @return array [
-     * ]
-     * 'city_name' => string
-     * 'postal_code' => string
-     * 'address' => string
-     * 'description' => string // custom description
-     * 'created_at' => string // creation timestamp
-     * 'verified' => bool
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
     }
 
     public function country()

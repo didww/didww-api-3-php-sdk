@@ -2,22 +2,21 @@
 
 namespace Didww\Tests;
 
-class AreaTest extends BaseTest
+class AreaTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'areas.yml';
+    }
+
     public function testAll()
     {
-        $this->startVCR('areas.yml');
-
         $areasDocument = \Didww\Item\Area::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\Area', $areasDocument->getData());
-
-        $this->stopVCR();
     }
 
     public function testFind()
     {
-        $this->startVCR('areas.yml');
-
         $uuid = 'ab2adc18-7c94-42d9-bdde-b28dfc373a22';
         $areaDocument = \Didww\Item\Area::find($uuid, ['include' => 'country']);
         $countryRelation = $areaDocument->getData()->country();
@@ -32,7 +31,5 @@ class AreaTest extends BaseTest
             'prefix' => '39',
             'name' => 'Italy',
         ], $countryRelation->getIncluded()->getAttributes());
-
-        $this->stopVCR();
     }
 }

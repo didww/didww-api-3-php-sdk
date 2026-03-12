@@ -54,7 +54,7 @@ class Identity extends BaseItem
 
     public function getBirthDate(): ?\DateTime
     {
-        return isset($this->attributes['birth_date']) ? new \DateTime($this->attributes['birth_date']) : null;
+        return $this->dateAttribute('birth_date');
     }
 
     public function setBirthDate(string $birthDate)
@@ -119,7 +119,7 @@ class Identity extends BaseItem
 
     public function setIdentityType(IdentityType|string $identityType)
     {
-        $this->attributes['identity_type'] = $identityType instanceof IdentityType ? $identityType->value : $identityType;
+        $this->setEnumAttribute('identity_type', $identityType);
     }
 
     public function getExternalReferenceId(): ?string
@@ -142,37 +142,14 @@ class Identity extends BaseItem
         $this->attributes['contact_email'] = $contactEmail;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     public function getVerified(): bool
     {
         return $this->attributes['verified'];
-    }
-
-    /** @return array [
-     * ]
-     * 'first_name' => string
-     * 'last_name' => string
-     * 'phone_number' => string
-     * 'id_number' => string // passport number or similar
-     * 'birth_date' => string
-     * 'company_name' => string // only for Business identity
-     * 'company_reg_number' => string // only for Business identity
-     * 'vat_id' => string // only for Business identity
-     * 'description' => string // custom description
-     * 'personal_tax_id' => string
-     * 'identity_type' => string // 'Personal' or 'Business'
-     * 'created_at' => string // creation timestamp
-     * 'external_reference_id' => string // custom identifier
-     * 'contact_email' => string|null // contact email address
-     * 'verified' => bool
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
     }
 
     public function country()

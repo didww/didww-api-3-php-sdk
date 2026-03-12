@@ -17,14 +17,4 @@ class ProofType extends BaseItem
     {
         return $this->attributes['entity_type'];
     }
-
-    /** @return array [
-     * ]
-     * 'name' => string
-     * 'entity_type' => string // 'Personal' or 'Business' for identity entity, 'Address' for address entity
-     */
-    public function getAttributes(): array
-    {
-        return parent::getAttributes();
-    }
 }

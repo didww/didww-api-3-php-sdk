@@ -2,11 +2,15 @@
 
 namespace Didww\Tests;
 
-class ProofTypeTest extends BaseTest
+class ProofTypeTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'proof_types.yml';
+    }
+
     public function testAllWithPagination()
     {
-        $this->startVCR('proof_types.yml');
         $proofTypesDocument = \Didww\Item\ProofType::all(
             ['page' => ['size' => 5, 'number' => 1]]
         );
@@ -22,7 +26,5 @@ class ProofTypeTest extends BaseTest
         $fourth = $proofTypes[3];
         $this->assertEquals('Drivers License', $fourth->getName());
         $this->assertEquals('Personal', $fourth->getEntityType());
-
-        $this->stopVCR();
     }
 }

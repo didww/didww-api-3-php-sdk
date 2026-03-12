@@ -2,17 +2,11 @@
 
 namespace Didww\Tests;
 
-class NanpaPrefixTest extends BaseTest
+class NanpaPrefixTest extends CassetteTest
 {
-    protected function setUp(): void
+    protected function getCassetteName(): string
     {
-        parent::setUp();
-        $this->startVCR('nanpa_prefixes.yml');
-    }
-
-    protected function tearDown(): void
-    {
-        $this->stopVCR();
+        return 'nanpa_prefixes.yml';
     }
 
     public function testAll()

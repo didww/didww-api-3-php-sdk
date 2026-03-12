@@ -42,7 +42,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function setOnCliMismatchAction(OnCliMismatchAction|string $onCliMismatchAction)
     {
-        $this->attributes['on_cli_mismatch_action'] = $onCliMismatchAction instanceof OnCliMismatchAction ? $onCliMismatchAction->value : $onCliMismatchAction;
+        $this->setEnumAttribute('on_cli_mismatch_action', $onCliMismatchAction);
     }
 
     public function getAllowedRtpIps(): ?array
@@ -72,7 +72,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function setStatus(VoiceOutTrunkStatus|string $status)
     {
-        $this->attributes['status'] = $status instanceof VoiceOutTrunkStatus ? $status->value : $status;
+        $this->setEnumAttribute('status', $status);
     }
 
     public function getCapacityLimit(): string
@@ -102,7 +102,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function setMediaEncryptionMode(MediaEncryptionMode|string $mediaEncryptionMode)
     {
-        $this->attributes['media_encryption_mode'] = $mediaEncryptionMode instanceof MediaEncryptionMode ? $mediaEncryptionMode->value : $mediaEncryptionMode;
+        $this->setEnumAttribute('media_encryption_mode', $mediaEncryptionMode);
     }
 
     public function getDefaultDstAction(): DefaultDstAction
@@ -112,7 +112,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function setDefaultDstAction(DefaultDstAction|string $defaultDstAction)
     {
-        $this->attributes['default_dst_action'] = $defaultDstAction instanceof DefaultDstAction ? $defaultDstAction->value : $defaultDstAction;
+        $this->setEnumAttribute('default_dst_action', $defaultDstAction);
     }
 
     public function getDstPrefixes(): array
@@ -157,7 +157,7 @@ class VoiceOutTrunk extends BaseItem
 
     public function getCreatedAt()
     {
-        return new \DateTime($this->attributes['created_at']);
+        return $this->dateAttribute('created_at');
     }
 
     public function dids()
