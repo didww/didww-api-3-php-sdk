@@ -26,7 +26,7 @@ class RequestValidator
      */
     public function validate(string $url, array $payload, string $signature): bool
     {
-        if (null == $signature || 0 == strlen($signature)) {
+        if ('' === $signature) {
             return false;
         }
 
