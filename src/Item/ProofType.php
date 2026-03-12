@@ -17,5 +17,4 @@ class ProofType extends BaseItem
     {
         return $this->attributes['entity_type'];
     }
-
 }

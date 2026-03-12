@@ -66,7 +66,6 @@ class Requirement extends BaseItem
         return $this->attributes['restriction_message'];
     }
 
-
     public function country()
     {
         return $this->hasOne(Country::class);

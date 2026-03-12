@@ -12,5 +12,4 @@ class PublicKey extends BaseItem
     {
         return $this->attributes['key'];
     }
-
 }

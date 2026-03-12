@@ -67,7 +67,6 @@ class AddressVerification extends BaseItem
         return $this->dateAttribute('created_at');
     }
 
-
     public function address()
     {
         return $this->hasOne(Address::class);

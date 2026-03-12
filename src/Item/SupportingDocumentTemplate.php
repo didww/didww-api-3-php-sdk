@@ -23,7 +23,6 @@ class SupportingDocumentTemplate extends BaseItem
         return $this->attributes['url'];
     }
 
-
     public function download($dest)
     {
         $options = [

@@ -152,7 +152,6 @@ class Identity extends BaseItem
         return $this->attributes['verified'];
     }
 
-
     public function country()
     {
         return $this->hasOne(Country::class);

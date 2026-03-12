@@ -149,7 +149,6 @@ class Export extends BaseItem
         return true;
     }
 
-
     protected function getWhiteListAttributesKeys(): array
     {
         return [

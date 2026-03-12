@@ -14,7 +14,6 @@ class PermanentSupportingDocument extends BaseItem
         return $this->dateAttribute('created_at');
     }
 
-
     public function identity()
     {
         return $this->hasOne(Identity::class);

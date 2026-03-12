@@ -19,7 +19,6 @@ class Proof extends BaseItem
         return $this->dateAttribute('expires_at');
     }
 
-
     public function entity()
     {
         return $this->morphTo();
