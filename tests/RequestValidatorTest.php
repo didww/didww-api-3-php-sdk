@@ -91,7 +91,7 @@ class RequestValidatorTest extends BaseTest
      */
     public function testDocumentationExample()
     {
-        $apiKey = 'szrdgh6547umt7tht7xbqhj6g9gdbyp7';
+        $apiKey = 'szrdgh6547umt7tht7xbqhj6g9gdbyp7'; // NOSONAR
         $signature = '30f66e9d72eb5e193051fd02952f70d8e934b4ff';
         $validator = new \Didww\Callback\RequestValidator($apiKey);
         $this->assertTrue($validator->validate(
