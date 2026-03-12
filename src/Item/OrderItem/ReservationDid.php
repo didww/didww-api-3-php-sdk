@@ -2,13 +2,11 @@
 
 namespace Didww\Item\OrderItem;
 
-class ReservationDid extends Did
+class ReservationDid extends AbstractReferencedDidOrderItem
 {
-    use Traits\Sku;
-
-    protected function getCreatableAttributesKeys()
+    protected function getReferencedIdKey(): string
     {
-        return $this->withOptionalKeys(['did_reservation_id', 'sku_id']);
+        return 'did_reservation_id';
     }
 
     public function setDidReservationId(string $uuid)
