@@ -109,7 +109,7 @@ class RequestValidatorTest extends BaseTest
             'ipv6 http explicit port 80' => ['http://[::1]:80/bar', 'e0e9b83e4046d097f54b3ae64b08cbb4a539f601'], // NOSONAR
             'ipv6 http custom port' => ['http://[::1]:9090/bar', 'ebec110ec5debd0e0fd086ff2f02e48ca665b543'], // NOSONAR
             'ipv6 https default port' => ['https://[::1]/bar', 'f3cfe6f523fdf1d4eaadc310fcd3ed92e1e324b0'], // NOSONAR
-'percent-encoded path' => ['http://foo.com/hello%20world', 'eb64035b2e8f356ff1442898a39ec94d5c3e2fc8'], // NOSONAR
+            'percent-encoded path' => ['http://foo.com/hello%20world', 'eb64035b2e8f356ff1442898a39ec94d5c3e2fc8'], // NOSONAR
             'percent-encoded slash in path' => ['http://foo.com/foo%2Fbar', 'db24428442b012fa0972a453ba1ba98e755bba10'], // NOSONAR
         ];
     }
