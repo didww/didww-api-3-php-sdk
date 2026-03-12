@@ -15,5 +15,6 @@ abstract class CassetteTest extends BaseTest
     protected function tearDown(): void
     {
         $this->stopVCR();
+        parent::tearDown();
     }
 }

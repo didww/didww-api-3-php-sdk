@@ -4,11 +4,9 @@ namespace Didww\Item\OrderItem;
 
 abstract class AbstractReferencedDidOrderItem extends Did
 {
-    use Traits\Sku;
-
     abstract protected function getReferencedIdKey(): string;
 
-    protected function getCreatableAttributesKeys(): array
+    protected function getCreatableAttributesKeys()
     {
         return $this->withOptionalKeys([$this->getReferencedIdKey(), 'sku_id']);
     }
