@@ -26,11 +26,11 @@ class RequestValidator
      */
     public function validate(string $url, array $payload, string $signature): bool
     {
-        if (null == $signature || 0 == strlen($signature)) {
+        if ('' === $signature) {
             return false;
         }
 
-        return $this->validSignature($url, $payload) == $signature;
+        return hash_equals($this->validSignature($url, $payload), $signature);
     }
 
     private function validSignature(string $url, array $payload): string
@@ -54,8 +54,8 @@ class RequestValidator
 
         $scheme = $parsedUrl['scheme'];
 
-        if (array_key_exists('user', $parsedUrl) && array_key_exists('password', $parsedUrl)) {
-            $userInfo = $parsedUrl['user'].':'.$parsedUrl['password'].'@';
+        if (array_key_exists('user', $parsedUrl) && array_key_exists('pass', $parsedUrl)) {
+            $userInfo = $parsedUrl['user'].':'.$parsedUrl['pass'].'@';
         } elseif (array_key_exists('user', $parsedUrl)) {
             $userInfo = $parsedUrl['user'].'@';
         } else {
@@ -72,7 +72,7 @@ class RequestValidator
             $port = 80;
         }
 
-        if (array_key_exists('path', $parsedUrl)) {
+        if (array_key_exists('path', $parsedUrl) && '' !== $parsedUrl['path']) {
             $path = $parsedUrl['path'];
         } else {
             $path = '';
