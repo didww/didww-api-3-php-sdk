@@ -142,7 +142,7 @@ class Identity extends BaseItem
         $this->attributes['contact_email'] = $contactEmail;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->dateAttribute('created_at');
     }

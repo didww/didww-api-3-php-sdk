@@ -9,7 +9,7 @@ class Proof extends BaseItem
 
     protected $type = 'proofs';
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->dateAttribute('created_at');
     }

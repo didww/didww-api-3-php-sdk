@@ -29,7 +29,7 @@ class CapacityPool extends BaseItem
         return $this->getAttributes()['name'];
     }
 
-    public function getRenewDate(): \DateTime
+    public function getRenewDate(): ?\DateTime
     {
         return $this->dateAttribute('renew_date');
     }

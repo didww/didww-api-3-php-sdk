@@ -9,7 +9,7 @@ class PermanentSupportingDocument extends BaseItem
 
     protected $type = 'permanent_supporting_documents';
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->dateAttribute('created_at');
     }

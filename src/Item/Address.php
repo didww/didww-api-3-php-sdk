@@ -50,7 +50,7 @@ class Address extends BaseItem
         $this->attributes['description'] = $description;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->dateAttribute('created_at');
     }

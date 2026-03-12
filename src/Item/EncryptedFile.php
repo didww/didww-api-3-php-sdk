@@ -16,12 +16,12 @@ class EncryptedFile extends BaseItem
         return $this->attribute('description');
     }
 
-    public function getExpireAt(): \DateTime
+    public function getExpireAt(): ?\DateTime
     {
         return $this->dateAttribute('expire_at');
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->dateAttribute('created_at');
     }

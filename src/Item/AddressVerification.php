@@ -62,7 +62,7 @@ class AddressVerification extends BaseItem
         return $this->attribute('reference');
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->dateAttribute('created_at');
     }

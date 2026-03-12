@@ -90,7 +90,7 @@ class Order extends BaseItem
         return $this->enumAttribute('status', OrderStatus::class);
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->dateAttribute('created_at');
     }
