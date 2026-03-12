@@ -8,6 +8,7 @@ class ProofTest extends CassetteTest
     {
         return 'proofs.yml';
     }
+
     public function testCreateProof()
     {
         $identity = \Didww\Item\Identity::build('5e9df058-50d2-4e34-b0d4-d1746b86f41a');
@@ -24,7 +25,6 @@ class ProofTest extends CassetteTest
         $proof = $proofDocument->getData();
         $this->assertInstanceOf('Didww\Item\Proof', $proof);
         $this->assertInstanceOf('Didww\Item\ProofType', $proof->proofType()->getIncluded());
-
     }
 
     public function testGetExpiresAtReturnsNullWhenNull()
@@ -43,7 +43,6 @@ class ProofTest extends CassetteTest
 
     public function testDeleteProof()
     {
-
         $proof = \Didww\Item\Proof::build('ed46925b-a830-482d-917d-015858cf7ab9');
 
         $proofDocument = $proof->delete();

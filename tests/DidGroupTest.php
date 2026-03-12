@@ -8,25 +8,21 @@ class DidGroupTest extends CassetteTest
     {
         return 'did_groups.yml';
     }
+
     public function testAll()
     {
-
         $didGroupDocument = \Didww\Item\DidGroup::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\DidGroup', $didGroupDocument->getData());
-
     }
 
     public function testFilterByNanpaPrefix()
     {
-
         $didGroupDocument = \Didww\Item\DidGroup::all(['filter' => ['nanpa_prefix.id' => 'eeed293b-f3d8-4ef8-91ef-1b077d174b3b']]);
         $this->assertContainsOnlyInstancesOf('Didww\Item\DidGroup', $didGroupDocument->getData());
-
     }
 
     public function testFind()
     {
-
         $uuid = '2187c36d-28fb-436f-8861-5a0f5b5a3ee1';
         $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,did_group_type,stock_keeping_units,requirement']);
         $countryRelation = $didGroupDocument->getData()->country();
@@ -79,6 +75,5 @@ class DidGroupTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\Requirement', $requirement);
         $this->assertEquals('Any', $requirement->getAttributes()['identity_type']);
         $this->assertSame(\Didww\Enum\IdentityType::ANY, $requirement->getIdentityType());
-
     }
 }

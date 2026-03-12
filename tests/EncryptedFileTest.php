@@ -8,6 +8,7 @@ class EncryptedFileTest extends CassetteTest
     {
         return 'encrypted_files.yml';
     }
+
     public function testAllWithPagination()
     {
         $encryptedFilesDocument = \Didww\Item\EncryptedFile::all(
@@ -21,7 +22,6 @@ class EncryptedFileTest extends CassetteTest
 
     public function testDeleteEncryptedFile()
     {
-
         $encryptedFile = \Didww\Item\EncryptedFile::build('7f2fbdca-8008-44ce-bcb6-3537ea5efaac');
 
         $encryptedFileDocument = $encryptedFile->delete();
@@ -31,7 +31,6 @@ class EncryptedFileTest extends CassetteTest
 
     public function testUploadFiles()
     {
-
         $fingerprint = 'c74684d7863639169c21c4d04747f8d6fa05cfe3:::8a586bd37fa0000501715321b2e6a7b3ca57894c';
         $files = [
             'file-content-1',

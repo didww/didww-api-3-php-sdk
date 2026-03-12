@@ -8,6 +8,7 @@ class PermanentSupportingDocumentTest extends CassetteTest
     {
         return 'permanent_supporting_documents.yml';
     }
+
     public function testCreatePermanentSupportingDocument()
     {
         $identity = \Didww\Item\Identity::build('5e9df058-50d2-4e34-b0d4-d1746b86f41a');
@@ -24,12 +25,10 @@ class PermanentSupportingDocumentTest extends CassetteTest
         $permanentSupportingDoc = $permanentSupportingDocDocument->getData();
         $this->assertInstanceOf('Didww\Item\PermanentSupportingDocument', $permanentSupportingDoc);
         $this->assertInstanceOf('Didww\Item\SupportingDocumentTemplate', $permanentSupportingDoc->template()->getIncluded());
-
     }
 
     public function testDeletePermanentSupportingDocument()
     {
-
         $permanentSupportingDoc = \Didww\Item\PermanentSupportingDocument::build('19510da3-c07e-4fa9-a696-6b9ab89cc172');
 
         $permanentSupportingDocDocument = $permanentSupportingDoc->delete();

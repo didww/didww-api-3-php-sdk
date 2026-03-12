@@ -8,6 +8,7 @@ class RequirementValidationTest extends CassetteTest
     {
         return 'requirement_validations.yml';
     }
+
     public function testCreateRequirementValidation()
     {
         $address = \Didww\Item\Address::build('d3414687-40f4-4346-a267-c2c65117d28c');
@@ -20,7 +21,6 @@ class RequirementValidationTest extends CassetteTest
         $this->assertFalse($requirementValidationDocument->hasErrors());
         $requirementValidation = $requirementValidationDocument->getData();
         $this->assertInstanceOf('Didww\Item\RequirementValidation', $requirementValidation);
-
     }
 
     public function testCreateRequirementValidationFailed()
@@ -35,6 +35,5 @@ class RequirementValidationTest extends CassetteTest
         $requirementValidation->setRequirement($requirement);
         $requirementValidationDocument = $requirementValidation->save();
         $this->assertTrue($requirementValidationDocument->hasErrors());
-
     }
 }

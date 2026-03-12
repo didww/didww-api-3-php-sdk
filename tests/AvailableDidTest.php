@@ -8,25 +8,21 @@ class AvailableDidTest extends CassetteTest
     {
         return 'available_dids.yml';
     }
+
     public function testAll()
     {
-
         $availableDidsDocument = \Didww\Item\AvailableDid::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\AvailableDid', $availableDidsDocument->getData());
-
     }
 
     public function testFilterByNanpaPrefix()
     {
-
         $availableDidsDocument = \Didww\Item\AvailableDid::all(['filter' => ['nanpa_prefix.id' => 'eeed293b-f3d8-4ef8-91ef-1b077d174b3b']]);
         $this->assertContainsOnlyInstancesOf('Didww\Item\AvailableDid', $availableDidsDocument->getData());
-
     }
 
     public function testFindWithNanpaPrefix()
     {
-
         $uuid = '0e1c548e-c6b5-43b0-9c12-2e300178e820';
         $availableDidDocument = \Didww\Item\AvailableDid::find($uuid, ['include' => 'nanpa_prefix']);
 
@@ -40,12 +36,10 @@ class AvailableDidTest extends CassetteTest
             'npa' => '201',
             'nxx' => '221',
         ], $nanpaPrefix->getAttributes());
-
     }
 
     public function testFind()
     {
-
         $uuid = '0b76223b-9625-412f-b0f3-330551473e7e';
         $availableDidDocument = \Didww\Item\AvailableDid::find($uuid, ['include' => 'did_group.stock_keeping_units']);
 
@@ -78,6 +72,5 @@ class AvailableDidTest extends CassetteTest
             'monthly_price' => '0.19',
             'channels_included_count' => 2,
         ]);
-
     }
 }

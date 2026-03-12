@@ -8,17 +8,15 @@ class DidGroupTypeTest extends CassetteTest
     {
         return 'did_group_types.yml';
     }
+
     public function testAll()
     {
-
         $didGroupTypesDocument = \Didww\Item\DidGroupType::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\DidGroupType', $didGroupTypesDocument->getData());
-
     }
 
     public function testFind()
     {
-
         $uuid = 'd6530a8c-924c-469a-98c0-9525602e6192';
         $didGroupTypeDocument = \Didww\Item\DidGroupType::find($uuid);
 
@@ -26,6 +24,5 @@ class DidGroupTypeTest extends CassetteTest
         $this->assertEquals($didGroupTypeDocument->getData()->getAttributes(), [
             'name' => 'Global',
         ]);
-
     }
 }

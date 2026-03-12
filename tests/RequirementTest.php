@@ -10,6 +10,7 @@ class RequirementTest extends CassetteTest
     {
         return 'requirements.yml';
     }
+
     public function testAllWithIncludesAndPagination()
     {
         $requirementsDocument = \Didww\Item\Requirement::all(
@@ -79,6 +80,5 @@ class RequirementTest extends CassetteTest
         $this->assertNotNull($requirement->personalProofTypes());
         $this->assertNotNull($requirement->businessProofTypes());
         $this->assertNotNull($requirement->addressProofTypes());
-
     }
 }

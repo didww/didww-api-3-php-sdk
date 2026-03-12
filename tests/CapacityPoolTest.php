@@ -8,17 +8,15 @@ class CapacityPoolTest extends CassetteTest
     {
         return 'capacity_pools.yml';
     }
+
     public function testAll()
     {
-
         $capacityPoolsDocument = \Didww\Item\CapacityPool::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\CapacityPool', $capacityPoolsDocument->getData());
-
     }
 
     public function testFind()
     {
-
         $uuid = 'f288d07c-e2fc-4ae6-9837-b18fb469c324';
         $capacityPoolDocument = \Didww\Item\CapacityPool::find($uuid, ['include' => 'countries,shared_capacity_groups,qty_based_pricings']);
         $countriesRelation = $capacityPoolDocument->getData()->countries();
@@ -107,12 +105,10 @@ class CapacityPoolTest extends CassetteTest
                     'setup_price' => '7.0',
                 ],
             ]);
-
     }
 
     public function testUpdateCapacityPool()
     {
-
         $uuid = 'f288d07c-e2fc-4ae6-9837-b18fb469c324';
         $capacityPool = \Didww\Item\CapacityPool::build($uuid);
         $capacityPool->setTotalChannelsCount(25);
@@ -137,6 +133,5 @@ class CapacityPoolTest extends CassetteTest
             'monthly_price' => '15.0',
             'metered_rate' => '1.0',
         ]);
-
     }
 }

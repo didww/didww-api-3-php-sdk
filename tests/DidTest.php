@@ -8,9 +8,9 @@ class DidTest extends CassetteTest
     {
         return 'dids.yml';
     }
+
     public function testAllWithIncludesAndPagination()
     {
-
         $dids = \Didww\Item\Did::all(['include' => 'order', 'page' => ['size' => 10, 'number' => 2]]);
         $this->assertContainsOnlyInstancesOf('Didww\Item\Did', $dids->getData());
         $order = $dids->getData()[0]->order()->getIncluded();
@@ -18,12 +18,10 @@ class DidTest extends CassetteTest
         $didGroup = $dids->getData()[0]->didGroup()->getIncluded();
         $this->assertNull($didGroup);
         $this->assertEquals($dids->getMeta()['total_records'], 13);
-
     }
 
     public function testApplyTrunkGroup()
     {
-
         $voiceInTrunkGroup = new \Didww\Item\VoiceInTrunkGroup();
         $voiceInTrunkGroup->setId('837c5764-a6c3-456f-aa37-71fc8f8ca07b');
 
@@ -47,12 +45,10 @@ class DidTest extends CassetteTest
                 ],
             ],
         ]);
-
     }
 
     public function testApplyInvalidTrunkGroup()
     {
-
         $voiceInTrunkGroup = new \Didww\Item\VoiceInTrunkGroup();
         $voiceInTrunkGroup->setId('invalid');
 
@@ -61,12 +57,10 @@ class DidTest extends CassetteTest
         $did->setVoiceInTrunkGroup($voiceInTrunkGroup);
         $response = $did->save();
         $this->assertEquals($response->getErrors()->all()[0]->getDetail(), 'voice_in_trunk_group - is invalid');
-
     }
 
     public function testApplyCapacityPool()
     {
-
         $capacityPool = new \Didww\Item\CapacityPool();
         $capacityPool->setId('f288d07c-e2fc-4ae6-9837-b18fb469c324');
 
@@ -87,12 +81,10 @@ class DidTest extends CassetteTest
                 ],
             ],
         ]);
-
     }
 
     public function testApplySharedCapacityGroup()
     {
-
         $sharedCapacityGroup = new \Didww\Item\SharedCapacityGroup();
         $sharedCapacityGroup->setId('206881de-7a92-4415-aa32-b05458c79623');
 
@@ -113,12 +105,10 @@ class DidTest extends CassetteTest
                 ],
             ],
         ]);
-
     }
 
     public function testFindWithAddressVerificationAndDidGroup()
     {
-
         $uuid = '21d0b02c-b556-4d3e-acbf-504b78295dbe';
         $didDocument = \Didww\Item\Did::find($uuid, ['include' => 'address_verification,did_group']);
         $did = $didDocument->getData();
@@ -138,12 +128,10 @@ class DidTest extends CassetteTest
         $this->assertEquals('Mobile', $didGroup->getAreaName());
         $this->assertEquals(false, $didGroup->getIsMetered());
         $this->assertEquals(false, $didGroup->getAllowAdditionalChannels());
-
     }
 
     public function testBooleans()
     {
-
         $didDocument = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did = $didDocument->getData();
         $this->assertEquals($did->getBillingCyclesCount(), null);
@@ -174,12 +162,10 @@ class DidTest extends CassetteTest
 
         $this->assertEquals($did->getBillingCyclesCount(), 0);
         $this->assertEquals($did->getTerminated(), true);
-
     }
 
     public function testUpdateBuiltSingleAttribute()
     {
-
         $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did->setCapacityLimit(10);
         $didDocument = $did->save();
@@ -187,12 +173,10 @@ class DidTest extends CassetteTest
         $did = $didDocument->getData();
         $this->assertInstanceOf('Didww\Item\Did', $did);
         $this->assertEquals(10, $did->getCapacityLimit());
-
     }
 
     public function testUpdateClearDescription()
     {
-
         $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did->setDescription(null);
         $didDocument = $did->save();
@@ -200,12 +184,10 @@ class DidTest extends CassetteTest
         $did = $didDocument->getData();
         $this->assertInstanceOf('Didww\Item\Did', $did);
         $this->assertNull($did->getDescription());
-
     }
 
     public function testUpdateTerminated()
     {
-
         $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did->setTerminated(true);
         $didDocument = $did->save();
@@ -213,12 +195,10 @@ class DidTest extends CassetteTest
         $did = $didDocument->getData();
         $this->assertInstanceOf('Didww\Item\Did', $did);
         $this->assertTrue($did->getTerminated());
-
     }
 
     public function testUpdateSetVoiceInTrunk()
     {
-
         $voiceInTrunk = new \Didww\Item\VoiceInTrunk();
         $voiceInTrunk->setId('7939589c-4cac-4f70-8ba8-ee8e1a0aa3e9');
 
@@ -228,12 +208,10 @@ class DidTest extends CassetteTest
 
         $did = $didDocument->getData();
         $this->assertInstanceOf('Didww\Item\Did', $did);
-
     }
 
     public function testUpdateFromLoaded()
     {
-
         $didDocument = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did = $didDocument->getData();
         $this->assertNull($did->getDescription());
@@ -244,12 +222,10 @@ class DidTest extends CassetteTest
         $did = $didDocument->getData();
         $this->assertInstanceOf('Didww\Item\Did', $did);
         $this->assertEquals('updated', $did->getDescription());
-
     }
 
     public function testUpdateFromLoadedSetVoiceInTrunk()
     {
-
         $didDocument = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did = $didDocument->getData();
 
@@ -260,12 +236,10 @@ class DidTest extends CassetteTest
 
         $did = $didDocument->getData();
         $this->assertInstanceOf('Didww\Item\Did', $did);
-
     }
 
     public function testFindWithIncludedHasCleanDirtyState()
     {
-
         $uuid = '21d0b02c-b556-4d3e-acbf-504b78295dbe';
         $didDocument = \Didww\Item\Did::find($uuid, ['include' => 'address_verification,did_group']);
         $did = $didDocument->getData();
@@ -286,6 +260,5 @@ class DidTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
         $addressVerificationPatch = $addressVerification->toJsonApiPatchArray();
         $this->assertArrayNotHasKey('attributes', $addressVerificationPatch);
-
     }
 }

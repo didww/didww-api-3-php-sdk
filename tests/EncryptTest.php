@@ -8,6 +8,7 @@ class EncryptTest extends CassetteTest
     {
         return 'public_keys.yml';
     }
+
     private function decrypt(string $binary, string $privateKey, int $keyIndex): string
     {
         $encryptedAesCredentials = 0 == $keyIndex ? substr($binary, 0, 512) : substr($binary, 512, 512);
@@ -51,6 +52,5 @@ class EncryptTest extends CassetteTest
 
         $decryptedB = $this->decrypt($encryptedData, $privateKeys['private_key_b'], 1);
         $this->assertEquals($data, $decryptedB);
-
     }
 }

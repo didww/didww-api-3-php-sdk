@@ -13,15 +13,15 @@ use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class VoiceInTrunkTest extends CassetteTest
 {
+    use ArraySubsetAsserts;
+
     protected function getCassetteName(): string
     {
         return 'voice_in_trunks.yml';
     }
-    use ArraySubsetAsserts;
 
     public function testAllWithIncludesAndPagination()
     {
-
         $voiceInTrunksDocument = \Didww\Item\VoiceInTrunk::all(['sort' => '-created_at', 'include' => 'trunk_group,pop', 'page' => ['size' => 4, 'number' => 1]]);
         $voiceInTrunks = $voiceInTrunksDocument->getData();
         $this->assertContainsOnlyInstancesOf('Didww\Item\VoiceInTrunk', $voiceInTrunks);
@@ -37,7 +37,6 @@ class VoiceInTrunkTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\Configuration\Sip', $voiceInTrunks[1]->getConfiguration());
 
         $this->assertEquals($voiceInTrunksDocument->getMeta()['total_records'], 68);
-
     }
 
     public function testCreatePstnTrunk()
@@ -139,7 +138,6 @@ class VoiceInTrunkTest extends CassetteTest
         $this->assertEquals(65535, $voiceInTrunk->getWeight());
         $this->assertInstanceOf(\DateTime::class, $voiceInTrunk->getCreatedAt());
         $this->assertEquals(CliFormat::E164, $voiceInTrunk->getCliFormat());
-
     }
 
     public function testUpdateSipTrunk()
@@ -164,7 +162,6 @@ class VoiceInTrunkTest extends CassetteTest
 
     public function testDeleteTrunk()
     {
-
         $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('41b94706-325e-4704-a433-d65105758836');
 
         $voiceInTrunkDocument = $voiceInTrunk->delete();
@@ -188,7 +185,6 @@ class VoiceInTrunkTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
         $this->assertEquals('ba7ccbef-82ac-4372-9391-eac90d5c9479', $pop->getId());
         $this->assertEquals('837c5764-a6c3-456f-aa37-71fc8f8ca07b', $voiceInTrunkGroup->getId());
-
     }
 
     public function testSipSetters()

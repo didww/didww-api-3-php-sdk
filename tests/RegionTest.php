@@ -8,17 +8,15 @@ class RegionTest extends CassetteTest
     {
         return 'regions.yml';
     }
+
     public function testAll()
     {
-
         $regionsDocument = \Didww\Item\Region::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\Region', $regionsDocument->getData());
-
     }
 
     public function testFind()
     {
-
         $uuid = 'c11b1f34-16cf-4ba6-8497-f305b53d5b01';
         $regionDocument = \Didww\Item\Region::find($uuid, ['include' => 'country']);
         $countryRelation = $regionDocument->getData()->country();
@@ -33,6 +31,5 @@ class RegionTest extends CassetteTest
             'prefix' => '1',
             'name' => 'United States',
         ]);
-
     }
 }

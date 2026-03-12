@@ -7,11 +7,12 @@ use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class AddressVerificationTest extends CassetteTest
 {
+    use ArraySubsetAsserts;
+
     protected function getCassetteName(): string
     {
         return 'address_verifications.yml';
     }
-    use ArraySubsetAsserts;
 
     public function testAllWithIncludesAndPagination()
     {
@@ -81,6 +82,5 @@ class AddressVerificationTest extends CassetteTest
         $this->assertArraySubset($attributes, $addressVerification->getAttributes());
         $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
         $this->assertInstanceOf('Didww\Item\Address', $addressVerification->address()->getIncluded());
-
     }
 }

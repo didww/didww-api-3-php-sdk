@@ -6,11 +6,12 @@ use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class VoiceInTrunkGroupTest extends CassetteTest
 {
+    use ArraySubsetAsserts;
+
     protected function getCassetteName(): string
     {
         return 'voice_in_trunk_groups.yml';
     }
-    use ArraySubsetAsserts;
 
     public function testAllWithIncludesAndPagination()
     {
@@ -41,7 +42,6 @@ class VoiceInTrunkGroupTest extends CassetteTest
         $voiceInTrunkGroup = $voiceInTrunkGroupDocument->getData();
         $this->assertArraySubset($attributes, $voiceInTrunkGroup->getAttributes());
         $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
-
     }
 
     public function testUpdateTrunkGroup()
@@ -61,7 +61,6 @@ class VoiceInTrunkGroupTest extends CassetteTest
 
     public function testDeleteTrunkGroup()
     {
-
         $voiceInTrunkGroup = \Didww\Item\VoiceInTrunkGroup::build('b2319703-ce6c-480d-bb53-614e7abcfc96');
 
         $voiceInTrunkGroupDocument = $voiceInTrunkGroup->delete();

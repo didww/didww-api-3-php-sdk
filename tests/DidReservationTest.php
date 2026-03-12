@@ -8,9 +8,9 @@ class DidReservationTest extends CassetteTest
     {
         return 'did_reservations.yml';
     }
+
     public function testDidReservationSave()
     {
-
         $availableDid = new \Didww\Item\AvailableDid();
         $availableDid->setId('857d1462-5f43-4238-b007-ff05f282e41b');
 
@@ -35,20 +35,16 @@ class DidReservationTest extends CassetteTest
         ]);
         $response = $didReservation->save();
         $this->assertInstanceOf('Didww\Item\DidReservation', $response->getData());
-
     }
 
     public function testAll()
     {
-
         $didReservationsDocument = \Didww\Item\DidReservation::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\DidReservation', $didReservationsDocument->getData());
-
     }
 
     public function testFind()
     {
-
         $uuid = 'fd38d3ff-80cf-4e67-a605-609a2884a5c4';
         $didReservationDocument = \Didww\Item\DidReservation::find($uuid, ['include' => 'available_did.did_group.stock_keeping_units']);
 
@@ -83,16 +79,13 @@ class DidReservationTest extends CassetteTest
             'monthly_price' => '0.19',
             'channels_included_count' => 2,
         ]);
-
     }
 
     public function testDeleteDidReservation()
     {
-
         $uuid = '8a18a19f-b082-42f3-acca-99ea402a4e5d';
         $didReservation = \Didww\Item\DidReservation::build($uuid);
         $didReservationDocument = $didReservation->delete();
         $this->assertFalse($didReservationDocument->hasErrors());
-
     }
 }

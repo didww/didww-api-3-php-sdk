@@ -13,9 +13,9 @@ class VoiceOutTrunkTest extends CassetteTest
     {
         return 'voice_out_trunks.yml';
     }
+
     public function testCreateVoiceOutTrunk()
     {
-
         $did = \Didww\Item\Did::build('7a028c32-e6b6-4c86-bf01-90f901b37012');
         $dids = new \Swis\JsonApi\Client\Collection([$did]);
         $voiceOutTrunk = new \Didww\Item\VoiceOutTrunk();
@@ -71,20 +71,16 @@ class VoiceOutTrunkTest extends CassetteTest
         $this->assertNull($data->getCallbackUrl());
         $this->assertNull($data->getThresholdAmount());
         $this->assertInstanceOf(\DateTime::class, $data->getCreatedAt());
-
     }
 
     public function testAllVoiceOutTrunks()
     {
-
         $voiceOutTrunksDocument = \Didww\Item\VoiceOutTrunk::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\VoiceOutTrunk', $voiceOutTrunksDocument->getData());
-
     }
 
     public function testFindVoiceOutTrunk()
     {
-
         $uuid = '425ce763-a3a9-49b4-af5b-ada1a65c8864';
         $voiceOutTrunkDocument = \Didww\Item\VoiceOutTrunk::find($uuid, ['include' => 'dids,default_did']);
 
@@ -97,12 +93,10 @@ class VoiceOutTrunkTest extends CassetteTest
         $defaultDidRelation = $data->defaultDid();
         $this->assertInstanceOf('Didww\Item\Did', $defaultDidRelation->getIncluded());
         $this->assertEquals('7de7f718-4042-4d74-9fe9-863fa1777520', $defaultDidRelation->getIncluded()->getId());
-
     }
 
     public function testUpdateVoiceOutTrunk()
     {
-
         $uuid = '425ce763-a3a9-49b4-af5b-ada1a65c8864';
         $voiceOutTrunk = \Didww\Item\VoiceOutTrunk::build($uuid);
         $voiceOutTrunk->setMediaEncryptionMode('disabled');
@@ -111,17 +105,14 @@ class VoiceOutTrunkTest extends CassetteTest
         $data = $voiceOutTrunkDocument->getData();
         $this->assertInstanceOf('Didww\Item\VoiceOutTrunk', $data);
         $this->assertEquals(MediaEncryptionMode::DISABLED, $data->getMediaEncryptionMode());
-
     }
 
     public function testDeleteVoiceOutTrunk()
     {
-
         $uuid = '425ce763-a3a9-49b4-af5b-ada1a65c8864';
         $voiceOutTrunk = \Didww\Item\VoiceOutTrunk::build($uuid);
         $voiceOutTrunkDocument = $voiceOutTrunk->delete();
         $this->assertFalse($voiceOutTrunkDocument->hasErrors());
-
     }
 
     public function testVoiceOutTrunkSetters()

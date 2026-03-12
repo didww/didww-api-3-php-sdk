@@ -8,17 +8,15 @@ class SharedCapacityGroupTest extends CassetteTest
     {
         return 'shared_capacity_groups.yml';
     }
+
     public function testAll()
     {
-
         $sharedCapacityGroupsDocument = \Didww\Item\SharedCapacityGroup::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\SharedCapacityGroup', $sharedCapacityGroupsDocument->getData());
-
     }
 
     public function testFind()
     {
-
         $uuid = '89f987e2-0862-4bf4-a3f4-cdc89af0d875';
         $sharedCapacityGroupDocument = \Didww\Item\SharedCapacityGroup::find($uuid, ['include' => 'dids,capacity_pool']);
         $didsRelation = $sharedCapacityGroupDocument->getData()->dids();
@@ -85,12 +83,10 @@ class SharedCapacityGroupTest extends CassetteTest
             'metered_rate' => '1.0',
         ]
         );
-
     }
 
     public function testUpdateSharedCapacityGroup()
     {
-
         $uuid = '89f987e2-0862-4bf4-a3f4-cdc89af0d875';
         $sharedCapacityGroup = \Didww\Item\SharedCapacityGroup::build($uuid, ['name' => 'didww1', 'shared_channels_count' => 10, 'metered_channels_count' => 2]);
         $sharedCapacityGroupDocument = $sharedCapacityGroup->save();
@@ -102,12 +98,10 @@ class SharedCapacityGroupTest extends CassetteTest
             'metered_channels_count' => 2,
             'created_at' => '2018-06-19T11:41:21.644Z',
         ]);
-
     }
 
     public function testUpdateSharedCapacityGroupWithDidsRelationship()
     {
-
         $uuid = '89f987e2-0862-4bf4-a3f4-cdc89af0d875';
         $sharedCapacityGroup = \Didww\Item\SharedCapacityGroup::build($uuid);
         $dids = new \Swis\JsonApi\Client\Collection([
@@ -146,12 +140,10 @@ class SharedCapacityGroupTest extends CassetteTest
                 'expires_at' => '2019-01-27T10:00:04.755Z',
             ],
         ]);
-
     }
 
     public function testCreateSharedCapacityGroup()
     {
-
         $attributes = [
             'name' => 'php-sdk',
             'shared_channels_count' => 5,
@@ -170,17 +162,14 @@ class SharedCapacityGroupTest extends CassetteTest
             'metered_channels_count' => 0,
             'created_at' => '2019-01-02T09:41:26.083Z',
         ]);
-
     }
 
     public function testDeleteSharedCapacityGroup()
     {
-
         $uuid = '3688a9c3-354f-4e16-b458-1d2df9f02547';
         $sharedCapacityGroup = \Didww\Item\SharedCapacityGroup::build($uuid);
         $sharedCapacityGroupDocument = $sharedCapacityGroup->delete();
         $this->assertFalse($sharedCapacityGroupDocument->hasErrors());
-
     }
 
     public function testSharedCapacityGroupSetters()

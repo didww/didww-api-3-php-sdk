@@ -8,6 +8,7 @@ class ProofTypeTest extends CassetteTest
     {
         return 'proof_types.yml';
     }
+
     public function testAllWithPagination()
     {
         $proofTypesDocument = \Didww\Item\ProofType::all(
@@ -25,6 +26,5 @@ class ProofTypeTest extends CassetteTest
         $fourth = $proofTypes[3];
         $this->assertEquals('Drivers License', $fourth->getName());
         $this->assertEquals('Personal', $fourth->getEntityType());
-
     }
 }

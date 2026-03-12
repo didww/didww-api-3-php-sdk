@@ -10,9 +10,9 @@ class ExportTest extends CassetteTest
     {
         return 'exports.yml';
     }
+
     public function testCdrExportCreateCdrIn()
     {
-
         $export = new \Didww\Item\Export();
         $export->setExportType('cdr_in');
         $export->setFilterDidNumber('1234556789');
@@ -42,12 +42,10 @@ class ExportTest extends CassetteTest
             'callback_method' => null,
             'export_type' => 'cdr_in',
         ]);
-
     }
 
     public function testCdrExportCreateCdrOut()
     {
-
         $export = new \Didww\Item\Export();
         $export->setExportType('cdr_out');
         $export->setFilterVoiceOutTrunkId('1f6fc2bd-f081-4202-9b1a-d9cb88d942b9');
@@ -79,20 +77,16 @@ class ExportTest extends CassetteTest
             'callback_method' => null,
             'export_type' => 'cdr_out',
         ]);
-
     }
 
     public function testAll()
     {
-
         $exportsDocument = \Didww\Item\Export::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\Export', $exportsDocument->getData());
-
     }
 
     public function testFind()
     {
-
         $uuid = 'da15f006-5da4-45ca-b0df-735baeadf423';
         $exportsDocument = \Didww\Item\Export::find($uuid);
         $export = $exportsDocument->getData();
@@ -113,7 +107,6 @@ class ExportTest extends CassetteTest
 
     public function testDownload()
     {
-
         $uuid = '5a03dd1e-6018-44c6-b98b-084999b376ce';
         $destFile = tempnam(sys_get_temp_dir(), 'didww_test_');
 
@@ -129,7 +122,6 @@ class ExportTest extends CassetteTest
 
     public function testDownloadAndDecompress()
     {
-
         $uuid = '5a03dd1e-6018-44c6-b98b-084999b376ce';
         $destFile = tempnam(sys_get_temp_dir(), 'didww_dest_');
 

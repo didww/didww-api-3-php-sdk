@@ -8,6 +8,7 @@ class SupportingDocumentTemplateTest extends CassetteTest
     {
         return 'supporting_document_templates.yml';
     }
+
     public function testAllWithIncludesAndPagination()
     {
         $supportingDocumentTemplatesDocument = \Didww\Item\SupportingDocumentTemplate::all(
@@ -29,6 +30,5 @@ class SupportingDocumentTemplateTest extends CassetteTest
         $second = $supportingDocumentTemplates[1];
         $this->assertEquals('Belgium Registration Form', $second->getName());
         $this->assertTrue($second->getPermanent());
-
     }
 }

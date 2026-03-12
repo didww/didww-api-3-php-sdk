@@ -8,17 +8,15 @@ class AreaTest extends CassetteTest
     {
         return 'areas.yml';
     }
+
     public function testAll()
     {
-
         $areasDocument = \Didww\Item\Area::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\Area', $areasDocument->getData());
-
     }
 
     public function testFind()
     {
-
         $uuid = 'ab2adc18-7c94-42d9-bdde-b28dfc373a22';
         $areaDocument = \Didww\Item\Area::find($uuid, ['include' => 'country']);
         $countryRelation = $areaDocument->getData()->country();
@@ -33,6 +31,5 @@ class AreaTest extends CassetteTest
             'prefix' => '39',
             'name' => 'Italy',
         ], $countryRelation->getIncluded()->getAttributes());
-
     }
 }

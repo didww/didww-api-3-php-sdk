@@ -6,11 +6,12 @@ use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class IdentityTest extends CassetteTest
 {
+    use ArraySubsetAsserts;
+
     protected function getCassetteName(): string
     {
         return 'identities.yml';
     }
-    use ArraySubsetAsserts;
 
     public function testAllWithIncludesAndPagination()
     {
@@ -72,7 +73,6 @@ class IdentityTest extends CassetteTest
         $this->assertEquals('111', $identity->getExternalReferenceId());
         $this->assertInstanceOf(\DateTime::class, $identity->getCreatedAt());
         $this->assertIsBool($identity->getVerified());
-
     }
 
     public function testCreateIdentity()
@@ -97,7 +97,6 @@ class IdentityTest extends CassetteTest
         $identity = $identityDocument->getData();
         $this->assertArraySubset($attributes, $identity->getAttributes());
         $this->assertInstanceOf('Didww\Item\Identity', $identity);
-
     }
 
     public function testUpdateIdentity()
@@ -140,7 +139,6 @@ class IdentityTest extends CassetteTest
 
     public function testDeleteIdentity()
     {
-
         $identity = \Didww\Item\Identity::build('e96ae7d1-11d5-42bc-a5c5-211f3c3788ae');
 
         $identityDocument = $identity->delete();

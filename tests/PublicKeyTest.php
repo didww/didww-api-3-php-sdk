@@ -8,6 +8,7 @@ class PublicKeyTest extends CassetteTest
     {
         return 'public_keys.yml';
     }
+
     public function testAll()
     {
         $publicKeysDocument = \Didww\Item\PublicKey::all();

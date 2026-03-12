@@ -6,11 +6,12 @@ use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class AddressTest extends CassetteTest
 {
+    use ArraySubsetAsserts;
+
     protected function getCassetteName(): string
     {
         return 'addresses.yml';
     }
-    use ArraySubsetAsserts;
 
     public function testAllWithIncludesAndPagination()
     {
@@ -55,7 +56,6 @@ class AddressTest extends CassetteTest
         $this->assertArraySubset($attributes, $address->getAttributes());
         $this->assertInstanceOf('Didww\Item\Address', $address);
         $this->assertInstanceOf('Didww\Item\Country', $address->country()->getIncluded());
-
     }
 
     public function testUpdateAddress()
@@ -77,7 +77,6 @@ class AddressTest extends CassetteTest
 
     public function testDeleteAddress()
     {
-
         $address = \Didww\Item\Address::build('bf69bc70-e1c2-442c-9f30-335ee299b663');
 
         $addressDocument = $address->delete();

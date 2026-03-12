@@ -8,17 +8,15 @@ class CityTest extends CassetteTest
     {
         return 'cities.yml';
     }
+
     public function testAll()
     {
-
         $citiesDocument = \Didww\Item\City::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\City', $citiesDocument->getData());
-
     }
 
     public function testFind()
     {
-
         $uuid = '368bf92f-c36e-473f-96fc-d53ed1b4028b';
         $cityDocument = \Didww\Item\City::find($uuid, ['include' => 'country,region,area']);
         $countryRelation = $cityDocument->getData()->country();
@@ -40,6 +38,5 @@ class CityTest extends CassetteTest
             'name' => 'New York',
         ], $regionRelation->getIncluded()->getAttributes());
         $this->assertEquals(null, $areaRelation->getIncluded());
-
     }
 }
