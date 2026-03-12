@@ -86,6 +86,25 @@ class RequestValidatorTest extends BaseTest
         ));
     }
 
+    /**
+     * @see https://doc.didww.com/api3/2022-05-10/callbacks-details.html#algorithm-implementation-details
+     */
+    public function testDocumentationExample()
+    {
+        $apiKey = 'szrdgh6547umt7tht7xbqhj6g9gdbyp7';
+        $signature = '30f66e9d72eb5e193051fd02952f70d8e934b4ff';
+        $validator = new \Didww\Callback\RequestValidator($apiKey);
+        $this->assertTrue($validator->validate(
+            'https://mycompany.com/didww_callbacks?opaque=123',
+            [
+                'id' => 'bf2cee72-6caa-4ae2-917e-bea01945691e',
+                'status' => 'completed',
+                'type' => 'orders',
+            ],
+            $signature
+        ));
+    }
+
     public static function urlNormalizationProvider(): array
     {
         return [
