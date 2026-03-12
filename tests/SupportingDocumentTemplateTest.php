@@ -2,11 +2,14 @@
 
 namespace Didww\Tests;
 
-class SupportingDocumentTemplateTest extends BaseTest
+class SupportingDocumentTemplateTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'supporting_document_templates.yml';
+    }
     public function testAllWithIncludesAndPagination()
     {
-        $this->startVCR('supporting_document_templates.yml');
         $supportingDocumentTemplatesDocument = \Didww\Item\SupportingDocumentTemplate::all(
             ['page' => ['size' => 5, 'number' => 1]]
         );
@@ -27,6 +30,5 @@ class SupportingDocumentTemplateTest extends BaseTest
         $this->assertEquals('Belgium Registration Form', $second->getName());
         $this->assertTrue($second->getPermanent());
 
-        $this->stopVCR();
     }
 }

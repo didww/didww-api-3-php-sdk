@@ -4,25 +4,26 @@ namespace Didww\Tests;
 
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
-class VoiceInTrunkGroupTest extends BaseTest
+class VoiceInTrunkGroupTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'voice_in_trunk_groups.yml';
+    }
     use ArraySubsetAsserts;
 
     public function testAllWithIncludesAndPagination()
     {
-        $this->startVCR('voice_in_trunk_groups.yml');
         $voiceInTrunkGroupsDocument = \Didww\Item\VoiceInTrunkGroup::all(['include' => 'trunks', 'page' => ['size' => 5, 'number' => 1]]);
         $voiceInTrunkGroups = $voiceInTrunkGroupsDocument->getData();
         $this->assertContainsOnlyInstancesOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroups);
         $voiceInTrunks = $voiceInTrunkGroups[0]->voiceInTrunks()->getIncluded();
         $this->assertContainsOnlyInstancesOf('Didww\Item\VoiceInTrunk', $voiceInTrunks);
         $this->assertEquals($voiceInTrunkGroupsDocument->getMeta()['total_records'], 1);
-        $this->stopVCR();
     }
 
     public function testCreateTrunkGroup()
     {
-        $this->startVCR('voice_in_trunk_groups.yml');
         $attributes = [
             'name' => 'trunk group sample with 2 trunks',
             'capacity_limit' => 1000,
@@ -41,12 +42,10 @@ class VoiceInTrunkGroupTest extends BaseTest
         $this->assertArraySubset($attributes, $voiceInTrunkGroup->getAttributes());
         $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
 
-        $this->stopVCR();
     }
 
     public function testUpdateTrunkGroup()
     {
-        $this->startVCR('voice_in_trunk_groups.yml');
         $attributes = [
             'name' => 'trunk group sample updated with 2 trunks',
             'capacity_limit' => 500,
@@ -58,18 +57,15 @@ class VoiceInTrunkGroupTest extends BaseTest
         $voiceInTrunkGroup = $voiceInTrunkGroupDocument->getData();
         $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
         $this->assertArraySubset($attributes, $voiceInTrunkGroup->getAttributes());
-        $this->stopVCR();
     }
 
     public function testDeleteTrunkGroup()
     {
-        $this->startVCR('voice_in_trunk_groups.yml');
 
         $voiceInTrunkGroup = \Didww\Item\VoiceInTrunkGroup::build('b2319703-ce6c-480d-bb53-614e7abcfc96');
 
         $voiceInTrunkGroupDocument = $voiceInTrunkGroup->delete();
 
         $this->assertFalse($voiceInTrunkGroupDocument->hasErrors());
-        $this->stopVCR();
     }
 }

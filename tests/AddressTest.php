@@ -4,13 +4,16 @@ namespace Didww\Tests;
 
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
-class AddressTest extends BaseTest
+class AddressTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'addresses.yml';
+    }
     use ArraySubsetAsserts;
 
     public function testAllWithIncludesAndPagination()
     {
-        $this->startVCR('addresses.yml');
         $addressesDocument = \Didww\Item\Address::all(
             [
                 'include' => 'country,identity,proofs,area,city',
@@ -30,12 +33,10 @@ class AddressTest extends BaseTest
         $this->assertEquals(null, $city);
 
         $this->assertEquals(1, $addressesDocument->getMeta()['total_records']);
-        $this->stopVCR();
     }
 
     public function testCreateAddress()
     {
-        $this->startVCR('addresses.yml');
         $attributes = [
             'city_name' => 'New York',
             'postal_code' => '123',
@@ -55,12 +56,10 @@ class AddressTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Address', $address);
         $this->assertInstanceOf('Didww\Item\Country', $address->country()->getIncluded());
 
-        $this->stopVCR();
     }
 
     public function testUpdateAddress()
     {
-        $this->startVCR('addresses.yml');
         $attributes = [
             'city_name' => 'Chicago',
             'postal_code' => '1234',
@@ -74,18 +73,15 @@ class AddressTest extends BaseTest
         $address = $addressDocument->getData();
         $this->assertInstanceOf('Didww\Item\Address', $address);
         $this->assertArraySubset($attributes, $address->getAttributes());
-        $this->stopVCR();
     }
 
     public function testDeleteAddress()
     {
-        $this->startVCR('addresses.yml');
 
         $address = \Didww\Item\Address::build('bf69bc70-e1c2-442c-9f30-335ee299b663');
 
         $addressDocument = $address->delete();
 
         $this->assertFalse($addressDocument->hasErrors());
-        $this->stopVCR();
     }
 }

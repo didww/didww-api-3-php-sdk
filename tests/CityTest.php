@@ -2,21 +2,22 @@
 
 namespace Didww\Tests;
 
-class CityTest extends BaseTest
+class CityTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'cities.yml';
+    }
     public function testAll()
     {
-        $this->startVCR('cities.yml');
 
         $citiesDocument = \Didww\Item\City::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\City', $citiesDocument->getData());
 
-        $this->stopVCR();
     }
 
     public function testFind()
     {
-        $this->startVCR('cities.yml');
 
         $uuid = '368bf92f-c36e-473f-96fc-d53ed1b4028b';
         $cityDocument = \Didww\Item\City::find($uuid, ['include' => 'country,region,area']);
@@ -40,6 +41,5 @@ class CityTest extends BaseTest
         ], $regionRelation->getIncluded()->getAttributes());
         $this->assertEquals(null, $areaRelation->getIncluded());
 
-        $this->stopVCR();
     }
 }

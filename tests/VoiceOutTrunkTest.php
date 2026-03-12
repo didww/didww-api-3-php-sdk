@@ -7,11 +7,14 @@ use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\OnCliMismatchAction;
 use Didww\Enum\VoiceOutTrunkStatus;
 
-class VoiceOutTrunkTest extends BaseTest
+class VoiceOutTrunkTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'voice_out_trunks.yml';
+    }
     public function testCreateVoiceOutTrunk()
     {
-        $this->startVCR('voice_out_trunks.yml');
 
         $did = \Didww\Item\Did::build('7a028c32-e6b6-4c86-bf01-90f901b37012');
         $dids = new \Swis\JsonApi\Client\Collection([$did]);
@@ -69,22 +72,18 @@ class VoiceOutTrunkTest extends BaseTest
         $this->assertNull($data->getThresholdAmount());
         $this->assertInstanceOf(\DateTime::class, $data->getCreatedAt());
 
-        $this->stopVCR();
     }
 
     public function testAllVoiceOutTrunks()
     {
-        $this->startVCR('voice_out_trunks.yml');
 
         $voiceOutTrunksDocument = \Didww\Item\VoiceOutTrunk::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\VoiceOutTrunk', $voiceOutTrunksDocument->getData());
 
-        $this->stopVCR();
     }
 
     public function testFindVoiceOutTrunk()
     {
-        $this->startVCR('voice_out_trunks.yml');
 
         $uuid = '425ce763-a3a9-49b4-af5b-ada1a65c8864';
         $voiceOutTrunkDocument = \Didww\Item\VoiceOutTrunk::find($uuid, ['include' => 'dids,default_did']);
@@ -99,12 +98,10 @@ class VoiceOutTrunkTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Did', $defaultDidRelation->getIncluded());
         $this->assertEquals('7de7f718-4042-4d74-9fe9-863fa1777520', $defaultDidRelation->getIncluded()->getId());
 
-        $this->stopVCR();
     }
 
     public function testUpdateVoiceOutTrunk()
     {
-        $this->startVCR('voice_out_trunks.yml');
 
         $uuid = '425ce763-a3a9-49b4-af5b-ada1a65c8864';
         $voiceOutTrunk = \Didww\Item\VoiceOutTrunk::build($uuid);
@@ -115,19 +112,16 @@ class VoiceOutTrunkTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\VoiceOutTrunk', $data);
         $this->assertEquals(MediaEncryptionMode::DISABLED, $data->getMediaEncryptionMode());
 
-        $this->stopVCR();
     }
 
     public function testDeleteVoiceOutTrunk()
     {
-        $this->startVCR('voice_out_trunks.yml');
 
         $uuid = '425ce763-a3a9-49b4-af5b-ada1a65c8864';
         $voiceOutTrunk = \Didww\Item\VoiceOutTrunk::build($uuid);
         $voiceOutTrunkDocument = $voiceOutTrunk->delete();
         $this->assertFalse($voiceOutTrunkDocument->hasErrors());
 
-        $this->stopVCR();
     }
 
     public function testVoiceOutTrunkSetters()

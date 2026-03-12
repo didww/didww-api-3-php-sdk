@@ -2,11 +2,14 @@
 
 namespace Didww\Tests;
 
-class DidReservationTest extends BaseTest
+class DidReservationTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'did_reservations.yml';
+    }
     public function testDidReservationSave()
     {
-        $this->startVCR('did_reservations.yml');
 
         $availableDid = new \Didww\Item\AvailableDid();
         $availableDid->setId('857d1462-5f43-4238-b007-ff05f282e41b');
@@ -33,22 +36,18 @@ class DidReservationTest extends BaseTest
         $response = $didReservation->save();
         $this->assertInstanceOf('Didww\Item\DidReservation', $response->getData());
 
-        $this->stopVCR();
     }
 
     public function testAll()
     {
-        $this->startVCR('did_reservations.yml');
 
         $didReservationsDocument = \Didww\Item\DidReservation::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\DidReservation', $didReservationsDocument->getData());
 
-        $this->stopVCR();
     }
 
     public function testFind()
     {
-        $this->startVCR('did_reservations.yml');
 
         $uuid = 'fd38d3ff-80cf-4e67-a605-609a2884a5c4';
         $didReservationDocument = \Didww\Item\DidReservation::find($uuid, ['include' => 'available_did.did_group.stock_keeping_units']);
@@ -85,18 +84,15 @@ class DidReservationTest extends BaseTest
             'channels_included_count' => 2,
         ]);
 
-        $this->stopVCR();
     }
 
     public function testDeleteDidReservation()
     {
-        $this->startVCR('did_reservations.yml');
 
         $uuid = '8a18a19f-b082-42f3-acca-99ea402a4e5d';
         $didReservation = \Didww\Item\DidReservation::build($uuid);
         $didReservationDocument = $didReservation->delete();
         $this->assertFalse($didReservationDocument->hasErrors());
 
-        $this->stopVCR();
     }
 }

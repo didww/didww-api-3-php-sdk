@@ -2,21 +2,22 @@
 
 namespace Didww\Tests;
 
-class SharedCapacityGroupTest extends BaseTest
+class SharedCapacityGroupTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'shared_capacity_groups.yml';
+    }
     public function testAll()
     {
-        $this->startVCR('shared_capacity_groups.yml');
 
         $sharedCapacityGroupsDocument = \Didww\Item\SharedCapacityGroup::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\SharedCapacityGroup', $sharedCapacityGroupsDocument->getData());
 
-        $this->stopVCR();
     }
 
     public function testFind()
     {
-        $this->startVCR('shared_capacity_groups.yml');
 
         $uuid = '89f987e2-0862-4bf4-a3f4-cdc89af0d875';
         $sharedCapacityGroupDocument = \Didww\Item\SharedCapacityGroup::find($uuid, ['include' => 'dids,capacity_pool']);
@@ -85,12 +86,10 @@ class SharedCapacityGroupTest extends BaseTest
         ]
         );
 
-        $this->stopVCR();
     }
 
     public function testUpdateSharedCapacityGroup()
     {
-        $this->startVCR('shared_capacity_groups.yml');
 
         $uuid = '89f987e2-0862-4bf4-a3f4-cdc89af0d875';
         $sharedCapacityGroup = \Didww\Item\SharedCapacityGroup::build($uuid, ['name' => 'didww1', 'shared_channels_count' => 10, 'metered_channels_count' => 2]);
@@ -104,12 +103,10 @@ class SharedCapacityGroupTest extends BaseTest
             'created_at' => '2018-06-19T11:41:21.644Z',
         ]);
 
-        $this->stopVCR();
     }
 
     public function testUpdateSharedCapacityGroupWithDidsRelationship()
     {
-        $this->startVCR('shared_capacity_groups.yml');
 
         $uuid = '89f987e2-0862-4bf4-a3f4-cdc89af0d875';
         $sharedCapacityGroup = \Didww\Item\SharedCapacityGroup::build($uuid);
@@ -150,12 +147,10 @@ class SharedCapacityGroupTest extends BaseTest
             ],
         ]);
 
-        $this->stopVCR();
     }
 
     public function testCreateSharedCapacityGroup()
     {
-        $this->startVCR('shared_capacity_groups.yml');
 
         $attributes = [
             'name' => 'php-sdk',
@@ -176,19 +171,16 @@ class SharedCapacityGroupTest extends BaseTest
             'created_at' => '2019-01-02T09:41:26.083Z',
         ]);
 
-        $this->stopVCR();
     }
 
     public function testDeleteSharedCapacityGroup()
     {
-        $this->startVCR('shared_capacity_groups.yml');
 
         $uuid = '3688a9c3-354f-4e16-b458-1d2df9f02547';
         $sharedCapacityGroup = \Didww\Item\SharedCapacityGroup::build($uuid);
         $sharedCapacityGroupDocument = $sharedCapacityGroup->delete();
         $this->assertFalse($sharedCapacityGroupDocument->hasErrors());
 
-        $this->stopVCR();
     }
 
     public function testSharedCapacityGroupSetters()

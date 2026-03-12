@@ -2,21 +2,22 @@
 
 namespace Didww\Tests;
 
-class CapacityPoolTest extends BaseTest
+class CapacityPoolTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'capacity_pools.yml';
+    }
     public function testAll()
     {
-        $this->startVCR('capacity_pools.yml');
 
         $capacityPoolsDocument = \Didww\Item\CapacityPool::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\CapacityPool', $capacityPoolsDocument->getData());
 
-        $this->stopVCR();
     }
 
     public function testFind()
     {
-        $this->startVCR('capacity_pools.yml');
 
         $uuid = 'f288d07c-e2fc-4ae6-9837-b18fb469c324';
         $capacityPoolDocument = \Didww\Item\CapacityPool::find($uuid, ['include' => 'countries,shared_capacity_groups,qty_based_pricings']);
@@ -107,12 +108,10 @@ class CapacityPoolTest extends BaseTest
                 ],
             ]);
 
-        $this->stopVCR();
     }
 
     public function testUpdateCapacityPool()
     {
-        $this->startVCR('capacity_pools.yml');
 
         $uuid = 'f288d07c-e2fc-4ae6-9837-b18fb469c324';
         $capacityPool = \Didww\Item\CapacityPool::build($uuid);
@@ -139,6 +138,5 @@ class CapacityPoolTest extends BaseTest
             'metered_rate' => '1.0',
         ]);
 
-        $this->stopVCR();
     }
 }

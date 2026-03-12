@@ -4,11 +4,14 @@ namespace Didww\Tests;
 
 use Didww\Enum\ExportType;
 
-class ExportTest extends BaseTest
+class ExportTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'exports.yml';
+    }
     public function testCdrExportCreateCdrIn()
     {
-        $this->startVCR('exports.yml');
 
         $export = new \Didww\Item\Export();
         $export->setExportType('cdr_in');
@@ -40,12 +43,10 @@ class ExportTest extends BaseTest
             'export_type' => 'cdr_in',
         ]);
 
-        $this->stopVCR();
     }
 
     public function testCdrExportCreateCdrOut()
     {
-        $this->startVCR('exports.yml');
 
         $export = new \Didww\Item\Export();
         $export->setExportType('cdr_out');
@@ -79,22 +80,18 @@ class ExportTest extends BaseTest
             'export_type' => 'cdr_out',
         ]);
 
-        $this->stopVCR();
     }
 
     public function testAll()
     {
-        $this->startVCR('exports.yml');
 
         $exportsDocument = \Didww\Item\Export::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\Export', $exportsDocument->getData());
 
-        $this->stopVCR();
     }
 
     public function testFind()
     {
-        $this->startVCR('exports.yml');
 
         $uuid = 'da15f006-5da4-45ca-b0df-735baeadf423';
         $exportsDocument = \Didww\Item\Export::find($uuid);
@@ -112,12 +109,10 @@ class ExportTest extends BaseTest
         $this->assertEquals(ExportType::CDR_IN, $export->getExportType());
         $this->assertNull($export->getCallbackUrl());
         $this->assertNull($export->getCallbackMethod());
-        $this->stopVCR();
     }
 
     public function testDownload()
     {
-        $this->startVCR('exports.yml');
 
         $uuid = '5a03dd1e-6018-44c6-b98b-084999b376ce';
         $destFile = tempnam(sys_get_temp_dir(), 'didww_test_');
@@ -130,12 +125,10 @@ class ExportTest extends BaseTest
         $magic = file_get_contents($destFile, false, null, 0, 2);
         $this->assertEquals("\x1f\x8b", $magic);
         unlink($destFile);
-        $this->stopVCR();
     }
 
     public function testDownloadAndDecompress()
     {
-        $this->startVCR('exports.yml');
 
         $uuid = '5a03dd1e-6018-44c6-b98b-084999b376ce';
         $destFile = tempnam(sys_get_temp_dir(), 'didww_dest_');
@@ -148,7 +141,6 @@ class ExportTest extends BaseTest
         $this->assertStringContainsString('Date/Time Start (UTC)', $content);
         $this->assertStringContainsString('972397239159652', $content);
         unlink($destFile);
-        $this->stopVCR();
     }
 
     public function testExportSetters()

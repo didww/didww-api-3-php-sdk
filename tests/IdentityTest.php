@@ -4,13 +4,16 @@ namespace Didww\Tests;
 
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
-class IdentityTest extends BaseTest
+class IdentityTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'identities.yml';
+    }
     use ArraySubsetAsserts;
 
     public function testAllWithIncludesAndPagination()
     {
-        $this->startVCR('identities.yml');
         $identitiesDocument = \Didww\Item\Identity::all(
             [
                 'include' => 'country,addresses,proofs,permanent_documents',
@@ -24,12 +27,10 @@ class IdentityTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Country', $country);
 
         $this->assertEquals(2, $identitiesDocument->getMeta()['total_records']);
-        $this->stopVCR();
     }
 
     public function testCreateIdentityIncludeCountry()
     {
-        $this->startVCR('identities.yml');
         $attributes = [
             'first_name' => 'John',
             'last_name' => 'Doe',
@@ -72,12 +73,10 @@ class IdentityTest extends BaseTest
         $this->assertInstanceOf(\DateTime::class, $identity->getCreatedAt());
         $this->assertIsBool($identity->getVerified());
 
-        $this->stopVCR();
     }
 
     public function testCreateIdentity()
     {
-        $this->startVCR('identities.yml');
         $attributes = [
             'first_name' => 'John',
             'last_name' => 'Doe',
@@ -99,12 +98,10 @@ class IdentityTest extends BaseTest
         $this->assertArraySubset($attributes, $identity->getAttributes());
         $this->assertInstanceOf('Didww\Item\Identity', $identity);
 
-        $this->stopVCR();
     }
 
     public function testUpdateIdentity()
     {
-        $this->startVCR('identities.yml');
         $attributes = [
             'first_name' => 'Jake',
             'last_name' => 'Johnson',
@@ -125,7 +122,6 @@ class IdentityTest extends BaseTest
         $identity = $identityDocument->getData();
         $this->assertInstanceOf('Didww\Item\Identity', $identity);
         $this->assertArraySubset($attributes, $identity->getAttributes());
-        $this->stopVCR();
     }
 
     public function testGetBirthDateReturnsNullWhenNull()
@@ -144,14 +140,12 @@ class IdentityTest extends BaseTest
 
     public function testDeleteIdentity()
     {
-        $this->startVCR('identities.yml');
 
         $identity = \Didww\Item\Identity::build('e96ae7d1-11d5-42bc-a5c5-211f3c3788ae');
 
         $identityDocument = $identity->delete();
 
         $this->assertFalse($identityDocument->hasErrors());
-        $this->stopVCR();
     }
 
     public function testIdentitySetters()

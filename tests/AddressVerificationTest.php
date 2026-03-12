@@ -5,13 +5,16 @@ namespace Didww\Tests;
 use Didww\Enum\AddressVerificationStatus;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
-class AddressVerificationTest extends BaseTest
+class AddressVerificationTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'address_verifications.yml';
+    }
     use ArraySubsetAsserts;
 
     public function testAllWithIncludesAndPagination()
     {
-        $this->startVCR('address_verifications.yml');
         $addressVerificationVerificationsDocument = \Didww\Item\AddressVerification::all(
             [
                 'include' => 'address,dids',
@@ -25,24 +28,20 @@ class AddressVerificationTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Address', $address);
 
         $this->assertEquals(1, $addressVerificationVerificationsDocument->getMeta()['total_records']);
-        $this->stopVCR();
     }
 
     public function testFindAddressVerification()
     {
-        $this->startVCR('address_verifications.yml');
         $addressVerificationDocument = \Didww\Item\AddressVerification::find('c8e004b0-87ec-4987-b4fb-ee89db099f0e');
         $addressVerification = $addressVerificationDocument->getData();
         $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
         $this->assertEquals('c8e004b0-87ec-4987-b4fb-ee89db099f0e', $addressVerification->getId());
         $this->assertEquals(AddressVerificationStatus::APPROVED, $addressVerification->getStatus());
         $this->assertEquals('SHB-485120', $addressVerification->getReference());
-        $this->stopVCR();
     }
 
     public function testFindRejectedAddressVerification()
     {
-        $this->startVCR('address_verifications.yml');
         $addressVerificationDocument = \Didww\Item\AddressVerification::find('429e6d4e-2ee9-4953-aa98-0b3ac07f0f96');
         $addressVerification = $addressVerificationDocument->getData();
         $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
@@ -50,7 +49,6 @@ class AddressVerificationTest extends BaseTest
         $this->assertEquals(AddressVerificationStatus::REJECTED, $addressVerification->getStatus());
         $this->assertEquals(['Address cannot be validated', 'Proof of address should be not older than of 6 months'], $addressVerification->getRejectReasons());
         $this->assertEquals('ODW-879912', $addressVerification->getReference());
-        $this->stopVCR();
     }
 
     public function testNullableGettersReturnNullOnEmptyObject()
@@ -65,7 +63,6 @@ class AddressVerificationTest extends BaseTest
 
     public function testCreateAddressVerification()
     {
-        $this->startVCR('address_verifications.yml');
         $attributes = [
             'callback_url' => 'http://example.com',
             'callback_method' => 'GET',
@@ -85,6 +82,5 @@ class AddressVerificationTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
         $this->assertInstanceOf('Didww\Item\Address', $addressVerification->address()->getIncluded());
 
-        $this->stopVCR();
     }
 }

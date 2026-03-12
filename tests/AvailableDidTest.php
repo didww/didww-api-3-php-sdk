@@ -2,31 +2,30 @@
 
 namespace Didww\Tests;
 
-class AvailableDidTest extends BaseTest
+class AvailableDidTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'available_dids.yml';
+    }
     public function testAll()
     {
-        $this->startVCR('available_dids.yml');
 
         $availableDidsDocument = \Didww\Item\AvailableDid::all();
         $this->assertContainsOnlyInstancesOf('Didww\Item\AvailableDid', $availableDidsDocument->getData());
 
-        $this->stopVCR();
     }
 
     public function testFilterByNanpaPrefix()
     {
-        $this->startVCR('available_dids.yml');
 
         $availableDidsDocument = \Didww\Item\AvailableDid::all(['filter' => ['nanpa_prefix.id' => 'eeed293b-f3d8-4ef8-91ef-1b077d174b3b']]);
         $this->assertContainsOnlyInstancesOf('Didww\Item\AvailableDid', $availableDidsDocument->getData());
 
-        $this->stopVCR();
     }
 
     public function testFindWithNanpaPrefix()
     {
-        $this->startVCR('available_dids.yml');
 
         $uuid = '0e1c548e-c6b5-43b0-9c12-2e300178e820';
         $availableDidDocument = \Didww\Item\AvailableDid::find($uuid, ['include' => 'nanpa_prefix']);
@@ -42,12 +41,10 @@ class AvailableDidTest extends BaseTest
             'nxx' => '221',
         ], $nanpaPrefix->getAttributes());
 
-        $this->stopVCR();
     }
 
     public function testFind()
     {
-        $this->startVCR('available_dids.yml');
 
         $uuid = '0b76223b-9625-412f-b0f3-330551473e7e';
         $availableDidDocument = \Didww\Item\AvailableDid::find($uuid, ['include' => 'did_group.stock_keeping_units']);
@@ -82,6 +79,5 @@ class AvailableDidTest extends BaseTest
             'channels_included_count' => 2,
         ]);
 
-        $this->stopVCR();
     }
 }

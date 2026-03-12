@@ -2,11 +2,14 @@
 
 namespace Didww\Tests;
 
-class DidTest extends BaseTest
+class DidTest extends CassetteTest
 {
+    protected function getCassetteName(): string
+    {
+        return 'dids.yml';
+    }
     public function testAllWithIncludesAndPagination()
     {
-        $this->startVCR('dids.yml');
 
         $dids = \Didww\Item\Did::all(['include' => 'order', 'page' => ['size' => 10, 'number' => 2]]);
         $this->assertContainsOnlyInstancesOf('Didww\Item\Did', $dids->getData());
@@ -16,12 +19,10 @@ class DidTest extends BaseTest
         $this->assertNull($didGroup);
         $this->assertEquals($dids->getMeta()['total_records'], 13);
 
-        $this->stopVCR();
     }
 
     public function testApplyTrunkGroup()
     {
-        $this->startVCR('dids.yml');
 
         $voiceInTrunkGroup = new \Didww\Item\VoiceInTrunkGroup();
         $voiceInTrunkGroup->setId('837c5764-a6c3-456f-aa37-71fc8f8ca07b');
@@ -47,12 +48,10 @@ class DidTest extends BaseTest
             ],
         ]);
 
-        $this->stopVCR();
     }
 
     public function testApplyInvalidTrunkGroup()
     {
-        $this->startVCR('dids.yml');
 
         $voiceInTrunkGroup = new \Didww\Item\VoiceInTrunkGroup();
         $voiceInTrunkGroup->setId('invalid');
@@ -63,12 +62,10 @@ class DidTest extends BaseTest
         $response = $did->save();
         $this->assertEquals($response->getErrors()->all()[0]->getDetail(), 'voice_in_trunk_group - is invalid');
 
-        $this->stopVCR();
     }
 
     public function testApplyCapacityPool()
     {
-        $this->startVCR('dids.yml');
 
         $capacityPool = new \Didww\Item\CapacityPool();
         $capacityPool->setId('f288d07c-e2fc-4ae6-9837-b18fb469c324');
@@ -91,12 +88,10 @@ class DidTest extends BaseTest
             ],
         ]);
 
-        $this->stopVCR();
     }
 
     public function testApplySharedCapacityGroup()
     {
-        $this->startVCR('dids.yml');
 
         $sharedCapacityGroup = new \Didww\Item\SharedCapacityGroup();
         $sharedCapacityGroup->setId('206881de-7a92-4415-aa32-b05458c79623');
@@ -119,12 +114,10 @@ class DidTest extends BaseTest
             ],
         ]);
 
-        $this->stopVCR();
     }
 
     public function testFindWithAddressVerificationAndDidGroup()
     {
-        $this->startVCR('dids.yml');
 
         $uuid = '21d0b02c-b556-4d3e-acbf-504b78295dbe';
         $didDocument = \Didww\Item\Did::find($uuid, ['include' => 'address_verification,did_group']);
@@ -146,12 +139,10 @@ class DidTest extends BaseTest
         $this->assertEquals(false, $didGroup->getIsMetered());
         $this->assertEquals(false, $didGroup->getAllowAdditionalChannels());
 
-        $this->stopVCR();
     }
 
     public function testBooleans()
     {
-        $this->startVCR('dids.yml');
 
         $didDocument = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did = $didDocument->getData();
@@ -184,12 +175,10 @@ class DidTest extends BaseTest
         $this->assertEquals($did->getBillingCyclesCount(), 0);
         $this->assertEquals($did->getTerminated(), true);
 
-        $this->stopVCR();
     }
 
     public function testUpdateBuiltSingleAttribute()
     {
-        $this->startVCR('dids.yml');
 
         $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did->setCapacityLimit(10);
@@ -199,12 +188,10 @@ class DidTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Did', $did);
         $this->assertEquals(10, $did->getCapacityLimit());
 
-        $this->stopVCR();
     }
 
     public function testUpdateClearDescription()
     {
-        $this->startVCR('dids.yml');
 
         $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did->setDescription(null);
@@ -214,12 +201,10 @@ class DidTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Did', $did);
         $this->assertNull($did->getDescription());
 
-        $this->stopVCR();
     }
 
     public function testUpdateTerminated()
     {
-        $this->startVCR('dids.yml');
 
         $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did->setTerminated(true);
@@ -229,12 +214,10 @@ class DidTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Did', $did);
         $this->assertTrue($did->getTerminated());
 
-        $this->stopVCR();
     }
 
     public function testUpdateSetVoiceInTrunk()
     {
-        $this->startVCR('dids.yml');
 
         $voiceInTrunk = new \Didww\Item\VoiceInTrunk();
         $voiceInTrunk->setId('7939589c-4cac-4f70-8ba8-ee8e1a0aa3e9');
@@ -246,12 +229,10 @@ class DidTest extends BaseTest
         $did = $didDocument->getData();
         $this->assertInstanceOf('Didww\Item\Did', $did);
 
-        $this->stopVCR();
     }
 
     public function testUpdateFromLoaded()
     {
-        $this->startVCR('dids.yml');
 
         $didDocument = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did = $didDocument->getData();
@@ -264,12 +245,10 @@ class DidTest extends BaseTest
         $this->assertInstanceOf('Didww\Item\Did', $did);
         $this->assertEquals('updated', $did->getDescription());
 
-        $this->stopVCR();
     }
 
     public function testUpdateFromLoadedSetVoiceInTrunk()
     {
-        $this->startVCR('dids.yml');
 
         $didDocument = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b');
         $did = $didDocument->getData();
@@ -282,12 +261,10 @@ class DidTest extends BaseTest
         $did = $didDocument->getData();
         $this->assertInstanceOf('Didww\Item\Did', $did);
 
-        $this->stopVCR();
     }
 
     public function testFindWithIncludedHasCleanDirtyState()
     {
-        $this->startVCR('dids.yml');
 
         $uuid = '21d0b02c-b556-4d3e-acbf-504b78295dbe';
         $didDocument = \Didww\Item\Did::find($uuid, ['include' => 'address_verification,did_group']);
@@ -310,6 +287,5 @@ class DidTest extends BaseTest
         $addressVerificationPatch = $addressVerification->toJsonApiPatchArray();
         $this->assertArrayNotHasKey('attributes', $addressVerificationPatch);
 
-        $this->stopVCR();
     }
 }
