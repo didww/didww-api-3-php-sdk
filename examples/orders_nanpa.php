@@ -6,7 +6,7 @@ require_once 'bootstrap.php';
 $nanpaPrefixes = Didww\Item\NanpaPrefix::all([
     'filter' => ['npanxx' => '201221'],
     'page' => ['size' => 1, 'number' => 1],
-])->getData();
+])->getData()->all();
 
 if (empty($nanpaPrefixes)) {
     exit("NANPA prefix 201-221 not found\n");
@@ -20,7 +20,7 @@ $didGroups = Didww\Item\DidGroup::all([
     'filter' => ['nanpa_prefix.id' => $nanpaPrefix->getId()],
     'include' => 'stock_keeping_units',
     'page' => ['size' => 1, 'number' => 1],
-])->getData();
+])->getData()->all();
 
 if (empty($didGroups)) {
     exit("No DID group found for this NANPA prefix\n");
