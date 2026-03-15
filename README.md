@@ -339,6 +339,28 @@ $export = $exportDocument->getData();
 $export->download('/tmp/export.csv');
 ```
 
+## Date and Datetime Fields
+
+Date and datetime attributes returned from the API are represented as strings in the underlying JSON. This SDK provides **typed getter methods** for some known date and datetime attributes; these getters convert those string values to `\DateTime` instances.
+
+- **Datetime getters** — return `\DateTime` with full timestamp:
+  - All `getCreatedAt()` methods — present on most resources
+  - Expiry getters: `Did::getExpiresAt()`, `DidReservation::getExpireAt()`, `Proof::getExpiresAt()`, `EncryptedFile::getExpireAt()`
+- **Date-only getters** — return `\DateTime` with time `00:00:00`:
+  - `Identity::getBirthDate()`
+- **Getters that intentionally keep strings** — these represent dates but still return `string` values:
+  - `CapacityPool::getRenewDate()`
+  - Order item `getBilledFrom()` / `getBilledTo()`
+
+```php
+$did = Didww\Item\Did::find('uuid')->getData();
+echo $did->getCreatedAt()->format('Y-m-d H:i:s');  // e.g. "2024-01-15 10:00:00"
+echo $did->getExpiresAt()?->format('Y-m-d');        // null or "2025-01-15"
+
+$identity = Didww\Item\Identity::find('uuid')->getData();
+echo $identity->getBirthDate()->format('Y-m-d');    // e.g. "1990-05-20"
+```
+
 ## Filtering, Sorting, and Pagination
 
 ```php
