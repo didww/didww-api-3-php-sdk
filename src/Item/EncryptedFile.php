@@ -21,11 +21,6 @@ class EncryptedFile extends BaseItem
         return $this->dateAttribute('expire_at');
     }
 
-    public function getCreatedAt(): ?\DateTime
-    {
-        return $this->dateAttribute('created_at');
-    }
-
     /* POST /v3/encrypted_files
      * encrypted_files[encryption_fingerprint] required
      * encrypted_files[items][][file] required

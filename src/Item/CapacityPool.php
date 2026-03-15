@@ -29,9 +29,9 @@ class CapacityPool extends BaseItem
         return $this->getAttributes()['name'];
     }
 
-    public function getRenewDate(): ?\DateTime
+    public function getRenewDate(): ?string
     {
-        return $this->dateAttribute('renew_date');
+        return $this->getAttributes()['renew_date'] ?? null;
     }
 
     public function getTotalChannelsCount(): int
