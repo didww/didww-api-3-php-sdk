@@ -36,6 +36,7 @@ DIDWW_API_KEY=your_api_key php examples/balance.php
 | [`trunks.php`](trunks.php) | Creates SIP and PSTN trunks with enum-based configuration, prints details. |
 | [`channel_groups.php`](channel_groups.php) | Manages shared capacity groups. |
 | [`orders_sku.php`](orders_sku.php) | Creates a DID order by SKU. |
+| [`orders_nanpa.php`](orders_nanpa.php) | Orders a DID number by NPA/NXX prefix. |
 | [`orders_available_dids.php`](orders_available_dids.php) | Orders an available DID. |
 | [`orders_reservation_dids.php`](orders_reservation_dids.php) | Reserves a DID and places an order from that reservation. |
 | [`orders_capacities.php`](orders_capacities.php) | Purchases capacity by creating a capacity order item. |
