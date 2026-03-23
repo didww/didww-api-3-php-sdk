@@ -86,6 +86,7 @@ class VoiceOutTrunk extends BaseItem
         $this->attributes['capacity_limit'] = $capacityLimit;
     }
 
+    /** Maximum amount of money allowed to be spent in 24 hours. */
     public function getThresholdAmount(): ?string
     {
         return $this->attribute('threshold_amount');
