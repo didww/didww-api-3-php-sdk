@@ -12,7 +12,9 @@ use Didww\Traits\Saveable;
 
 class VoiceOutTrunk extends BaseItem
 {
-    use Fetchable, Saveable, Deletable;
+    use Fetchable;
+    use Saveable;
+    use Deletable;
 
     protected $type = 'voice_out_trunks';
 

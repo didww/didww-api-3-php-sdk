@@ -8,7 +8,9 @@ use Didww\Traits\Saveable;
 
 class SharedCapacityGroup extends BaseItem
 {
-    use Fetchable, Saveable, Deletable;
+    use Fetchable;
+    use Saveable;
+    use Deletable;
 
     protected $type = 'shared_capacity_groups';
 

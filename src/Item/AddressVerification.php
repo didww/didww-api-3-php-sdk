@@ -9,7 +9,8 @@ use Didww\Traits\Saveable;
 
 class AddressVerification extends BaseItem
 {
-    use Fetchable, Saveable;
+    use Fetchable;
+    use Saveable;
 
     protected $type = 'address_verifications';
 

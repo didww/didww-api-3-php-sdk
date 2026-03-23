@@ -9,7 +9,9 @@ use Didww\Traits\Saveable;
 
 class Identity extends BaseItem
 {
-    use Fetchable, Saveable, Deletable;
+    use Fetchable;
+    use Saveable;
+    use Deletable;
 
     protected $type = 'identities';
 

@@ -11,7 +11,9 @@ use Didww\Traits\Saveable;
 
 class VoiceInTrunk extends BaseItem
 {
-    use Fetchable, Saveable, Deletable;
+    use Fetchable;
+    use Saveable;
+    use Deletable;
 
     protected $type = 'voice_in_trunks';
 
@@ -131,7 +133,7 @@ class VoiceInTrunk extends BaseItem
     }
 
     private const CONFIGURATION_CLASSES = [
-        'sip'  => Sip::class,
+        'sip' => Sip::class,
         'pstn' => Pstn::class,
     ];
 

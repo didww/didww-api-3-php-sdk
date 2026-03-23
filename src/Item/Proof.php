@@ -7,7 +7,8 @@ use Didww\Traits\Saveable;
 
 class Proof extends BaseItem
 {
-    use Saveable, Deletable;
+    use Saveable;
+    use Deletable;
 
     protected $type = 'proofs';
 

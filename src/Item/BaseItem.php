@@ -2,8 +2,8 @@
 
 namespace Didww\Item;
 
-use Illuminate\Support\Str;
 use Didww\Traits\HasSafeAttributes;
+use Illuminate\Support\Str;
 
 abstract class BaseItem extends \Swis\JsonApi\Client\Item
 {

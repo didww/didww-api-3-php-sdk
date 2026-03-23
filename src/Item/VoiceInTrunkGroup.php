@@ -8,7 +8,9 @@ use Didww\Traits\Saveable;
 
 class VoiceInTrunkGroup extends BaseItem
 {
-    use Fetchable, Saveable, Deletable;
+    use Fetchable;
+    use Saveable;
+    use Deletable;
 
     protected $type = 'voice_in_trunk_groups';
 

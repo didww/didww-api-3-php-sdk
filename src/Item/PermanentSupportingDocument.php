@@ -7,7 +7,8 @@ use Didww\Traits\Saveable;
 
 class PermanentSupportingDocument extends BaseItem
 {
-    use Saveable, Deletable;
+    use Saveable;
+    use Deletable;
 
     protected $type = 'permanent_supporting_documents';
 

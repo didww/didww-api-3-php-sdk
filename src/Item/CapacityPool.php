@@ -7,7 +7,8 @@ use Didww\Traits\Saveable;
 
 class CapacityPool extends BaseItem
 {
-    use Saveable, Fetchable;
+    use Saveable;
+    use Fetchable;
 
     protected $type = 'capacity_pools';
 

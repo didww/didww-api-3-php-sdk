@@ -13,14 +13,16 @@ use Didww\Traits\Saveable;
 
 class Order extends BaseItem
 {
-    use Fetchable, Saveable, Deletable;
+    use Fetchable;
+    use Saveable;
+    use Deletable;
 
     protected $type = 'orders';
 
     private const ITEM_CLASSES = [
-        'did'      => DidOrderItem::class,
+        'did' => DidOrderItem::class,
         'capacity' => Capacity::class,
-        'generic'  => Generic::class,
+        'generic' => Generic::class,
     ];
 
     public static function itemFactory(string $type, $attributes)

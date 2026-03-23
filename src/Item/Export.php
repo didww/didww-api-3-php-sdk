@@ -9,7 +9,8 @@ use Didww\Traits\Saveable;
 
 class Export extends BaseItem
 {
-    use Saveable, Fetchable;
+    use Saveable;
+    use Fetchable;
 
     protected $type = 'exports';
 
