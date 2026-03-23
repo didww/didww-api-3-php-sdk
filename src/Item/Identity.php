@@ -3,12 +3,13 @@
 namespace Didww\Item;
 
 use Didww\Enum\IdentityType;
+use Didww\Traits\Deletable;
+use Didww\Traits\Fetchable;
+use Didww\Traits\Saveable;
 
 class Identity extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
-    use \Didww\Traits\Saveable;
-    use \Didww\Traits\Deletable;
+    use Fetchable, Saveable, Deletable;
 
     protected $type = 'identities';
 

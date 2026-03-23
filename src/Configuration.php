@@ -29,7 +29,7 @@ class Configuration
         $client->setApiKey($credentials->getApiKey());
         $client->setUserAgent('didww-php-sdk/'.Client::sdkVersion());
         $version = $credentials->getVersion();
-        if (null != $version) {
+        if (null !== $version) {
             $client->setVersion($version);
         }
 

@@ -2,9 +2,11 @@
 
 namespace Didww\Item\OrderItem;
 
+use Didww\Traits\HasSafeAttributes;
+
 abstract class Base implements \Swis\JsonApi\Client\Interfaces\DataInterface
 {
-    use \Didww\Traits\HasSafeAttributes;
+    use HasSafeAttributes;
 
     protected $attributes = [];
 

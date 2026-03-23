@@ -2,9 +2,11 @@
 
 namespace Didww\Item;
 
+use Didww\Traits\Saveable;
+
 class VoiceOutTrunkRegenerateCredential extends BaseItem
 {
-    use \Didww\Traits\Saveable;
+    use Saveable;
 
     protected $type = 'voice_out_trunk_regenerate_credentials';
 

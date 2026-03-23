@@ -2,11 +2,13 @@
 
 namespace Didww\Item;
 
+use Didww\Traits\Deletable;
+use Didww\Traits\Fetchable;
+use Didww\Traits\Saveable;
+
 class SharedCapacityGroup extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
-    use \Didww\Traits\Saveable;
-    use \Didww\Traits\Deletable;
+    use Fetchable, Saveable, Deletable;
 
     protected $type = 'shared_capacity_groups';
 

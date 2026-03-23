@@ -3,10 +3,11 @@
 namespace Didww\Item;
 
 use Didww\Enum\Feature;
+use Didww\Traits\Fetchable;
 
 class DidGroup extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
+    use Fetchable;
 
     protected $type = 'did_groups';
 

@@ -2,9 +2,11 @@
 
 namespace Didww\Item;
 
+use Didww\Traits\Fetchable;
+
 class PublicKey extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
+    use Fetchable;
 
     protected $type = 'public_keys';
 

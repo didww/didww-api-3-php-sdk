@@ -4,10 +4,11 @@ namespace Didww\Item;
 
 use Didww\Enum\AreaLevel;
 use Didww\Enum\IdentityType;
+use Didww\Traits\Fetchable;
 
 class Requirement extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
+    use Fetchable;
 
     protected $type = 'requirements';
 

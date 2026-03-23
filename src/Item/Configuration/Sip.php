@@ -191,10 +191,7 @@ class Sip extends Base
      */
     public function setCodecIds(array $newCodecIds)
     {
-        $this->attributes['codec_ids'] = array_map(
-            fn ($v) => $v instanceof Codec ? $v->value : $v,
-            $newCodecIds
-        );
+        $this->setEnumArrayAttribute('codec_ids', $newCodecIds);
     }
 
     public function setRxDtmfFormatId(RxDtmfFormat|int $newRxDtmfFormatId)
@@ -287,10 +284,7 @@ class Sip extends Base
      */
     public function setReroutingDisconnectCodeIds(array $newReroutingDisconnectCodeIds)
     {
-        $this->attributes['rerouting_disconnect_code_ids'] = array_map(
-            fn ($v) => $v instanceof ReroutingDisconnectCode ? $v->value : $v,
-            $newReroutingDisconnectCodeIds
-        );
+        $this->setEnumArrayAttribute('rerouting_disconnect_code_ids', $newReroutingDisconnectCodeIds);
     }
 
     public function setSstSessionExpires($newSstSessionExpires)

@@ -2,9 +2,11 @@
 
 namespace Didww\Item;
 
+use Didww\Traits\Fetchable;
+
 class SupportingDocumentTemplate extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
+    use Fetchable;
 
     protected $type = 'supporting_document_templates';
 

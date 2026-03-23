@@ -2,9 +2,11 @@
 
 namespace Didww\Item;
 
+use Didww\Traits\Fetchable;
+
 class Area extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
+    use Fetchable;
 
     protected $type = 'areas';
 

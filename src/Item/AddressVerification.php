@@ -4,11 +4,12 @@ namespace Didww\Item;
 
 use Didww\Enum\AddressVerificationStatus;
 use Didww\Enum\CallbackMethod;
+use Didww\Traits\Fetchable;
+use Didww\Traits\Saveable;
 
 class AddressVerification extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
-    use \Didww\Traits\Saveable;
+    use Fetchable, Saveable;
 
     protected $type = 'address_verifications';
 

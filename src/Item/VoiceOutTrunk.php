@@ -6,12 +6,13 @@ use Didww\Enum\DefaultDstAction;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\OnCliMismatchAction;
 use Didww\Enum\VoiceOutTrunkStatus;
+use Didww\Traits\Deletable;
+use Didww\Traits\Fetchable;
+use Didww\Traits\Saveable;
 
 class VoiceOutTrunk extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
-    use \Didww\Traits\Saveable;
-    use \Didww\Traits\Deletable;
+    use Fetchable, Saveable, Deletable;
 
     protected $type = 'voice_out_trunks';
 
@@ -178,32 +179,6 @@ class VoiceOutTrunk extends BaseItem
     public function setDefaultDid(Did $defaultDid)
     {
         $this->defaultDid()->associate($defaultDid);
-    }
-
-    /** @return array [
-     * ]
-     * 'name' => string
-     * 'created_at' => string // creation timestamp
-     * 'allowed_sip_ips' => array
-     * 'on_cli_mismatch_action' => string
-     * 'allowed_rtp_ips' => ?array
-     * 'allow_any_did_as_cli' => bool
-     * 'status' => string
-     * 'capacity_limit' => ?integer
-     * 'username' => ?string
-     * 'password' => ?string
-     * 'threshold_reached' => bool
-     * 'threshold_amount' => ?string // amount of money allowed to spent in 24 hours
-     * 'media_encryption_mode' => string
-     * 'default_dst_action' => string
-     * 'dst_prefixes' => array
-     * 'force_symmetric_rtp' => bool
-     * 'rtp_ping' => bool
-     * 'callback_url' => ?string
-     */
-    public function getAttributes()
-    {
-        return parent::getAttributes();
     }
 
     public function voiceInTrunkGroup()

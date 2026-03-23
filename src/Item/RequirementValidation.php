@@ -2,9 +2,11 @@
 
 namespace Didww\Item;
 
+use Didww\Traits\Saveable;
+
 class RequirementValidation extends BaseItem
 {
-    use \Didww\Traits\Saveable;
+    use Saveable;
 
     protected $type = 'requirement_validations';
 

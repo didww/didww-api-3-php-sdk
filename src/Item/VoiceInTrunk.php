@@ -3,12 +3,15 @@
 namespace Didww\Item;
 
 use Didww\Enum\CliFormat;
+use Didww\Item\Configuration\Pstn;
+use Didww\Item\Configuration\Sip;
+use Didww\Traits\Deletable;
+use Didww\Traits\Fetchable;
+use Didww\Traits\Saveable;
 
 class VoiceInTrunk extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
-    use \Didww\Traits\Saveable;
-    use \Didww\Traits\Deletable;
+    use Fetchable, Saveable, Deletable;
 
     protected $type = 'voice_in_trunks';
 
@@ -87,24 +90,6 @@ class VoiceInTrunk extends BaseItem
         return $this->dateAttribute('created_at');
     }
 
-    /** @return array [
-     * ]
-     * 'priority' => integer // The priority of this target host. DIDWW will attempt to contact the target trunk with the lowest-numbered priority; target trunk with the same priority will be tried in an order defined by the weight field. The range is 0-65535. See RFC 2782 for more details
-     * 'weight' => integer // A trunk selection mechanism. The weight field specifies a relative weight for entries with the same priority. Larger weights will be given a proportionately higher probability of being selected. The range of this number is 0-65535. In the presence of records containing weights greater than 0, records with weight 0 will have a very small chance of being selected. See RFC 2782 for more details
-     * 'capacity_limit' => integer //Maximum number of simultaneous calls for the trunk
-     * 'ringing_timeout' => integer// After which it will be end transaction with internal disconnect code 'Ringing timeout' if the call was not connected.
-     * 'name' => string // Friendly name of the trunk
-     * 'cli_format'=> string  // CLI format conversion may not work correctly for phone calls originating from outside the country of that specific DID, Possible values: RAW - Do not alter CLI (default),  164 - Attempt to convert CLI to E.164 format,  Local - Attempt to convert CLI to Localized format
-     * 'cli_prefix' => string // You may prefix the CLI with an optional '+' sign followed by up to 6 characters, including digits and '#'
-     * 'description' => string // Optional description of trunk
-     * 'created_at' => string // creation timestamp
-     * 'configuration' => Didww\Configuration\Base instance
-     */
-    public function getAttributes()
-    {
-        return parent::getAttributes();
-    }
-
     public function getConfiguration()
     {
         return $this->configuration;
@@ -125,9 +110,14 @@ class VoiceInTrunk extends BaseItem
         return $this->hasOne(VoiceInTrunkGroup::class);
     }
 
+    private const CONFIGURATION_CLASSES = [
+        'sip'  => Sip::class,
+        'pstn' => Pstn::class,
+    ];
+
     public static function configurationFactory(string $type)
     {
-        $class = '\\Didww\\Item\\Configuration\\'.ucfirst($type);
+        $class = self::CONFIGURATION_CLASSES[$type] ?? throw new \InvalidArgumentException("Unknown configuration type: $type");
 
         return new $class();
     }

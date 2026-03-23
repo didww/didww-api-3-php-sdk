@@ -4,18 +4,28 @@ namespace Didww\Item;
 
 use Didww\Enum\CallbackMethod;
 use Didww\Enum\OrderStatus;
+use Didww\Item\OrderItem\Capacity;
+use Didww\Item\OrderItem\Did as DidOrderItem;
+use Didww\Item\OrderItem\Generic;
+use Didww\Traits\Deletable;
+use Didww\Traits\Fetchable;
+use Didww\Traits\Saveable;
 
 class Order extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
-    use \Didww\Traits\Saveable;
-    use \Didww\Traits\Deletable;
+    use Fetchable, Saveable, Deletable;
 
     protected $type = 'orders';
 
+    private const ITEM_CLASSES = [
+        'did'      => DidOrderItem::class,
+        'capacity' => Capacity::class,
+        'generic'  => Generic::class,
+    ];
+
     public static function itemFactory(string $type, $attributes)
     {
-        $class = '\\Didww\\Item\\OrderItem\\'.ucfirst($type);
+        $class = self::ITEM_CLASSES[$type] ?? throw new \InvalidArgumentException("Unknown order item type: $type");
 
         return new $class($attributes);
     }

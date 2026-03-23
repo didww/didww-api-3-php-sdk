@@ -2,9 +2,11 @@
 
 namespace Didww\Item;
 
+use Didww\Traits\Fetchable;
+
 class AvailableDid extends BaseItem
 {
-    use \Didww\Traits\Fetchable;
+    use Fetchable;
 
     protected $type = 'available_dids';
 
@@ -20,6 +22,6 @@ class AvailableDid extends BaseItem
 
     public function getNumber(): string
     {
-        return $this->getAttributes()['number'];
+        return $this->attributes['number'];
     }
 }
