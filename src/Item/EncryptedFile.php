@@ -11,6 +11,11 @@ class EncryptedFile extends BaseItem
     use Fetchable;
     use Deletable;
 
+    public static function getEndpoint(): string
+    {
+        return '/encrypted_files';
+    }
+
     protected $type = 'encrypted_files';
 
     public function getDescription(): ?string

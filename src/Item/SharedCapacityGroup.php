@@ -12,6 +12,11 @@ class SharedCapacityGroup extends BaseItem
     use Saveable;
     use Deletable;
 
+    public static function getEndpoint(): string
+    {
+        return '/shared_capacity_groups';
+    }
+
     protected $type = 'shared_capacity_groups';
 
     public function setName(string $name)

@@ -8,6 +8,11 @@ class City extends BaseItem
 {
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/cities';
+    }
+
     protected $type = 'cities';
 
     public function country()

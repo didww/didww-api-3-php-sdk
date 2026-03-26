@@ -10,9 +10,14 @@ use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\StirShakenMode;
 use Didww\Enum\TransportProtocol;
 use Didww\Enum\TxDtmfFormat;
+use Didww\Traits\HasEnumAttributes;
+use Didww\Traits\HasSafeAttributes;
 
-abstract class Base extends \Didww\Item\BaseItem
+abstract class Base
 {
+    use HasSafeAttributes;
+    use HasEnumAttributes;
+
     protected $attributes = [];
 
     public function __construct($attributes = [])

@@ -15,6 +15,11 @@ class VoiceInTrunk extends BaseItem
     use Saveable;
     use Deletable;
 
+    public static function getEndpoint(): string
+    {
+        return '/voice_in_trunks';
+    }
+
     protected $type = 'voice_in_trunks';
 
     /**

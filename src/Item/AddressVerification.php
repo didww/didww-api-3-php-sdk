@@ -12,6 +12,11 @@ class AddressVerification extends BaseItem
     use Fetchable;
     use Saveable;
 
+    public static function getEndpoint(): string
+    {
+        return '/address_verifications';
+    }
+
     protected $type = 'address_verifications';
 
     public function getServiceDescription(): ?string

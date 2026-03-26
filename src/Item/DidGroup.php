@@ -9,6 +9,11 @@ class DidGroup extends BaseItem
 {
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/did_groups';
+    }
+
     protected $type = 'did_groups';
 
     public function stockKeepingUnits()

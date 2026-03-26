@@ -8,6 +8,11 @@ class RequirementValidation extends BaseItem
 {
     use Saveable;
 
+    public static function getEndpoint(): string
+    {
+        return '/requirement_validations';
+    }
+
     protected $type = 'requirement_validations';
 
     public function requirement()

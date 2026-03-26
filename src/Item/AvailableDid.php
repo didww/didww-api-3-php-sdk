@@ -8,6 +8,11 @@ class AvailableDid extends BaseItem
 {
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/available_dids';
+    }
+
     protected $type = 'available_dids';
 
     public function didGroup()

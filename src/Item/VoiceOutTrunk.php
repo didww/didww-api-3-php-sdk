@@ -16,6 +16,11 @@ class VoiceOutTrunk extends BaseItem
     use Saveable;
     use Deletable;
 
+    public static function getEndpoint(): string
+    {
+        return '/voice_out_trunks';
+    }
+
     protected $type = 'voice_out_trunks';
 
     public function getName(): string

@@ -10,6 +10,11 @@ class Requirement extends BaseItem
 {
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/requirements';
+    }
+
     protected $type = 'requirements';
 
     public function getIdentityType(): IdentityType

@@ -12,6 +12,11 @@ class DidReservation extends BaseItem
     use Saveable;
     use Deletable;
 
+    public static function getEndpoint(): string
+    {
+        return '/did_reservations';
+    }
+
     protected $type = 'did_reservations';
 
     public function availableDid()

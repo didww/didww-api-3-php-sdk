@@ -8,6 +8,11 @@ class ProofType extends BaseItem
 {
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/proof_types';
+    }
+
     protected $type = 'proof_types';
 
     public function getName(): string

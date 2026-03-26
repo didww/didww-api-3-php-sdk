@@ -8,6 +8,11 @@ class SupportingDocumentTemplate extends BaseItem
 {
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/supporting_document_templates';
+    }
+
     protected $type = 'supporting_document_templates';
 
     public function getName(): string

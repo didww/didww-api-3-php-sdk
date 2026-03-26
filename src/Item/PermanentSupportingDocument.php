@@ -10,6 +10,11 @@ class PermanentSupportingDocument extends BaseItem
     use Saveable;
     use Deletable;
 
+    public static function getEndpoint(): string
+    {
+        return '/permanent_supporting_documents';
+    }
+
     protected $type = 'permanent_supporting_documents';
 
     public function getCreatedAt(): ?\DateTime

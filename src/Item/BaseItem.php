@@ -2,12 +2,13 @@
 
 namespace Didww\Item;
 
+use Didww\Traits\HasEnumAttributes;
 use Didww\Traits\HasSafeAttributes;
-use Illuminate\Support\Str;
 
 abstract class BaseItem extends \Swis\JsonApi\Client\Item
 {
     use HasSafeAttributes;
+    use HasEnumAttributes;
 
     protected array $persistedAttributes = [];
 
@@ -32,10 +33,7 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
         return $repository;
     }
 
-    public static function getEndpoint(): string
-    {
-        return '/'.Str::snake(Str::plural(substr(get_called_class(), strrpos(get_called_class(), '\\') + 1)));
-    }
+    abstract public static function getEndpoint(): string;
 
     public function toJsonApiArray(): array
     {
@@ -84,40 +82,6 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
         $current = $this->toJsonApiArray();
         $this->persistedAttributes = $current['attributes'] ?? [];
         $this->persistedRelationships = $this->extractRelationshipData($current['relationships'] ?? []);
-    }
-
-    protected function enumAttribute(string $key, string $enumClass): ?\BackedEnum
-    {
-        $val = $this->attribute($key);
-
-        return null !== $val ? $enumClass::from($val) : null;
-    }
-
-    protected function setEnumAttribute(string $key, mixed $value): void
-    {
-        $this->attributes[$key] = $value instanceof \BackedEnum ? $value->value : $value;
-    }
-
-    protected function setEnumArrayAttribute(string $key, array $values): void
-    {
-        $this->attributes[$key] = array_map(
-            fn ($v) => $v instanceof \BackedEnum ? $v->value : $v,
-            $values
-        );
-    }
-
-    protected function dateAttribute(string $key): ?\DateTime
-    {
-        $val = $this->attribute($key);
-
-        return null !== $val ? new \DateTime($val) : null;
-    }
-
-    protected function enumArrayAttribute(string $key, string $enumClass): ?array
-    {
-        $val = $this->attribute($key);
-
-        return null !== $val ? array_map(fn ($v) => $enumClass::from($v), $val) : null;
     }
 
     protected function getWhiteListAttributesKeys()

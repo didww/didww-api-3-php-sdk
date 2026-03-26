@@ -8,6 +8,11 @@ class Area extends BaseItem
 {
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/areas';
+    }
+
     protected $type = 'areas';
 
     public function country()

@@ -10,6 +10,11 @@ class Proof extends BaseItem
     use Saveable;
     use Deletable;
 
+    public static function getEndpoint(): string
+    {
+        return '/proofs';
+    }
+
     protected $type = 'proofs';
 
     public function getCreatedAt(): ?\DateTime
