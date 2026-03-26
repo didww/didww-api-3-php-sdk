@@ -8,6 +8,11 @@ class NanpaPrefix extends BaseItem
 {
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/nanpa_prefixes';
+    }
+
     protected $type = 'nanpa_prefixes';
 
     public function country()

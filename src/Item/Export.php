@@ -12,6 +12,11 @@ class Export extends BaseItem
     use Saveable;
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/exports';
+    }
+
     protected $type = 'exports';
 
     private $filters = [];

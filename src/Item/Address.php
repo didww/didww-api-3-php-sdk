@@ -12,6 +12,11 @@ class Address extends BaseItem
     use Saveable;
     use Deletable;
 
+    public static function getEndpoint(): string
+    {
+        return '/addresses';
+    }
+
     protected $type = 'addresses';
 
     public function getCityName(): string

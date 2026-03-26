@@ -8,6 +8,11 @@ class VoiceOutTrunkRegenerateCredential extends BaseItem
 {
     use Saveable;
 
+    public static function getEndpoint(): string
+    {
+        return '/voice_out_trunk_regenerate_credentials';
+    }
+
     protected $type = 'voice_out_trunk_regenerate_credentials';
 
     public function voiceOutTrunk()

@@ -4,6 +4,11 @@ namespace Didww\Item;
 
 class StockKeepingUnit extends BaseItem
 {
+    public static function getEndpoint(): string
+    {
+        return '/stock_keeping_units';
+    }
+
     protected $type = 'stock_keeping_units';
 
     public function getSetupPrice(): float

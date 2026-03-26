@@ -10,6 +10,11 @@ class Did extends BaseItem
     use Saveable;
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/dids';
+    }
+
     protected $type = 'dids';
 
     public function setDedicatedChannelsCount(int $dedicatedChannelCount)

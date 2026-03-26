@@ -10,6 +10,11 @@ class CapacityPool extends BaseItem
     use Saveable;
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/capacity_pools';
+    }
+
     protected $type = 'capacity_pools';
 
     public function countries()

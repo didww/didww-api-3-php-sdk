@@ -13,6 +13,11 @@ class Identity extends BaseItem
     use Saveable;
     use Deletable;
 
+    public static function getEndpoint(): string
+    {
+        return '/identities';
+    }
+
     protected $type = 'identities';
 
     public function getFirstName(): string

@@ -17,6 +17,11 @@ class Order extends BaseItem
     use Saveable;
     use Deletable;
 
+    public static function getEndpoint(): string
+    {
+        return '/orders';
+    }
+
     protected $type = 'orders';
 
     private const ITEM_CLASSES = [

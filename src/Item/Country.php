@@ -8,6 +8,11 @@ class Country extends BaseItem
 {
     use Fetchable;
 
+    public static function getEndpoint(): string
+    {
+        return '/countries';
+    }
+
     protected $type = 'countries';
 
     public function getName(): string
