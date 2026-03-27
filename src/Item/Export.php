@@ -108,7 +108,7 @@ class Export extends BaseItem
         curl_setopt_array($ch, $options);
         $return = curl_exec($ch);
         $error = false === $return ? curl_error($ch) : null;
-        curl_close($ch);
+        unset($ch);
         if ($ownHandle) {
             fclose($destHandle);
         }
