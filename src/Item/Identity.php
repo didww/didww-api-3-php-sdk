@@ -20,6 +20,22 @@ class Identity extends BaseItem
 
     protected $type = 'identities';
 
+    protected $visible = [
+        'first_name',
+        'last_name',
+        'phone_number',
+        'id_number',
+        'birth_date',
+        'company_name',
+        'company_reg_number',
+        'vat_id',
+        'description',
+        'personal_tax_id',
+        'identity_type',
+        'external_reference_id',
+        'contact_email',
+    ];
+
     public function getFirstName(): string
     {
         return $this->attributes['first_name'];
@@ -185,22 +201,4 @@ class Identity extends BaseItem
         return $this->hasMany(PermanentSupportingDocument::class);
     }
 
-    protected function getWhiteListAttributesKeys(): array
-    {
-        return [
-            'first_name',
-            'last_name',
-            'phone_number',
-            'id_number',
-            'birth_date',
-            'company_name',
-            'company_reg_number',
-            'vat_id',
-            'description',
-            'personal_tax_id',
-            'identity_type',
-            'external_reference_id',
-            'contact_email',
-        ];
-    }
 }

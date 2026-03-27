@@ -22,6 +22,18 @@ class VoiceInTrunk extends BaseItem
 
     protected $type = 'voice_in_trunks';
 
+    protected $visible = [
+        'priority',
+        'capacity_limit',
+        'weight',
+        'name',
+        'cli_format',
+        'cli_prefix',
+        'description',
+        'ringing_timeout',
+        'configuration',
+    ];
+
     /**
      * The priority of this target host. DIDWW will attempt to contact the target trunk with the
      * lowest-numbered priority; trunks with the same priority are tried in an order defined by
@@ -201,18 +213,4 @@ class VoiceInTrunk extends BaseItem
         return self::configurationFactory($parts[0]);
     }
 
-    protected function getWhiteListAttributesKeys()
-    {
-        return [
-            'priority',
-            'capacity_limit',
-            'weight',
-            'name',
-            'cli_format',
-            'cli_prefix',
-            'description',
-            'ringing_timeout',
-            'configuration',
-        ];
-    }
 }

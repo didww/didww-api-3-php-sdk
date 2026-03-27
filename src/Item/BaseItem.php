@@ -35,18 +35,6 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
 
     abstract public static function getEndpoint(): string;
 
-    public function toJsonApiArray(): array
-    {
-        $attributes = parent::toJsonApiArray();
-        $whitelist = $this->getWhiteListAttributesKeys();
-        if (is_array($whitelist) && isset($attributes['attributes'])) {
-            // keep only whitelisted attributes
-            $attributes['attributes'] = array_intersect_key($attributes['attributes'], array_flip($whitelist));
-        }
-
-        return $attributes;
-    }
-
     public function toJsonApiPatchArray(): array
     {
         $current = $this->toJsonApiArray();
@@ -82,11 +70,6 @@ abstract class BaseItem extends \Swis\JsonApi\Client\Item
         $current = $this->toJsonApiArray();
         $this->persistedAttributes = $current['attributes'] ?? [];
         $this->persistedRelationships = $this->extractRelationshipData($current['relationships'] ?? []);
-    }
-
-    protected function getWhiteListAttributesKeys()
-    {
-        return null;
     }
 
     private function extractDirtyAttributes(array $currentAttributes): array

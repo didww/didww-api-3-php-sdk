@@ -19,6 +19,13 @@ class Address extends BaseItem
 
     protected $type = 'addresses';
 
+    protected $visible = [
+        'city_name',
+        'postal_code',
+        'address',
+        'description',
+    ];
+
     public function getCityName(): string
     {
         return $this->attributes['city_name'];
@@ -104,13 +111,4 @@ class Address extends BaseItem
         return $this->hasOne(City::class);
     }
 
-    protected function getWhiteListAttributesKeys(): array
-    {
-        return [
-            'city_name',
-            'postal_code',
-            'address',
-            'description',
-        ];
-    }
 }

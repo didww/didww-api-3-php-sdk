@@ -24,6 +24,13 @@ class Order extends BaseItem
 
     protected $type = 'orders';
 
+    protected $visible = [
+        'allow_back_ordering',
+        'items',
+        'callback_url',
+        'callback_method',
+    ];
+
     private const ITEM_CLASSES = [
         'did' => DidOrderItem::class,
         'capacity' => Capacity::class,
@@ -51,16 +58,6 @@ class Order extends BaseItem
         $data['attributes']['items'] = $itemData;
 
         return $data;
-    }
-
-    protected function getWhiteListAttributesKeys(): array
-    {
-        return [
-            'allow_back_ordering',
-            'items',
-            'callback_url',
-            'callback_method',
-        ];
     }
 
     public function fill(array $attributes)

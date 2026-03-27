@@ -19,6 +19,11 @@ class VoiceInTrunkGroup extends BaseItem
 
     protected $type = 'voice_in_trunk_groups';
 
+    protected $visible = [
+        'capacity_limit',
+        'name',
+    ];
+
     public function voiceInTrunks()
     {
         return $this->hasMany(VoiceInTrunk::class);
@@ -29,11 +34,4 @@ class VoiceInTrunkGroup extends BaseItem
         $this->voiceInTrunks()->associate($voiceInTrunks);
     }
 
-    protected function getWhiteListAttributesKeys()
-    {
-        return [
-            'capacity_limit',
-            'name',
-        ];
-    }
 }

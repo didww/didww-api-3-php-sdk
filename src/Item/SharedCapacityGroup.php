@@ -19,6 +19,12 @@ class SharedCapacityGroup extends BaseItem
 
     protected $type = 'shared_capacity_groups';
 
+    protected $visible = [
+        'name',
+        'shared_channels_count',
+        'metered_channels_count',
+    ];
+
     public function setName(string $name)
     {
         $this->attributes['name'] = $name;
@@ -74,12 +80,4 @@ class SharedCapacityGroup extends BaseItem
         $this->capacityPool()->associate($capacityPool);
     }
 
-    protected function getWhiteListAttributesKeys()
-    {
-        return [
-            'name',
-            'shared_channels_count',
-            'metered_channels_count',
-        ];
-    }
 }
