@@ -156,5 +156,4 @@ class Did extends BaseItem
     {
         $this->sharedCapacityGroup()->associate($sharedCapacityGroup);
     }
-
 }

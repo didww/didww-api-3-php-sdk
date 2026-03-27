@@ -215,5 +215,4 @@ class VoiceOutTrunk extends BaseItem
     {
         $this->voiceInTrunkGroup()->associate($voiceInTrunkGroup);
     }
-
 }

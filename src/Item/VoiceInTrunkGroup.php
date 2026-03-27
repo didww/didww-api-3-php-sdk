@@ -33,5 +33,4 @@ class VoiceInTrunkGroup extends BaseItem
     {
         $this->voiceInTrunks()->associate($voiceInTrunks);
     }
-
 }

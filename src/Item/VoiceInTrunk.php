@@ -212,5 +212,4 @@ class VoiceInTrunk extends BaseItem
 
         return self::configurationFactory($parts[0]);
     }
-
 }

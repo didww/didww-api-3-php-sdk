@@ -99,5 +99,4 @@ class AddressVerification extends BaseItem
     {
         $this->dids()->associate($dids);
     }
-
 }

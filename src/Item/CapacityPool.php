@@ -85,5 +85,4 @@ class CapacityPool extends BaseItem
     {
         $this->attributes['total_channels_count'] = $totalChannelsCount;
     }
-
 }

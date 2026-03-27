@@ -79,5 +79,4 @@ class SharedCapacityGroup extends BaseItem
     {
         $this->capacityPool()->associate($capacityPool);
     }
-
 }

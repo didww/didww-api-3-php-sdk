@@ -200,5 +200,4 @@ class Identity extends BaseItem
     {
         return $this->hasMany(PermanentSupportingDocument::class);
     }
-
 }

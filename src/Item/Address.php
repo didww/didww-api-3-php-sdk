@@ -110,5 +110,4 @@ class Address extends BaseItem
     {
         return $this->hasOne(City::class);
     }
-
 }
