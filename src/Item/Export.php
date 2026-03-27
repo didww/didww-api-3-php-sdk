@@ -19,6 +19,13 @@ class Export extends BaseItem
 
     protected $type = 'exports';
 
+    protected $visible = [
+        'filters',
+        'export_type',
+        'callback_url',
+        'callback_method',
+    ];
+
     private $filters = [];
 
     public function setFilterDidNumber($didNumber)
@@ -154,15 +161,5 @@ class Export extends BaseItem
         unlink($tmpFile);
 
         return true;
-    }
-
-    protected function getWhiteListAttributesKeys(): array
-    {
-        return [
-            'filters',
-            'export_type',
-            'callback_url',
-            'callback_method',
-        ];
     }
 }

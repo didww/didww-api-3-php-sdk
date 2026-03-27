@@ -17,6 +17,10 @@ class CapacityPool extends BaseItem
 
     protected $type = 'capacity_pools';
 
+    protected $visible = [
+        'total_channels_count',
+    ];
+
     public function countries()
     {
         return $this->hasMany(Country::class);
@@ -80,12 +84,5 @@ class CapacityPool extends BaseItem
     public function setTotalChannelsCount(int $totalChannelsCount)
     {
         $this->attributes['total_channels_count'] = $totalChannelsCount;
-    }
-
-    protected function getWhiteListAttributesKeys()
-    {
-        return [
-            'total_channels_count',
-        ];
     }
 }

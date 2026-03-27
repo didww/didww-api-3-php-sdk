@@ -23,6 +23,23 @@ class VoiceOutTrunk extends BaseItem
 
     protected $type = 'voice_out_trunks';
 
+    protected $visible = [
+        'name',
+        'allowed_sip_ips',
+        'on_cli_mismatch_action',
+        'allowed_rtp_ips',
+        'allow_any_did_as_cli',
+        'status',
+        'capacity_limit',
+        'threshold_amount',
+        'media_encryption_mode',
+        'default_dst_action',
+        'dst_prefixes',
+        'force_symmetric_rtp',
+        'rtp_ping',
+        'callback_url',
+    ];
+
     public function getName(): string
     {
         return $this->attributes['name'];
@@ -197,25 +214,5 @@ class VoiceOutTrunk extends BaseItem
     public function setVoiceInTrunkGroup(VoiceInTrunkGroup $voiceInTrunkGroup)
     {
         $this->voiceInTrunkGroup()->associate($voiceInTrunkGroup);
-    }
-
-    protected function getWhiteListAttributesKeys()
-    {
-        return [
-            'name',
-            'allowed_sip_ips',
-            'on_cli_mismatch_action',
-            'allowed_rtp_ips',
-            'allow_any_did_as_cli',
-            'status',
-            'capacity_limit',
-            'threshold_amount',
-            'media_encryption_mode',
-            'default_dst_action',
-            'dst_prefixes',
-            'force_symmetric_rtp',
-            'rtp_ping',
-            'callback_url',
-        ];
     }
 }

@@ -17,6 +17,14 @@ class Did extends BaseItem
 
     protected $type = 'dids';
 
+    protected $visible = [
+        'billing_cycles_count',
+        'capacity_limit',
+        'description',
+        'terminated',
+        'dedicated_channels_count',
+    ];
+
     public function setDedicatedChannelsCount(int $dedicatedChannelCount)
     {
         $this->attributes['dedicated_channels_count'] = $dedicatedChannelCount;
@@ -147,16 +155,5 @@ class Did extends BaseItem
     public function setSharedCapacityGroup(SharedCapacityGroup $sharedCapacityGroup)
     {
         $this->sharedCapacityGroup()->associate($sharedCapacityGroup);
-    }
-
-    protected function getWhiteListAttributesKeys()
-    {
-        return [
-            'billing_cycles_count',
-            'capacity_limit',
-            'description',
-            'terminated',
-            'dedicated_channels_count',
-        ];
     }
 }

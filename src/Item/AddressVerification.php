@@ -19,6 +19,12 @@ class AddressVerification extends BaseItem
 
     protected $type = 'address_verifications';
 
+    protected $visible = [
+        'service_description',
+        'callback_url',
+        'callback_method',
+    ];
+
     public function getServiceDescription(): ?string
     {
         return $this->attribute('service_description');
@@ -92,14 +98,5 @@ class AddressVerification extends BaseItem
     public function setDids(\Swis\JsonApi\Client\Collection $dids)
     {
         $this->dids()->associate($dids);
-    }
-
-    protected function getWhiteListAttributesKeys(): array
-    {
-        return [
-            'service_description',
-            'callback_url',
-            'callback_method',
-        ];
     }
 }
