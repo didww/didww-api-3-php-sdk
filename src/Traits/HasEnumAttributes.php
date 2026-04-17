@@ -4,11 +4,11 @@ namespace Didww\Traits;
 
 trait HasEnumAttributes
 {
-    protected function enumAttribute(string $key, string $enumClass): ?\BackedEnum
+    protected function enumAttribute(string $key, string $enumClass): \BackedEnum|string|null
     {
         $val = $this->attribute($key);
 
-        return null !== $val ? $enumClass::from($val) : null;
+        return null !== $val ? ($enumClass::tryFrom($val) ?? $val) : null;
     }
 
     protected function setEnumAttribute(string $key, mixed $value): void
@@ -28,7 +28,7 @@ trait HasEnumAttributes
     {
         $val = $this->attribute($key);
 
-        return null !== $val ? array_map(fn ($v) => $enumClass::from($v), $val) : null;
+        return null !== $val ? array_map(fn ($v) => $enumClass::tryFrom($v) ?? $v, $val) : null;
     }
 
     protected function dateAttribute(string $key): ?\DateTime

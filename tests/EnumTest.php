@@ -168,6 +168,16 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('as_is', $sip->getAttributes()['diversion_relay_policy']);
     }
 
+    public function testUnknownEnumValueFallsBackToRawString()
+    {
+        // Single enum attribute: unknown value should return raw string, not crash
+        $didGroup = new \Didww\Item\DidGroup();
+        $didGroup->fill(['features' => ['voice_in', 'future_feature_xyz']]);
+        $features = $didGroup->getFeatures();
+        $this->assertSame(Feature::VOICE_IN, $features[0]);
+        $this->assertSame('future_feature_xyz', $features[1]);
+    }
+
     public function testCodecArraySetterAcceptsEnumAndRaw()
     {
         $sip = new \Didww\Item\Configuration\Sip();
