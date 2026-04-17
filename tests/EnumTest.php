@@ -85,7 +85,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(3, OnCliMismatchAction::cases());
         $this->assertCount(2, DefaultDstAction::cases());
         $this->assertCount(2, VoiceOutTrunkStatus::cases());
-        $this->assertCount(5, Feature::cases());
+        $this->assertCount(4, Feature::cases());
         $this->assertCount(4, AreaLevel::cases());
         $this->assertCount(13, Codec::cases());
         $this->assertCount(3, TransportProtocol::cases());
