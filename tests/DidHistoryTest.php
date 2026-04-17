@@ -37,4 +37,20 @@ class DidHistoryTest extends CassetteTest
         $this->assertEquals('system', $data->getMethod());
         $this->assertInstanceOf(\DateTime::class, $data->getCreatedAt());
     }
+
+    public function testFindDidHistoryBillingCyclesCountChanged()
+    {
+        $uuid = 'aabbccdd-1122-3344-5566-778899aabbcc';
+        $document = \Didww\Item\DidHistory::find($uuid);
+
+        $data = $document->getData();
+        $this->assertInstanceOf('Didww\Item\DidHistory', $data);
+        $this->assertEquals($uuid, $data->getId());
+        $this->assertEquals('billing_cycles_count_changed', $data->getAction());
+
+        $meta = $data->getMeta();
+        $this->assertNotNull($meta);
+        $this->assertEquals('2', $meta->from);
+        $this->assertEquals('1', $meta->to);
+    }
 }

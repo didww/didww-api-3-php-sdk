@@ -11,6 +11,13 @@ use Didww\Traits\Fetchable;
  * Available filters (server-side):
  *   did_number (eq), action (eq), method (eq),
  *   created_at_gteq, created_at_lteq
+ *
+ * Meta attributes (accessible via the JSON:API meta hash on the returned resource):
+ *   meta[from] / meta[to]
+ *     Type: integer
+ *     Presence: only when action == 'billing_cycles_count_changed'.
+ *     Description: The previous (from) and new (to) billing_cycles_count
+ *                  values. Absent for every other action.
  */
 class DidHistory extends BaseItem
 {
