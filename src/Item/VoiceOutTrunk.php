@@ -41,6 +41,7 @@ class VoiceOutTrunk extends BaseItem
         'authentication_method',
         'external_reference_id',
         'emergency_enable_all',
+        'rtp_timeout',
     ];
 
     public function getName(): string
@@ -191,6 +192,16 @@ class VoiceOutTrunk extends BaseItem
     public function setAuthenticationMethod(AuthenticationMethodBase $authenticationMethod)
     {
         $this->attributes['authentication_method'] = $authenticationMethod->toJsonApiArray();
+    }
+
+    public function getRtpTimeout(): ?int
+    {
+        return $this->attribute('rtp_timeout');
+    }
+
+    public function setRtpTimeout(?int $rtpTimeout)
+    {
+        $this->attributes['rtp_timeout'] = $rtpTimeout;
     }
 
     public function getEmergencyEnableAll(): ?bool

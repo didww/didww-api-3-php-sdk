@@ -193,6 +193,17 @@ class VoiceOutTrunkTest extends CassetteTest
         $this->assertNull($trunk->getExternalReferenceId());
     }
 
+    public function testVoiceOutTrunkRtpTimeout()
+    {
+        $trunk = new \Didww\Item\VoiceOutTrunk();
+
+        $trunk->setRtpTimeout(30);
+        $this->assertEquals(30, $trunk->getRtpTimeout());
+
+        $trunk->setRtpTimeout(null);
+        $this->assertNull($trunk->getRtpTimeout());
+    }
+
     public function testVoiceOutTrunkEmergencyEnableAll()
     {
         $trunk = new \Didww\Item\VoiceOutTrunk();
