@@ -39,5 +39,6 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('nanpa_prefixes', Item\NanpaPrefix::class);
         $this->setMapping('voice_out_trunks', Item\VoiceOutTrunk::class);
         $this->setMapping('voice_out_trunk_regenerate_credentials', Item\VoiceOutTrunkRegenerateCredential::class);
+        $this->setMapping('did_history', Item\DidHistory::class);
     }
 }
