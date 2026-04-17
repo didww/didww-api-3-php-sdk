@@ -32,6 +32,7 @@ class VoiceInTrunk extends BaseItem
         'description',
         'ringing_timeout',
         'configuration',
+        'external_reference_id',
     ];
 
     /**
@@ -122,6 +123,16 @@ class VoiceInTrunk extends BaseItem
     public function setName(string $name)
     {
         $this->attributes['name'] = $name;
+    }
+
+    public function getExternalReferenceId(): ?string
+    {
+        return $this->attribute('external_reference_id');
+    }
+
+    public function setExternalReferenceId(?string $externalReferenceId)
+    {
+        $this->attributes['external_reference_id'] = $externalReferenceId;
     }
 
     public function getCreatedAt()

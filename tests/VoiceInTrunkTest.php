@@ -307,5 +307,11 @@ class VoiceInTrunkTest extends CassetteTest
         $config = new \Didww\Item\Configuration\Sip(['host' => '1.2.3.4']);
         $trunk->setConfiguration($config);
         $this->assertSame($config, $trunk->getConfiguration());
+
+        $trunk->setExternalReferenceId('ref-456');
+        $this->assertEquals('ref-456', $trunk->getExternalReferenceId());
+
+        $trunk->setExternalReferenceId(null);
+        $this->assertNull($trunk->getExternalReferenceId());
     }
 }
