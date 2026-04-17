@@ -22,16 +22,22 @@ class EmergencyCallingService extends BaseItem
 
     protected $type = 'emergency_calling_services';
 
+    /** @return string Human-readable name for the calling service subscription. */
     public function getName(): string
     {
         return $this->attributes['name'];
     }
 
+    /** @return string|null Server-assigned reference code. */
     public function getReference(): ?string
     {
         return $this->attribute('reference');
     }
 
+    /**
+     * @return EmergencyCallingServiceStatus One of: active, canceled,
+     *   changes required, in process, new, pending update.
+     */
     public function getStatus(): EmergencyCallingServiceStatus
     {
         return $this->enumAttribute('status', EmergencyCallingServiceStatus::class);
@@ -67,21 +73,25 @@ class EmergencyCallingService extends BaseItem
         return $this->getStatus() === EmergencyCallingServiceStatus::PENDING_UPDATE;
     }
 
+    /** @return \DateTime|null Timestamp when the service became active. Null while pending. */
     public function getActivatedAt()
     {
         return $this->dateAttribute('activated_at');
     }
 
+    /** @return \DateTime|null Timestamp when the service was canceled. Null when active. */
     public function getCanceledAt()
     {
         return $this->dateAttribute('canceled_at');
     }
 
+    /** @return \DateTime|null */
     public function getCreatedAt()
     {
         return $this->dateAttribute('created_at');
     }
 
+    /** @return \DateTime|null Next renewal date. Null when canceled. */
     public function getRenewDate()
     {
         return $this->dateAttribute('renew_date');

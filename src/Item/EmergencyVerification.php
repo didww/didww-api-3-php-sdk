@@ -30,11 +30,15 @@ class EmergencyVerification extends BaseItem
         'external_reference_id',
     ];
 
+    /** @return string|null Verification reference code. */
     public function getReference(): ?string
     {
         return $this->attribute('reference');
     }
 
+    /**
+     * @return EmergencyVerificationStatus|string One of: pending, approved, rejected.
+     */
     public function getStatus(): EmergencyVerificationStatus|string
     {
         return $this->enumAttribute('status', EmergencyVerificationStatus::class);
@@ -55,16 +59,19 @@ class EmergencyVerification extends BaseItem
         return $this->getStatus() === EmergencyVerificationStatus::REJECTED;
     }
 
+    /** @return array<string>|null List of reject reason codes when status is "rejected". */
     public function getRejectReasons(): ?array
     {
         return $this->attribute('reject_reasons');
     }
 
+    /** @return string|null Optional free-form comment accompanying a rejection. */
     public function getRejectComment(): ?string
     {
         return $this->attribute('reject_comment');
     }
 
+    /** @return string|null Valid URI for callbacks. */
     public function getCallbackUrl(): ?string
     {
         return $this->attribute('callback_url');
@@ -75,6 +82,7 @@ class EmergencyVerification extends BaseItem
         $this->attributes['callback_url'] = $callbackUrl;
     }
 
+    /** @return string|null GET or POST. */
     public function getCallbackMethod(): ?string
     {
         return $this->attribute('callback_method');
