@@ -238,6 +238,18 @@ class DidTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\Did', $did);
     }
 
+    public function testDidEmergencyEnabled()
+    {
+        $did = new \Didww\Item\Did(['emergency_enabled' => true]);
+        $this->assertTrue($did->getEmergencyEnabled());
+
+        $did2 = new \Didww\Item\Did(['emergency_enabled' => false]);
+        $this->assertFalse($did2->getEmergencyEnabled());
+
+        $did3 = new \Didww\Item\Did();
+        $this->assertNull($did3->getEmergencyEnabled());
+    }
+
     public function testFindWithIncludedHasCleanDirtyState()
     {
         $uuid = '21d0b02c-b556-4d3e-acbf-504b78295dbe';

@@ -90,6 +90,11 @@ class Did extends BaseItem
         return $this->attributes['number'];
     }
 
+    public function getEmergencyEnabled(): ?bool
+    {
+        return $this->attribute('emergency_enabled');
+    }
+
     public function getCreatedAt()
     {
         return $this->dateAttribute('created_at');
