@@ -2,31 +2,15 @@
 
 namespace Didww\Item\AuthenticationMethod;
 
+use Didww\Traits\HasIpAttributes;
+
 class CredentialsAndIp extends Base
 {
+    use HasIpAttributes;
+
     public function getType(): string
     {
         return 'credentials_and_ip';
-    }
-
-    public function getAllowedSipIps(): ?array
-    {
-        return $this->attribute('allowed_sip_ips');
-    }
-
-    public function setAllowedSipIps(array $allowedSipIps): void
-    {
-        $this->attributes['allowed_sip_ips'] = $allowedSipIps;
-    }
-
-    public function getTechPrefix(): ?string
-    {
-        return $this->attribute('tech_prefix');
-    }
-
-    public function setTechPrefix(?string $techPrefix): void
-    {
-        $this->attributes['tech_prefix'] = $techPrefix;
     }
 
     /** Server-generated, read-only */
