@@ -119,7 +119,7 @@ class DidTest extends CassetteTest
         $addressVerification = $did->addressVerification()->getIncluded();
         $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
         $this->assertEquals('75dc8d39-5e17-4470-a6f3-df42642c975f', $addressVerification->getId());
-        $this->assertEquals('Approved', $addressVerification->getAttributes()['status']);
+        $this->assertEquals('approved', $addressVerification->getAttributes()['status']);
 
         $didGroup = $did->didGroup()->getIncluded();
         $this->assertInstanceOf('Didww\Item\DidGroup', $didGroup);

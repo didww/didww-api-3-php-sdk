@@ -36,7 +36,7 @@ class ExportTest extends CassetteTest
 
         $this->assertEquals($export->getAttributes(), [
             'created_at' => '2019-01-02T10:23:00.897Z',
-            'status' => 'Pending',
+            'status' => 'pending',
             'url' => null,
             'callback_url' => null,
             'callback_method' => null,
@@ -70,7 +70,7 @@ class ExportTest extends CassetteTest
 
         $this->assertEquals($export->getAttributes(), [
             'created_at' => '2019-01-02T10:23:00.897Z',
-            'status' => 'Pending',
+            'status' => 'pending',
             'url' => null,
             'callback_url' => null,
             'callback_method' => null,
@@ -94,7 +94,7 @@ class ExportTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\Export', $export);
         $this->assertEquals($export->getAttributes(), [
             'created_at' => '2019-01-02T10:23:00.897Z',
-            'status' => 'Completed',
+            'status' => 'completed',
             'url' => 'https://sandbox-api.didww.com/v3/exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv.gz',
             'callback_url' => null,
             'callback_method' => null,
@@ -159,23 +159,23 @@ class ExportTest extends CassetteTest
         $export->setCallbackUrl('https://example.com/hook');
         $this->assertEquals('https://example.com/hook', $export->getCallbackUrl());
 
-        $export->setCallbackMethod('POST');
+        $export->setCallbackMethod('post');
         $this->assertEquals(\Didww\Enum\CallbackMethod::POST, $export->getCallbackMethod());
     }
 
     public function testExportStatusPredicates()
     {
-        $pending = new \Didww\Item\Export(['status' => 'Pending']);
+        $pending = new \Didww\Item\Export(['status' => 'pending']);
         $this->assertTrue($pending->isPending());
         $this->assertFalse($pending->isProcessing());
         $this->assertFalse($pending->isCompleted());
 
-        $processing = new \Didww\Item\Export(['status' => 'Processing']);
+        $processing = new \Didww\Item\Export(['status' => 'processing']);
         $this->assertFalse($processing->isPending());
         $this->assertTrue($processing->isProcessing());
         $this->assertFalse($processing->isCompleted());
 
-        $completed = new \Didww\Item\Export(['status' => 'Completed']);
+        $completed = new \Didww\Item\Export(['status' => 'completed']);
         $this->assertFalse($completed->isPending());
         $this->assertFalse($completed->isProcessing());
         $this->assertTrue($completed->isCompleted());

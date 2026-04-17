@@ -39,7 +39,7 @@ class IdentityTest extends CassetteTest
             'vat_id' => 'GB1234',
             'description' => 'test identity',
             'personal_tax_id' => '987654321',
-            'identity_type' => 'Business',
+            'identity_type' => 'business',
             'external_reference_id' => '111',
         ];
         $country = \Didww\Item\Country::build('1f6fc2bd-f081-4202-9b1a-d9cb88d942b9');
@@ -81,7 +81,7 @@ class IdentityTest extends CassetteTest
             'birth_date' => '1970-01-01',
             'description' => 'test identity',
             'personal_tax_id' => '987654321',
-            'identity_type' => 'Personal',
+            'identity_type' => 'personal',
             'external_reference_id' => '111',
         ];
         $country = \Didww\Item\Country::build('1f6fc2bd-f081-4202-9b1a-d9cb88d942b9');
@@ -176,7 +176,7 @@ class IdentityTest extends CassetteTest
         $identity->setPersonalTaxId('TAX789');
         $this->assertEquals('TAX789', $identity->getPersonalTaxId());
 
-        $identity->setIdentityType('Personal');
+        $identity->setIdentityType('personal');
         $this->assertEquals(\Didww\Enum\IdentityType::PERSONAL, $identity->getIdentityType());
 
         $identity->setExternalReferenceId('EXT-001');

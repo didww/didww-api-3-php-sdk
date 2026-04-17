@@ -45,10 +45,10 @@ class AddressRequirementTest extends CassetteTest
         $requirement = $requirementsDocument->getData();
         $this->assertInstanceOf('Didww\Item\AddressRequirement', $requirement);
         $this->assertEquals([
-            'identity_type' => 'Any',
-            'personal_area_level' => 'WorldWide',
-            'business_area_level' => 'WorldWide',
-            'address_area_level' => 'WorldWide',
+            'identity_type' => 'any',
+            'personal_area_level' => 'world_wide',
+            'business_area_level' => 'world_wide',
+            'address_area_level' => 'world_wide',
             'personal_proof_qty' => 1,
             'business_proof_qty' => 1,
             'address_proof_qty' => 1,

@@ -272,13 +272,13 @@ class OrderTest extends BaseTest
         ];
         $order = new \Didww\Item\Order($attributes);
         $order->setCallbackUrl('https://example.com/callback');
-        $order->setCallbackMethod('POST');
+        $order->setCallbackMethod('post');
         $this->assertEquals($order->toJsonApiArray(), [
             'type' => 'orders',
             'attributes' => [
                 'allow_back_ordering' => true,
                 'callback_url' => 'https://example.com/callback',
-                'callback_method' => 'POST',
+                'callback_method' => 'post',
                 'items' => [
                     [
                         'type' => 'did_order_items',
@@ -400,17 +400,17 @@ class OrderTest extends BaseTest
 
     public function testOrderStatusPredicates()
     {
-        $pending = new \Didww\Item\Order(['status' => 'Pending']);
+        $pending = new \Didww\Item\Order(['status' => 'pending']);
         $this->assertTrue($pending->isPending());
         $this->assertFalse($pending->isCompleted());
         $this->assertFalse($pending->isCancelled());
 
-        $completed = new \Didww\Item\Order(['status' => 'Completed']);
+        $completed = new \Didww\Item\Order(['status' => 'completed']);
         $this->assertFalse($completed->isPending());
         $this->assertTrue($completed->isCompleted());
         $this->assertFalse($completed->isCancelled());
 
-        $cancelled = new \Didww\Item\Order(['status' => 'Canceled']);
+        $cancelled = new \Didww\Item\Order(['status' => 'canceled']);
         $this->assertFalse($cancelled->isPending());
         $this->assertFalse($cancelled->isCompleted());
         $this->assertTrue($cancelled->isCancelled());

@@ -24,7 +24,7 @@ class EmergencyVerificationTest extends CassetteTest
         $this->assertNull($first->getRejectReasons());
         $this->assertNull($first->getRejectComment());
         $this->assertEquals('https://example.com/emergency/hook', $first->getCallbackUrl());
-        $this->assertEquals('POST', $first->getCallbackMethod());
+        $this->assertEquals('post', $first->getCallbackMethod());
         $this->assertNull($first->getExternalReferenceId());
         $this->assertInstanceOf(\DateTime::class, $first->getCreatedAt());
     }
@@ -67,7 +67,7 @@ class EmergencyVerificationTest extends CassetteTest
 
         $verification = new \Didww\Item\EmergencyVerification();
         $verification->setCallbackUrl('https://example.com/emergency/hook');
-        $verification->setCallbackMethod('POST');
+        $verification->setCallbackMethod('post');
         $verification->setExternalReferenceId('ref-abc-123');
         $verification->setEmergencyCallingService($ecs);
         $verification->setAddress($address);

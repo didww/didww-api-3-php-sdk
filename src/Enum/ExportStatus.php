@@ -4,7 +4,7 @@ namespace Didww\Enum;
 
 enum ExportStatus: string
 {
-    case PENDING = 'Pending';
-    case PROCESSING = 'Processing';
-    case COMPLETED = 'Completed';
+    case PENDING = 'pending';
+    case PROCESSING = 'processing';
+    case COMPLETED = 'completed';
 }

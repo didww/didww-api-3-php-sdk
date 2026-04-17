@@ -32,20 +32,20 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     {
         $cases = [
             [CliFormat::class, 'raw', CliFormat::RAW],
-            [IdentityType::class, 'Personal', IdentityType::PERSONAL],
-            [IdentityType::class, 'Any', IdentityType::ANY],
-            [OrderStatus::class, 'Completed', OrderStatus::COMPLETED],
-            [CallbackMethod::class, 'POST', CallbackMethod::POST],
+            [IdentityType::class, 'personal', IdentityType::PERSONAL],
+            [IdentityType::class, 'any', IdentityType::ANY],
+            [OrderStatus::class, 'completed', OrderStatus::COMPLETED],
+            [CallbackMethod::class, 'post', CallbackMethod::POST],
             [ExportType::class, 'cdr_in', ExportType::CDR_IN],
-            [ExportStatus::class, 'Pending', ExportStatus::PENDING],
-            [AddressVerificationStatus::class, 'Approved', AddressVerificationStatus::APPROVED],
+            [ExportStatus::class, 'pending', ExportStatus::PENDING],
+            [AddressVerificationStatus::class, 'approved', AddressVerificationStatus::APPROVED],
             [MediaEncryptionMode::class, 'zrtp', MediaEncryptionMode::ZRTP],
             [StirShakenMode::class, 'pai', StirShakenMode::PAI],
             [OnCliMismatchAction::class, 'replace_cli', OnCliMismatchAction::REPLACE_CLI],
             [DefaultDstAction::class, 'allow_all', DefaultDstAction::ALLOW_ALL],
             [VoiceOutTrunkStatus::class, 'active', VoiceOutTrunkStatus::ACTIVE],
             [Feature::class, 'voice_in', Feature::VOICE_IN],
-            [AreaLevel::class, 'Country', AreaLevel::COUNTRY],
+            [AreaLevel::class, 'country', AreaLevel::COUNTRY],
         ];
 
         foreach ($cases as [$enumClass, $rawValue, $expectedCase]) {

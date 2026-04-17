@@ -75,7 +75,7 @@ class DidGroupTest extends CassetteTest
         $requirementRelation = $didGroupDocument->getData()->addressRequirement();
         $requirement = $requirementRelation->getIncluded();
         $this->assertInstanceOf('Didww\Item\AddressRequirement', $requirement);
-        $this->assertEquals('Any', $requirement->getAttributes()['identity_type']);
+        $this->assertEquals('any', $requirement->getAttributes()['identity_type']);
         $this->assertSame(\Didww\Enum\IdentityType::ANY, $requirement->getIdentityType());
     }
 

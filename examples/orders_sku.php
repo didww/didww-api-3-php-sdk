@@ -30,7 +30,7 @@ $orderItem = $order->getItems()[0];
 var_dump(
     $order->getId(), // 2989925f-7df3-4dc9-9944-d1fa0f4e8e86
     $order->getAmount(), // 0.18
-    $order->getStatus(), // Pending
+    $order->getStatus(), // pending
     $order->getCreatedAt(), // new \DateTime('2019-01-03 15:46:27')
     $order->getDescription(), // DID
     $order->getReference(), // XXU-610373

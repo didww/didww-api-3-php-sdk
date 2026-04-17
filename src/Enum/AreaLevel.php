@@ -4,8 +4,8 @@ namespace Didww\Enum;
 
 enum AreaLevel: string
 {
-    case WORLDWIDE = 'WorldWide';
-    case COUNTRY = 'Country';
-    case AREA = 'Area';
-    case CITY = 'City';
+    case WORLDWIDE = 'world_wide';
+    case COUNTRY = 'country';
+    case AREA = 'area';
+    case CITY = 'city';
 }
