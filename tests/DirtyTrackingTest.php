@@ -412,6 +412,45 @@ class DirtyTrackingTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Test PATCH dirty-tracking for polymorphic authentication_method on VoiceOutTrunk.
+     */
+    public function testPatchAuthenticationMethodDirtyTracking()
+    {
+        $trunk = new \Didww\Item\VoiceOutTrunk([
+            'name' => 'original',
+            'authentication_method' => [
+                'type' => 'ip_only',
+                'attributes' => ['allowed_sip_ips' => ['203.0.113.0/24']],
+            ],
+        ]);
+        $trunk->setId('test-uuid');
+        $trunk->syncPersistedState();
+
+        // Change to a different authentication method type
+        $newAuth = new \Didww\Item\AuthenticationMethod\CredentialsAndIp([
+            'allowed_sip_ips' => ['192.0.2.10/32'],
+            'tech_prefix' => '99',
+        ]);
+        $trunk->setAuthenticationMethod($newAuth);
+
+        $patch = $trunk->toJsonApiPatchArray();
+
+        $this->assertEquals([
+            'type' => 'voice_out_trunks',
+            'id' => 'test-uuid',
+            'attributes' => [
+                'authentication_method' => [
+                    'type' => 'credentials_and_ip',
+                    'attributes' => [
+                        'allowed_sip_ips' => ['192.0.2.10/32'],
+                        'tech_prefix' => '99',
+                    ],
+                ],
+            ],
+        ], $patch);
+    }
+
+    /**
      * Test that switching trunk from group to individual sends both changes.
      */
     public function testSwitchFromTrunkGroupToTrunkAfterLoad()
