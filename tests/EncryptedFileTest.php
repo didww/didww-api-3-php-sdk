@@ -29,31 +29,32 @@ class EncryptedFileTest extends CassetteTest
         $this->assertFalse($encryptedFileDocument->hasErrors());
     }
 
-    public function testUploadFiles()
+    public function testUploadResultSingleFile()
     {
-        $fingerprint = 'c74684d7863639169c21c4d04747f8d6fa05cfe3:::8a586bd37fa0000501715321b2e6a7b3ca57894c';
-        $files = [
-            'file-content-1',
-            'file-content-2',
-        ];
-        $descriptions = [
-            'some description',
-        ];
-
-        $boundary = '606b3cb6603e8'; // boundary from VCR
-        $result = \Didww\Item\EncryptedFile::upload($fingerprint, $files, $descriptions, $boundary);
+        $responseBody = '{"data":{"id":"f6a7b890-1234-5678-9abc-def123456789","type":"encrypted_files","attributes":{"description":"passport.pdf","expires_at":"2026-04-22T10:00:00.000Z"}},"meta":{"api_version":"2026-04-16"}}';
+        $result = new \Didww\UploadResult($responseBody, 201);
         $this->assertTrue($result->success());
-        $this->assertEquals([
-            '6eed102c-66a9-4a9b-a95f-4312d70ec12a',
-            '371eafbd-ac6a-485c-aadf-9e3c5da37eb4',
-        ], $result->getIds());
+        $this->assertFalse($result->hasErrors());
+        $this->assertEquals('f6a7b890-1234-5678-9abc-def123456789', $result->getId());
+    }
 
-        $encryptedFileDocument = \Didww\Item\EncryptedFile::find($result->getIds()[0]);
-        $encryptedFile = $encryptedFileDocument->getData();
-        $this->assertEquals('some description', $encryptedFile->getDescription());
+    public function testUploadResultError()
+    {
+        $responseBody = '{"errors":[{"title":"Invalid fingerprint"}]}';
+        $result = new \Didww\UploadResult($responseBody, 422);
+        $this->assertFalse($result->success());
+        $this->assertTrue($result->hasErrors());
+        $this->assertNull($result->getId());
+        $this->assertEquals([['title' => 'Invalid fingerprint']], $result->getErrors());
+    }
 
-        $encryptedFileDocument = \Didww\Item\EncryptedFile::find($result->getIds()[1]);
-        $encryptedFile = $encryptedFileDocument->getData();
-        $this->assertEquals(null, $encryptedFile->getDescription());
+    public function testUploadMethodSignature()
+    {
+        $reflection = new \ReflectionMethod(\Didww\Item\EncryptedFile::class, 'upload');
+        $params = $reflection->getParameters();
+        $this->assertEquals('fingerprint', $params[0]->getName());
+        $this->assertEquals('fileContent', $params[1]->getName());
+        $this->assertEquals('description', $params[2]->getName());
+        $this->assertTrue($params[2]->isOptional());
     }
 }

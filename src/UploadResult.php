@@ -43,8 +43,8 @@ class UploadResult
         return null == $this->responseData ? [] : $this->responseData['errors'];
     }
 
-    public function getIds(): array
+    public function getId(): ?string
     {
-        return null == $this->responseData ? [] : $this->responseData['ids'];
+        return $this->responseData['data']['id'] ?? null;
     }
 }
