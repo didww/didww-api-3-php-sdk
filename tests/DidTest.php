@@ -238,6 +238,13 @@ class DidTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\Did', $did);
     }
 
+    public function testDidIdentityRelation()
+    {
+        $did = new \Didww\Item\Did();
+        $relation = $did->identity();
+        $this->assertNotNull($relation);
+    }
+
     public function testDidEmergencyVerificationRelation()
     {
         $did = new \Didww\Item\Did();
