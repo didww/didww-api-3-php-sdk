@@ -239,6 +239,16 @@ class VoiceOutTrunk extends BaseItem
         $this->dids()->associate($dids);
     }
 
+    public function emergencyDids()
+    {
+        return $this->hasMany(Did::class, 'emergency_dids');
+    }
+
+    public function setEmergencyDids(\Swis\JsonApi\Client\Collection $emergencyDids)
+    {
+        $this->emergencyDids()->associate($emergencyDids);
+    }
+
     public function defaultDid()
     {
         return $this->hasOne(Did::class);

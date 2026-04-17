@@ -193,6 +193,20 @@ class VoiceOutTrunkTest extends CassetteTest
         $this->assertNull($trunk->getExternalReferenceId());
     }
 
+    public function testVoiceOutTrunkEmergencyDids()
+    {
+        $trunk = new \Didww\Item\VoiceOutTrunk();
+
+        $emergencyDids = new \Swis\JsonApi\Client\Collection([
+            \Didww\Item\Did::build('did-1'),
+            \Didww\Item\Did::build('did-2'),
+        ]);
+        $trunk->setEmergencyDids($emergencyDids);
+
+        $relation = $trunk->emergencyDids();
+        $this->assertNotNull($relation);
+    }
+
     public function testVoiceOutTrunkRtpTimeout()
     {
         $trunk = new \Didww\Item\VoiceOutTrunk();
