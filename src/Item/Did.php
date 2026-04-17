@@ -147,7 +147,7 @@ class Did extends BaseItem
 
     public function setEmergencyCallingService(?EmergencyCallingService $emergencyCallingService)
     {
-        if ($emergencyCallingService === null) {
+        if (null === $emergencyCallingService) {
             $this->emergencyCallingService()->dissociate();
         } else {
             $this->emergencyCallingService()->associate($emergencyCallingService);

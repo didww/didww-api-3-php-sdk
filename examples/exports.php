@@ -5,19 +5,19 @@
 
 require_once 'bootstrap.php';
 
-use Didww\Item\Export;
 use Didww\Enum\ExportType;
+use Didww\Item\Export;
 
 // List exports
 echo "=== Listing Exports ===\n";
 $document = Export::all(['page' => ['size' => 5, 'number' => 1]]);
 $exports = $document->getData();
-echo "Found " . count($exports) . " exports\n";
+echo 'Found '.count($exports)." exports\n";
 
 foreach ($exports as $export) {
-    echo "ID: " . $export->getId() . "\n";
-    echo "  Type: " . $export->getExportType()->value . "\n";
-    echo "  External Reference ID: " . ($export->getExternalReferenceId() ?? 'null') . "\n";
+    echo 'ID: '.$export->getId()."\n";
+    echo '  Type: '.$export->getExportType()->value."\n";
+    echo '  External Reference ID: '.($export->getExternalReferenceId() ?? 'null')."\n";
     echo "\n";
 }
 
@@ -39,6 +39,6 @@ if ($document->hasErrors()) {
     var_dump($document->getErrors());
 } else {
     $export = $document->getData();
-    echo "Created export: " . $export->getId() . "\n";
-    echo "  External Reference ID: " . ($export->getExternalReferenceId() ?? 'null') . "\n";
+    echo 'Created export: '.$export->getId()."\n";
+    echo '  External Reference ID: '.($export->getExternalReferenceId() ?? 'null')."\n";
 }

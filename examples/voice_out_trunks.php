@@ -15,23 +15,23 @@ use Didww\Item\VoiceOutTrunk;
 echo "=== Listing Voice Out Trunks ===\n";
 $document = VoiceOutTrunk::all();
 $trunks = $document->getData();
-echo "Found " . count($trunks) . " voice out trunks\n";
+echo 'Found '.count($trunks)." voice out trunks\n";
 
 foreach (array_slice($trunks, 0, 5) as $trunk) {
-    echo $trunk->getName() . ' (' . $trunk->getStatus()->value . ")\n";
-    echo "  ID: " . $trunk->getId() . "\n";
+    echo $trunk->getName().' ('.$trunk->getStatus()->value.")\n";
+    echo '  ID: '.$trunk->getId()."\n";
     $auth = $trunk->getAuthenticationMethod();
-    echo "  Auth type: " . ($auth ? $auth->getType() : 'none') . "\n";
+    echo '  Auth type: '.($auth ? $auth->getType() : 'none')."\n";
     if ($auth instanceof CredentialsAndIp) {
-        echo "  Username: " . ($auth->getUsername() ?? 'null') . "\n";
+        echo '  Username: '.($auth->getUsername() ?? 'null')."\n";
     } elseif ($auth instanceof IpOnly) {
-        echo "  Allowed SIP IPs: " . implode(', ', $auth->getAllowedSipIps() ?? []) . "\n";
+        echo '  Allowed SIP IPs: '.implode(', ', $auth->getAllowedSipIps() ?? [])."\n";
     } elseif ($auth instanceof Twilio) {
-        echo "  Twilio Account SID: " . ($auth->getTwilioAccountSid() ?? 'null') . "\n";
+        echo '  Twilio Account SID: '.($auth->getTwilioAccountSid() ?? 'null')."\n";
     }
-    echo "  External Reference ID: " . ($trunk->getExternalReferenceId() ?? 'null') . "\n";
-    echo "  Emergency Enable All: " . ($trunk->getEmergencyEnableAll() ? 'true' : 'false') . "\n";
-    echo "  RTP Timeout: " . ($trunk->getRtpTimeout() ?? 'null') . "\n";
+    echo '  External Reference ID: '.($trunk->getExternalReferenceId() ?? 'null')."\n";
+    echo '  Emergency Enable All: '.($trunk->getEmergencyEnableAll() ? 'true' : 'false')."\n";
+    echo '  RTP Timeout: '.($trunk->getRtpTimeout() ?? 'null')."\n";
     echo "\n";
 }
 
@@ -60,17 +60,17 @@ if ($document->hasErrors()) {
     var_dump($document->getErrors());
 } else {
     $trunk = $document->getData();
-    echo "Created trunk: " . $trunk->getId() . "\n";
-    echo "  Name: " . $trunk->getName() . "\n";
-    echo "  Status: " . $trunk->getStatus()->value . "\n";
+    echo 'Created trunk: '.$trunk->getId()."\n";
+    echo '  Name: '.$trunk->getName()."\n";
+    echo '  Status: '.$trunk->getStatus()->value."\n";
     $auth = $trunk->getAuthenticationMethod();
-    echo "  Auth type: " . ($auth ? $auth->getType() : 'none') . "\n";
+    echo '  Auth type: '.($auth ? $auth->getType() : 'none')."\n";
     if ($auth instanceof CredentialsAndIp) {
-        echo "  Username: " . ($auth->getUsername() ?? 'null') . "\n";
-        echo "  Password: " . ($auth->getPassword() ?? 'null') . "\n";
+        echo '  Username: '.($auth->getUsername() ?? 'null')."\n";
+        echo '  Password: '.($auth->getPassword() ?? 'null')."\n";
     }
-    echo "  External Reference ID: " . ($trunk->getExternalReferenceId() ?? 'null') . "\n";
-    echo "  RTP Timeout: " . ($trunk->getRtpTimeout() ?? 'null') . "\n";
+    echo '  External Reference ID: '.($trunk->getExternalReferenceId() ?? 'null')."\n";
+    echo '  RTP Timeout: '.($trunk->getRtpTimeout() ?? 'null')."\n";
 
     // Delete trunk
     echo "\n=== Deleting Voice Out Trunk ===\n";

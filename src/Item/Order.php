@@ -111,17 +111,17 @@ class Order extends BaseItem
 
     public function isPending(): bool
     {
-        return $this->getStatus() === OrderStatus::PENDING;
+        return OrderStatus::PENDING === $this->getStatus();
     }
 
     public function isCompleted(): bool
     {
-        return $this->getStatus() === OrderStatus::COMPLETED;
+        return OrderStatus::COMPLETED === $this->getStatus();
     }
 
     public function isCancelled(): bool
     {
-        return $this->getStatus() === OrderStatus::CANCELED;
+        return OrderStatus::CANCELED === $this->getStatus();
     }
 
     public function getCreatedAt(): ?\DateTime
@@ -168,5 +168,4 @@ class Order extends BaseItem
     {
         $this->setEnumAttribute('callback_method', $callbackMethod);
     }
-
 }

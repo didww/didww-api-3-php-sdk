@@ -12,19 +12,19 @@ $document = EmergencyCallingService::all([
     'page' => ['size' => 10, 'number' => 1],
 ]);
 $services = $document->getData();
-echo "Found " . count($services) . " emergency calling services\n";
+echo 'Found '.count($services)." emergency calling services\n";
 
 foreach ($services as $service) {
-    echo "ID: " . $service->getId() . "\n";
-    echo "  Name: " . $service->getName() . "\n";
-    echo "  Reference: " . $service->getReference() . "\n";
-    echo "  Status: " . $service->getStatus() . "\n";
-    echo "  Created At: " . $service->getCreatedAt()->format('Y-m-d H:i:s') . "\n";
-    echo "  Renew Date: " . ($service->getRenewDate() ?? 'N/A') . "\n";
+    echo 'ID: '.$service->getId()."\n";
+    echo '  Name: '.$service->getName()."\n";
+    echo '  Reference: '.$service->getReference()."\n";
+    echo '  Status: '.$service->getStatus()."\n";
+    echo '  Created At: '.$service->getCreatedAt()->format('Y-m-d H:i:s')."\n";
+    echo '  Renew Date: '.($service->getRenewDate() ?? 'N/A')."\n";
 
     $country = $service->country()->getIncluded();
     if ($country) {
-        echo "  Country: " . $country->getName() . "\n";
+        echo '  Country: '.$country->getName()."\n";
     }
 
     echo "\n";

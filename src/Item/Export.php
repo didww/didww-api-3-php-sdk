@@ -67,17 +67,17 @@ class Export extends BaseItem
 
     public function isPending(): bool
     {
-        return $this->getStatus() === ExportStatus::PENDING;
+        return ExportStatus::PENDING === $this->getStatus();
     }
 
     public function isProcessing(): bool
     {
-        return $this->getStatus() === ExportStatus::PROCESSING;
+        return ExportStatus::PROCESSING === $this->getStatus();
     }
 
     public function isCompleted(): bool
     {
-        return $this->getStatus() === ExportStatus::COMPLETED;
+        return ExportStatus::COMPLETED === $this->getStatus();
     }
 
     public function getExportType(): ExportType

@@ -26,9 +26,9 @@ if ($document->hasErrors()) {
     var_dump($document->getErrors());
 } else {
     $order = $document->getData();
-    echo "Created order: " . $order->getId() . "\n";
-    echo "  Reference: " . $order->getReference() . "\n";
-    echo "  Status: " . $order->getStatus()->value . "\n";
-    echo "  Amount: " . $order->getAmount() . "\n";
-    echo "  External Reference ID: " . ($order->getExternalReferenceId() ?? 'null') . "\n";
+    echo 'Created order: '.$order->getId()."\n";
+    echo '  Reference: '.$order->getReference()."\n";
+    echo '  Status: '.$order->getStatus()->value."\n";
+    echo '  Amount: '.$order->getAmount()."\n";
+    echo '  External Reference ID: '.($order->getExternalReferenceId() ?? 'null')."\n";
 }

@@ -37,7 +37,7 @@ class EmergencyVerification extends BaseItem
     }
 
     /**
-     * @return EmergencyVerificationStatus|string One of: pending, approved, rejected.
+     * @return EmergencyVerificationStatus|string one of: pending, approved, rejected
      */
     public function getStatus(): EmergencyVerificationStatus|string
     {
@@ -46,17 +46,17 @@ class EmergencyVerification extends BaseItem
 
     public function isPending(): bool
     {
-        return $this->getStatus() === EmergencyVerificationStatus::PENDING;
+        return EmergencyVerificationStatus::PENDING === $this->getStatus();
     }
 
     public function isApproved(): bool
     {
-        return $this->getStatus() === EmergencyVerificationStatus::APPROVED;
+        return EmergencyVerificationStatus::APPROVED === $this->getStatus();
     }
 
     public function isRejected(): bool
     {
-        return $this->getStatus() === EmergencyVerificationStatus::REJECTED;
+        return EmergencyVerificationStatus::REJECTED === $this->getStatus();
     }
 
     /** @return array<string>|null List of reject reason codes when status is "rejected". */

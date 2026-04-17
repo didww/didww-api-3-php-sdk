@@ -35,8 +35,8 @@ class EmergencyCallingService extends BaseItem
     }
 
     /**
-     * @return EmergencyCallingServiceStatus One of: active, canceled,
-     *   changes required, in process, new, pending update.
+     * @return EmergencyCallingServiceStatus one of: active, canceled,
+     *                                       changes required, in process, new, pending update
      */
     public function getStatus(): EmergencyCallingServiceStatus
     {
@@ -45,32 +45,32 @@ class EmergencyCallingService extends BaseItem
 
     public function isActive(): bool
     {
-        return $this->getStatus() === EmergencyCallingServiceStatus::ACTIVE;
+        return EmergencyCallingServiceStatus::ACTIVE === $this->getStatus();
     }
 
     public function isCanceled(): bool
     {
-        return $this->getStatus() === EmergencyCallingServiceStatus::CANCELED;
+        return EmergencyCallingServiceStatus::CANCELED === $this->getStatus();
     }
 
     public function isChangesRequired(): bool
     {
-        return $this->getStatus() === EmergencyCallingServiceStatus::CHANGES_REQUIRED;
+        return EmergencyCallingServiceStatus::CHANGES_REQUIRED === $this->getStatus();
     }
 
     public function isInProcess(): bool
     {
-        return $this->getStatus() === EmergencyCallingServiceStatus::IN_PROCESS;
+        return EmergencyCallingServiceStatus::IN_PROCESS === $this->getStatus();
     }
 
     public function isNew(): bool
     {
-        return $this->getStatus() === EmergencyCallingServiceStatus::NEW;
+        return EmergencyCallingServiceStatus::NEW === $this->getStatus();
     }
 
     public function isPendingUpdate(): bool
     {
-        return $this->getStatus() === EmergencyCallingServiceStatus::PENDING_UPDATE;
+        return EmergencyCallingServiceStatus::PENDING_UPDATE === $this->getStatus();
     }
 
     /** @return \DateTime|null Timestamp when the service became active. Null while pending. */

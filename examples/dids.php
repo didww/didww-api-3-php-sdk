@@ -9,20 +9,20 @@ $did = Didww\Item\Did::all([
     'include' => 'identity,emergency_calling_service,emergency_verification',
 ])->getData()[0];
 
-echo "Selected DID: " . $did->getId() . "\n";
-echo "  Number: " . $did->getNumber() . "\n";
-echo "  Emergency enabled: " . ($did->getEmergencyEnabled() ? 'true' : 'false') . "\n";
+echo 'Selected DID: '.$did->getId()."\n";
+echo '  Number: '.$did->getNumber()."\n";
+echo '  Emergency enabled: '.($did->getEmergencyEnabled() ? 'true' : 'false')."\n";
 $ecs = $did->emergencyCallingService()->getIncluded();
 if ($ecs) {
-    echo "  Emergency Calling Service: " . $ecs->getId() . "\n";
+    echo '  Emergency Calling Service: '.$ecs->getId()."\n";
 }
 $ev = $did->emergencyVerification()->getIncluded();
 if ($ev) {
-    echo "  Emergency Verification: " . $ev->getId() . "\n";
+    echo '  Emergency Verification: '.$ev->getId()."\n";
 }
 $identity = $did->identity()->getIncluded();
 if ($identity) {
-    echo "  Identity: " . $identity->getId() . "\n";
+    echo '  Identity: '.$identity->getId()."\n";
 }
 
 // see trunks example to create Trunk

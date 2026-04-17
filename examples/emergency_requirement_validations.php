@@ -4,9 +4,9 @@
 
 require_once 'bootstrap.php';
 
-use Didww\Item\EmergencyRequirementValidation;
-use Didww\Item\EmergencyRequirement;
 use Didww\Item\Address;
+use Didww\Item\EmergencyRequirement;
+use Didww\Item\EmergencyRequirementValidation;
 use Didww\Item\Identity;
 
 echo "=== Creating Emergency Requirement Validation ===\n";

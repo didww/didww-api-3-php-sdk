@@ -198,12 +198,12 @@ class VoiceOutTrunk extends BaseItem
 
     public function isActive(): bool
     {
-        return $this->getStatus() === VoiceOutTrunkStatus::ACTIVE;
+        return VoiceOutTrunkStatus::ACTIVE === $this->getStatus();
     }
 
     public function isBlocked(): bool
     {
-        return $this->getStatus() === VoiceOutTrunkStatus::BLOCKED;
+        return VoiceOutTrunkStatus::BLOCKED === $this->getStatus();
     }
 
     public function getRtpTimeout(): ?int

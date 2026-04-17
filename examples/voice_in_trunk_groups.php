@@ -13,12 +13,12 @@ use Didww\Item\VoiceInTrunkGroup;
 echo "=== Existing Trunk Groups ===\n";
 $document = VoiceInTrunkGroup::all(['include' => 'voice_in_trunks']);
 $trunkGroups = $document->getData();
-echo "Found " . count($trunkGroups) . " trunk groups\n";
+echo 'Found '.count($trunkGroups)." trunk groups\n";
 
 foreach (array_slice($trunkGroups, 0, 3) as $group) {
     $trunks = $group->voiceInTrunks()->getIncluded();
     $trunksCount = $trunks ? count($trunks->all()) : 0;
-    echo $group->getName() . " ($trunksCount trunks)\n";
+    echo $group->getName()." ($trunksCount trunks)\n";
 }
 
 // Create a new trunk group (2026-04-16 external_reference_id for customer tagging)
@@ -37,8 +37,8 @@ if ($document->hasErrors()) {
     var_dump($document->getErrors());
 } else {
     $trunkGroup = $document->getData();
-    echo "Created trunk group: " . $trunkGroup->getId() . " - " . $trunkGroup->getName() . "\n";
-    echo "  External reference: " . ($trunkGroup->getExternalReferenceId() ?? 'null') . "\n";
+    echo 'Created trunk group: '.$trunkGroup->getId().' - '.$trunkGroup->getName()."\n";
+    echo '  External reference: '.($trunkGroup->getExternalReferenceId() ?? 'null')."\n";
 
     // Update trunk group
     echo "\n=== Updating Trunk Group ===\n";
@@ -50,7 +50,7 @@ if ($document->hasErrors()) {
         var_dump($updateDoc->getErrors());
     } else {
         $trunkGroup = $updateDoc->getData();
-        echo "Updated trunk group: " . $trunkGroup->getName() . " (capacity_limit: " . $trunkGroup->getCapacityLimit() . ")\n";
+        echo 'Updated trunk group: '.$trunkGroup->getName().' (capacity_limit: '.$trunkGroup->getCapacityLimit().")\n";
 
         // Delete trunk group
         echo "\n=== Deleting Trunk Group ===\n";

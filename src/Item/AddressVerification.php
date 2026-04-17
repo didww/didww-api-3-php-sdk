@@ -65,17 +65,17 @@ class AddressVerification extends BaseItem
 
     public function isPending(): bool
     {
-        return $this->getStatus() === AddressVerificationStatus::PENDING;
+        return AddressVerificationStatus::PENDING === $this->getStatus();
     }
 
     public function isApproved(): bool
     {
-        return $this->getStatus() === AddressVerificationStatus::APPROVED;
+        return AddressVerificationStatus::APPROVED === $this->getStatus();
     }
 
     public function isRejected(): bool
     {
-        return $this->getStatus() === AddressVerificationStatus::REJECTED;
+        return AddressVerificationStatus::REJECTED === $this->getStatus();
     }
 
     public function getRejectReasons(): ?array
