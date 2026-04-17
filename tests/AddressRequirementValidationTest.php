@@ -16,7 +16,7 @@ class AddressRequirementValidationTest extends CassetteTest
 
         $requirementValidation = new \Didww\Item\AddressRequirementValidation();
         $requirementValidation->setAddress($address);
-        $requirementValidation->setRequirement($requirement);
+        $requirementValidation->setAddressRequirement($requirement);
         $requirementValidationDocument = $requirementValidation->save();
         $this->assertFalse($requirementValidationDocument->hasErrors());
         $requirementValidation = $requirementValidationDocument->getData();
@@ -32,7 +32,7 @@ class AddressRequirementValidationTest extends CassetteTest
         $requirementValidation = new \Didww\Item\AddressRequirementValidation();
         $requirementValidation->setIdentity($identity);
         $requirementValidation->setAddress($address);
-        $requirementValidation->setRequirement($requirement);
+        $requirementValidation->setAddressRequirement($requirement);
         $requirementValidationDocument = $requirementValidation->save();
         $this->assertTrue($requirementValidationDocument->hasErrors());
     }

@@ -15,14 +15,14 @@ class AddressRequirementValidation extends BaseItem
 
     protected $type = 'address_requirement_validations';
 
-    public function requirement()
+    public function addressRequirement()
     {
         return $this->hasOne(AddressRequirement::class);
     }
 
-    public function setRequirement(AddressRequirement $requirement)
+    public function setAddressRequirement(AddressRequirement $addressRequirement)
     {
-        $this->requirement()->associate($requirement);
+        $this->addressRequirement()->associate($addressRequirement);
     }
 
     public function address()
