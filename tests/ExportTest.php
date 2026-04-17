@@ -102,6 +102,19 @@ class ExportTest extends CassetteTest
             'external_reference_id' => null,
         ]);
         $this->assertEquals(ExportType::CDR_IN, $export->getExportType());
+        $this->assertNull($export->getExternalReferenceId());
+    }
+
+    public function testUpdateExportExternalReferenceId()
+    {
+        $uuid = 'da15f006-5da4-45ca-b0df-735baeadf423';
+        $export = \Didww\Item\Export::build($uuid);
+        $export->setExternalReferenceId('updated-ref-export');
+        $document = $export->save();
+
+        $data = $document->getData();
+        $this->assertInstanceOf('Didww\Item\Export', $data);
+        $this->assertEquals('updated-ref-export', $data->getExternalReferenceId());
         $this->assertNull($export->getCallbackUrl());
         $this->assertNull($export->getCallbackMethod());
     }
