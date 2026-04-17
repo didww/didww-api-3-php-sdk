@@ -17,6 +17,20 @@ class PermanentSupportingDocument extends BaseItem
 
     protected $type = 'permanent_supporting_documents';
 
+    protected $visible = [
+        'external_reference_id',
+    ];
+
+    public function getExternalReferenceId(): ?string
+    {
+        return $this->attribute('external_reference_id');
+    }
+
+    public function setExternalReferenceId(?string $externalReferenceId)
+    {
+        $this->attributes['external_reference_id'] = $externalReferenceId;
+    }
+
     public function getCreatedAt(): ?\DateTime
     {
         return $this->dateAttribute('created_at');
