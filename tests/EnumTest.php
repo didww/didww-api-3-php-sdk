@@ -8,6 +8,7 @@ use Didww\Enum\CallbackMethod;
 use Didww\Enum\CliFormat;
 use Didww\Enum\Codec;
 use Didww\Enum\DefaultDstAction;
+use Didww\Enum\DiversionRelayPolicy;
 use Didww\Enum\ExportStatus;
 use Didww\Enum\ExportType;
 use Didww\Enum\Feature;
@@ -93,6 +94,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(4, TxDtmfFormat::cases());
         $this->assertCount(3, SstRefreshMethod::cases());
         $this->assertCount(47, ReroutingDisconnectCode::cases());
+        $this->assertCount(4, DiversionRelayPolicy::cases());
     }
 
     public function testSipConfigurationSetterAcceptsEnumAndRaw()
@@ -151,6 +153,19 @@ class EnumTest extends \PHPUnit\Framework\TestCase
 
         $trunk->setOnCliMismatchAction('reject_call');
         $this->assertSame('reject_call', $trunk->getAttributes()['on_cli_mismatch_action']);
+    }
+
+    public function testSipConfigurationDiversionRelayPolicy()
+    {
+        $sip = new \Didww\Item\Configuration\Sip();
+
+        $sip->setDiversionRelayPolicy('sip');
+        $this->assertSame(DiversionRelayPolicy::SIP, $sip->getDiversionRelayPolicy());
+        $this->assertSame('sip', $sip->getAttributes()['diversion_relay_policy']);
+
+        $sip->setDiversionRelayPolicy(DiversionRelayPolicy::AS_IS);
+        $this->assertSame(DiversionRelayPolicy::AS_IS, $sip->getDiversionRelayPolicy());
+        $this->assertSame('as_is', $sip->getAttributes()['diversion_relay_policy']);
     }
 
     public function testCodecArraySetterAcceptsEnumAndRaw()
