@@ -23,6 +23,7 @@ class AddressVerification extends BaseItem
         'service_description',
         'callback_url',
         'callback_method',
+        'external_reference_id',
     ];
 
     public function getServiceDescription(): ?string
@@ -68,6 +69,21 @@ class AddressVerification extends BaseItem
     public function getReference(): ?string
     {
         return $this->attribute('reference');
+    }
+
+    public function getRejectComment(): ?string
+    {
+        return $this->attribute('reject_comment');
+    }
+
+    public function getExternalReferenceId(): ?string
+    {
+        return $this->attribute('external_reference_id');
+    }
+
+    public function setExternalReferenceId(?string $externalReferenceId)
+    {
+        $this->attributes['external_reference_id'] = $externalReferenceId;
     }
 
     public function getCreatedAt(): ?\DateTime

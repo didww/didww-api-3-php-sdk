@@ -47,6 +47,8 @@ class AddressVerificationTest extends CassetteTest
         $this->assertEquals(AddressVerificationStatus::REJECTED, $addressVerification->getStatus());
         $this->assertEquals(['Address cannot be validated', 'Proof of address should be not older than of 6 months'], $addressVerification->getRejectReasons());
         $this->assertEquals('ODW-879912', $addressVerification->getReference());
+        $this->assertEquals('Please re-submit with a more recent utility bill.', $addressVerification->getRejectComment());
+        $this->assertEquals('crm-verif-0001', $addressVerification->getExternalReferenceId());
     }
 
     public function testNullableGettersReturnNullOnEmptyObject()
