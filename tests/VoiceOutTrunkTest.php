@@ -18,9 +18,12 @@ class VoiceOutTrunkTest extends CassetteTest
     {
         $did = \Didww\Item\Did::build('7a028c32-e6b6-4c86-bf01-90f901b37012');
         $dids = new \Swis\JsonApi\Client\Collection([$did]);
+
+        $authMethod = new \Didww\Item\AuthenticationMethod\IpOnly(['allowed_sip_ips' => ['203.0.113.0/24']]);
+
         $voiceOutTrunk = new \Didww\Item\VoiceOutTrunk();
         $voiceOutTrunk->setName('php-test');
-        $voiceOutTrunk->setAllowedSipIps(['0.0.0.0/0']);
+        $voiceOutTrunk->setAuthenticationMethod($authMethod);
         $voiceOutTrunk->setOnCliMismatchAction('replace_cli');
         $voiceOutTrunk->setDefaultDid($did);
         $voiceOutTrunk->setDids($dids);
@@ -32,33 +35,16 @@ class VoiceOutTrunkTest extends CassetteTest
             'b60201c1-21f0-4d9a-aafa-0e6d1e12f22e',
             $data->getId()
         );
-        $this->assertEquals(
-            [
-                'name' => 'php-test',
-                'allowed_sip_ips' => ['0.0.0.0/0'],
-                'on_cli_mismatch_action' => 'replace_cli',
-                'created_at' => '2022-02-03T08:21:29.798Z',
-                'allowed_rtp_ips' => null,
-                'allow_any_did_as_cli' => false,
-                'status' => 'active',
-                'capacity_limit' => null,
-                'username' => 'qkut5v4xwm',
-                'password' => 'np34mftrrq',
-                'threshold_reached' => false,
-                'threshold_amount' => null,
-                'media_encryption_mode' => 'disabled',
-                'default_dst_action' => 'allow_all',
-                'dst_prefixes' => [],
-                'force_symmetric_rtp' => false,
-                'rtp_ping' => false,
-                'callback_url' => null,
-            ],
-            $data->getAttributes()
-        );
+
+        // Verify authentication_method is parsed correctly
+        $am = $data->getAuthenticationMethod();
+        $this->assertInstanceOf(\Didww\Item\AuthenticationMethod\CredentialsAndIp::class, $am);
+        $this->assertEquals(['203.0.113.0/24'], $am->getAllowedSipIps());
+        $this->assertEquals('qkut5v4xwm', $am->getUsername());
+        $this->assertEquals('np34mftrrq', $am->getPassword());
 
         // Typed getter assertions
         $this->assertEquals('php-test', $data->getName());
-        $this->assertEquals(['0.0.0.0/0'], $data->getAllowedSipIps());
         $this->assertEquals(OnCliMismatchAction::REPLACE_CLI, $data->getOnCliMismatchAction());
         $this->assertNull($data->getAllowedRtpIps());
         $this->assertFalse($data->getAllowAnyDidAsCli());
@@ -122,9 +108,6 @@ class VoiceOutTrunkTest extends CassetteTest
         $trunk->setName('my-trunk');
         $this->assertEquals('my-trunk', $trunk->getName());
 
-        $trunk->setAllowedSipIps(['10.0.0.1/32']);
-        $this->assertEquals(['10.0.0.1/32'], $trunk->getAllowedSipIps());
-
         $trunk->setOnCliMismatchAction('reject_call');
         $this->assertEquals(OnCliMismatchAction::REJECT_CALL, $trunk->getOnCliMismatchAction());
 
@@ -160,5 +143,57 @@ class VoiceOutTrunkTest extends CassetteTest
 
         $trunk->setCapacityLimit('50');
         $this->assertEquals('50', $trunk->getCapacityLimit());
+    }
+
+    public function testAuthenticationMethodPolymorphicParsing()
+    {
+        // IpOnly
+        $ipOnly = \Didww\Item\AuthenticationMethod\Base::fromArray([
+            'type' => 'ip_only',
+            'attributes' => ['allowed_sip_ips' => ['10.0.0.1/32'], 'tech_prefix' => 'abc'],
+        ]);
+        $this->assertInstanceOf(\Didww\Item\AuthenticationMethod\IpOnly::class, $ipOnly);
+        $this->assertEquals(['10.0.0.1/32'], $ipOnly->getAllowedSipIps());
+        $this->assertEquals('abc', $ipOnly->getTechPrefix());
+
+        // CredentialsAndIp
+        $credIp = \Didww\Item\AuthenticationMethod\Base::fromArray([
+            'type' => 'credentials_and_ip',
+            'attributes' => ['allowed_sip_ips' => ['10.0.0.1/32'], 'username' => 'user1', 'password' => 'pass1'],
+        ]);
+        $this->assertInstanceOf(\Didww\Item\AuthenticationMethod\CredentialsAndIp::class, $credIp);
+        $this->assertEquals('user1', $credIp->getUsername());
+        $this->assertEquals('pass1', $credIp->getPassword());
+
+        // Twilio
+        $twilio = \Didww\Item\AuthenticationMethod\Base::fromArray([
+            'type' => 'twilio',
+            'attributes' => ['twilio_account_sid' => 'AC123'],
+        ]);
+        $this->assertInstanceOf(\Didww\Item\AuthenticationMethod\Twilio::class, $twilio);
+        $this->assertEquals('AC123', $twilio->getTwilioAccountSid());
+
+        // Unknown type -> Generic
+        $generic = \Didww\Item\AuthenticationMethod\Base::fromArray([
+            'type' => 'future_type',
+            'attributes' => ['foo' => 'bar'],
+        ]);
+        $this->assertInstanceOf(\Didww\Item\AuthenticationMethod\Generic::class, $generic);
+        $this->assertEquals('future_type', $generic->getType());
+    }
+
+    public function testAuthenticationMethodSerialization()
+    {
+        $ipOnly = new \Didww\Item\AuthenticationMethod\IpOnly([
+            'allowed_sip_ips' => ['203.0.113.0/24'],
+            'tech_prefix' => 'test',
+        ]);
+        $this->assertEquals([
+            'type' => 'ip_only',
+            'attributes' => [
+                'allowed_sip_ips' => ['203.0.113.0/24'],
+                'tech_prefix' => 'test',
+            ],
+        ], $ipOnly->toJsonApiArray());
     }
 }

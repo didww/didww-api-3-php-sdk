@@ -6,6 +6,7 @@ use Didww\Enum\DefaultDstAction;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\OnCliMismatchAction;
 use Didww\Enum\VoiceOutTrunkStatus;
+use Didww\Item\AuthenticationMethod\Base as AuthenticationMethodBase;
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
 use Didww\Traits\Saveable;
@@ -25,7 +26,6 @@ class VoiceOutTrunk extends BaseItem
 
     protected $visible = [
         'name',
-        'allowed_sip_ips',
         'on_cli_mismatch_action',
         'allowed_rtp_ips',
         'allow_any_did_as_cli',
@@ -38,6 +38,7 @@ class VoiceOutTrunk extends BaseItem
         'force_symmetric_rtp',
         'rtp_ping',
         'callback_url',
+        'authentication_method',
     ];
 
     public function getName(): string
@@ -48,16 +49,6 @@ class VoiceOutTrunk extends BaseItem
     public function setName(string $name)
     {
         $this->attributes['name'] = $name;
-    }
-
-    public function getAllowedSipIps(): array
-    {
-        return $this->attributes['allowed_sip_ips'];
-    }
-
-    public function setAllowedSipIps(array $allowedSipIps)
-    {
-        $this->attributes['allowed_sip_ips'] = $allowedSipIps;
     }
 
     public function getOnCliMismatchAction(): OnCliMismatchAction
@@ -179,6 +170,25 @@ class VoiceOutTrunk extends BaseItem
     public function setCallbackUrl(?string $callbackUrl)
     {
         $this->attributes['callback_url'] = $callbackUrl;
+    }
+
+    public function getAuthenticationMethod(): ?AuthenticationMethodBase
+    {
+        $data = $this->attribute('authentication_method');
+        if (null === $data || $data instanceof AuthenticationMethodBase) {
+            return $data;
+        }
+
+        if ($data instanceof \stdClass) {
+            $data = json_decode(json_encode($data), true);
+        }
+
+        return AuthenticationMethodBase::fromArray($data);
+    }
+
+    public function setAuthenticationMethod(AuthenticationMethodBase $authenticationMethod)
+    {
+        $this->attributes['authentication_method'] = $authenticationMethod->toJsonApiArray();
     }
 
     public function getCreatedAt()
