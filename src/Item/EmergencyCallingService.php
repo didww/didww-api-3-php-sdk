@@ -71,6 +71,11 @@ class EmergencyCallingService extends BaseItem
         return $this->hasOne(Order::class);
     }
 
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
+
     public function emergencyRequirement()
     {
         return $this->hasOne(EmergencyRequirement::class);
