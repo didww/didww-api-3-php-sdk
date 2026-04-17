@@ -17,6 +17,20 @@ class Proof extends BaseItem
 
     protected $type = 'proofs';
 
+    protected $visible = [
+        'external_reference_id',
+    ];
+
+    public function getExternalReferenceId(): ?string
+    {
+        return $this->attribute('external_reference_id');
+    }
+
+    public function setExternalReferenceId(?string $externalReferenceId)
+    {
+        $this->attributes['external_reference_id'] = $externalReferenceId;
+    }
+
     public function getCreatedAt(): ?\DateTime
     {
         return $this->dateAttribute('created_at');
