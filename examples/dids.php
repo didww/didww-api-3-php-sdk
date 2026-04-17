@@ -2,8 +2,28 @@
 
 require_once 'bootstrap.php';
 
-// get last ordered DID
-$did = Didww\Item\Did::all(['sort' => '-created_at', 'page' => ['size' => 1, 'number' => 1]])->getData()[0];
+// get last ordered DID (include 2026-04-16 emergency relationships)
+$did = Didww\Item\Did::all([
+    'sort' => '-created_at',
+    'page' => ['size' => 1, 'number' => 1],
+    'include' => 'identity,emergency_calling_service,emergency_verification',
+])->getData()[0];
+
+echo "Selected DID: " . $did->getId() . "\n";
+echo "  Number: " . $did->getNumber() . "\n";
+echo "  Emergency enabled: " . ($did->getEmergencyEnabled() ? 'true' : 'false') . "\n";
+$ecs = $did->emergencyCallingService()->getIncluded();
+if ($ecs) {
+    echo "  Emergency Calling Service: " . $ecs->getId() . "\n";
+}
+$ev = $did->emergencyVerification()->getIncluded();
+if ($ev) {
+    echo "  Emergency Verification: " . $ev->getId() . "\n";
+}
+$identity = $did->identity()->getIncluded();
+if ($identity) {
+    echo "  Identity: " . $identity->getId() . "\n";
+}
 
 // see trunks example to create Trunk
 // get last SIP trunk
