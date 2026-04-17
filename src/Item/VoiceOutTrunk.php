@@ -194,6 +194,16 @@ class VoiceOutTrunk extends BaseItem
         $this->attributes['authentication_method'] = $authenticationMethod->toJsonApiArray();
     }
 
+    public function isActive(): bool
+    {
+        return $this->getStatus() === VoiceOutTrunkStatus::ACTIVE;
+    }
+
+    public function isBlocked(): bool
+    {
+        return $this->getStatus() === VoiceOutTrunkStatus::BLOCKED;
+    }
+
     public function getRtpTimeout(): ?int
     {
         return $this->attribute('rtp_timeout');

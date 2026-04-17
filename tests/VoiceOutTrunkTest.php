@@ -193,6 +193,17 @@ class VoiceOutTrunkTest extends CassetteTest
         $this->assertNull($trunk->getExternalReferenceId());
     }
 
+    public function testVoiceOutTrunkStatusPredicates()
+    {
+        $trunk = new \Didww\Item\VoiceOutTrunk(['status' => 'active']);
+        $this->assertTrue($trunk->isActive());
+        $this->assertFalse($trunk->isBlocked());
+
+        $trunk2 = new \Didww\Item\VoiceOutTrunk(['status' => 'blocked']);
+        $this->assertFalse($trunk2->isActive());
+        $this->assertTrue($trunk2->isBlocked());
+    }
+
     public function testVoiceOutTrunkEmergencyDids()
     {
         $trunk = new \Didww\Item\VoiceOutTrunk();
