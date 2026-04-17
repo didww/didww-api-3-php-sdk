@@ -238,6 +238,15 @@ class DidTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\Did', $did);
     }
 
+    public function testDidEmergencyCallingServiceRelation()
+    {
+        $did = new \Didww\Item\Did();
+        $ecs = \Didww\Item\EmergencyCallingService::build('ecs-id-1');
+        $did->setEmergencyCallingService($ecs);
+        $relation = $did->emergencyCallingService();
+        $this->assertNotNull($relation);
+    }
+
     public function testDidEmergencyEnabled()
     {
         $did = new \Didww\Item\Did(['emergency_enabled' => true]);

@@ -140,6 +140,20 @@ class Did extends BaseItem
         return $this->hasOne(AddressVerification::class);
     }
 
+    public function emergencyCallingService()
+    {
+        return $this->hasOne(EmergencyCallingService::class);
+    }
+
+    public function setEmergencyCallingService(?EmergencyCallingService $emergencyCallingService)
+    {
+        if ($emergencyCallingService === null) {
+            $this->emergencyCallingService()->dissociate();
+        } else {
+            $this->emergencyCallingService()->associate($emergencyCallingService);
+        }
+    }
+
     public function setVoiceInTrunkGroup(VoiceInTrunkGroup $voiceInTrunkGroup)
     {
         $this->voiceInTrunkGroup()->associate($voiceInTrunkGroup);
