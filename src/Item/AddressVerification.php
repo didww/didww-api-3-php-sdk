@@ -62,12 +62,7 @@ class AddressVerification extends BaseItem
 
     public function getRejectReasons(): ?array
     {
-        $reasons = $this->attribute('reject_reasons');
-        if (null === $reasons) {
-            return null;
-        }
-
-        return explode('; ', $reasons);
+        return $this->attribute('reject_reasons');
     }
 
     public function getReference(): ?string
