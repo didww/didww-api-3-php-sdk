@@ -240,6 +240,33 @@ class VoiceOutTrunkTest extends CassetteTest
         $this->assertFalse($trunk->getEmergencyEnableAll());
     }
 
+    public function testPatchEmergencyEnableAll()
+    {
+        $trunk = \Didww\Item\VoiceOutTrunk::build('01234567-89ab-cdef-0123-456789abcdef');
+        $trunk->setEmergencyEnableAll(true);
+
+        $document = $trunk->save();
+        $this->assertFalse($document->hasErrors());
+        $savedTrunk = $document->getData();
+        $this->assertInstanceOf(\Didww\Item\VoiceOutTrunk::class, $savedTrunk);
+        $this->assertTrue($savedTrunk->getEmergencyEnableAll());
+    }
+
+    public function testPatchEmergencyDids()
+    {
+        $trunk = \Didww\Item\VoiceOutTrunk::build('01234567-89ab-cdef-0123-456789abcdef');
+        $dids = new \Swis\JsonApi\Client\Collection([
+            \Didww\Item\Did::build('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'),
+            \Didww\Item\Did::build('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'),
+        ]);
+        $trunk->setEmergencyDids($dids);
+
+        $document = $trunk->save();
+        $this->assertFalse($document->hasErrors());
+        $savedTrunk = $document->getData();
+        $this->assertInstanceOf(\Didww\Item\VoiceOutTrunk::class, $savedTrunk);
+    }
+
     public function testAuthenticationMethodSerialization()
     {
         $ipOnly = new \Didww\Item\AuthenticationMethod\IpOnly([
