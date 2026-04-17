@@ -23,6 +23,7 @@ class SharedCapacityGroup extends BaseItem
         'name',
         'shared_channels_count',
         'metered_channels_count',
+        'external_reference_id',
     ];
 
     public function setName(string $name)
@@ -53,6 +54,16 @@ class SharedCapacityGroup extends BaseItem
     public function getMeteredChannelsCount(): int
     {
         return $this->attributes['metered_channels_count'];
+    }
+
+    public function getExternalReferenceId(): ?string
+    {
+        return $this->attribute('external_reference_id');
+    }
+
+    public function setExternalReferenceId(?string $externalReferenceId)
+    {
+        $this->attributes['external_reference_id'] = $externalReferenceId;
     }
 
     public function getCreatedAt()
