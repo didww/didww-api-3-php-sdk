@@ -15,7 +15,7 @@ This SDK uses [swisnl/json-api-client](https://github.com/swisnl/json-api-client
 
 Read more https://doc.didww.com/api
 
-By default, this SDK sends the `X-DIDWW-API-Version: 2022-05-10` header with each request.
+By default, this SDK sends the `X-DIDWW-API-Version: 2026-04-16` header with each request.
 
 ## Requirements
 
@@ -113,8 +113,8 @@ $proofTypes = Didww\Item\ProofType::all()->getData();
 // Public Keys
 $publicKeys = Didww\Item\PublicKey::all()->getData();
 
-// Requirements
-$requirements = Didww\Item\Requirement::all()->getData();
+// Address Requirements (renamed from Requirements in 2026-04-16)
+$requirements = Didww\Item\AddressRequirement::all()->getData();
 
 // Balance (singleton)
 $balance = Didww\Item\Balance::find()->getData();
@@ -216,12 +216,20 @@ $groupDocument = $group->save();
 
 ### Voice Out Trunks
 
+Voice Out Trunks use a polymorphic `authentication_method` (2026-04-16).
+
 ```php
 use Didww\Enum\OnCliMismatchAction;
+use Didww\Item\AuthenticationMethod\IpOnly;
 
 $trunk = new Didww\Item\VoiceOutTrunk();
 $trunk->setName('My Outbound Trunk');
-$trunk->setAllowedSipIps(['0.0.0.0/0']);
+// NOTE: 203.0.113.0/24 is RFC 5737 TEST-NET-3 documentation space.
+// Replace with the real CIDR of your SIP infrastructure.
+$trunk->setAuthenticationMethod(new IpOnly([
+    'allowed_sip_ips' => ['203.0.113.0/24'],
+    'tech_prefix' => '',
+]));
 $trunk->setOnCliMismatchAction(OnCliMismatchAction::REPLACE_CLI);
 $trunk->setDefaultDid(Didww\Item\Did::build('did-uuid'));
 $trunkDocument = $trunk->save();
@@ -325,13 +333,15 @@ $addressDocument = $address->save();
 
 ### Exports
 
+In 2026-04-16, the `year`/`month` filters are replaced by a `from`/`to` datetime range.
+
 ```php
 use Didww\Enum\ExportType;
 
 $export = new Didww\Item\Export();
 $export->setExportType(ExportType::CDR_IN);
-$export->setFilterYear('2025');
-$export->setFilterMonth('01');
+$export->setFilterFrom('2025-01-01T00:00:00.000Z');  // inclusive
+$export->setFilterTo('2025-02-01T00:00:00.000Z');     // exclusive
 $exportDocument = $export->save();
 
 // Download the export when completed
@@ -414,7 +424,7 @@ $trunk->setOnCliMismatchAction('replace_cli');
 | `OnCliMismatchAction` | `string` | `SEND_ORIGINAL_CLI`, `REJECT_CALL`, `REPLACE_CLI` |
 | `DefaultDstAction` | `string` | `ALLOW_ALL`, `REJECT_ALL` |
 | `VoiceOutTrunkStatus` | `string` | `ACTIVE`, `BLOCKED` |
-| `Feature` | `string` | `VOICE_IN`, `VOICE_OUT`, `T38`, `SMS_IN`, `SMS_OUT` |
+| `Feature` | `string` | `VOICE_IN`, `VOICE_OUT`, `T38`, `SMS_IN`, `P2P`, `A2P`, `EMERGENCY`, `CNAM_OUT` |
 | `AreaLevel` | `string` | `WORLDWIDE`, `COUNTRY`, `AREA`, `CITY` |
 | `Codec` | `int` | `TELEPHONE_EVENT(6)`, `G723(7)`, `G729(8)`, `PCMU(9)`, `PCMA(10)`, ... |
 | `TransportProtocol` | `int` | `UDP(1)`, `TCP(2)`, `TLS(3)` |
@@ -481,7 +491,7 @@ $valid = $validator->validate(
 | AvailableDid | `Didww\Item\AvailableDid` | list, find |
 | ProofType | `Didww\Item\ProofType` | list, find |
 | PublicKey | `Didww\Item\PublicKey` | list, find |
-| Requirement | `Didww\Item\Requirement` | list, find |
+| AddressRequirement | `Didww\Item\AddressRequirement` | list, find |
 | SupportingDocumentTemplate | `Didww\Item\SupportingDocumentTemplate` | list, find |
 | Balance | `Didww\Item\Balance` | find |
 | Did | `Didww\Item\Did` | list, find, update, delete |
@@ -493,14 +503,19 @@ $valid = $validator->validate(
 | CapacityPool | `Didww\Item\CapacityPool` | list, find |
 | SharedCapacityGroup | `Didww\Item\SharedCapacityGroup` | list, find, create, update, delete |
 | Order | `Didww\Item\Order` | list, find, create |
-| Export | `Didww\Item\Export` | list, find, create |
+| Export | `Didww\Item\Export` | list, find, create, update |
 | Address | `Didww\Item\Address` | list, find, create, delete |
-| AddressVerification | `Didww\Item\AddressVerification` | list, create |
+| AddressVerification | `Didww\Item\AddressVerification` | list, create, update |
 | Identity | `Didww\Item\Identity` | list, find, create, delete |
 | EncryptedFile | `Didww\Item\EncryptedFile` | list, find, delete |
 | PermanentSupportingDocument | `Didww\Item\PermanentSupportingDocument` | create, delete |
 | Proof | `Didww\Item\Proof` | create, delete |
-| RequirementValidation | `Didww\Item\RequirementValidation` | create |
+| AddressRequirementValidation | `Didww\Item\AddressRequirementValidation` | create |
+| DidHistory | `Didww\Item\DidHistory` | list |
+| EmergencyRequirement | `Didww\Item\EmergencyRequirement` | list, find |
+| EmergencyRequirementValidation | `Didww\Item\EmergencyRequirementValidation` | create |
+| EmergencyCallingService | `Didww\Item\EmergencyCallingService` | list, find, update |
+| EmergencyVerification | `Didww\Item\EmergencyVerification` | list, find, create, update |
 
 ## Contributing
 
