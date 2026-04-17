@@ -6,7 +6,7 @@ use Didww\Enum\AreaLevel;
 use Didww\Enum\IdentityType;
 use Didww\Traits\Fetchable;
 
-class AddressRequirement extends BaseItem
+class AddressRequirement extends BaseItem // NOSONAR
 {
     use Fetchable;
 

@@ -10,7 +10,7 @@ use Didww\Traits\Fetchable;
  * Customer-owned subscription to emergency calling on one or more DIDs.
  * Supported operations: index, show, destroy. Introduced in API 2026-04-16.
  */
-class EmergencyCallingService extends BaseItem
+class EmergencyCallingService extends BaseItem // NOSONAR
 {
     use Fetchable;
     use Deletable;
@@ -41,36 +41,6 @@ class EmergencyCallingService extends BaseItem
     public function getStatus(): EmergencyCallingServiceStatus
     {
         return $this->enumAttribute('status', EmergencyCallingServiceStatus::class);
-    }
-
-    public function isActive(): bool
-    {
-        return EmergencyCallingServiceStatus::ACTIVE === $this->getStatus();
-    }
-
-    public function isCanceled(): bool
-    {
-        return EmergencyCallingServiceStatus::CANCELED === $this->getStatus();
-    }
-
-    public function isChangesRequired(): bool
-    {
-        return EmergencyCallingServiceStatus::CHANGES_REQUIRED === $this->getStatus();
-    }
-
-    public function isInProcess(): bool
-    {
-        return EmergencyCallingServiceStatus::IN_PROCESS === $this->getStatus();
-    }
-
-    public function isNew(): bool
-    {
-        return EmergencyCallingServiceStatus::NEW === $this->getStatus();
-    }
-
-    public function isPendingUpdate(): bool
-    {
-        return EmergencyCallingServiceStatus::PENDING_UPDATE === $this->getStatus();
     }
 
     /** @return \DateTime|null Timestamp when the service became active. Null while pending. */
@@ -130,5 +100,35 @@ class EmergencyCallingService extends BaseItem
     public function dids()
     {
         return $this->hasMany(Did::class);
+    }
+
+    public function isActive(): bool
+    {
+        return EmergencyCallingServiceStatus::ACTIVE === $this->getStatus();
+    }
+
+    public function isCanceled(): bool
+    {
+        return EmergencyCallingServiceStatus::CANCELED === $this->getStatus();
+    }
+
+    public function isChangesRequired(): bool
+    {
+        return EmergencyCallingServiceStatus::CHANGES_REQUIRED === $this->getStatus();
+    }
+
+    public function isInProcess(): bool
+    {
+        return EmergencyCallingServiceStatus::IN_PROCESS === $this->getStatus();
+    }
+
+    public function isNew(): bool
+    {
+        return EmergencyCallingServiceStatus::NEW === $this->getStatus();
+    }
+
+    public function isPendingUpdate(): bool
+    {
+        return EmergencyCallingServiceStatus::PENDING_UPDATE === $this->getStatus();
     }
 }

@@ -15,7 +15,8 @@ use Didww\Item\ProofType;
 echo "=== Identities ===\n";
 $document = Identity::all(['include' => 'country,birth_country']);
 $identities = $document->getData();
-echo 'Found '.count($identities)." identities\n";
+$foundPrefix = 'Found ';
+echo $foundPrefix.count($identities)." identities\n";
 
 foreach (array_slice($identities, 0, 10) as $identity) {
     echo "\nIdentity: ".$identity->getId()."\n";
@@ -35,7 +36,7 @@ foreach (array_slice($identities, 0, 10) as $identity) {
 echo "\n=== Addresses ===\n";
 $document = Address::all(['include' => 'identity']);
 $addresses = $document->getData();
-echo 'Found '.count($addresses)." addresses\n";
+echo $foundPrefix.count($addresses)." addresses\n";
 
 foreach (array_slice($addresses, 0, 10) as $address) {
     echo "\nAddress: ".$address->getId()."\n";
@@ -53,7 +54,7 @@ foreach (array_slice($addresses, 0, 10) as $address) {
 echo "\n=== Proof Types ===\n";
 $document = ProofType::all();
 $proofTypes = $document->getData();
-echo 'Found '.count($proofTypes)." proof types\n";
+echo $foundPrefix.count($proofTypes)." proof types\n";
 
 foreach (array_slice($proofTypes, 0, 10) as $pt) {
     echo $pt->getName().' ('.$pt->getEntityType().")\n";
