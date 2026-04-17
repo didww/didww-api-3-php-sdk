@@ -22,7 +22,18 @@ class VoiceInTrunkGroup extends BaseItem
     protected $visible = [
         'capacity_limit',
         'name',
+        'external_reference_id',
     ];
+
+    public function getExternalReferenceId(): ?string
+    {
+        return $this->attribute('external_reference_id');
+    }
+
+    public function setExternalReferenceId(?string $externalReferenceId)
+    {
+        $this->attributes['external_reference_id'] = $externalReferenceId;
+    }
 
     public function voiceInTrunks()
     {
