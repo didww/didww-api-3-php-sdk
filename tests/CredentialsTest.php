@@ -8,7 +8,7 @@ class CredentialsTest extends \PHPUnit\Framework\TestCase
     {
         $credentials = new \Didww\Credentials('PLACEYOURAPIKEYHERE', 'sandbox');
 
-        $this->assertEquals('2022-05-10', $credentials->getVersion());
+        $this->assertEquals('2026-04-16', $credentials->getVersion());
     }
 
     public function testCustomApiVersion()
