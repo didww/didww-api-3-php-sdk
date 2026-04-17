@@ -76,4 +76,12 @@ class DidGroupTest extends CassetteTest
         $this->assertEquals('Any', $requirement->getAttributes()['identity_type']);
         $this->assertSame(\Didww\Enum\IdentityType::ANY, $requirement->getIdentityType());
     }
+
+    public function testNewFeatureEnums()
+    {
+        $this->assertEquals('p2p', \Didww\Enum\Feature::P2P->value);
+        $this->assertEquals('a2p', \Didww\Enum\Feature::A2P->value);
+        $this->assertEquals('emergency', \Didww\Enum\Feature::EMERGENCY->value);
+        $this->assertEquals('cnam_out', \Didww\Enum\Feature::CNAM_OUT->value);
+    }
 }
