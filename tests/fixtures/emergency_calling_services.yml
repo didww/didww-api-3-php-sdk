@@ -1,0 +1,76 @@
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/emergency_calling_services'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":[{"id":"11111111-2222-3333-4444-555555555555","type":"emergency_calling_services","attributes":{"name":"London Office ECS","reference":"ECS-0001","status":"active","activated_at":"2026-03-01T10:00:00.000Z","canceled_at":null,"created_at":"2026-02-28T09:00:00.000Z","renew_date":"2026-05-01T00:00:00.000Z"},"relationships":{"country":{"data":{"id":"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee","type":"countries"}},"did_group_type":{"data":{"id":"ffffffff-0000-1111-2222-333333333333","type":"did_group_types"}},"order":{"data":{"id":"99999999-8888-7777-6666-555555555555","type":"orders"}},"emergency_requirement":{"data":{"id":"44444444-3333-2222-1111-000000000000","type":"emergency_requirements"}},"emergency_verification":{"data":null},"dids":{"data":[{"id":"11111111-aaaa-bbbb-cccc-dddddddddddd","type":"dids"}]}}}],"meta":{"total_records":1}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/emergency_calling_services/01234567-89ab-cdef-0123-456789abcdef'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"01234567-89ab-cdef-0123-456789abcdef","type":"emergency_calling_services","attributes":{"name":"Berlin Office ECS","reference":"ECS-0042","status":"pending update","activated_at":"2026-03-15T09:00:00.000Z","canceled_at":null,"created_at":"2026-03-14T11:00:00.000Z","renew_date":"2026-06-15T00:00:00.000Z"},"relationships":{"country":{"data":{"id":"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee","type":"countries"}},"did_group_type":{"data":{"id":"ffffffff-0000-1111-2222-333333333333","type":"did_group_types"}},"order":{"data":{"id":"99999999-8888-7777-6666-555555555555","type":"orders"}},"emergency_requirement":{"data":{"id":"44444444-3333-2222-1111-000000000000","type":"emergency_requirements"}},"emergency_verification":{"data":{"id":"77777777-6666-5555-4444-333333333333","type":"emergency_verifications"}},"dids":{"data":[{"id":"11111111-aaaa-bbbb-cccc-dddddddddddd","type":"dids"}]}}}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/emergency_calling_services/01234567-89ab-cdef-0123-456789abcdef?include=emergency_requirement%2Cemergency_verification'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"01234567-89ab-cdef-0123-456789abcdef","type":"emergency_calling_services","attributes":{"name":"Berlin Office ECS","reference":"ECS-0042","status":"pending_update","activated_at":"2026-03-15T09:00:00.000Z","canceled_at":null,"created_at":"2026-03-14T11:00:00.000Z","renew_date":"2026-06-15T00:00:00.000Z"},"relationships":{"country":{"data":{"id":"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee","type":"countries"}},"did_group_type":{"data":{"id":"ffffffff-0000-1111-2222-333333333333","type":"did_group_types"}},"order":{"data":{"id":"99999999-8888-7777-6666-555555555555","type":"orders"}},"emergency_requirement":{"data":{"id":"44444444-3333-2222-1111-000000000000","type":"emergency_requirements"}},"emergency_verification":{"data":{"id":"77777777-6666-5555-4444-333333333333","type":"emergency_verifications"}},"dids":{"data":[{"id":"11111111-aaaa-bbbb-cccc-dddddddddddd","type":"dids"}]}}},"included":[{"id":"44444444-3333-2222-1111-000000000000","type":"emergency_requirements","attributes":{"identity_type":"personal","address_area_level":"city","personal_area_level":"country","business_area_level":"country","address_mandatory_fields":["Street","Building Number","Zip Code","City"],"personal_mandatory_fields":["First Name","Last Name"],"business_mandatory_fields":["Company Name"],"estimate_setup_time":3,"requirement_restriction_message":null},"relationships":{"country":{"data":{"id":"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee","type":"countries"}},"did_group_type":{"data":{"id":"ffffffff-0000-1111-2222-333333333333","type":"did_group_types"}}}},{"id":"77777777-6666-5555-4444-333333333333","type":"emergency_verifications","attributes":{"reference":"EV-0099","status":"approved","reject_reasons":null,"reject_comment":null,"callback_url":null,"callback_method":null,"external_reference_id":null,"created_at":"2026-03-14T12:00:00.000Z"},"relationships":{"address":{"data":{"id":"eeeeeeee-dddd-cccc-bbbb-aaaaaaaaaaaa","type":"addresses"}},"emergency_calling_service":{"data":{"id":"01234567-89ab-cdef-0123-456789abcdef","type":"emergency_calling_services"}},"dids":{"data":[{"id":"11111111-aaaa-bbbb-cccc-dddddddddddd","type":"dids"}]}}}]}'
+-
+    request:
+        method: DELETE
+        url: 'https://sandbox-api.didww.com/v3/emergency_calling_services/01234567-89ab-cdef-0123-456789abcdef'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '204'
+            message: 'No Content'
+        headers:
+            Content-Type: application/vnd.api+json

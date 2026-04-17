@@ -42,5 +42,7 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('did_history', Item\DidHistory::class);
         $this->setMapping('emergency_requirements', Item\EmergencyRequirement::class);
         $this->setMapping('emergency_requirement_validations', Item\EmergencyRequirementValidation::class);
+        $this->setMapping('emergency_calling_services', Item\EmergencyCallingService::class);
+        $this->setMapping('emergency_verifications', Item\EmergencyVerification::class);
     }
 }
