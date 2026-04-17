@@ -238,6 +238,27 @@ class DidTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\Did', $did);
     }
 
+    public function testUnassignEmergencyCallingService()
+    {
+        $did = \Didww\Item\Did::build('44957076-778a-4802-b60c-d22db0cda284');
+        $did->setEmergencyCallingService(null);
+
+        $this->assertEquals(json_encode([
+            'type' => 'dids',
+            'id' => '44957076-778a-4802-b60c-d22db0cda284',
+            'relationships' => [
+                'emergency_calling_service' => [
+                    'data' => null,
+                ],
+            ],
+        ]), json_encode($did->toJsonApiArray()));
+
+        $document = $did->save();
+        $this->assertFalse($document->hasErrors());
+        $savedDid = $document->getData();
+        $this->assertInstanceOf('Didww\Item\Did', $savedDid);
+    }
+
     public function testDidIdentityRelation()
     {
         $did = new \Didww\Item\Did();
