@@ -24,6 +24,7 @@ if ($capacityGroupDocument->hasErrors()) {
         $capacityGroup->getName(), // "My New Channel Group 5c2f27fa320f2"
         $capacityGroup->getCreatedAt(), // object(DateTime)
         $capacityGroup->getMeteredChannelsCount(),// int(10),
-        $capacityGroup->getSharedChannelsCount() // int(1)
+        $capacityGroup->getSharedChannelsCount(), // int(1)
+        $capacityGroup->getExternalReferenceId() // 2026-04-16
     );
 }
