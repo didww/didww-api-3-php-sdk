@@ -24,6 +24,7 @@ class Address extends BaseItem
         'postal_code',
         'address',
         'description',
+        'external_reference_id',
     ];
 
     public function getCityName(): string
@@ -64,6 +65,16 @@ class Address extends BaseItem
     public function setDescription(string $description)
     {
         $this->attributes['description'] = $description;
+    }
+
+    public function getExternalReferenceId(): ?string
+    {
+        return $this->attribute('external_reference_id');
+    }
+
+    public function setExternalReferenceId(?string $externalReferenceId)
+    {
+        $this->attributes['external_reference_id'] = $externalReferenceId;
     }
 
     public function getCreatedAt(): ?\DateTime
