@@ -37,6 +37,18 @@ class AddressRequirementValidationTest extends CassetteTest
         $this->assertTrue($requirementValidationDocument->hasErrors());
     }
 
+    public function testCreateAddressRequirementValidation204()
+    {
+        $address = \Didww\Item\Address::build('aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee');
+        $requirement = \Didww\Item\AddressRequirement::build('11111111-2222-3333-4444-555555555555');
+
+        $validation = new \Didww\Item\AddressRequirementValidation();
+        $validation->setAddress($address);
+        $validation->setAddressRequirement($requirement);
+        $document = $validation->save();
+        $this->assertFalse($document->hasErrors());
+    }
+
     public function testEndpoint()
     {
         $this->assertEquals('/address_requirement_validations', \Didww\Item\AddressRequirementValidation::getEndpoint());

@@ -25,6 +25,20 @@ class EmergencyRequirementValidationTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\EmergencyRequirementValidation', $data);
     }
 
+    public function testCreateEmergencyRequirementValidation204()
+    {
+        $address = \Didww\Item\Address::build('aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee');
+        $identity = \Didww\Item\Identity::build('11111111-aaaa-bbbb-cccc-dddddddddddd');
+        $emergencyRequirement = \Didww\Item\EmergencyRequirement::build('22222222-3333-4444-5555-666666666666');
+
+        $validation = new \Didww\Item\EmergencyRequirementValidation();
+        $validation->setAddress($address);
+        $validation->setIdentity($identity);
+        $validation->setEmergencyRequirement($emergencyRequirement);
+        $document = $validation->save();
+        $this->assertFalse($document->hasErrors());
+    }
+
     public function testEndpoint()
     {
         $this->assertEquals(
