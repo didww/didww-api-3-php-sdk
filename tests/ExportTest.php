@@ -16,8 +16,8 @@ class ExportTest extends CassetteTest
         $export = new \Didww\Item\Export();
         $export->setExportType('cdr_in');
         $export->setFilterDidNumber('1234556789');
-        $export->setFilterYear('2019');
-        $export->setFilterMonth('01');
+        $export->setFilterFrom('2026-04-01 00:00:00');
+        $export->setFilterTo('2026-04-15 23:59:59');
 
         $this->assertEquals($export->toJsonApiArray(), [
             'type' => 'exports',
@@ -25,8 +25,8 @@ class ExportTest extends CassetteTest
                 'export_type' => 'cdr_in',
                 'filters' => [
                     'did_number' => '1234556789',
-                    'year' => '2019',
-                    'month' => '01',
+                    'from' => '2026-04-01 00:00:00',
+                    'to' => '2026-04-15 23:59:59',
                 ],
             ],
         ]);
@@ -49,9 +49,8 @@ class ExportTest extends CassetteTest
         $export = new \Didww\Item\Export();
         $export->setExportType('cdr_out');
         $export->setFilterVoiceOutTrunkId('1f6fc2bd-f081-4202-9b1a-d9cb88d942b9');
-        $export->setFilterYear('2019');
-        $export->setFilterMonth('01');
-        $export->setFilterDay('03');
+        $export->setFilterFrom('2026-04-01 00:00:00');
+        $export->setFilterTo('2026-04-15 23:59:59');
 
         $this->assertEquals($export->toJsonApiArray(), [
             'type' => 'exports',
@@ -59,9 +58,8 @@ class ExportTest extends CassetteTest
                 'export_type' => 'cdr_out',
                 'filters' => [
                     'voice_out_trunk.id' => '1f6fc2bd-f081-4202-9b1a-d9cb88d942b9',
-                    'year' => '2019',
-                    'month' => '01',
-                    'day' => '03',
+                    'from' => '2026-04-01 00:00:00',
+                    'to' => '2026-04-15 23:59:59',
                 ],
             ],
         ]);

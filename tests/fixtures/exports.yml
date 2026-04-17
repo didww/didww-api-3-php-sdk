@@ -11,7 +11,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"exports","attributes":{"export_type":"cdr_in","filters":{"did_number":"1234556789","year":"2019","month":"01"}}}}'
+        body: '{"data":{"type":"exports","attributes":{"export_type":"cdr_in","filters":{"did_number":"1234556789","from":"2026-04-01 00:00:00","to":"2026-04-15 23:59:59"}}}}'
     response:
         status:
             http_version: '1.1'
@@ -51,7 +51,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"exports","attributes":{"export_type":"cdr_out","filters":{"voice_out_trunk.id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9","year":"2019","month":"01","day":"03"}}}}'
+        body: '{"data":{"type":"exports","attributes":{"export_type":"cdr_out","filters":{"voice_out_trunk.id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9","from":"2026-04-01 00:00:00","to":"2026-04-15 23:59:59"}}}}'
     response:
         status:
             http_version: '1.1'

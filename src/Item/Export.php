@@ -33,19 +33,14 @@ class Export extends BaseItem
         $this->filters['did_number'] = $didNumber;
     }
 
-    public function setFilterYear($year)
+    public function setFilterFrom(string $from)
     {
-        $this->filters['year'] = $year;
+        $this->filters['from'] = $from;
     }
 
-    public function setFilterMonth($month)
+    public function setFilterTo(string $to)
     {
-        $this->filters['month'] = $month;
-    }
-
-    public function setFilterDay($day)
-    {
-        $this->filters['day'] = $day;
+        $this->filters['to'] = $to;
     }
 
     public function setFilterVoiceOutTrunkId($voiceOutTrunkId)
@@ -104,7 +99,7 @@ class Export extends BaseItem
             CURLOPT_HTTPHEADER => [
                 "Api-Key: $apiKey",
                 'User-Agent: didww-php-sdk/'.\Didww\Client::sdkVersion(),
-                'X-DIDWW-API-Version: '.(\Didww\Configuration::getCredentials()->getVersion() ?? '2022-05-10'),
+                'X-DIDWW-API-Version: '.(\Didww\Configuration::getCredentials()->getVersion() ?? '2026-04-16'),
             ],
             CURLOPT_FILE => $destHandle,
             CURLOPT_FOLLOWLOCATION => true,
