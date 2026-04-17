@@ -17,10 +17,10 @@ class AddressRequirementValidation extends BaseItem
 
     public function requirement()
     {
-        return $this->hasOne(Requirement::class);
+        return $this->hasOne(AddressRequirement::class);
     }
 
-    public function setRequirement(Requirement $requirement)
+    public function setRequirement(AddressRequirement $requirement)
     {
         $this->requirement()->associate($requirement);
     }

@@ -32,7 +32,7 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('permanent_supporting_documents', Item\PermanentSupportingDocument::class);
         $this->setMapping('proofs', Item\Proof::class);
         $this->setMapping('proof_types', Item\ProofType::class);
-        $this->setMapping('requirements', Item\Requirement::class);
+        $this->setMapping('address_requirements', Item\AddressRequirement::class);
         $this->setMapping('supporting_document_templates', Item\SupportingDocumentTemplate::class);
         $this->setMapping('public_keys', Item\PublicKey::class);
         $this->setMapping('areas', Item\Area::class);

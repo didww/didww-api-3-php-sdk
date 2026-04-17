@@ -41,9 +41,9 @@ class DidGroup extends BaseItem
         return $this->hasOne(DidGroupType::class);
     }
 
-    public function requirement()
+    public function addressRequirement()
     {
-        return $this->hasOne(Requirement::class);
+        return $this->hasOne(AddressRequirement::class);
     }
 
     public function getAreaName(): string

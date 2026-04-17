@@ -4,20 +4,20 @@ namespace Didww\Tests;
 
 use Didww\Enum\AreaLevel;
 
-class RequirementTest extends CassetteTest
+class AddressRequirementTest extends CassetteTest
 {
     protected function getCassetteName(): string
     {
-        return 'requirements.yml';
+        return 'address_requirements.yml';
     }
 
     public function testAllWithIncludesAndPagination()
     {
-        $requirementsDocument = \Didww\Item\Requirement::all(
+        $requirementsDocument = \Didww\Item\AddressRequirement::all(
             ['page' => ['size' => 5, 'number' => 1]]
         );
         $requirements = $requirementsDocument->getData();
-        $this->assertContainsOnlyInstancesOf('Didww\Item\Requirement', $requirements);
+        $this->assertContainsOnlyInstancesOf('Didww\Item\AddressRequirement', $requirements);
 
         $this->assertEquals(73, $requirementsDocument->getMeta()['total_records']);
     }
@@ -35,7 +35,7 @@ class RequirementTest extends CassetteTest
             'business_proof_types',
             'address_proof_types',
         ];
-        $requirementsDocument = \Didww\Item\Requirement::find(
+        $requirementsDocument = \Didww\Item\AddressRequirement::find(
             '25d12afe-1ec6-4fe3-9621-b250dd1fb959',
             [
                 'include' => join(',', $includes),
@@ -43,7 +43,7 @@ class RequirementTest extends CassetteTest
             ]
         );
         $requirement = $requirementsDocument->getData();
-        $this->assertInstanceOf('Didww\Item\Requirement', $requirement);
+        $this->assertInstanceOf('Didww\Item\AddressRequirement', $requirement);
         $this->assertEquals([
             'identity_type' => 'Any',
             'personal_area_level' => 'WorldWide',
@@ -80,5 +80,10 @@ class RequirementTest extends CassetteTest
         $this->assertNotNull($requirement->personalProofTypes());
         $this->assertNotNull($requirement->businessProofTypes());
         $this->assertNotNull($requirement->addressProofTypes());
+    }
+
+    public function testEndpoint()
+    {
+        $this->assertEquals('/address_requirements', \Didww\Item\AddressRequirement::getEndpoint());
     }
 }
