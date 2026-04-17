@@ -21,7 +21,8 @@ $trunkSipConfig = new Didww\Item\Configuration\Sip([
 
 $trunk = new Didww\Item\VoiceInTrunk();
 // set name (should be unique)
-$trunk->setName('My New Custom Sip Trunk '.uniqid());
+$suffix = bin2hex(random_bytes(4));
+$trunk->setName("My New Custom Sip Trunk $suffix");
 // set CLI format using enum
 $trunk->setCliFormat(CliFormat::RAW);
 // set configuration object

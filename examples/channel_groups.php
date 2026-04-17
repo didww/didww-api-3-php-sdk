@@ -4,7 +4,8 @@ require_once 'bootstrap.php';
 
 $capacityGroup = new Didww\Item\SharedCapacityGroup();
 // set name (should be unique)
-$capacityGroup->setName('My New Channel Group '.uniqid());
+$suffix = bin2hex(random_bytes(4));
+$capacityGroup->setName("My New Channel Group $suffix");
 
 $capacityPool = Didww\Item\CapacityPool::all()->getData()[0];
 $capacityGroup->setMeteredChannelsCount(10);
