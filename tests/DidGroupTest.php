@@ -38,7 +38,9 @@ class DidGroupTest extends CassetteTest
             'is_metered' => false,
             'area_name' => 'Aachen',
             'allow_additional_channels' => true,
+            'service_restrictions' => null,
         ]);
+        $this->assertNull($didGroupDocument->getData()->getServiceRestrictions());
 
         $this->assertInstanceOf('Didww\Item\Country', $countryRelation->getIncluded());
         $this->assertEquals($countryRelation->getIncluded()->getAttributes(), [

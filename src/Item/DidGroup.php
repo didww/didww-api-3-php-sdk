@@ -73,4 +73,9 @@ class DidGroup extends BaseItem
     {
         return $this->getAttributes()['allow_additional_channels'];
     }
+
+    public function getServiceRestrictions(): ?string
+    {
+        return $this->attribute('service_restrictions');
+    }
 }
