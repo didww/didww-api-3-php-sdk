@@ -41,5 +41,6 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('voice_out_trunk_regenerate_credentials', Item\VoiceOutTrunkRegenerateCredential::class);
         $this->setMapping('did_history', Item\DidHistory::class);
         $this->setMapping('emergency_requirements', Item\EmergencyRequirement::class);
+        $this->setMapping('emergency_requirement_validations', Item\EmergencyRequirementValidation::class);
     }
 }
