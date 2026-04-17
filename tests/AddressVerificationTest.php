@@ -61,6 +61,18 @@ class AddressVerificationTest extends CassetteTest
         $this->assertNull($av->getReference());
     }
 
+    public function testUpdateAddressVerificationExternalReferenceId()
+    {
+        $uuid = '429e6d4e-2ee9-4953-aa98-0b3ac07f0f96';
+        $verification = \Didww\Item\AddressVerification::build($uuid);
+        $verification->setExternalReferenceId('updated-ref-42');
+        $document = $verification->save();
+
+        $data = $document->getData();
+        $this->assertInstanceOf('Didww\Item\AddressVerification', $data);
+        $this->assertEquals('updated-ref-42', $data->getExternalReferenceId());
+    }
+
     public function testCreateAddressVerification()
     {
         $attributes = [

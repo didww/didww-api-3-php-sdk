@@ -123,3 +123,24 @@
             Transfer-Encoding: chunked
             Connection: keep-alive
         body: '{"data":{"id":"429e6d4e-2ee9-4953-aa98-0b3ac07f0f96","type":"address_verifications","attributes":{"service_description":null,"callback_url":null,"callback_method":null,"status":"Rejected","reject_reasons":["Address cannot be validated","Proof of address should be not older than of 6 months"],"reference":"ODW-879912","created_at":"2020-10-28T08:29:29.960Z","reject_comment":"Please re-submit with a more recent utility bill.","external_reference_id":"crm-verif-0001"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/address"}}}},"meta":{"api_version":"2022-05-10"}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"address_verifications","id":"429e6d4e-2ee9-4953-aa98-0b3ac07f0f96","attributes":{"external_reference_id":"updated-ref-42"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"429e6d4e-2ee9-4953-aa98-0b3ac07f0f96","type":"address_verifications","attributes":{"service_description":null,"callback_url":null,"callback_method":null,"status":"Pending","reject_reasons":null,"reject_comment":null,"reference":"ODW-879912","created_at":"2020-10-28T08:29:29.960Z","external_reference_id":"updated-ref-42"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/address"}}}}}'
