@@ -6,6 +6,7 @@ use Didww\Enum\CallbackMethod;
 use Didww\Enum\OrderStatus;
 use Didww\Item\OrderItem\Capacity;
 use Didww\Item\OrderItem\Did as DidOrderItem;
+use Didww\Item\OrderItem\Emergency;
 use Didww\Item\OrderItem\Generic;
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
@@ -35,6 +36,7 @@ class Order extends BaseItem
     private const ITEM_CLASSES = [
         'did' => DidOrderItem::class,
         'capacity' => Capacity::class,
+        'emergency' => Emergency::class,
         'generic' => Generic::class,
     ];
 

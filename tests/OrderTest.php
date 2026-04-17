@@ -353,4 +353,48 @@ class OrderTest extends BaseTest
 
         $this->assertEquals('capacity_order_items', $item->getType());
     }
+
+    public function testEmergencyOrderItem()
+    {
+        $item = new \Didww\Item\OrderItem\Emergency([
+            'qty' => 1,
+            'emergency_calling_service_id' => 'b6d9d793-578d-42d3-bc33-73dd8155e615',
+        ]);
+
+        $this->assertEquals('emergency_order_items', $item->getType());
+        $this->assertEquals(1, $item->getQty());
+        $this->assertEquals('b6d9d793-578d-42d3-bc33-73dd8155e615', $item->getEmergencyCallingServiceId());
+
+        $this->assertEquals([
+            'type' => 'emergency_order_items',
+            'attributes' => [
+                'qty' => 1,
+                'emergency_calling_service_id' => 'b6d9d793-578d-42d3-bc33-73dd8155e615',
+            ],
+        ], $item->toJsonApiArray());
+    }
+
+    public function testEmergencyOrderItemReturnedProperties()
+    {
+        $item = new \Didww\Item\OrderItem\Emergency([
+            'nrc' => '5.0',
+            'mrc' => '25.0',
+            'prorated_mrc' => false,
+            'billed_from' => '2026-04-16',
+            'billed_to' => '2026-05-15',
+        ]);
+
+        $this->assertEquals(5.0, $item->getNrc());
+        $this->assertEquals(25.0, $item->getMrc());
+        $this->assertFalse($item->getProratedMrc());
+        $this->assertEquals('2026-04-16', $item->getBilledFrom());
+        $this->assertEquals('2026-05-15', $item->getBilledTo());
+    }
+
+    public function testEmergencyOrderItemFactory()
+    {
+        $item = \Didww\Item\Order::itemFactory('emergency', ['qty' => 2, 'emergency_calling_service_id' => 'test-id']);
+        $this->assertInstanceOf(\Didww\Item\OrderItem\Emergency::class, $item);
+        $this->assertEquals(2, $item->getQty());
+    }
 }
