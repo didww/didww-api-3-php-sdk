@@ -40,6 +40,7 @@ class VoiceOutTrunk extends BaseItem
         'callback_url',
         'authentication_method',
         'external_reference_id',
+        'emergency_enable_all',
     ];
 
     public function getName(): string
@@ -190,6 +191,16 @@ class VoiceOutTrunk extends BaseItem
     public function setAuthenticationMethod(AuthenticationMethodBase $authenticationMethod)
     {
         $this->attributes['authentication_method'] = $authenticationMethod->toJsonApiArray();
+    }
+
+    public function getEmergencyEnableAll(): ?bool
+    {
+        return $this->attribute('emergency_enable_all');
+    }
+
+    public function setEmergencyEnableAll(bool $emergencyEnableAll)
+    {
+        $this->attributes['emergency_enable_all'] = $emergencyEnableAll;
     }
 
     public function getExternalReferenceId(): ?string

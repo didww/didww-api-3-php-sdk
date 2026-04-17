@@ -193,6 +193,17 @@ class VoiceOutTrunkTest extends CassetteTest
         $this->assertNull($trunk->getExternalReferenceId());
     }
 
+    public function testVoiceOutTrunkEmergencyEnableAll()
+    {
+        $trunk = new \Didww\Item\VoiceOutTrunk();
+
+        $trunk->setEmergencyEnableAll(true);
+        $this->assertTrue($trunk->getEmergencyEnableAll());
+
+        $trunk->setEmergencyEnableAll(false);
+        $this->assertFalse($trunk->getEmergencyEnableAll());
+    }
+
     public function testAuthenticationMethodSerialization()
     {
         $ipOnly = new \Didww\Item\AuthenticationMethod\IpOnly([
