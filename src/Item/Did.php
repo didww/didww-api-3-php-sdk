@@ -154,6 +154,11 @@ class Did extends BaseItem
         }
     }
 
+    public function emergencyVerification()
+    {
+        return $this->hasOne(EmergencyVerification::class);
+    }
+
     public function setVoiceInTrunkGroup(VoiceInTrunkGroup $voiceInTrunkGroup)
     {
         $this->voiceInTrunkGroup()->associate($voiceInTrunkGroup);
