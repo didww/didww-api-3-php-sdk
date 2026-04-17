@@ -39,6 +39,7 @@ class VoiceOutTrunk extends BaseItem
         'rtp_ping',
         'callback_url',
         'authentication_method',
+        'external_reference_id',
     ];
 
     public function getName(): string
@@ -189,6 +190,16 @@ class VoiceOutTrunk extends BaseItem
     public function setAuthenticationMethod(AuthenticationMethodBase $authenticationMethod)
     {
         $this->attributes['authentication_method'] = $authenticationMethod->toJsonApiArray();
+    }
+
+    public function getExternalReferenceId(): ?string
+    {
+        return $this->attribute('external_reference_id');
+    }
+
+    public function setExternalReferenceId(?string $externalReferenceId)
+    {
+        $this->attributes['external_reference_id'] = $externalReferenceId;
     }
 
     public function getCreatedAt()
