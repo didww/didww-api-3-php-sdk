@@ -29,9 +29,9 @@ class DidReservation extends BaseItem
         $this->availableDid()->associate($availableDid);
     }
 
-    public function getExpireAt(): ?\DateTime
+    public function getExpiresAt(): ?\DateTime
     {
-        return $this->dateAttribute('expire_at');
+        return $this->dateAttribute('expires_at');
     }
 
     public function getCreatedAt(): ?\DateTime
