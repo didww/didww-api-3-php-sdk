@@ -23,9 +23,9 @@ class EncryptedFile extends BaseItem
         return $this->attribute('description');
     }
 
-    public function getExpireAt(): ?\DateTime
+    public function getExpiresAt(): ?\DateTime
     {
-        return $this->dateAttribute('expire_at');
+        return $this->dateAttribute('expires_at');
     }
 
     /* POST /v3/encrypted_files
