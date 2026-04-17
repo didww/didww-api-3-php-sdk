@@ -186,6 +186,16 @@ class Identity extends BaseItem
         $this->country()->associate($country);
     }
 
+    public function birthCountry()
+    {
+        return $this->hasOne(Country::class, 'birth_country');
+    }
+
+    public function setBirthCountry(Country $birthCountry)
+    {
+        $this->birthCountry()->associate($birthCountry);
+    }
+
     public function proofs()
     {
         return $this->hasMany(Proof::class);

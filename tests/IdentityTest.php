@@ -207,4 +207,28 @@ class IdentityTest extends CassetteTest
         $attributes = $identity->getAttributes();
         $this->assertEquals('test@example.com', $attributes['contact_email']);
     }
+
+    public function testBirthCountryRelation()
+    {
+        $identity = new \Didww\Item\Identity();
+        $country = \Didww\Item\Country::build('country-id');
+        $identity->setBirthCountry($country);
+        $relation = $identity->birthCountry();
+        $this->assertNotNull($relation);
+    }
+
+    public function testBirthCountryIncluded()
+    {
+        $uuid = 'aaaa1111-bbbb-2222-cccc-333344445555';
+        $document = \Didww\Item\Identity::find($uuid, ['include' => 'birth_country']);
+        $identity = $document->getData();
+        $this->assertInstanceOf('Didww\Item\Identity', $identity);
+        $this->assertEquals($uuid, $identity->getId());
+
+        $birthCountry = $identity->birthCountry()->getIncluded();
+        $this->assertInstanceOf('Didww\Item\Country', $birthCountry);
+        $this->assertEquals('Germany', $birthCountry->getName());
+        $this->assertEquals('DE', $birthCountry->getIso());
+        $this->assertEquals('49', $birthCountry->getPrefix());
+    }
 }
