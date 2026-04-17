@@ -1,3 +1,7 @@
 /vendor
 /examples/vendor
 /.php_cs.cache
+/.claude/
+/build/
+composer.lock
+/examples/composer.lock
