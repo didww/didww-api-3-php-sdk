@@ -162,4 +162,22 @@ class ExportTest extends CassetteTest
         $export->setCallbackMethod('POST');
         $this->assertEquals(\Didww\Enum\CallbackMethod::POST, $export->getCallbackMethod());
     }
+
+    public function testExportStatusPredicates()
+    {
+        $pending = new \Didww\Item\Export(['status' => 'Pending']);
+        $this->assertTrue($pending->isPending());
+        $this->assertFalse($pending->isProcessing());
+        $this->assertFalse($pending->isCompleted());
+
+        $processing = new \Didww\Item\Export(['status' => 'Processing']);
+        $this->assertFalse($processing->isPending());
+        $this->assertTrue($processing->isProcessing());
+        $this->assertFalse($processing->isCompleted());
+
+        $completed = new \Didww\Item\Export(['status' => 'Completed']);
+        $this->assertFalse($completed->isPending());
+        $this->assertFalse($completed->isProcessing());
+        $this->assertTrue($completed->isCompleted());
+    }
 }

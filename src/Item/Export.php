@@ -3,6 +3,7 @@
 namespace Didww\Item;
 
 use Didww\Enum\CallbackMethod;
+use Didww\Enum\ExportStatus;
 use Didww\Enum\ExportType;
 use Didww\Traits\Fetchable;
 use Didww\Traits\Saveable;
@@ -55,6 +56,26 @@ class Export extends BaseItem
         $data['attributes']['filters'] = $this->filters;
 
         return $data;
+    }
+
+    public function getStatus(): ExportStatus
+    {
+        return $this->enumAttribute('status', ExportStatus::class);
+    }
+
+    public function isPending(): bool
+    {
+        return $this->getStatus() === ExportStatus::PENDING;
+    }
+
+    public function isProcessing(): bool
+    {
+        return $this->getStatus() === ExportStatus::PROCESSING;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->getStatus() === ExportStatus::COMPLETED;
     }
 
     public function getExportType(): ExportType
