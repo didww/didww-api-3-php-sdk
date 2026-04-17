@@ -2,6 +2,7 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\EmergencyCallingServiceStatus;
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
 
@@ -31,9 +32,39 @@ class EmergencyCallingService extends BaseItem
         return $this->attribute('reference');
     }
 
-    public function getStatus(): string
+    public function getStatus(): EmergencyCallingServiceStatus
     {
-        return $this->attributes['status'];
+        return $this->enumAttribute('status', EmergencyCallingServiceStatus::class);
+    }
+
+    public function isActive(): bool
+    {
+        return $this->getStatus() === EmergencyCallingServiceStatus::ACTIVE;
+    }
+
+    public function isCanceled(): bool
+    {
+        return $this->getStatus() === EmergencyCallingServiceStatus::CANCELED;
+    }
+
+    public function isChangesRequired(): bool
+    {
+        return $this->getStatus() === EmergencyCallingServiceStatus::CHANGES_REQUIRED;
+    }
+
+    public function isInProcess(): bool
+    {
+        return $this->getStatus() === EmergencyCallingServiceStatus::IN_PROCESS;
+    }
+
+    public function isNew(): bool
+    {
+        return $this->getStatus() === EmergencyCallingServiceStatus::NEW;
+    }
+
+    public function isPendingUpdate(): bool
+    {
+        return $this->getStatus() === EmergencyCallingServiceStatus::PENDING_UPDATE;
     }
 
     public function getActivatedAt()

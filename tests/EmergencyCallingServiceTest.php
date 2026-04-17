@@ -19,7 +19,9 @@ class EmergencyCallingServiceTest extends CassetteTest
         $first = $data[0];
         $this->assertEquals('London Office ECS', $first->getName());
         $this->assertEquals('ECS-0001', $first->getReference());
-        $this->assertEquals('active', $first->getStatus());
+        $this->assertEquals(\Didww\Enum\EmergencyCallingServiceStatus::ACTIVE, $first->getStatus());
+        $this->assertTrue($first->isActive());
+        $this->assertFalse($first->isCanceled());
         $this->assertInstanceOf(\DateTime::class, $first->getActivatedAt());
         $this->assertNull($first->getCanceledAt());
         $this->assertInstanceOf(\DateTime::class, $first->getCreatedAt());
@@ -36,7 +38,9 @@ class EmergencyCallingServiceTest extends CassetteTest
         $this->assertEquals($uuid, $data->getId());
         $this->assertEquals('Berlin Office ECS', $data->getName());
         $this->assertEquals('ECS-0042', $data->getReference());
-        $this->assertEquals('pending update', $data->getStatus());
+        $this->assertEquals(\Didww\Enum\EmergencyCallingServiceStatus::PENDING_UPDATE, $data->getStatus());
+        $this->assertTrue($data->isPendingUpdate());
+        $this->assertFalse($data->isActive());
     }
 
     public function testFindEmergencyCallingServiceWithIncludes()
