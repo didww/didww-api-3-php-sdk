@@ -24,6 +24,7 @@ class Export extends BaseItem
         'export_type',
         'callback_url',
         'callback_method',
+        'external_reference_id',
     ];
 
     private $filters = [];
@@ -74,6 +75,16 @@ class Export extends BaseItem
     public function setCallbackUrl(string $callbackUrl)
     {
         $this->attributes['callback_url'] = $callbackUrl;
+    }
+
+    public function getExternalReferenceId(): ?string
+    {
+        return $this->attribute('external_reference_id');
+    }
+
+    public function setExternalReferenceId(?string $externalReferenceId)
+    {
+        $this->attributes['external_reference_id'] = $externalReferenceId;
     }
 
     public function getCallbackMethod(): ?CallbackMethod

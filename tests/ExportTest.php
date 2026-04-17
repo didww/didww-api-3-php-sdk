@@ -41,6 +41,7 @@ class ExportTest extends CassetteTest
             'callback_url' => null,
             'callback_method' => null,
             'export_type' => 'cdr_in',
+            'external_reference_id' => null,
         ]);
     }
 
@@ -74,6 +75,7 @@ class ExportTest extends CassetteTest
             'callback_url' => null,
             'callback_method' => null,
             'export_type' => 'cdr_out',
+            'external_reference_id' => null,
         ]);
     }
 
@@ -97,6 +99,7 @@ class ExportTest extends CassetteTest
             'callback_url' => null,
             'callback_method' => null,
             'export_type' => 'cdr_in',
+            'external_reference_id' => null,
         ]);
         $this->assertEquals(ExportType::CDR_IN, $export->getExportType());
         $this->assertNull($export->getCallbackUrl());
