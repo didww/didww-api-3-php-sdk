@@ -10,7 +10,7 @@ use Didww\Enum\TransportProtocol;
 // create Sip Configuration object
 $trunkSipConfig = new Didww\Item\Configuration\Sip([
     'username' => 'username',
-    'host' => '216.58.215.110',
+    'host' => '203.0.113.110',
     'sst_refresh_method_id' => SstRefreshMethod::INVITE,
     'transport_protocol_id' => TransportProtocol::UDP,
     'media_encryption_mode' => MediaEncryptionMode::DISABLED,

@@ -111,8 +111,8 @@ class VoiceOutTrunkTest extends CassetteTest
         $trunk->setOnCliMismatchAction('reject_call');
         $this->assertEquals(OnCliMismatchAction::REJECT_CALL, $trunk->getOnCliMismatchAction());
 
-        $trunk->setAllowedRtpIps(['192.168.0.1']);
-        $this->assertEquals(['192.168.0.1'], $trunk->getAllowedRtpIps());
+        $trunk->setAllowedRtpIps(['203.0.113.2']);
+        $this->assertEquals(['203.0.113.2'], $trunk->getAllowedRtpIps());
 
         $trunk->setAllowAnyDidAsCli(true);
         $this->assertTrue($trunk->getAllowAnyDidAsCli());
@@ -150,16 +150,16 @@ class VoiceOutTrunkTest extends CassetteTest
         // IpOnly
         $ipOnly = \Didww\Item\AuthenticationMethod\Base::fromArray([
             'type' => 'ip_only',
-            'attributes' => ['allowed_sip_ips' => ['10.0.0.1/32'], 'tech_prefix' => 'abc'],
+            'attributes' => ['allowed_sip_ips' => ['203.0.113.1/32'], 'tech_prefix' => 'abc'],
         ]);
         $this->assertInstanceOf(\Didww\Item\AuthenticationMethod\IpOnly::class, $ipOnly);
-        $this->assertEquals(['10.0.0.1/32'], $ipOnly->getAllowedSipIps());
+        $this->assertEquals(['203.0.113.1/32'], $ipOnly->getAllowedSipIps());
         $this->assertEquals('abc', $ipOnly->getTechPrefix());
 
         // CredentialsAndIp
         $credIp = \Didww\Item\AuthenticationMethod\Base::fromArray([
             'type' => 'credentials_and_ip',
-            'attributes' => ['allowed_sip_ips' => ['10.0.0.1/32'], 'username' => 'user1', 'password' => 'pass1'],
+            'attributes' => ['allowed_sip_ips' => ['203.0.113.1/32'], 'username' => 'user1', 'password' => 'pass1'],
         ]);
         $this->assertInstanceOf(\Didww\Item\AuthenticationMethod\CredentialsAndIp::class, $credIp);
         $this->assertEquals('user1', $credIp->getUsername());
