@@ -44,6 +44,18 @@ class EmergencyVerificationTest extends CassetteTest
         $this->assertEquals('ref-xyz-999', $data->getExternalReferenceId());
     }
 
+    public function testUpdateEmergencyVerificationExternalReferenceId()
+    {
+        $uuid = '01234567-89ab-cdef-0123-456789abcdef';
+        $verification = \Didww\Item\EmergencyVerification::build($uuid);
+        $verification->setExternalReferenceId('updated-ev-ref');
+        $document = $verification->save();
+
+        $data = $document->getData();
+        $this->assertInstanceOf('Didww\Item\EmergencyVerification', $data);
+        $this->assertEquals('updated-ev-ref', $data->getExternalReferenceId());
+    }
+
     public function testCreateEmergencyVerification()
     {
         $ecs = \Didww\Item\EmergencyCallingService::build('33333333-4444-5555-6666-777777777777');

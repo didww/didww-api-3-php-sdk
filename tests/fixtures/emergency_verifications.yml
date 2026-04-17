@@ -39,6 +39,27 @@
         body: '{"data":{"id":"01234567-89ab-cdef-0123-456789abcdef","type":"emergency_verifications","attributes":{"reference":"EV-0042","status":"rejected","reject_reasons":["Address does not match identity","Missing proof of occupancy"],"reject_comment":"Please re-submit with updated documentation.","callback_url":"https://example.com/emergency/hook","callback_method":"POST","external_reference_id":"ref-xyz-999","created_at":"2026-04-11T10:00:00.000Z"},"relationships":{"address":{"data":{"id":"88888888-9999-aaaa-bbbb-cccccccccccc","type":"addresses"}},"emergency_calling_service":{"data":{"id":"33333333-4444-5555-6666-777777777777","type":"emergency_calling_services"}},"dids":{"data":[{"id":"11111111-aaaa-bbbb-cccc-dddddddddddd","type":"dids"}]}}}}'
 -
     request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/emergency_verifications/01234567-89ab-cdef-0123-456789abcdef'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"emergency_verifications","id":"01234567-89ab-cdef-0123-456789abcdef","attributes":{"external_reference_id":"updated-ev-ref"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"01234567-89ab-cdef-0123-456789abcdef","type":"emergency_verifications","attributes":{"reference":"EV-0042","status":"rejected","reject_reasons":null,"reject_comment":null,"callback_url":"https://example.com/emergency/hook","callback_method":"POST","external_reference_id":"updated-ev-ref","created_at":"2026-04-11T10:00:00.000Z"},"relationships":{"address":{"data":{"id":"88888888-9999-aaaa-bbbb-cccccccccccc","type":"addresses"}},"emergency_calling_service":{"data":{"id":"33333333-4444-5555-6666-777777777777","type":"emergency_calling_services"}},"dids":{"data":[{"id":"11111111-aaaa-bbbb-cccc-dddddddddddd","type":"dids"}]}}}}'
+-
+    request:
         method: POST
         url: 'https://sandbox-api.didww.com/v3/emergency_verifications'
         headers:
