@@ -2,6 +2,7 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\EmergencyVerificationStatus;
 use Didww\Traits\Fetchable;
 use Didww\Traits\Saveable;
 
@@ -32,9 +33,24 @@ class EmergencyVerification extends BaseItem
         return $this->attribute('reference');
     }
 
-    public function getStatus(): string
+    public function getStatus(): EmergencyVerificationStatus|string
     {
-        return $this->attributes['status'];
+        return $this->enumAttribute('status', EmergencyVerificationStatus::class);
+    }
+
+    public function isPending(): bool
+    {
+        return $this->getStatus() === EmergencyVerificationStatus::PENDING;
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->getStatus() === EmergencyVerificationStatus::APPROVED;
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->getStatus() === EmergencyVerificationStatus::REJECTED;
     }
 
     public function getRejectReasons(): ?array

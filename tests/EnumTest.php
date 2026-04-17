@@ -9,6 +9,8 @@ use Didww\Enum\CliFormat;
 use Didww\Enum\Codec;
 use Didww\Enum\DefaultDstAction;
 use Didww\Enum\DiversionRelayPolicy;
+use Didww\Enum\EmergencyCallingServiceStatus;
+use Didww\Enum\EmergencyVerificationStatus;
 use Didww\Enum\ExportStatus;
 use Didww\Enum\ExportType;
 use Didww\Enum\Feature;
@@ -95,6 +97,8 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(3, SstRefreshMethod::cases());
         $this->assertCount(47, ReroutingDisconnectCode::cases());
         $this->assertCount(4, DiversionRelayPolicy::cases());
+        $this->assertCount(6, EmergencyCallingServiceStatus::cases());
+        $this->assertCount(3, EmergencyVerificationStatus::cases());
     }
 
     public function testSipConfigurationSetterAcceptsEnumAndRaw()

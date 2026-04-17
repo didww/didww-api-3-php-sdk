@@ -61,6 +61,21 @@ class AddressVerification extends BaseItem
         return $this->enumAttribute('status', AddressVerificationStatus::class);
     }
 
+    public function isPending(): bool
+    {
+        return $this->getStatus() === AddressVerificationStatus::PENDING;
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->getStatus() === AddressVerificationStatus::APPROVED;
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->getStatus() === AddressVerificationStatus::REJECTED;
+    }
+
     public function getRejectReasons(): ?array
     {
         return $this->attribute('reject_reasons');

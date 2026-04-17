@@ -2,6 +2,8 @@
 
 namespace Didww\Tests;
 
+use Didww\Enum\EmergencyVerificationStatus;
+
 class EmergencyVerificationTest extends CassetteTest
 {
     protected function getCassetteName(): string
@@ -18,7 +20,7 @@ class EmergencyVerificationTest extends CassetteTest
 
         $first = $data[0];
         $this->assertEquals('EV-0001', $first->getReference());
-        $this->assertEquals('pending', $first->getStatus());
+        $this->assertEquals(EmergencyVerificationStatus::PENDING, $first->getStatus());
         $this->assertNull($first->getRejectReasons());
         $this->assertNull($first->getRejectComment());
         $this->assertEquals('https://example.com/emergency/hook', $first->getCallbackUrl());
@@ -35,7 +37,7 @@ class EmergencyVerificationTest extends CassetteTest
         $data = $document->getData();
         $this->assertInstanceOf('Didww\Item\EmergencyVerification', $data);
         $this->assertEquals($uuid, $data->getId());
-        $this->assertEquals('rejected', $data->getStatus());
+        $this->assertEquals(EmergencyVerificationStatus::REJECTED, $data->getStatus());
         $this->assertEquals(
             ['Address does not match identity', 'Missing proof of occupancy'],
             $data->getRejectReasons()
@@ -74,7 +76,25 @@ class EmergencyVerificationTest extends CassetteTest
 
         $data = $document->getData();
         $this->assertInstanceOf('Didww\Item\EmergencyVerification', $data);
-        $this->assertEquals('pending', $data->getStatus());
+        $this->assertEquals(EmergencyVerificationStatus::PENDING, $data->getStatus());
         $this->assertEquals('ref-abc-123', $data->getExternalReferenceId());
+    }
+
+    public function testEmergencyVerificationStatusPredicates()
+    {
+        $pending = new \Didww\Item\EmergencyVerification(['status' => 'pending']);
+        $this->assertTrue($pending->isPending());
+        $this->assertFalse($pending->isApproved());
+        $this->assertFalse($pending->isRejected());
+
+        $approved = new \Didww\Item\EmergencyVerification(['status' => 'approved']);
+        $this->assertFalse($approved->isPending());
+        $this->assertTrue($approved->isApproved());
+        $this->assertFalse($approved->isRejected());
+
+        $rejected = new \Didww\Item\EmergencyVerification(['status' => 'rejected']);
+        $this->assertFalse($rejected->isPending());
+        $this->assertFalse($rejected->isApproved());
+        $this->assertTrue($rejected->isRejected());
     }
 }

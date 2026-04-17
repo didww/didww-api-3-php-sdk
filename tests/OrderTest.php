@@ -397,4 +397,22 @@ class OrderTest extends BaseTest
         $this->assertInstanceOf(\Didww\Item\OrderItem\Emergency::class, $item);
         $this->assertEquals(2, $item->getQty());
     }
+
+    public function testOrderStatusPredicates()
+    {
+        $pending = new \Didww\Item\Order(['status' => 'Pending']);
+        $this->assertTrue($pending->isPending());
+        $this->assertFalse($pending->isCompleted());
+        $this->assertFalse($pending->isCancelled());
+
+        $completed = new \Didww\Item\Order(['status' => 'Completed']);
+        $this->assertFalse($completed->isPending());
+        $this->assertTrue($completed->isCompleted());
+        $this->assertFalse($completed->isCancelled());
+
+        $cancelled = new \Didww\Item\Order(['status' => 'Canceled']);
+        $this->assertFalse($cancelled->isPending());
+        $this->assertFalse($cancelled->isCompleted());
+        $this->assertTrue($cancelled->isCancelled());
+    }
 }

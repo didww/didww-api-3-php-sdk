@@ -107,6 +107,21 @@ class Order extends BaseItem
         return $this->enumAttribute('status', OrderStatus::class);
     }
 
+    public function isPending(): bool
+    {
+        return $this->getStatus() === OrderStatus::PENDING;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->getStatus() === OrderStatus::COMPLETED;
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->getStatus() === OrderStatus::CANCELED;
+    }
+
     public function getCreatedAt(): ?\DateTime
     {
         return $this->dateAttribute('created_at');

@@ -51,6 +51,24 @@ class AddressVerificationTest extends CassetteTest
         $this->assertEquals('crm-verif-0001', $addressVerification->getExternalReferenceId());
     }
 
+    public function testAddressVerificationStatusPredicates()
+    {
+        $pending = new \Didww\Item\AddressVerification(['status' => 'Pending']);
+        $this->assertTrue($pending->isPending());
+        $this->assertFalse($pending->isApproved());
+        $this->assertFalse($pending->isRejected());
+
+        $approved = new \Didww\Item\AddressVerification(['status' => 'Approved']);
+        $this->assertFalse($approved->isPending());
+        $this->assertTrue($approved->isApproved());
+        $this->assertFalse($approved->isRejected());
+
+        $rejected = new \Didww\Item\AddressVerification(['status' => 'Rejected']);
+        $this->assertFalse($rejected->isPending());
+        $this->assertFalse($rejected->isApproved());
+        $this->assertTrue($rejected->isRejected());
+    }
+
     public function testNullableGettersReturnNullOnEmptyObject()
     {
         $av = new \Didww\Item\AddressVerification();
