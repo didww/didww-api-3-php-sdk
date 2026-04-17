@@ -34,7 +34,7 @@ class DidGroupTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\DidGroup', $didGroupDocument->getData());
         $this->assertEquals($didGroupDocument->getData()->getAttributes(), [
             'prefix' => '241',
-            'features' => ['voice'],
+            'features' => ['voice_in', 'voice_out', 't38'],
             'is_metered' => false,
             'area_name' => 'Aachen',
             'allow_additional_channels' => true,
@@ -77,6 +77,17 @@ class DidGroupTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\AddressRequirement', $requirement);
         $this->assertEquals('Any', $requirement->getAttributes()['identity_type']);
         $this->assertSame(\Didww\Enum\IdentityType::ANY, $requirement->getIdentityType());
+    }
+
+    public function testFeaturesAreParsedAsEnums()
+    {
+        $uuid = '2187c36d-28fb-436f-8861-5a0f5b5a3ee1';
+        $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,did_group_type,stock_keeping_units,address_requirement']);
+        $features = $didGroupDocument->getData()->getFeatures();
+        $this->assertCount(3, $features);
+        $this->assertSame(\Didww\Enum\Feature::VOICE_IN, $features[0]);
+        $this->assertSame(\Didww\Enum\Feature::VOICE_OUT, $features[1]);
+        $this->assertSame(\Didww\Enum\Feature::T38, $features[2]);
     }
 
     public function testNewFeatureEnums()
