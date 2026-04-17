@@ -3,12 +3,14 @@
 namespace Didww\Item;
 
 use Didww\Traits\Deletable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class PermanentSupportingDocument extends BaseItem
 {
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -20,16 +22,6 @@ class PermanentSupportingDocument extends BaseItem
     protected $visible = [
         'external_reference_id',
     ];
-
-    public function getExternalReferenceId(): ?string
-    {
-        return $this->attribute('external_reference_id');
-    }
-
-    public function setExternalReferenceId(?string $externalReferenceId)
-    {
-        $this->attributes['external_reference_id'] = $externalReferenceId;
-    }
 
     public function getCreatedAt(): ?\DateTime
     {

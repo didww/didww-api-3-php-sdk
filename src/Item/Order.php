@@ -10,6 +10,7 @@ use Didww\Item\OrderItem\Emergency;
 use Didww\Item\OrderItem\Generic;
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class Order extends BaseItem
@@ -17,6 +18,7 @@ class Order extends BaseItem
     use Fetchable;
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -167,13 +169,4 @@ class Order extends BaseItem
         $this->setEnumAttribute('callback_method', $callbackMethod);
     }
 
-    public function getExternalReferenceId(): ?string
-    {
-        return $this->attribute('external_reference_id');
-    }
-
-    public function setExternalReferenceId(?string $externalReferenceId)
-    {
-        $this->attributes['external_reference_id'] = $externalReferenceId;
-    }
 }

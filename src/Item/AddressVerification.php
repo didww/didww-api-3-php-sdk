@@ -5,12 +5,14 @@ namespace Didww\Item;
 use Didww\Enum\AddressVerificationStatus;
 use Didww\Enum\CallbackMethod;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class AddressVerification extends BaseItem
 {
     use Fetchable;
     use Saveable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -89,16 +91,6 @@ class AddressVerification extends BaseItem
     public function getRejectComment(): ?string
     {
         return $this->attribute('reject_comment');
-    }
-
-    public function getExternalReferenceId(): ?string
-    {
-        return $this->attribute('external_reference_id');
-    }
-
-    public function setExternalReferenceId(?string $externalReferenceId)
-    {
-        $this->attributes['external_reference_id'] = $externalReferenceId;
     }
 
     public function getCreatedAt(): ?\DateTime

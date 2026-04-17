@@ -4,6 +4,7 @@ namespace Didww\Item;
 
 use Didww\Enum\EmergencyVerificationStatus;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 /**
@@ -14,6 +15,7 @@ class EmergencyVerification extends BaseItem
 {
     use Fetchable;
     use Saveable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -81,16 +83,6 @@ class EmergencyVerification extends BaseItem
     public function setCallbackMethod(?string $callbackMethod)
     {
         $this->attributes['callback_method'] = $callbackMethod;
-    }
-
-    public function getExternalReferenceId(): ?string
-    {
-        return $this->attribute('external_reference_id');
-    }
-
-    public function setExternalReferenceId(?string $externalReferenceId)
-    {
-        $this->attributes['external_reference_id'] = $externalReferenceId;
     }
 
     public function getCreatedAt()

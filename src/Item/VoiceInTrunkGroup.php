@@ -4,6 +4,7 @@ namespace Didww\Item;
 
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class VoiceInTrunkGroup extends BaseItem
@@ -11,6 +12,7 @@ class VoiceInTrunkGroup extends BaseItem
     use Fetchable;
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -24,16 +26,6 @@ class VoiceInTrunkGroup extends BaseItem
         'name',
         'external_reference_id',
     ];
-
-    public function getExternalReferenceId(): ?string
-    {
-        return $this->attribute('external_reference_id');
-    }
-
-    public function setExternalReferenceId(?string $externalReferenceId)
-    {
-        $this->attributes['external_reference_id'] = $externalReferenceId;
-    }
 
     public function voiceInTrunks()
     {
