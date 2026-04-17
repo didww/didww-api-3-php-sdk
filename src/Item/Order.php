@@ -29,6 +29,7 @@ class Order extends BaseItem
         'items',
         'callback_url',
         'callback_method',
+        'external_reference_id',
     ];
 
     private const ITEM_CLASSES = [
@@ -147,5 +148,15 @@ class Order extends BaseItem
     public function setCallbackMethod(CallbackMethod|string $callbackMethod)
     {
         $this->setEnumAttribute('callback_method', $callbackMethod);
+    }
+
+    public function getExternalReferenceId(): ?string
+    {
+        return $this->attribute('external_reference_id');
+    }
+
+    public function setExternalReferenceId(?string $externalReferenceId)
+    {
+        $this->attributes['external_reference_id'] = $externalReferenceId;
     }
 }

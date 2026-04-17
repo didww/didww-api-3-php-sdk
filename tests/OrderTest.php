@@ -22,6 +22,7 @@ class OrderTest extends BaseTest
         $this->assertEquals($order->getCreatedAt(), new \DateTime('2018-08-17T09:48:48.440Z'));
         $this->assertEquals($order->getDescription(), 'Payment processing fee');
         $this->assertEquals($order->getReference(), 'SPT-474057');
+        $this->assertNull($order->getExternalReferenceId());
         $item = $order->getItems()[0];
         $this->assertEquals($item->getMrc(), 0.0);
         $this->assertEquals($item->getNrc(), 25.07);
