@@ -2,12 +2,8 @@
 
 namespace Didww\Tests;
 
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
-
 class VoiceInTrunkGroupTest extends CassetteTest
 {
-    use ArraySubsetAsserts;
-
     protected function getCassetteName(): string
     {
         return 'voice_in_trunk_groups.yml';

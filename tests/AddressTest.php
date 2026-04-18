@@ -2,12 +2,8 @@
 
 namespace Didww\Tests;
 
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
-
 class AddressTest extends CassetteTest
 {
-    use ArraySubsetAsserts;
-
     protected function getCassetteName(): string
     {
         return 'addresses.yml';

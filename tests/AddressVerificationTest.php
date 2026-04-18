@@ -3,12 +3,9 @@
 namespace Didww\Tests;
 
 use Didww\Enum\AddressVerificationStatus;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class AddressVerificationTest extends CassetteTest
 {
-    use ArraySubsetAsserts;
-
     protected function getCassetteName(): string
     {
         return 'address_verifications.yml';
