@@ -30,4 +30,16 @@ abstract class BaseTest extends \PHPUnit\Framework\TestCase
     {
         return new \Didww\Credentials('PLACEYOURAPIKEYHERE', 'sandbox');
     }
+
+    protected static function assertArraySubset(array $subset, array $array, string $message = ''): void
+    {
+        foreach ($subset as $key => $value) {
+            static::assertArrayHasKey($key, $array, $message);
+            if (is_array($value) && is_array($array[$key])) {
+                static::assertArraySubset($value, $array[$key], $message);
+            } else {
+                static::assertEquals($value, $array[$key], $message);
+            }
+        }
+    }
 }

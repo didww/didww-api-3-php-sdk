@@ -9,12 +9,9 @@ use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\StirShakenMode;
 use Didww\Enum\TransportProtocol;
 use Didww\Enum\TxDtmfFormat;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 
 class VoiceInTrunkTest extends CassetteTest
 {
-    use ArraySubsetAsserts;
-
     protected function getCassetteName(): string
     {
         return 'voice_in_trunks.yml';

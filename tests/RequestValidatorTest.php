@@ -133,9 +133,7 @@ class RequestValidatorTest extends BaseTest
         ];
     }
 
-    /**
-     * @dataProvider urlNormalizationProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('urlNormalizationProvider')]
     public function testUrlNormalization(string $url, string $expectedSignature)
     {
         $apiKey = 'SOMEAPIKEY';
