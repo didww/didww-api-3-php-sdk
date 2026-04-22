@@ -431,7 +431,7 @@ $trunk->setOnCliMismatchAction('replace_cli');
 | `AddressVerificationStatus` | `string` | `PENDING`, `APPROVED`, `REJECTED` |
 | `MediaEncryptionMode` | `string` | `DISABLED`, `SRTP_SDES`, `SRTP_DTLS`, `ZRTP` |
 | `StirShakenMode` | `string` | `DISABLED`, `ORIGINAL`, `PAI`, `ORIGINAL_PAI`, `VERSTAT` |
-| `OnCliMismatchAction` | `string` | `SEND_ORIGINAL_CLI`, `REJECT_CALL`, `REPLACE_CLI` |
+| `OnCliMismatchAction` | `string` | `SEND_ORIGINAL_CLI`, `REJECT_CALL`, `REPLACE_CLI`\*, `RANDOMIZE_CLI`\* |
 | `DefaultDstAction` | `string` | `ALLOW_ALL`, `REJECT_ALL` |
 | `VoiceOutTrunkStatus` | `string` | `ACTIVE`, `BLOCKED` |
 | `Feature` | `string` | `VOICE_IN`, `VOICE_OUT`, `T38`, `SMS_IN`, `P2P`, `A2P`, `EMERGENCY`, `CNAM_OUT` |
@@ -441,7 +441,12 @@ $trunk->setOnCliMismatchAction('replace_cli');
 | `RxDtmfFormat` | `int` | `RFC_2833(1)`, `SIP_INFO(2)`, `RFC_2833_OR_SIP_INFO(3)` |
 | `TxDtmfFormat` | `int` | `DISABLED(0)`, `RFC_2833(1)`, `SIP_INFO_RELAY(2)`, `SIP_INFO_DTMF(4)` |
 | `SstRefreshMethod` | `int` | `INVITE(1)`, `UPDATE(2)`, `UPDATE_FALLBACK_INVITE(3)` |
+| `EmergencyCallingServiceStatus` | `string` | `ACTIVE`, `CANCELED`, `CHANGES_REQUIRED`, `IN_PROCESS`, `NEW`, `PENDING_UPDATE` |
+| `EmergencyVerificationStatus` | `string` | `PENDING`, `APPROVED`, `REJECTED` |
+| `DiversionRelayPolicy` | `string` | `NONE`, `AS_IS`, `SIP`, `TEL` |
 | `ReroutingDisconnectCode` | `int` | 47 SIP error codes (56-108, 1505) |
+
+\* `REPLACE_CLI` and `RANDOMIZE_CLI` require additional account configuration. Contact DIDWW support to enable these values.
 
 ## File Encryption
 
