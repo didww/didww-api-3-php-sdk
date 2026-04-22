@@ -349,6 +349,49 @@ $export = $exportDocument->getData();
 $export->download('/tmp/export.csv');
 ```
 
+### Address Verifications
+
+```php
+// List address verifications
+$verifications = Didww\Item\AddressVerification::all()->getData();
+
+// Create address verification
+$verification = new Didww\Item\AddressVerification();
+$verification->setCallbackUrl('https://example.com/callback');
+$verification->setCallbackMethod(Didww\Enum\CallbackMethod::POST);
+$verification->setAddress(Didww\Item\Address::build('address-uuid'));
+$verification->setDids([Didww\Item\Did::build('did-uuid')]);
+$verificationDocument = $verification->save();
+```
+
+### Emergency Services (2026-04-16)
+
+```php
+// List emergency requirements
+$emergReqs = Didww\Item\EmergencyRequirement::all()->getData();
+
+// Create emergency verification
+$emergVerification = new Didww\Item\EmergencyVerification();
+$emergVerification->setCallbackUrl('https://example.com/callback');
+$emergVerification->setCallbackMethod(Didww\Enum\CallbackMethod::POST);
+$emergVerification->setAddress(Didww\Item\Address::build('address-uuid'));
+$emergVerification->setDids([Didww\Item\Did::build('did-uuid')]);
+$emergVerificationDocument = $emergVerification->save();
+
+// List emergency calling services
+$emergServices = Didww\Item\EmergencyCallingService::all()->getData();
+```
+
+### DID History (2026-04-16)
+
+```php
+// List DID history
+$history = Didww\Item\DidHistory::all()->getData();
+foreach ($history as $entry) {
+    echo $entry->getAction() . ' ' . $entry->getCreatedAt()->format('Y-m-d') . "\n";
+}
+```
+
 ## Date and Datetime Fields
 
 Date and datetime attributes returned from the API are represented as strings in the underlying JSON. This SDK provides **typed getter methods** for some known date and datetime attributes; these getters convert those string values to `\DateTime` instances.
