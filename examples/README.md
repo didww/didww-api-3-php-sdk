@@ -56,6 +56,7 @@ DIDWW_API_KEY=your_api_key php examples/balance.php
 | [`emergency_verifications.php`](emergency_verifications.php) | Lists and creates emergency verifications. |
 | [`emergency_requirement_validations.php`](emergency_requirement_validations.php) | Pre-validates an emergency order triple (requirement + address + identity). |
 | [`orders_emergency.php`](orders_emergency.php) | Inspects server-created Emergency orders and `emergency_order_items`. |
+| [`emergency_scenario.php`](emergency_scenario.php) | End-to-end: find DID → check requirements → validate → create verification → get service. |
 
 ## Troubleshooting
 
