@@ -354,13 +354,23 @@ $export->download('/tmp/export.csv');
 Date and datetime attributes returned from the API are represented as strings in the underlying JSON. This SDK provides **typed getter methods** for some known date and datetime attributes; these getters convert those string values to `\DateTime` instances.
 
 - **Datetime getters** — return `\DateTime` with full timestamp:
-  - All `getCreatedAt()` methods — present on most resources
-  - Expiry getters: `Did::getExpiresAt()`, `DidReservation::getExpireAt()`, `Proof::getExpiresAt()`, `EncryptedFile::getExpireAt()`
+  - `getCreatedAt()` — present on most resources
+  - `getExpiresAt()` — `Did`, `DidReservation`, `Proof`, `EncryptedFile` (nullable)
+  - `getActivatedAt()` — `EmergencyCallingService` (nullable)
+  - `getCanceledAt()` — `EmergencyCallingService` (nullable)
 - **Date-only getters** — return `\DateTime` with time `00:00:00`:
   - `Identity::getBirthDate()`
 - **Getters that intentionally keep strings** — these represent dates but still return `string` values:
-  - `CapacityPool::getRenewDate()`
+  - `CapacityPool::getRenewDate()`, `EmergencyCallingService::getRenewDate()` — `"YYYY-MM-DD"` (nullable)
   - Order item `getBilledFrom()` / `getBilledTo()`
+- **String fields** (not numeric):
+  - `EmergencyRequirement::getEstimateSetupTime()` — e.g. `"7-14 days"`, `"1"`
+  - `EmergencyRequirement::getRequirementRestrictionMessage()` — nullable
+
+**Important changes from previous API versions:**
+- `getExpireAt()` renamed to `getExpiresAt()` on `DidReservation` and `EncryptedFile`
+- `getRenewDate()` returns a date-only string, NOT a `\DateTime`
+- `getEstimateSetupTime()` returns a string, NOT an integer
 
 ```php
 $did = Didww\Item\Did::find('uuid')->getData();
