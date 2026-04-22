@@ -534,6 +534,39 @@ $valid = $validator->validate(
 | Capacity | `Didww\Item\OrderItem\Capacity` |
 | Generic | `Didww\Item\OrderItem\Generic` |
 
+## Error Handling
+
+All API responses (including errors) are returned as document objects with an error collection. Check `hasErrors()` after every API call.
+
+```php
+// Validation errors (422) — e.g. creating a resource with invalid data
+$document = $order->save();
+if ($document->hasErrors()) {
+    foreach ($document->getErrors() as $error) {
+        echo $error->getDetail() . "\n";
+        // e.g. "name - has already been taken"
+    }
+}
+
+// Not found (404)
+$document = Didww\Item\Did::find('non-existent-uuid');
+if ($document->hasErrors()) {
+    foreach ($document->getErrors() as $error) {
+        echo $error->getTitle() . ': ' . $error->getDetail() . "\n";
+        // "Record not found: The record identified by non-existent-uuid could not be found."
+    }
+}
+
+// Unauthorized (401) — e.g. invalid API key
+$document = Didww\Item\Balance::find();
+if ($document->hasErrors()) {
+    foreach ($document->getErrors() as $error) {
+        echo $error->getTitle() . ': ' . $error->getDetail() . "\n";
+        // "Unauthorized: Authorization failed"
+    }
+}
+```
+
 ## All Supported Resources
 
 | Resource | Class | Operations |
