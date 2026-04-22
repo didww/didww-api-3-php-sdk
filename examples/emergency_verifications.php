@@ -17,7 +17,7 @@ echo 'Found '.count($verifications)." emergency verifications\n";
 foreach ($verifications as $verification) {
     echo 'ID: '.$verification->getId()."\n";
     echo '  Reference: '.$verification->getReference()."\n";
-    echo '  Status: '.$verification->getStatus()."\n";
+    echo '  Status: '.$verification->getStatus()->value."\n";
     echo '  External Reference ID: '.($verification->getExternalReferenceId() ?? 'null')."\n";
     echo '  Created At: '.$verification->getCreatedAt()->format('Y-m-d H:i:s')."\n";
 

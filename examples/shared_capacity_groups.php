@@ -16,7 +16,7 @@ $document = SharedCapacityGroup::all(['include' => 'capacity_pool']);
 $sharedGroups = $document->getData();
 echo 'Found '.count($sharedGroups)." shared capacity groups\n";
 
-foreach (array_slice($sharedGroups, 0, 10) as $group) {
+foreach ($sharedGroups->take(10) as $group) {
     echo "\nGroup: ".$group->getName()."\n";
     echo '  ID: '.$group->getId()."\n";
     echo '  Shared channels: '.$group->getSharedChannelsCount()."\n";

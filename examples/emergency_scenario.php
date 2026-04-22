@@ -1,116 +1,148 @@
 <?php
 
 // End-to-end Emergency Calling Service purchase flow (2026-04-16).
-// Steps: find DID with emergency feature -> get emergency requirements ->
-// find identity -> find address -> validate -> create verification -> check status -> get service.
+// Steps: order DID -> get emergency requirements -> find identity ->
+// find address -> validate -> create verification -> check status -> get service.
 
 require_once 'bootstrap.php';
 
-use Didww\Enum\Feature;
 use Didww\Item\Address;
+use Didww\Item\AvailableDid;
 use Didww\Item\Did;
-use Didww\Item\EmergencyCallingService;
 use Didww\Item\EmergencyRequirement;
 use Didww\Item\EmergencyRequirementValidation;
 use Didww\Item\EmergencyVerification;
 use Didww\Item\Identity;
+use Didww\Item\Order;
+use Didww\Item\OrderItem\AvailableDid as AvailableDidOrderItem;
 
-// Step 1: Find a DID with emergency feature enabled
-echo "=== Step 1: Find DID with Emergency Feature ===\n";
+// Step 0: Order a specific available DID with emergency feature
+echo "=== Step 0: Order an available DID with emergency feature ===\n";
+
+// Find address first to determine country
+$addresses = Address::all(['include' => 'country', 'page' => ['size' => 1, 'number' => 1]])->getData();
+if (0 === count($addresses)) {
+    exit("No addresses on this account. Please create an address first.\n");
+}
+$address = $addresses[0];
+$addressCountry = $address->country()->getIncluded();
+echo '  Address country: '.$addressCountry->getName()."\n";
+
+// Find an available DID with emergency feature in that country
+$availableDids = AvailableDid::all([
+    'filter' => [
+        'did_group.features' => 'emergency',
+        'country.id' => $addressCountry->getId(),
+    ],
+    'include' => 'did_group,did_group.stock_keeping_units',
+    'page' => ['size' => 1, 'number' => 1],
+])->getData();
+
+if (0 === count($availableDids)) {
+    exit('No available DIDs with emergency feature in '.$addressCountry->getName().".\n");
+}
+
+$availableDid = $availableDids[0];
+$didGroup = $availableDid->didGroup()->getIncluded();
+$skus = $didGroup->stockKeepingUnits()->getIncluded();
+$sku = $skus->first();
+if (!$sku) {
+    exit("No SKU found for DID group.\n");
+}
+
+echo '  Available DID: '.$availableDid->getNumber()."\n";
+echo '  DID Group: '.($didGroup->getAreaName() ?? $didGroup->getId())."\n";
+
+$didItem = new AvailableDidOrderItem(['available_did_id' => $availableDid->getId(), 'sku_id' => $sku->getId()]);
+$order = new Order();
+$order->setItems([$didItem]);
+
+$orderDocument = $order->save();
+if ($orderDocument->hasErrors()) {
+    exit("Failed to order DID.\n");
+}
+$order = $orderDocument->getData();
+echo '  Order: '.$order->getId().' — '.$order->getStatus()->value."\n";
+
+// Wait for order to complete
+for ($i = 0; $i < 10; ++$i) {
+    if ('completed' === $order->getStatus()->value) {
+        break;
+    }
+    sleep(5);
+    $order = Order::find($order->getId())->getData();
+}
+if ('completed' !== $order->getStatus()->value) {
+    exit('  Order did not complete (status: '.$order->getStatus()->value.").\n");
+}
+echo "  Order completed\n";
+
+// Step 1: Find the newly ordered DID
+echo "\n=== Step 1: Find the newly ordered DID ===\n";
 $dids = Did::all([
-    'include' => 'did_group,emergency_calling_service,emergency_verification',
+    'filter' => [
+        'did_group.features' => 'emergency',
+        'emergency_enabled' => 'false',
+    ],
+    'include' => 'did_group,did_group.country,did_group.did_group_type,emergency_calling_service',
+    'sort' => '-created_at',
     'page' => ['size' => 10, 'number' => 1],
 ])->getData();
 
+// Pick the first DID that has no emergency_calling_service yet
 $selectedDid = null;
-foreach ($dids as $did) {
-    if ($did->getEmergencyEnabled()) {
-        $selectedDid = $did;
+foreach ($dids as $d) {
+    if (!$d->emergencyCallingService()->getIncluded()) {
+        $selectedDid = $d;
         break;
     }
 }
 
 if (!$selectedDid) {
-    echo "No DID with emergency feature found. Listing first available DID instead.\n";
-    if (count($dids) > 0) {
-        $selectedDid = $dids[0];
-    } else {
-        exit("No DIDs available on this account.\n");
-    }
+    exit("No available DID without an existing Emergency Calling Service.\n");
 }
+$didGroup = $selectedDid->didGroup()->getIncluded();
+$country = $didGroup ? $didGroup->country()->getIncluded() : null;
+$didGroupType = $didGroup ? $didGroup->didGroupType()->getIncluded() : null;
 
-echo 'Selected DID: '.$selectedDid->getId()."\n";
-echo '  Number: '.$selectedDid->getNumber()."\n";
-echo '  Emergency enabled: '.($selectedDid->getEmergencyEnabled() ? 'true' : 'false')."\n";
+echo 'DID: '.$selectedDid->getNumber().' ('.$selectedDid->getId().")\n";
+echo '  Country: '.($country ? $country->getName() : 'N/A')."\n";
+echo '  DID Group Type: '.($didGroupType ? $didGroupType->name : 'N/A')."\n";
 
-$existingEcs = $selectedDid->emergencyCallingService()->getIncluded();
-if ($existingEcs) {
-    echo '  Already has Emergency Calling Service: '.$existingEcs->getId()."\n";
-}
-
-// Step 2: Get emergency requirements
+// Step 2: Get emergency requirements for this country + did_group_type
 echo "\n=== Step 2: Get Emergency Requirements ===\n";
-$document = EmergencyRequirement::all(['include' => 'country,did_group_type']);
-$requirements = $document->getData();
-echo 'Found '.count($requirements)." emergency requirements\n";
+$requirements = EmergencyRequirement::all([
+    'filter' => [
+        'country.id' => $country->getId(),
+        'did_group_type.id' => $didGroupType->getId(),
+    ],
+])->getData();
 
 if (0 === count($requirements)) {
-    exit("No emergency requirements available.\n");
+    exit("No emergency requirements found for this country/did_group_type.\n");
 }
 
 $emergencyRequirement = $requirements[0];
-echo 'Using requirement: '.$emergencyRequirement->getId()."\n";
+echo 'Requirement: '.$emergencyRequirement->getId()."\n";
 echo '  Identity type: '.$emergencyRequirement->getIdentityType()."\n";
 echo '  Estimate setup time: '.($emergencyRequirement->getEstimateSetupTime() ?? 'N/A')."\n";
 
-$country = $emergencyRequirement->country()->getIncluded();
-if ($country) {
-    echo '  Country: '.$country->getName()."\n";
-}
-
-$didGroupType = $emergencyRequirement->didGroupType()->getIncluded();
-if ($didGroupType) {
-    echo '  DID Group Type: '.$didGroupType->getName()."\n";
-}
-
 // Step 3: Find an identity
 echo "\n=== Step 3: Find Identity ===\n";
-$identities = Identity::all([
-    'page' => ['size' => 10, 'number' => 1],
-])->getData();
-echo 'Found '.count($identities)." identities\n";
+$identities = Identity::all(['page' => ['size' => 1, 'number' => 1]])->getData();
 
 if (0 === count($identities)) {
     exit("No identities available. Please create an identity first.\n");
 }
 
 $identity = $identities[0];
-echo 'Using identity: '.$identity->getId()."\n";
+echo 'Identity: '.$identity->getId()."\n";
 echo '  Name: '.$identity->getFirstName().' '.$identity->getLastName()."\n";
-echo '  Phone: '.$identity->getPhoneNumber()."\n";
 
-// Step 4: Find an address
-echo "\n=== Step 4: Find Address ===\n";
-$addresses = Address::all([
-    'include' => 'country',
-    'page' => ['size' => 10, 'number' => 1],
-])->getData();
-echo 'Found '.count($addresses)." addresses\n";
-
-if (0 === count($addresses)) {
-    exit("No addresses available. Please create an address first.\n");
-}
-
-$address = $addresses[0];
-echo 'Using address: '.$address->getId()."\n";
-echo '  Address: '.$address->getAddress()."\n";
+// Step 4: Use the address we found earlier
+echo "\n=== Step 4: Using Address ===\n";
+echo 'Address: '.$address->getId()."\n";
 echo '  City: '.$address->getCityName()."\n";
-echo '  Postal Code: '.$address->getPostalCode()."\n";
-
-$addressCountry = $address->country()->getIncluded();
-if ($addressCountry) {
-    echo '  Country: '.$addressCountry->getName()."\n";
-}
 
 // Step 5: Validate the emergency requirement
 echo "\n=== Step 5: Validate Emergency Requirement ===\n";
@@ -126,17 +158,19 @@ if ($validationDocument->hasErrors()) {
     foreach ($validationDocument->getErrors() as $error) {
         echo '  - '.$error->getDetail()."\n";
     }
-    exit("Cannot proceed without valid requirement. Fix issues and try again.\n");
+    exit("Cannot proceed without valid requirement.\n");
 }
-echo "Validation successful (HTTP 204)\n";
+echo "Validation passed!\n";
 
 // Step 6: Create emergency verification
 echo "\n=== Step 6: Create Emergency Verification ===\n";
 $suffix = bin2hex(random_bytes(4));
 $verification = new EmergencyVerification();
-$verification->setAddress(Address::build($address->getId()));
 $verification->setCallbackUrl('https://example.com/callbacks/emergency');
-$verification->setCallbackMethod('POST');
+$verification->setCallbackMethod('post');
+$verification->setExternalReferenceId("php-scenario-$suffix");
+$verification->setAddress(Address::build($address->getId()));
+$verification->setDids(new Swis\JsonApi\Client\Collection([Did::build($selectedDid->getId())]));
 
 $verificationDocument = $verification->save();
 
@@ -151,8 +185,8 @@ if ($verificationDocument->hasErrors()) {
 $verification = $verificationDocument->getData();
 echo 'Created verification: '.$verification->getId()."\n";
 echo '  Reference: '.($verification->getReference() ?? 'N/A')."\n";
-echo '  Status: '.($verification->getStatus() instanceof BackedEnum ? $verification->getStatus()->value : $verification->getStatus())."\n";
-echo '  Callback URL: '.($verification->getCallbackUrl() ?? 'N/A')."\n";
+echo '  Status: '.$verification->getStatus()->value."\n";
+echo '  External Reference: '.$verification->getExternalReferenceId()."\n";
 
 // Step 7: Check verification status
 echo "\n=== Step 7: Check Verification Status ===\n";
@@ -160,58 +194,17 @@ $freshDocument = EmergencyVerification::find($verification->getId(), [
     'include' => 'address,emergency_calling_service',
 ]);
 $freshVerification = $freshDocument->getData();
-$status = $freshVerification->getStatus();
-$statusString = $status instanceof BackedEnum ? $status->value : $status;
-echo 'Verification '.$freshVerification->getId()." status: $statusString\n";
+echo 'Status: '.$freshVerification->getStatus()->value."\n";
 
-if ($freshVerification->isPending()) {
-    echo "  Verification is pending review.\n";
-} elseif ($freshVerification->isApproved()) {
-    echo "  Verification has been approved.\n";
-} elseif ($freshVerification->isRejected()) {
-    echo "  Verification was rejected.\n";
-    if ($freshVerification->getRejectReasons()) {
-        echo '  Reject reasons: '.implode(', ', $freshVerification->getRejectReasons())."\n";
-    }
-    if ($freshVerification->getRejectComment()) {
-        echo '  Reject comment: '.$freshVerification->getRejectComment()."\n";
-    }
-}
-
-// Step 8: Get Emergency Calling Service (if available)
+// Step 8: Get Emergency Calling Service
 echo "\n=== Step 8: Get Emergency Calling Service ===\n";
 $ecs = $freshVerification->emergencyCallingService()->getIncluded();
 if ($ecs) {
-    echo 'Emergency Calling Service: '.$ecs->getId()."\n";
+    echo 'ECS: '.$ecs->getId()."\n";
     echo '  Name: '.$ecs->getName()."\n";
-    echo '  Reference: '.($ecs->getReference() ?? 'N/A')."\n";
     echo '  Status: '.$ecs->getStatus()->value."\n";
-    echo '  Created At: '.$ecs->getCreatedAt()->format('Y-m-d H:i:s')."\n";
-    echo '  Renew Date: '.($ecs->getRenewDate() ?? 'N/A')."\n";
 } else {
-    echo "No Emergency Calling Service linked yet (verification may still be pending).\n";
-    echo "Listing all Emergency Calling Services instead:\n";
-
-    $allServices = EmergencyCallingService::all([
-        'include' => 'country,did_group_type',
-        'page' => ['size' => 5, 'number' => 1],
-    ])->getData();
-
-    if (0 === count($allServices)) {
-        echo "  No emergency calling services found on this account.\n";
-    } else {
-        foreach ($allServices as $service) {
-            echo '  ID: '.$service->getId()."\n";
-            echo '    Name: '.$service->getName()."\n";
-            echo '    Status: '.$service->getStatus()->value."\n";
-
-            $serviceCountry = $service->country()->getIncluded();
-            if ($serviceCountry) {
-                echo '    Country: '.$serviceCountry->getName()."\n";
-            }
-            echo "\n";
-        }
-    }
+    echo "No ECS linked yet (verification may still be pending).\n";
 }
 
-echo "\n=== Emergency Scenario Complete ===\n";
+echo "\nDone!\n";

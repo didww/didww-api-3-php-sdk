@@ -24,7 +24,7 @@ foreach ($requirements as $requirement) {
 
     $didGroupType = $requirement->didGroupType()->getIncluded();
     if ($didGroupType) {
-        echo '  DID Group Type: '.$didGroupType->getName()."\n";
+        echo '  DID Group Type: '.$didGroupType->name."\n";
     }
 
     echo "\n";

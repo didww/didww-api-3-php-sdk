@@ -54,7 +54,7 @@ class EmergencyRequirement extends BaseItem
         return $this->attributes['business_mandatory_fields'];
     }
 
-    public function getEstimateSetupTime(): string
+    public function getEstimateSetupTime(): string|int
     {
         return $this->attributes['estimate_setup_time'];
     }

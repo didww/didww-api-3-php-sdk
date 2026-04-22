@@ -24,7 +24,7 @@ $didReservation->setDescription('php sdk');
 $didReservation = $didReservation->save()->getData();
 var_dump(
     $didReservation->getDescription(), // php sdk
-    $didReservation->getExpireAt(), // 2019-01-04 09:34:07
+    $didReservation->getExpiresAt(), // 2019-01-04 09:34:07
     $didReservation->getCreatedAt() // 2019-01-04 09:24:07
 );
 

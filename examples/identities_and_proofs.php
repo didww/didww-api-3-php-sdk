@@ -18,18 +18,19 @@ $identities = $document->getData();
 $foundPrefix = 'Found ';
 echo $foundPrefix.count($identities)." identities\n";
 
-foreach (array_slice($identities, 0, 10) as $identity) {
+foreach ($identities->take(10) as $identity) {
     echo "\nIdentity: ".$identity->getId()."\n";
     echo '  Name: '.$identity->getFirstName().' '.$identity->getLastName()."\n";
     echo '  Phone: '.$identity->getPhoneNumber()."\n";
-    echo '  Type: '.$identity->getIdentityType()."\n";
+    echo '  Type: '.$identity->getIdentityType()->value."\n";
     $country = $identity->country()->getIncluded();
     echo '  Country: '.($country ? $country->getName() : 'null')."\n";
     $birthCountry = $identity->birthCountry()->getIncluded();
     echo '  Birth Country: '.($birthCountry ? $birthCountry->getName() : 'null')."\n"; // 2026-04-16
-    echo '  Birth Date: '.($identity->getBirthDate() ?? 'null')."\n";
+    $birthDate = $identity->getBirthDate();
+    echo '  Birth Date: '.($birthDate ? $birthDate->format('Y-m-d') : 'null')."\n";
     echo '  Verified: '.($identity->getVerified() ? 'true' : 'false')."\n";
-    echo '  Created: '.$identity->getCreatedAt()."\n";
+    echo '  Created: '.$identity->getCreatedAt()->format('Y-m-d H:i:s')."\n";
 }
 
 // List addresses
@@ -38,7 +39,7 @@ $document = Address::all(['include' => 'identity']);
 $addresses = $document->getData();
 echo $foundPrefix.count($addresses)." addresses\n";
 
-foreach (array_slice($addresses, 0, 10) as $address) {
+foreach ($addresses->take(10) as $address) {
     echo "\nAddress: ".$address->getId()."\n";
     echo '  Street: '.$address->getAddress()."\n";
     echo '  City: '.$address->getCityName()."\n";
@@ -56,7 +57,7 @@ $document = ProofType::all();
 $proofTypes = $document->getData();
 echo $foundPrefix.count($proofTypes)." proof types\n";
 
-foreach (array_slice($proofTypes, 0, 10) as $pt) {
+foreach ($proofTypes->take(10) as $pt) {
     echo $pt->getName().' ('.$pt->getEntityType().")\n";
 }
 

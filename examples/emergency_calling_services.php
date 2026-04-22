@@ -18,9 +18,10 @@ foreach ($services as $service) {
     echo 'ID: '.$service->getId()."\n";
     echo '  Name: '.$service->getName()."\n";
     echo '  Reference: '.$service->getReference()."\n";
-    echo '  Status: '.$service->getStatus()."\n";
+    echo '  Status: '.$service->getStatus()->value."\n";
     echo '  Created At: '.$service->getCreatedAt()->format('Y-m-d H:i:s')."\n";
-    echo '  Renew Date: '.($service->getRenewDate() ?? 'N/A')."\n";
+    $renewDate = $service->getRenewDate();
+    echo '  Renew Date: '.($renewDate ? $renewDate->format('Y-m-d') : 'N/A')."\n";
 
     $country = $service->country()->getIncluded();
     if ($country) {

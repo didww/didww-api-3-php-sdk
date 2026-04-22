@@ -15,10 +15,10 @@ $document = VoiceInTrunkGroup::all(['include' => 'voice_in_trunks']);
 $trunkGroups = $document->getData();
 echo 'Found '.count($trunkGroups)." trunk groups\n";
 
-foreach (array_slice($trunkGroups, 0, 3) as $group) {
+foreach ($trunkGroups->take(3) as $group) {
     $trunks = $group->voiceInTrunks()->getIncluded();
     $trunksCount = $trunks ? count($trunks->all()) : 0;
-    echo $group->getName()." ($trunksCount trunks)\n";
+    echo $group->name." ($trunksCount trunks)\n";
 }
 
 // Create a new trunk group (2026-04-16 external_reference_id for customer tagging)
@@ -26,8 +26,8 @@ echo "\n=== Creating Trunk Group ===\n";
 $suffix = bin2hex(random_bytes(4));
 
 $trunkGroup = new VoiceInTrunkGroup();
-$trunkGroup->setName("PHP Trunk Group $suffix");
-$trunkGroup->setCapacityLimit(20);
+$trunkGroup->name = "PHP Trunk Group $suffix";
+$trunkGroup->capacity_limit = 20;
 $trunkGroup->setExternalReferenceId("php-tg-$suffix");
 
 $document = $trunkGroup->save();
@@ -37,12 +37,12 @@ if ($document->hasErrors()) {
     var_dump($document->getErrors());
 } else {
     $trunkGroup = $document->getData();
-    echo 'Created trunk group: '.$trunkGroup->getId().' - '.$trunkGroup->getName()."\n";
+    echo 'Created trunk group: '.$trunkGroup->getId().' - '.$trunkGroup->name."\n";
     echo '  External reference: '.($trunkGroup->getExternalReferenceId() ?? 'null')."\n";
 
     // Update trunk group
     echo "\n=== Updating Trunk Group ===\n";
-    $trunkGroup->setCapacityLimit(30);
+    $trunkGroup->capacity_limit = 30;
     $updateDoc = $trunkGroup->save();
 
     if ($updateDoc->hasErrors()) {
@@ -50,7 +50,7 @@ if ($document->hasErrors()) {
         var_dump($updateDoc->getErrors());
     } else {
         $trunkGroup = $updateDoc->getData();
-        echo 'Updated trunk group: '.$trunkGroup->getName().' (capacity_limit: '.$trunkGroup->getCapacityLimit().")\n";
+        echo 'Updated trunk group: '.$trunkGroup->name.' (capacity_limit: '.$trunkGroup->capacity_limit.")\n";
 
         // Delete trunk group
         echo "\n=== Deleting Trunk Group ===\n";

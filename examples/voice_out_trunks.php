@@ -17,7 +17,7 @@ $document = VoiceOutTrunk::all();
 $trunks = $document->getData();
 echo 'Found '.count($trunks)." voice out trunks\n";
 
-foreach (array_slice($trunks, 0, 5) as $trunk) {
+foreach ($trunks->take(5) as $trunk) {
     echo $trunk->getName().' ('.$trunk->getStatus()->value.")\n";
     echo '  ID: '.$trunk->getId()."\n";
     $auth = $trunk->getAuthenticationMethod();
