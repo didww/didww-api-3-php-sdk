@@ -403,16 +403,16 @@ class OrderTest extends BaseTest
         $pending = new \Didww\Item\Order(['status' => 'pending']);
         $this->assertTrue($pending->isPending());
         $this->assertFalse($pending->isCompleted());
-        $this->assertFalse($pending->isCancelled());
+        $this->assertFalse($pending->isCanceled());
 
         $completed = new \Didww\Item\Order(['status' => 'completed']);
         $this->assertFalse($completed->isPending());
         $this->assertTrue($completed->isCompleted());
-        $this->assertFalse($completed->isCancelled());
+        $this->assertFalse($completed->isCanceled());
 
-        $cancelled = new \Didww\Item\Order(['status' => 'canceled']);
-        $this->assertFalse($cancelled->isPending());
-        $this->assertFalse($cancelled->isCompleted());
-        $this->assertTrue($cancelled->isCancelled());
+        $canceled = new \Didww\Item\Order(['status' => 'canceled']);
+        $this->assertFalse($canceled->isPending());
+        $this->assertFalse($canceled->isCompleted());
+        $this->assertTrue($canceled->isCanceled());
     }
 }
