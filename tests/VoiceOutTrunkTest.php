@@ -81,6 +81,24 @@ class VoiceOutTrunkTest extends CassetteTest
         $this->assertEquals('7de7f718-4042-4d74-9fe9-863fa1777520', $defaultDidRelation->getIncluded()->getId());
     }
 
+    public function testFindVoiceOutTrunkWithIpOnlyAuth()
+    {
+        $uuid = '23fd58f9-9094-406c-bfd9-f4d25bda13c6';
+        $voiceOutTrunkDocument = \Didww\Item\VoiceOutTrunk::find($uuid);
+
+        $data = $voiceOutTrunkDocument->getData();
+        $this->assertInstanceOf('Didww\Item\VoiceOutTrunk', $data);
+        $this->assertEquals($uuid, $data->getId());
+        $this->assertEquals('SDK Test credentials_and_ip', $data->getName());
+        $this->assertEquals(VoiceOutTrunkStatus::ACTIVE, $data->getStatus());
+
+        // authentication_method must be IpOnly, not CredentialsAndIp
+        $am = $data->getAuthenticationMethod();
+        $this->assertInstanceOf(\Didww\Item\AuthenticationMethod\IpOnly::class, $am);
+        $this->assertNotInstanceOf(\Didww\Item\AuthenticationMethod\CredentialsAndIp::class, $am);
+        $this->assertEquals(['203.0.113.1/32'], $am->getAllowedSipIps());
+    }
+
     public function testUpdateVoiceOutTrunk()
     {
         $uuid = '425ce763-a3a9-49b4-af5b-ada1a65c8864';

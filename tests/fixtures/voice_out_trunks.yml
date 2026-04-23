@@ -99,6 +99,25 @@
 
 -
     request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/voice_out_trunks/23fd58f9-9094-406c-bfd9-f4d25bda13c6'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"23fd58f9-9094-406c-bfd9-f4d25bda13c6","type":"voice_out_trunks","attributes":{"allowed_rtp_ips":null,"allow_any_did_as_cli":false,"status":"active","on_cli_mismatch_action":"reject_call","name":"SDK Test credentials_and_ip","capacity_limit":null,"created_at":"2026-04-23T19:52:20.859Z","threshold_reached":false,"threshold_amount":"3000.0","media_encryption_mode":"disabled","default_dst_action":"allow_all","dst_prefixes":[],"force_symmetric_rtp":false,"rtp_ping":false,"callback_url":null,"external_reference_id":null,"authentication_method":{"type":"ip_only","attributes":{"allowed_sip_ips":["203.0.113.1/32"],"tech_prefix":null}},"emergency_enable_all":false,"rtp_timeout":30},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_out_trunks/23fd58f9-9094-406c-bfd9-f4d25bda13c6/relationships/dids","related":"https://sandbox-api.didww.com/v3/voice_out_trunks/23fd58f9-9094-406c-bfd9-f4d25bda13c6/dids"}},"emergency_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_out_trunks/23fd58f9-9094-406c-bfd9-f4d25bda13c6/relationships/emergency_dids","related":"https://sandbox-api.didww.com/v3/voice_out_trunks/23fd58f9-9094-406c-bfd9-f4d25bda13c6/emergency_dids"}}},"meta":{"spent_amount":"0.0"}},"meta":{"api_version":"2026-04-16"}}'
+-
+    request:
         method: PATCH
         url: 'https://sandbox-api.didww.com/v3/voice_out_trunks/01234567-89ab-cdef-0123-456789abcdef'
         headers:
