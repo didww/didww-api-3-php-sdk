@@ -119,7 +119,7 @@ class Order extends BaseItem
         return OrderStatus::COMPLETED === $this->getStatus();
     }
 
-    public function isCancelled(): bool
+    public function isCanceled(): bool
     {
         return OrderStatus::CANCELED === $this->getStatus();
     }

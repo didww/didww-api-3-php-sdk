@@ -27,5 +27,5 @@ if ($document->hasErrors()) {
     echo "Validation failed:\n";
     var_dump($document->getErrors());
 } else {
-    echo "Validation successful (HTTP 204)\n";
+    echo "Validation successful (HTTP 201)\n";
 }

@@ -19,27 +19,4 @@
             message: Created
         headers:
             Content-Type: application/vnd.api+json
-        body: '{"data":{"id":"aea92b24-a044-4864-9740-89d3e15b65c7","type":"emergency_requirement_validations"}}'
--
-    request:
-        method: POST
-        url: 'https://sandbox-api.didww.com/v3/emergency_requirement_validations'
-        headers:
-            Host: sandbox-api.didww.com
-            Expect: ''
-            Accept-Encoding: ''
-            User-Agent: GuzzleHttp/7
-            Accept: application/vnd.api+json
-            Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"emergency_requirement_validations","relationships":{"address":{"data":{"type":"addresses","id":"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"}},"identity":{"data":{"type":"identities","id":"11111111-aaaa-bbbb-cccc-dddddddddddd"}},"emergency_requirement":{"data":{"type":"emergency_requirements","id":"22222222-3333-4444-5555-666666666666"}}}}}'
-    response:
-        status:
-            http_version: '1.1'
-            code: '204'
-            message: 'No Content'
-        headers:
-            Server: nginx
-            Date: 'Thu, 01 Apr 2021 15:02:00 GMT'
-            Connection: keep-alive
-        body: ''
+        body: '{"data":{"id":"aea92b24-a044-4864-9740-89d3e15b65c7","type":"emergency_requirement_validations"},"meta":{"api_version":"2026-04-16"}}'

@@ -21,6 +21,7 @@ class AddressRequirementValidationTest extends CassetteTest
         $this->assertFalse($requirementValidationDocument->hasErrors());
         $requirementValidation = $requirementValidationDocument->getData();
         $this->assertInstanceOf('Didww\Item\AddressRequirementValidation', $requirementValidation);
+        $this->assertEquals('aea92b24-a044-4864-9740-89d3e15b65c7', $requirementValidation->getId());
     }
 
     public function testCreateAddressRequirementValidationFailed()
@@ -35,18 +36,6 @@ class AddressRequirementValidationTest extends CassetteTest
         $requirementValidation->setAddressRequirement($requirement);
         $requirementValidationDocument = $requirementValidation->save();
         $this->assertTrue($requirementValidationDocument->hasErrors());
-    }
-
-    public function testCreateAddressRequirementValidation204()
-    {
-        $address = \Didww\Item\Address::build('aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee');
-        $requirement = \Didww\Item\AddressRequirement::build('11111111-2222-3333-4444-555555555555');
-
-        $validation = new \Didww\Item\AddressRequirementValidation();
-        $validation->setAddress($address);
-        $validation->setAddressRequirement($requirement);
-        $document = $validation->save();
-        $this->assertFalse($document->hasErrors());
     }
 
     public function testEndpoint()
