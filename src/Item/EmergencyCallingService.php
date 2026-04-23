@@ -9,6 +9,9 @@ use Didww\Traits\Fetchable;
 /**
  * Customer-owned subscription to emergency calling on one or more DIDs.
  * Supported operations: index, show, destroy. Introduced in API 2026-04-16.
+ *
+ * Resource-level meta carries: setup_price, monthly_price.
+ * Access via $service->getMeta() (inherited from SWIS Item).
  */
 class EmergencyCallingService extends BaseItem // NOSONAR
 {
