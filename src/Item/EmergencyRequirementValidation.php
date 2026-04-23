@@ -8,7 +8,8 @@ use Didww\Traits\Saveable;
  * Validates a prospective emergency calling service order against
  * an EmergencyRequirement, given an Address and an Identity.
  *
- * Write-only endpoint: a successful POST returns 204 No Content.
+ * A successful POST returns 201 Created with the validation resource
+ * (id mirrors the submitted emergency_requirement_id).
  * Introduced in API 2026-04-16.
  */
 class EmergencyRequirementValidation extends BaseItem
