@@ -216,23 +216,28 @@ $groupDocument = $group->save();
 
 ### Voice Out Trunks
 
-Voice Out Trunks use a polymorphic `authentication_method` (2026-04-16).
+Voice Out Trunks use a polymorphic `authentication_method` (2026-04-16). Three types are supported:
+
+- **`credentials_and_ip`** -- default method; `username` and `password` are server-generated and returned in the response.
+- **`twilio`** -- requires a `twilio_account_sid`.
+- **`ip_only`** -- read-only; can only be configured by DIDWW staff upon request. Cannot be set via the API.
 
 ```php
 use Didww\Enum\OnCliMismatchAction;
-use Didww\Item\AuthenticationMethod\IpOnly;
+use Didww\Item\AuthenticationMethod\CredentialsAndIp;
 
 $trunk = new Didww\Item\VoiceOutTrunk();
 $trunk->setName('My Outbound Trunk');
 // NOTE: 203.0.113.0/24 is RFC 5737 TEST-NET-3 documentation space.
 // Replace with the real CIDR of your SIP infrastructure.
-$trunk->setAuthenticationMethod(new IpOnly([
+$trunk->setAuthenticationMethod(new CredentialsAndIp([
     'allowed_sip_ips' => ['203.0.113.0/24'],
-    'tech_prefix' => '',
 ]));
 $trunk->setOnCliMismatchAction(OnCliMismatchAction::REPLACE_CLI);
 $trunk->setDefaultDid(Didww\Item\Did::build('did-uuid'));
 $trunkDocument = $trunk->save();
+// $trunkDocument->getData()->getAuthenticationMethod()->getUsername() -- server-generated
+// $trunkDocument->getData()->getAuthenticationMethod()->getPassword() -- server-generated
 ```
 
 ### Orders
