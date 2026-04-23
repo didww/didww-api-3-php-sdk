@@ -126,6 +126,15 @@ $emergencyRequirement = $requirements[0];
 echo 'Requirement: '.$emergencyRequirement->getId()."\n";
 echo '  Identity type: '.$emergencyRequirement->getIdentityType()."\n";
 echo '  Estimate setup time: '.($emergencyRequirement->getEstimateSetupTime() ?? 'N/A')."\n";
+$meta = $emergencyRequirement->getMeta();
+if ($meta) {
+    if (isset($meta['setup_price'])) {
+        echo '  Setup price: '.$meta['setup_price']."\n";
+    }
+    if (isset($meta['monthly_price'])) {
+        echo '  Monthly price: '.$meta['monthly_price']."\n";
+    }
+}
 
 // Step 3: Find an identity
 echo "\n=== Step 3: Find Identity ===\n";
@@ -203,6 +212,15 @@ if ($ecs) {
     echo 'ECS: '.$ecs->getId()."\n";
     echo '  Name: '.$ecs->getName()."\n";
     echo '  Status: '.$ecs->getStatus()->value."\n";
+    $ecsMeta = $ecs->getMeta();
+    if ($ecsMeta) {
+        if (isset($ecsMeta['setup_price'])) {
+            echo '  Setup price: '.$ecsMeta['setup_price']."\n";
+        }
+        if (isset($ecsMeta['monthly_price'])) {
+            echo '  Monthly price: '.$ecsMeta['monthly_price']."\n";
+        }
+    }
 } else {
     echo "No ECS linked yet (verification may still be pending).\n";
 }

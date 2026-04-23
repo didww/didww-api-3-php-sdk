@@ -1,6 +1,7 @@
 <?php
 
-// List and manage emergency calling services (2026-04-16).
+// List emergency calling services (2026-04-16).
+// Each service may carry resource-level meta with setup_price and monthly_price.
 
 require_once 'bootstrap.php';
 
@@ -26,6 +27,16 @@ foreach ($services as $service) {
     $country = $service->country()->getIncluded();
     if ($country) {
         echo '  Country: '.$country->getName()."\n";
+    }
+
+    $meta = $service->getMeta();
+    if ($meta) {
+        if (isset($meta['setup_price'])) {
+            echo '  Setup price: '.$meta['setup_price']."\n";
+        }
+        if (isset($meta['monthly_price'])) {
+            echo '  Monthly price: '.$meta['monthly_price']."\n";
+        }
     }
 
     echo "\n";

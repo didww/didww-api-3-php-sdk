@@ -1,6 +1,8 @@
 <?php
 
 // List emergency requirements (2026-04-16).
+// Each requirement may carry resource-level meta with setup_price and monthly_price
+// when the customer has a matching plan.
 
 require_once 'bootstrap.php';
 
@@ -25,6 +27,16 @@ foreach ($requirements as $requirement) {
     $didGroupType = $requirement->didGroupType()->getIncluded();
     if ($didGroupType) {
         echo '  DID Group Type: '.$didGroupType->name."\n";
+    }
+
+    $meta = $requirement->getMeta();
+    if ($meta) {
+        if (isset($meta['setup_price'])) {
+            echo '  Setup price: '.$meta['setup_price']."\n";
+        }
+        if (isset($meta['monthly_price'])) {
+            echo '  Monthly price: '.$meta['monthly_price']."\n";
+        }
     }
 
     echo "\n";

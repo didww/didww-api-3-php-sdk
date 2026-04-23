@@ -99,6 +99,25 @@
 
 -
     request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/voice_out_trunks/23fd58f9-9094-406c-bfd9-f4d25bda13c6'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"23fd58f9-9094-406c-bfd9-f4d25bda13c6","type":"voice_out_trunks","attributes":{"allowed_rtp_ips":null,"allow_any_did_as_cli":false,"status":"active","on_cli_mismatch_action":"reject_call","name":"SDK Test credentials_and_ip","capacity_limit":null,"created_at":"2026-04-23T19:52:20.859Z","threshold_reached":false,"threshold_amount":"3000.0","media_encryption_mode":"disabled","default_dst_action":"allow_all","dst_prefixes":[],"force_symmetric_rtp":false,"rtp_ping":false,"callback_url":null,"external_reference_id":null,"authentication_method":{"type":"ip_only","attributes":{"allowed_sip_ips":["203.0.113.1/32"],"tech_prefix":null}},"emergency_enable_all":false,"rtp_timeout":30},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_out_trunks/23fd58f9-9094-406c-bfd9-f4d25bda13c6/relationships/dids","related":"https://sandbox-api.didww.com/v3/voice_out_trunks/23fd58f9-9094-406c-bfd9-f4d25bda13c6/dids"}},"emergency_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_out_trunks/23fd58f9-9094-406c-bfd9-f4d25bda13c6/relationships/emergency_dids","related":"https://sandbox-api.didww.com/v3/voice_out_trunks/23fd58f9-9094-406c-bfd9-f4d25bda13c6/emergency_dids"}}},"meta":{"spent_amount":"0.0"}},"meta":{"api_version":"2026-04-16"}}'
+-
+    request:
         method: PATCH
         url: 'https://sandbox-api.didww.com/v3/voice_out_trunks/01234567-89ab-cdef-0123-456789abcdef'
         headers:
@@ -147,3 +166,42 @@
             Transfer-Encoding: chunked
             Connection: keep-alive
         body: '{"data":{"id":"01234567-89ab-cdef-0123-456789abcdef","type":"voice_out_trunks","attributes":{"name":"test-trunk","on_cli_mismatch_action":"reject_call","allowed_rtp_ips":null,"allow_any_did_as_cli":false,"status":"active","capacity_limit":"100","threshold_amount":null,"media_encryption_mode":"disabled","default_dst_action":"allow_calls","dst_prefixes":[],"force_symmetric_rtp":false,"rtp_ping":false,"callback_url":null,"authentication_method":{"type":"ip_only","attributes":{"allowed_sip_ips":["203.0.113.0/24"],"tech_prefix":""}},"external_reference_id":null,"emergency_enable_all":false,"rtp_timeout":30,"created_at":"2026-04-01T10:00:00.000Z"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_out_trunks/01234567-89ab-cdef-0123-456789abcdef/relationships/dids","related":"https://sandbox-api.didww.com/v3/voice_out_trunks/01234567-89ab-cdef-0123-456789abcdef/dids"}},"emergency_dids":{"data":[{"type":"dids","id":"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"},{"type":"dids","id":"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"}]}}}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/voice_out_trunks/b5e701f4-ea15-4f9d-8f35-6a0bdce04385'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"b5e701f4-ea15-4f9d-8f35-6a0bdce04385","type":"voice_out_trunks","attributes":{"allowed_rtp_ips":null,"allow_any_did_as_cli":false,"status":"active","on_cli_mismatch_action":"reject_call","name":"SDK Test twilio","capacity_limit":null,"created_at":"2026-04-23T19:52:32.708Z","threshold_reached":false,"threshold_amount":"3000.0","media_encryption_mode":"disabled","default_dst_action":"allow_all","dst_prefixes":[],"force_symmetric_rtp":false,"rtp_ping":false,"callback_url":null,"external_reference_id":null,"authentication_method":{"type":"twilio","attributes":{"twilio_account_sid":"AC22222222222222222222222222222222"}},"emergency_enable_all":false,"rtp_timeout":30},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_out_trunks/b5e701f4-ea15-4f9d-8f35-6a0bdce04385/relationships/dids","related":"https://sandbox-api.didww.com/v3/voice_out_trunks/b5e701f4-ea15-4f9d-8f35-6a0bdce04385/dids"}},"emergency_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_out_trunks/b5e701f4-ea15-4f9d-8f35-6a0bdce04385/relationships/emergency_dids","related":"https://sandbox-api.didww.com/v3/voice_out_trunks/b5e701f4-ea15-4f9d-8f35-6a0bdce04385/emergency_dids"}}},"meta":{"spent_amount":"0.0"}},"meta":{"api_version":"2026-04-16"}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/voice_out_trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"voice_out_trunks","attributes":{"name":"SDK Test twilio create","authentication_method":{"type":"twilio","attributes":{"twilio_account_sid":"AC33333333333333333333333333333333"}},"on_cli_mismatch_action":"reject_call"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"507fa5a2-fd58-4c4d-a231-efba27f67c3a","type":"voice_out_trunks","attributes":{"allowed_rtp_ips":null,"allow_any_did_as_cli":false,"status":"active","on_cli_mismatch_action":"reject_call","name":"SDK Test twilio create","capacity_limit":null,"created_at":"2026-04-23T19:59:39.154Z","threshold_reached":false,"threshold_amount":"3000.0","media_encryption_mode":"disabled","default_dst_action":"allow_all","dst_prefixes":[],"force_symmetric_rtp":false,"rtp_ping":false,"callback_url":null,"external_reference_id":null,"authentication_method":{"type":"twilio","attributes":{"twilio_account_sid":"AC33333333333333333333333333333333"}},"emergency_enable_all":false,"rtp_timeout":30},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_out_trunks/507fa5a2-fd58-4c4d-a231-efba27f67c3a/relationships/dids","related":"https://sandbox-api.didww.com/v3/voice_out_trunks/507fa5a2-fd58-4c4d-a231-efba27f67c3a/dids"}},"emergency_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_out_trunks/507fa5a2-fd58-4c4d-a231-efba27f67c3a/relationships/emergency_dids","related":"https://sandbox-api.didww.com/v3/voice_out_trunks/507fa5a2-fd58-4c4d-a231-efba27f67c3a/emergency_dids"}}},"meta":{"spent_amount":"0.0"}},"meta":{"api_version":"2026-04-16"}}'
