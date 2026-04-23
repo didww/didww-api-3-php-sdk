@@ -15,7 +15,7 @@ This SDK uses [swisnl/json-api-client](https://github.com/swisnl/json-api-client
 
 Read more https://doc.didww.com/api
 
-By default, this SDK sends the `X-DIDWW-API-Version: 2022-05-10` header with each request.
+By default, this SDK sends the `X-DIDWW-API-Version: 2026-04-16` header with each request.
 
 ## Requirements
 
@@ -113,8 +113,8 @@ $proofTypes = Didww\Item\ProofType::all()->getData();
 // Public Keys
 $publicKeys = Didww\Item\PublicKey::all()->getData();
 
-// Requirements
-$requirements = Didww\Item\Requirement::all()->getData();
+// Address Requirements (renamed from Requirements in 2026-04-16)
+$requirements = Didww\Item\AddressRequirement::all()->getData();
 
 // Balance (singleton)
 $balance = Didww\Item\Balance::find()->getData();
@@ -216,12 +216,20 @@ $groupDocument = $group->save();
 
 ### Voice Out Trunks
 
+Voice Out Trunks use a polymorphic `authentication_method` (2026-04-16).
+
 ```php
 use Didww\Enum\OnCliMismatchAction;
+use Didww\Item\AuthenticationMethod\IpOnly;
 
 $trunk = new Didww\Item\VoiceOutTrunk();
 $trunk->setName('My Outbound Trunk');
-$trunk->setAllowedSipIps(['0.0.0.0/0']);
+// NOTE: 203.0.113.0/24 is RFC 5737 TEST-NET-3 documentation space.
+// Replace with the real CIDR of your SIP infrastructure.
+$trunk->setAuthenticationMethod(new IpOnly([
+    'allowed_sip_ips' => ['203.0.113.0/24'],
+    'tech_prefix' => '',
+]));
 $trunk->setOnCliMismatchAction(OnCliMismatchAction::REPLACE_CLI);
 $trunk->setDefaultDid(Didww\Item\Did::build('did-uuid'));
 $trunkDocument = $trunk->save();
@@ -325,13 +333,15 @@ $addressDocument = $address->save();
 
 ### Exports
 
+In 2026-04-16, the `year`/`month` filters are replaced by a `from`/`to` datetime range.
+
 ```php
 use Didww\Enum\ExportType;
 
 $export = new Didww\Item\Export();
 $export->setExportType(ExportType::CDR_IN);
-$export->setFilterYear('2025');
-$export->setFilterMonth('01');
+$export->setFilterFrom('2025-01-01T00:00:00.000Z');  // inclusive
+$export->setFilterTo('2025-02-01T00:00:00.000Z');     // exclusive
 $exportDocument = $export->save();
 
 // Download the export when completed
@@ -339,18 +349,71 @@ $export = $exportDocument->getData();
 $export->download('/tmp/export.csv');
 ```
 
+### Address Verifications
+
+```php
+// List address verifications
+$verifications = Didww\Item\AddressVerification::all()->getData();
+
+// Create address verification
+$verification = new Didww\Item\AddressVerification();
+$verification->setCallbackUrl('https://example.com/callback');
+$verification->setCallbackMethod(Didww\Enum\CallbackMethod::POST);
+$verification->setAddress(Didww\Item\Address::build('address-uuid'));
+$verification->setDids([Didww\Item\Did::build('did-uuid')]);
+$verificationDocument = $verification->save();
+```
+
+### Emergency Services (2026-04-16)
+
+```php
+// List emergency requirements
+$emergReqs = Didww\Item\EmergencyRequirement::all()->getData();
+
+// Create emergency verification
+$emergVerification = new Didww\Item\EmergencyVerification();
+$emergVerification->setCallbackUrl('https://example.com/callback');
+$emergVerification->setCallbackMethod(Didww\Enum\CallbackMethod::POST);
+$emergVerification->setAddress(Didww\Item\Address::build('address-uuid'));
+$emergVerification->setDids([Didww\Item\Did::build('did-uuid')]);
+$emergVerificationDocument = $emergVerification->save();
+
+// List emergency calling services
+$emergServices = Didww\Item\EmergencyCallingService::all()->getData();
+```
+
+### DID History (2026-04-16)
+
+```php
+// List DID history
+$history = Didww\Item\DidHistory::all()->getData();
+foreach ($history as $entry) {
+    echo $entry->getAction() . ' ' . $entry->getCreatedAt()->format('Y-m-d') . "\n";
+}
+```
+
 ## Date and Datetime Fields
 
 Date and datetime attributes returned from the API are represented as strings in the underlying JSON. This SDK provides **typed getter methods** for some known date and datetime attributes; these getters convert those string values to `\DateTime` instances.
 
 - **Datetime getters** — return `\DateTime` with full timestamp:
-  - All `getCreatedAt()` methods — present on most resources
-  - Expiry getters: `Did::getExpiresAt()`, `DidReservation::getExpireAt()`, `Proof::getExpiresAt()`, `EncryptedFile::getExpireAt()`
+  - `getCreatedAt()` — present on most resources
+  - `getExpiresAt()` — `Did`, `DidReservation`, `Proof`, `EncryptedFile` (nullable)
+  - `getActivatedAt()` — `EmergencyCallingService` (nullable)
+  - `getCanceledAt()` — `EmergencyCallingService` (nullable)
 - **Date-only getters** — return `\DateTime` with time `00:00:00`:
   - `Identity::getBirthDate()`
 - **Getters that intentionally keep strings** — these represent dates but still return `string` values:
-  - `CapacityPool::getRenewDate()`
+  - `CapacityPool::getRenewDate()`, `EmergencyCallingService::getRenewDate()` — `"YYYY-MM-DD"` (nullable)
   - Order item `getBilledFrom()` / `getBilledTo()`
+- **String fields** (not numeric):
+  - `EmergencyRequirement::getEstimateSetupTime()` — e.g. `"7-14 days"`, `"1"`
+  - `EmergencyRequirement::getRequirementRestrictionMessage()` — nullable
+
+**Important changes from previous API versions:**
+- `getExpireAt()` renamed to `getExpiresAt()` on `DidReservation` and `EncryptedFile`
+- `getRenewDate()` returns a date-only string, NOT a `\DateTime`
+- `getEstimateSetupTime()` returns a string, NOT an integer
 
 ```php
 $did = Didww\Item\Did::find('uuid')->getData();
@@ -411,17 +474,22 @@ $trunk->setOnCliMismatchAction('replace_cli');
 | `AddressVerificationStatus` | `string` | `PENDING`, `APPROVED`, `REJECTED` |
 | `MediaEncryptionMode` | `string` | `DISABLED`, `SRTP_SDES`, `SRTP_DTLS`, `ZRTP` |
 | `StirShakenMode` | `string` | `DISABLED`, `ORIGINAL`, `PAI`, `ORIGINAL_PAI`, `VERSTAT` |
-| `OnCliMismatchAction` | `string` | `SEND_ORIGINAL_CLI`, `REJECT_CALL`, `REPLACE_CLI` |
+| `OnCliMismatchAction` | `string` | `SEND_ORIGINAL_CLI`, `REJECT_CALL`, `REPLACE_CLI`\*, `RANDOMIZE_CLI`\* |
 | `DefaultDstAction` | `string` | `ALLOW_ALL`, `REJECT_ALL` |
 | `VoiceOutTrunkStatus` | `string` | `ACTIVE`, `BLOCKED` |
-| `Feature` | `string` | `VOICE_IN`, `VOICE_OUT`, `T38`, `SMS_IN`, `SMS_OUT` |
+| `Feature` | `string` | `VOICE_IN`, `VOICE_OUT`, `T38`, `SMS_IN`, `P2P`, `A2P`, `EMERGENCY`, `CNAM_OUT` |
 | `AreaLevel` | `string` | `WORLDWIDE`, `COUNTRY`, `AREA`, `CITY` |
 | `Codec` | `int` | `TELEPHONE_EVENT(6)`, `G723(7)`, `G729(8)`, `PCMU(9)`, `PCMA(10)`, ... |
 | `TransportProtocol` | `int` | `UDP(1)`, `TCP(2)`, `TLS(3)` |
 | `RxDtmfFormat` | `int` | `RFC_2833(1)`, `SIP_INFO(2)`, `RFC_2833_OR_SIP_INFO(3)` |
 | `TxDtmfFormat` | `int` | `DISABLED(0)`, `RFC_2833(1)`, `SIP_INFO_RELAY(2)`, `SIP_INFO_DTMF(4)` |
 | `SstRefreshMethod` | `int` | `INVITE(1)`, `UPDATE(2)`, `UPDATE_FALLBACK_INVITE(3)` |
+| `EmergencyCallingServiceStatus` | `string` | `ACTIVE`, `CANCELED`, `CHANGES_REQUIRED`, `IN_PROCESS`, `NEW`, `PENDING_UPDATE` |
+| `EmergencyVerificationStatus` | `string` | `PENDING`, `APPROVED`, `REJECTED` |
+| `DiversionRelayPolicy` | `string` | `NONE`, `AS_IS`, `SIP`, `TEL` |
 | `ReroutingDisconnectCode` | `int` | 47 SIP error codes (56-108, 1505) |
+
+\* `REPLACE_CLI` and `RANDOMIZE_CLI` require additional account configuration. Contact DIDWW support to enable these values.
 
 ## File Encryption
 
@@ -466,6 +534,39 @@ $valid = $validator->validate(
 | Capacity | `Didww\Item\OrderItem\Capacity` |
 | Generic | `Didww\Item\OrderItem\Generic` |
 
+## Error Handling
+
+All API responses (including errors) are returned as document objects with an error collection. Check `hasErrors()` after every API call.
+
+```php
+// Validation errors (422) — e.g. creating a resource with invalid data
+$document = $order->save();
+if ($document->hasErrors()) {
+    foreach ($document->getErrors() as $error) {
+        echo $error->getDetail() . "\n";
+        // e.g. "name - has already been taken"
+    }
+}
+
+// Not found (404)
+$document = Didww\Item\Did::find('non-existent-uuid');
+if ($document->hasErrors()) {
+    foreach ($document->getErrors() as $error) {
+        echo $error->getTitle() . ': ' . $error->getDetail() . "\n";
+        // "Record not found: The record identified by non-existent-uuid could not be found."
+    }
+}
+
+// Unauthorized (401) — e.g. invalid API key
+$document = Didww\Item\Balance::find();
+if ($document->hasErrors()) {
+    foreach ($document->getErrors() as $error) {
+        echo $error->getTitle() . ': ' . $error->getDetail() . "\n";
+        // "Unauthorized: Authorization failed"
+    }
+}
+```
+
 ## All Supported Resources
 
 | Resource | Class | Operations |
@@ -481,7 +582,7 @@ $valid = $validator->validate(
 | AvailableDid | `Didww\Item\AvailableDid` | list, find |
 | ProofType | `Didww\Item\ProofType` | list, find |
 | PublicKey | `Didww\Item\PublicKey` | list, find |
-| Requirement | `Didww\Item\Requirement` | list, find |
+| AddressRequirement | `Didww\Item\AddressRequirement` | list, find |
 | SupportingDocumentTemplate | `Didww\Item\SupportingDocumentTemplate` | list, find |
 | Balance | `Didww\Item\Balance` | find |
 | Did | `Didww\Item\Did` | list, find, update, delete |
@@ -493,14 +594,19 @@ $valid = $validator->validate(
 | CapacityPool | `Didww\Item\CapacityPool` | list, find |
 | SharedCapacityGroup | `Didww\Item\SharedCapacityGroup` | list, find, create, update, delete |
 | Order | `Didww\Item\Order` | list, find, create |
-| Export | `Didww\Item\Export` | list, find, create |
+| Export | `Didww\Item\Export` | list, find, create, update |
 | Address | `Didww\Item\Address` | list, find, create, delete |
-| AddressVerification | `Didww\Item\AddressVerification` | list, create |
+| AddressVerification | `Didww\Item\AddressVerification` | list, create, update |
 | Identity | `Didww\Item\Identity` | list, find, create, delete |
 | EncryptedFile | `Didww\Item\EncryptedFile` | list, find, delete |
 | PermanentSupportingDocument | `Didww\Item\PermanentSupportingDocument` | create, delete |
 | Proof | `Didww\Item\Proof` | create, delete |
-| RequirementValidation | `Didww\Item\RequirementValidation` | create |
+| AddressRequirementValidation | `Didww\Item\AddressRequirementValidation` | create |
+| DidHistory | `Didww\Item\DidHistory` | list |
+| EmergencyRequirement | `Didww\Item\EmergencyRequirement` | list, find |
+| EmergencyRequirementValidation | `Didww\Item\EmergencyRequirementValidation` | create |
+| EmergencyCallingService | `Didww\Item\EmergencyCallingService` | list, find, update |
+| EmergencyVerification | `Didww\Item\EmergencyVerification` | list, find, create, update |
 
 ## Contributing
 

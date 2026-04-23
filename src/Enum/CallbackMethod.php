@@ -4,6 +4,6 @@ namespace Didww\Enum;
 
 enum CallbackMethod: string
 {
-    case POST = 'POST';
-    case GET = 'GET';
+    case POST = 'post';
+    case GET = 'get';
 }

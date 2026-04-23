@@ -4,25 +4,25 @@ namespace Didww\Item;
 
 use Didww\Traits\Saveable;
 
-class RequirementValidation extends BaseItem
+class AddressRequirementValidation extends BaseItem
 {
     use Saveable;
 
     public static function getEndpoint(): string
     {
-        return '/requirement_validations';
+        return '/address_requirement_validations';
     }
 
-    protected $type = 'requirement_validations';
+    protected $type = 'address_requirement_validations';
 
-    public function requirement()
+    public function addressRequirement()
     {
-        return $this->hasOne(Requirement::class);
+        return $this->hasOne(AddressRequirement::class);
     }
 
-    public function setRequirement(Requirement $requirement)
+    public function setAddressRequirement(AddressRequirement $addressRequirement)
     {
-        $this->requirement()->associate($requirement);
+        $this->addressRequirement()->associate($addressRequirement);
     }
 
     public function address()

@@ -119,7 +119,7 @@ class DidTest extends CassetteTest
         $addressVerification = $did->addressVerification()->getIncluded();
         $this->assertInstanceOf('Didww\Item\AddressVerification', $addressVerification);
         $this->assertEquals('75dc8d39-5e17-4470-a6f3-df42642c975f', $addressVerification->getId());
-        $this->assertEquals('Approved', $addressVerification->getAttributes()['status']);
+        $this->assertEquals('approved', $addressVerification->getAttributes()['status']);
 
         $didGroup = $did->didGroup()->getIncluded();
         $this->assertInstanceOf('Didww\Item\DidGroup', $didGroup);
@@ -236,6 +236,62 @@ class DidTest extends CassetteTest
 
         $did = $didDocument->getData();
         $this->assertInstanceOf('Didww\Item\Did', $did);
+    }
+
+    public function testUnassignEmergencyCallingService()
+    {
+        $did = \Didww\Item\Did::build('44957076-778a-4802-b60c-d22db0cda284');
+        $did->setEmergencyCallingService(null);
+
+        $this->assertEquals(json_encode([
+            'type' => 'dids',
+            'id' => '44957076-778a-4802-b60c-d22db0cda284',
+            'relationships' => [
+                'emergency_calling_service' => [
+                    'data' => null,
+                ],
+            ],
+        ]), json_encode($did->toJsonApiArray()));
+
+        $document = $did->save();
+        $this->assertFalse($document->hasErrors());
+        $savedDid = $document->getData();
+        $this->assertInstanceOf('Didww\Item\Did', $savedDid);
+    }
+
+    public function testDidIdentityRelation()
+    {
+        $did = new \Didww\Item\Did();
+        $relation = $did->identity();
+        $this->assertNotNull($relation);
+    }
+
+    public function testDidEmergencyVerificationRelation()
+    {
+        $did = new \Didww\Item\Did();
+        $relation = $did->emergencyVerification();
+        $this->assertNotNull($relation);
+    }
+
+    public function testDidEmergencyCallingServiceRelation()
+    {
+        $did = new \Didww\Item\Did();
+        $ecs = \Didww\Item\EmergencyCallingService::build('ecs-id-1');
+        $did->setEmergencyCallingService($ecs);
+        $relation = $did->emergencyCallingService();
+        $this->assertNotNull($relation);
+    }
+
+    public function testDidEmergencyEnabled()
+    {
+        $did = new \Didww\Item\Did(['emergency_enabled' => true]);
+        $this->assertTrue($did->getEmergencyEnabled());
+
+        $did2 = new \Didww\Item\Did(['emergency_enabled' => false]);
+        $this->assertFalse($did2->getEmergencyEnabled());
+
+        $did3 = new \Didww\Item\Did();
+        $this->assertNull($did3->getEmergencyEnabled());
     }
 
     public function testFindWithIncludedHasCleanDirtyState()

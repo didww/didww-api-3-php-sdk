@@ -47,6 +47,26 @@ class AddressVerificationTest extends CassetteTest
         $this->assertEquals(AddressVerificationStatus::REJECTED, $addressVerification->getStatus());
         $this->assertEquals(['Address cannot be validated', 'Proof of address should be not older than of 6 months'], $addressVerification->getRejectReasons());
         $this->assertEquals('ODW-879912', $addressVerification->getReference());
+        $this->assertEquals('Please re-submit with a more recent utility bill.', $addressVerification->getRejectComment());
+        $this->assertEquals('crm-verif-0001', $addressVerification->getExternalReferenceId());
+    }
+
+    public function testAddressVerificationStatusPredicates()
+    {
+        $pending = new \Didww\Item\AddressVerification(['status' => 'pending']);
+        $this->assertTrue($pending->isPending());
+        $this->assertFalse($pending->isApproved());
+        $this->assertFalse($pending->isRejected());
+
+        $approved = new \Didww\Item\AddressVerification(['status' => 'approved']);
+        $this->assertFalse($approved->isPending());
+        $this->assertTrue($approved->isApproved());
+        $this->assertFalse($approved->isRejected());
+
+        $rejected = new \Didww\Item\AddressVerification(['status' => 'rejected']);
+        $this->assertFalse($rejected->isPending());
+        $this->assertFalse($rejected->isApproved());
+        $this->assertTrue($rejected->isRejected());
     }
 
     public function testNullableGettersReturnNullOnEmptyObject()
@@ -59,11 +79,23 @@ class AddressVerificationTest extends CassetteTest
         $this->assertNull($av->getReference());
     }
 
+    public function testUpdateAddressVerificationExternalReferenceId()
+    {
+        $uuid = '429e6d4e-2ee9-4953-aa98-0b3ac07f0f96';
+        $verification = \Didww\Item\AddressVerification::build($uuid);
+        $verification->setExternalReferenceId('updated-ref-42');
+        $document = $verification->save();
+
+        $data = $document->getData();
+        $this->assertInstanceOf('Didww\Item\AddressVerification', $data);
+        $this->assertEquals('updated-ref-42', $data->getExternalReferenceId());
+    }
+
     public function testCreateAddressVerification()
     {
         $attributes = [
             'callback_url' => 'http://example.com',
-            'callback_method' => 'GET',
+            'callback_method' => 'get',
         ];
         $address = \Didww\Item\Address::build('d3414687-40f4-4346-a267-c2c65117d28c');
         $dids = new \Swis\JsonApi\Client\Collection([

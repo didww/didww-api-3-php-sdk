@@ -20,9 +20,10 @@ foreach ($didGroups as $didGroup) {
         $didGroup->getId(), // df73511e-3b8e-4967-9bd8-d7b88ae1a084
         $didGroup->getAreaName(), // Beverly Hills
         $didGroup->getPrefix(), // 352, 310
-        $didGroup->getFeatures(), // ['voice']
+        $didGroup->getFeatures(), // 2026-04-16 adds p2p / a2p / emergency / cnam_out
         $didGroup->getIsMetered(), // false
         $didGroup->getAllowAdditionalChannels(), // true
+        $didGroup->getServiceRestrictions(), // 2026-04-16
         count($didGroup->stockKeepingUnits()->getIncluded()->all()) // 2
     );
     $stockKeepingUnit = $didGroup->stockKeepingUnits()->getIncluded()->all()[0];
@@ -42,9 +43,10 @@ var_dump(
     $didGroup->getId(), // df73511e-3b8e-4967-9bd8-d7b88ae1a084
     $didGroup->getAreaName(), // Beverly Hills
     $didGroup->getPrefix(), // 352, 310
-    $didGroup->getFeatures(), // ['voice']
+    $didGroup->getFeatures(), // 2026-04-16 adds p2p / a2p / emergency / cnam_out
     $didGroup->getIsMetered(), // false
     $didGroup->getAllowAdditionalChannels(), // true
+    $didGroup->getServiceRestrictions(), // 2026-04-16
     count($didGroup->stockKeepingUnits()->getIncluded()->all()) // 2
 );
 $stockKeepingUnit = $didGroup->stockKeepingUnits()->getIncluded()->all()[0];

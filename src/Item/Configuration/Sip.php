@@ -3,6 +3,7 @@
 namespace Didww\Item\Configuration;
 
 use Didww\Enum\Codec;
+use Didww\Enum\DiversionRelayPolicy;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\ReroutingDisconnectCode;
 use Didww\Enum\RxDtmfFormat;
@@ -169,6 +170,11 @@ class Sip extends Base
         return $this->attribute('allowed_rtp_ips');
     }
 
+    public function getDiversionRelayPolicy(): ?DiversionRelayPolicy
+    {
+        return $this->enumAttribute('diversion_relay_policy', DiversionRelayPolicy::class);
+    }
+
     // ##
 
     public function setHost($newHost)
@@ -320,5 +326,10 @@ class Sip extends Base
     public function setAllowedRtpIps(?array $allowedRtpIps)
     {
         $this->attributes['allowed_rtp_ips'] = $allowedRtpIps;
+    }
+
+    public function setDiversionRelayPolicy(DiversionRelayPolicy|string $diversionRelayPolicy)
+    {
+        $this->setEnumAttribute('diversion_relay_policy', $diversionRelayPolicy);
     }
 }

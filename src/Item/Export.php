@@ -3,14 +3,17 @@
 namespace Didww\Item;
 
 use Didww\Enum\CallbackMethod;
+use Didww\Enum\ExportStatus;
 use Didww\Enum\ExportType;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class Export extends BaseItem
 {
     use Saveable;
     use Fetchable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -24,6 +27,7 @@ class Export extends BaseItem
         'export_type',
         'callback_url',
         'callback_method',
+        'external_reference_id',
     ];
 
     private $filters = [];
@@ -33,19 +37,14 @@ class Export extends BaseItem
         $this->filters['did_number'] = $didNumber;
     }
 
-    public function setFilterYear($year)
+    public function setFilterFrom(string $from)
     {
-        $this->filters['year'] = $year;
+        $this->filters['from'] = $from;
     }
 
-    public function setFilterMonth($month)
+    public function setFilterTo(string $to)
     {
-        $this->filters['month'] = $month;
-    }
-
-    public function setFilterDay($day)
-    {
-        $this->filters['day'] = $day;
+        $this->filters['to'] = $to;
     }
 
     public function setFilterVoiceOutTrunkId($voiceOutTrunkId)
@@ -59,6 +58,26 @@ class Export extends BaseItem
         $data['attributes']['filters'] = $this->filters;
 
         return $data;
+    }
+
+    public function getStatus(): ExportStatus
+    {
+        return $this->enumAttribute('status', ExportStatus::class);
+    }
+
+    public function isPending(): bool
+    {
+        return ExportStatus::PENDING === $this->getStatus();
+    }
+
+    public function isProcessing(): bool
+    {
+        return ExportStatus::PROCESSING === $this->getStatus();
+    }
+
+    public function isCompleted(): bool
+    {
+        return ExportStatus::COMPLETED === $this->getStatus();
     }
 
     public function getExportType(): ExportType
@@ -104,7 +123,7 @@ class Export extends BaseItem
             CURLOPT_HTTPHEADER => [
                 "Api-Key: $apiKey",
                 'User-Agent: didww-php-sdk/'.\Didww\Client::sdkVersion(),
-                'X-DIDWW-API-Version: '.(\Didww\Configuration::getCredentials()->getVersion() ?? '2022-05-10'),
+                'X-DIDWW-API-Version: '.(\Didww\Configuration::getCredentials()->getVersion() ?? '2026-04-16'),
             ],
             CURLOPT_FILE => $destHandle,
             CURLOPT_FOLLOWLOCATION => true,

@@ -4,6 +4,7 @@ namespace Didww\Item;
 
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class SharedCapacityGroup extends BaseItem
@@ -11,6 +12,7 @@ class SharedCapacityGroup extends BaseItem
     use Fetchable;
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -23,6 +25,7 @@ class SharedCapacityGroup extends BaseItem
         'name',
         'shared_channels_count',
         'metered_channels_count',
+        'external_reference_id',
     ];
 
     public function setName(string $name)

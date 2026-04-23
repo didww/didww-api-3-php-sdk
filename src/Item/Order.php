@@ -6,9 +6,11 @@ use Didww\Enum\CallbackMethod;
 use Didww\Enum\OrderStatus;
 use Didww\Item\OrderItem\Capacity;
 use Didww\Item\OrderItem\Did as DidOrderItem;
+use Didww\Item\OrderItem\Emergency;
 use Didww\Item\OrderItem\Generic;
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class Order extends BaseItem
@@ -16,6 +18,7 @@ class Order extends BaseItem
     use Fetchable;
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -29,11 +32,13 @@ class Order extends BaseItem
         'items',
         'callback_url',
         'callback_method',
+        'external_reference_id',
     ];
 
     private const ITEM_CLASSES = [
         'did' => DidOrderItem::class,
         'capacity' => Capacity::class,
+        'emergency' => Emergency::class,
         'generic' => Generic::class,
     ];
 
@@ -102,6 +107,21 @@ class Order extends BaseItem
     public function getStatus(): OrderStatus
     {
         return $this->enumAttribute('status', OrderStatus::class);
+    }
+
+    public function isPending(): bool
+    {
+        return OrderStatus::PENDING === $this->getStatus();
+    }
+
+    public function isCompleted(): bool
+    {
+        return OrderStatus::COMPLETED === $this->getStatus();
+    }
+
+    public function isCancelled(): bool
+    {
+        return OrderStatus::CANCELED === $this->getStatus();
     }
 
     public function getCreatedAt(): ?\DateTime

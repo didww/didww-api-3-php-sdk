@@ -5,12 +5,14 @@ namespace Didww\Item;
 use Didww\Enum\AddressVerificationStatus;
 use Didww\Enum\CallbackMethod;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class AddressVerification extends BaseItem
 {
     use Fetchable;
     use Saveable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -23,6 +25,7 @@ class AddressVerification extends BaseItem
         'service_description',
         'callback_url',
         'callback_method',
+        'external_reference_id',
     ];
 
     public function getServiceDescription(): ?string
@@ -60,19 +63,34 @@ class AddressVerification extends BaseItem
         return $this->enumAttribute('status', AddressVerificationStatus::class);
     }
 
+    public function isPending(): bool
+    {
+        return AddressVerificationStatus::PENDING === $this->getStatus();
+    }
+
+    public function isApproved(): bool
+    {
+        return AddressVerificationStatus::APPROVED === $this->getStatus();
+    }
+
+    public function isRejected(): bool
+    {
+        return AddressVerificationStatus::REJECTED === $this->getStatus();
+    }
+
     public function getRejectReasons(): ?array
     {
-        $reasons = $this->attribute('reject_reasons');
-        if (null === $reasons) {
-            return null;
-        }
-
-        return explode('; ', $reasons);
+        return $this->attribute('reject_reasons');
     }
 
     public function getReference(): ?string
     {
         return $this->attribute('reference');
+    }
+
+    public function getRejectComment(): ?string
+    {
+        return $this->attribute('reject_comment');
     }
 
     public function getCreatedAt(): ?\DateTime

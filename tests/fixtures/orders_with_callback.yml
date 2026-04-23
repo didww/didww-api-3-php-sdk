@@ -10,7 +10,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"orders","attributes":{"items":[{"type":"did_order_items","attributes":{"sku_id":"f36d2812-2195-4385-85e8-e59c3484a8bc","qty":1}}],"allow_back_ordering":true,"callback_url":"https:\/\/example.com\/callback","callback_method":"POST"}}}'
+        body: '{"data":{"type":"orders","attributes":{"items":[{"type":"did_order_items","attributes":{"sku_id":"f36d2812-2195-4385-85e8-e59c3484a8bc","qty":1}}],"allow_back_ordering":true,"callback_url":"https:\/\/example.com\/callback","callback_method":"post"}}}'
     response:
         status:
             http_version: '1.1'
@@ -36,4 +36,26 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"5da18706-be9f-49b0-aeec-0480aacd49ad","type":"orders","attributes":{"amount":"5.98","status":"Pending","created_at":"2018-12-29T12:16:45.813Z","description":"DID","reference":"JXK-923618","items":[{"type":"did_order_items","attributes":{"qty":1,"nrc":"0.0","mrc":"5.6","prorated_mrc":false,"billed_from":null,"billed_to":null,"setup_price":"0.0","monthly_price":"5.6","did_group_id":"899f0119-b4e9-47d0-9b2c-8a9f282fcbe2"}}],"callback_url":"https://example.com/callback","callback_method":"POST"}}}'
+        body: '{"data":{"id":"5da18706-be9f-49b0-aeec-0480aacd49ad","type":"orders","attributes":{"amount":"5.98","status":"pending","created_at":"2018-12-29T12:16:45.813Z","description":"DID","reference":"JXK-923618","items":[{"type":"did_order_items","attributes":{"qty":1,"nrc":"0.0","mrc":"5.6","prorated_mrc":false,"billed_from":null,"billed_to":null,"setup_price":"0.0","monthly_price":"5.6","did_group_id":"899f0119-b4e9-47d0-9b2c-8a9f282fcbe2"}}],"callback_url":"https://example.com/callback","callback_method":"post"}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/orders'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+            User-Agent: didww-php-sdk/dev-master
+            x-didww-api-version: '2026-04-16'
+        body: '{"data":{"type":"orders","attributes":{"items":[{"type":"did_order_items","attributes":{"sku_id":"f36d2812-2195-4385-85e8-e59c3484a8bc","qty":1}}],"allow_back_ordering":true,"callback_url":"https:\/\/example.com\/callback","callback_method":"post"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"5da18706-be9f-49b0-aeec-0480aacd49ad","type":"orders","attributes":{"amount":"5.98","status":"pending","created_at":"2018-12-29T12:16:45.813Z","description":"DID","reference":"JXK-923618","items":[{"type":"did_order_items","attributes":{"qty":1,"nrc":"0.0","mrc":"5.6","prorated_mrc":false,"billed_from":null,"billed_to":null,"setup_price":"0.0","monthly_price":"5.6","did_group_id":"899f0119-b4e9-47d0-9b2c-8a9f282fcbe2"}}],"callback_url":"https://example.com/callback","callback_method":"post"}}}'

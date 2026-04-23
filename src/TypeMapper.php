@@ -25,19 +25,24 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('qty_based_pricings', Item\QtyBasedPricing::class);
         $this->setMapping('exports', Item\Export::class);
         $this->setMapping('addresses', Item\Address::class);
-        $this->setMapping('requirement_validations', Item\RequirementValidation::class);
+        $this->setMapping('address_requirement_validations', Item\AddressRequirementValidation::class);
         $this->setMapping('address_verifications', Item\AddressVerification::class);
         $this->setMapping('encrypted_files', Item\EncryptedFile::class);
         $this->setMapping('identities', Item\Identity::class);
         $this->setMapping('permanent_supporting_documents', Item\PermanentSupportingDocument::class);
         $this->setMapping('proofs', Item\Proof::class);
         $this->setMapping('proof_types', Item\ProofType::class);
-        $this->setMapping('requirements', Item\Requirement::class);
+        $this->setMapping('address_requirements', Item\AddressRequirement::class);
         $this->setMapping('supporting_document_templates', Item\SupportingDocumentTemplate::class);
         $this->setMapping('public_keys', Item\PublicKey::class);
         $this->setMapping('areas', Item\Area::class);
         $this->setMapping('nanpa_prefixes', Item\NanpaPrefix::class);
         $this->setMapping('voice_out_trunks', Item\VoiceOutTrunk::class);
         $this->setMapping('voice_out_trunk_regenerate_credentials', Item\VoiceOutTrunkRegenerateCredential::class);
+        $this->setMapping('did_history', Item\DidHistory::class);
+        $this->setMapping('emergency_requirements', Item\EmergencyRequirement::class);
+        $this->setMapping('emergency_requirement_validations', Item\EmergencyRequirementValidation::class);
+        $this->setMapping('emergency_calling_services', Item\EmergencyCallingService::class);
+        $this->setMapping('emergency_verifications', Item\EmergencyVerification::class);
     }
 }

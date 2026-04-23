@@ -36,7 +36,7 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":[{"id":"aaf2180a-3f2b-4427-888f-3d00f872014e","type":"address_verifications","attributes":{"service_description":null,"callback_url":"http://example.com","callback_method":"GET","status":"Pending","reject_reasons":null,"created_at":"2021-04-01T14:29:11.790Z"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/aaf2180a-3f2b-4427-888f-3d00f872014e/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/aaf2180a-3f2b-4427-888f-3d00f872014e/dids"},"data":[{"type":"dids","id":"a9d64c02-4486-4acb-a9a1-be4c81ff0659"}]},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/aaf2180a-3f2b-4427-888f-3d00f872014e/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/aaf2180a-3f2b-4427-888f-3d00f872014e/address"},"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}}}}],"included":[{"id":"a9d64c02-4486-4acb-a9a1-be4c81ff0659","type":"dids","attributes":{"blocked":true,"capacity_limit":null,"description":null,"terminated":false,"awaiting_registration":true,"created_at":"2021-04-01T14:27:01.000Z","billing_cycles_count":null,"number":"13472013835","expires_at":"2021-05-01T14:27:01.757Z","channels_included_count":0,"dedicated_channels_count":0},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/did_group","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/did_group"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/order","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/order"}},"trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/trunk","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/trunk"}},"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/trunk_group"}},"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/capacity_pool"}},"shared_capacity_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/shared_capacity_group","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/shared_capacity_group"}},"address_verification":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/address_verification","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/address_verification"}}}},{"id":"d3414687-40f4-4346-a267-c2c65117d28c","type":"addresses","attributes":{"city_name":"Chicago","postal_code":"1234","address":"Main street","description":"some address","created_at":"2021-04-01T13:12:56.632Z"},"relationships":{"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/identity","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/identity"}},"country":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/country","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/proofs","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/proofs"}}}}],"meta":{"total_records":1,"api_version":"2021-04-19"},"links":{"first":"https://sandbox-api.didww.com/v3/address_verifications?include=address%2Cdids&page%5Bnumber%5D=1&page%5Bsize%5D=5","last":"https://sandbox-api.didww.com/v3/address_verifications?include=address%2Cdids&page%5Bnumber%5D=1&page%5Bsize%5D=5"}}'
+        body: '{"data":[{"id":"aaf2180a-3f2b-4427-888f-3d00f872014e","type":"address_verifications","attributes":{"service_description":null,"callback_url":"http://example.com","callback_method":"get","status":"pending","reject_reasons":null,"created_at":"2021-04-01T14:29:11.790Z"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/aaf2180a-3f2b-4427-888f-3d00f872014e/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/aaf2180a-3f2b-4427-888f-3d00f872014e/dids"},"data":[{"type":"dids","id":"a9d64c02-4486-4acb-a9a1-be4c81ff0659"}]},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/aaf2180a-3f2b-4427-888f-3d00f872014e/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/aaf2180a-3f2b-4427-888f-3d00f872014e/address"},"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}}}}],"included":[{"id":"a9d64c02-4486-4acb-a9a1-be4c81ff0659","type":"dids","attributes":{"blocked":true,"capacity_limit":null,"description":null,"terminated":false,"awaiting_registration":true,"created_at":"2021-04-01T14:27:01.000Z","billing_cycles_count":null,"number":"13472013835","expires_at":"2021-05-01T14:27:01.757Z","channels_included_count":0,"dedicated_channels_count":0},"relationships":{"did_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/did_group","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/did_group"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/order","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/order"}},"trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/trunk","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/trunk"}},"trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/trunk_group","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/trunk_group"}},"capacity_pool":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/capacity_pool","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/capacity_pool"}},"shared_capacity_group":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/shared_capacity_group","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/shared_capacity_group"}},"address_verification":{"links":{"self":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/relationships/address_verification","related":"https://sandbox-api.didww.com/v3/dids/a9d64c02-4486-4acb-a9a1-be4c81ff0659/address_verification"}}}},{"id":"d3414687-40f4-4346-a267-c2c65117d28c","type":"addresses","attributes":{"city_name":"Chicago","postal_code":"1234","address":"Main street","description":"some address","created_at":"2021-04-01T13:12:56.632Z"},"relationships":{"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/identity","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/identity"}},"country":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/country","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/proofs","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/proofs"}}}}],"meta":{"total_records":1,"api_version":"2021-04-19"},"links":{"first":"https://sandbox-api.didww.com/v3/address_verifications?include=address%2Cdids&page%5Bnumber%5D=1&page%5Bsize%5D=5","last":"https://sandbox-api.didww.com/v3/address_verifications?include=address%2Cdids&page%5Bnumber%5D=1&page%5Bsize%5D=5"}}'
 -
     request:
         method: GET
@@ -59,7 +59,7 @@
             Content-Type: application/vnd.api+json
             Transfer-Encoding: chunked
             Connection: keep-alive
-        body: '{"data":{"id":"c8e004b0-87ec-4987-b4fb-ee89db099f0e","type":"address_verifications","attributes":{"service_description":null,"callback_url":null,"callback_method":null,"status":"Approved","reject_reasons":null,"created_at":"2020-09-15T06:38:12.650Z","reference":"SHB-485120"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/c8e004b0-87ec-4987-b4fb-ee89db099f0e/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/c8e004b0-87ec-4987-b4fb-ee89db099f0e/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/c8e004b0-87ec-4987-b4fb-ee89db099f0e/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/c8e004b0-87ec-4987-b4fb-ee89db099f0e/address"}}}},"meta":{"api_version":"2022-05-10"}}'
+        body: '{"data":{"id":"c8e004b0-87ec-4987-b4fb-ee89db099f0e","type":"address_verifications","attributes":{"service_description":null,"callback_url":null,"callback_method":null,"status":"approved","reject_reasons":null,"created_at":"2020-09-15T06:38:12.650Z","reference":"SHB-485120"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/c8e004b0-87ec-4987-b4fb-ee89db099f0e/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/c8e004b0-87ec-4987-b4fb-ee89db099f0e/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/c8e004b0-87ec-4987-b4fb-ee89db099f0e/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/c8e004b0-87ec-4987-b4fb-ee89db099f0e/address"}}}},"meta":{"api_version":"2022-05-10"}}'
 -
     request:
         method: POST
@@ -72,7 +72,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"address_verifications","attributes":{"callback_url":"http:\/\/example.com","callback_method":"GET"},"relationships":{"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"dids":{"data":[{"type":"dids","id":"a9d64c02-4486-4acb-a9a1-be4c81ff0659"}]}}}}'
+        body: '{"data":{"type":"address_verifications","attributes":{"callback_url":"http:\/\/example.com","callback_method":"get"},"relationships":{"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"dids":{"data":[{"type":"dids","id":"a9d64c02-4486-4acb-a9a1-be4c81ff0659"}]}}}}'
     response:
         status:
             http_version: '1.1'
@@ -99,7 +99,7 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"78182ef2-8377-41cd-89e1-26e8266c9c94","type":"address_verifications","attributes":{"service_description":null,"callback_url":"http://example.com","callback_method":"GET","status":"Pending","reject_reasons":null,"created_at":"2021-04-01T15:01:32.668Z"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/address"},"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}}}},"included":[{"id":"d3414687-40f4-4346-a267-c2c65117d28c","type":"addresses","attributes":{"city_name":"Chicago","postal_code":"1234","address":"Main street","description":"some address","created_at":"2021-04-01T13:12:56.632Z"},"relationships":{"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/identity","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/identity"}},"country":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/country","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/proofs","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/proofs"}}}}],"meta":{"api_version":"2021-04-19"}}'
+        body: '{"data":{"id":"78182ef2-8377-41cd-89e1-26e8266c9c94","type":"address_verifications","attributes":{"service_description":null,"callback_url":"http://example.com","callback_method":"get","status":"pending","reject_reasons":null,"created_at":"2021-04-01T15:01:32.668Z"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/78182ef2-8377-41cd-89e1-26e8266c9c94/address"},"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}}}},"included":[{"id":"d3414687-40f4-4346-a267-c2c65117d28c","type":"addresses","attributes":{"city_name":"Chicago","postal_code":"1234","address":"Main street","description":"some address","created_at":"2021-04-01T13:12:56.632Z"},"relationships":{"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/identity","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/identity"}},"country":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/country","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/proofs","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/proofs"}}}}],"meta":{"api_version":"2021-04-19"}}'
 -
     request:
         method: GET
@@ -122,4 +122,112 @@
             Content-Type: application/vnd.api+json
             Transfer-Encoding: chunked
             Connection: keep-alive
-        body: '{"data":{"id":"429e6d4e-2ee9-4953-aa98-0b3ac07f0f96","type":"address_verifications","attributes":{"service_description":null,"callback_url":null,"callback_method":null,"status":"Rejected","reject_reasons":"Address cannot be validated; Proof of address should be not older than of 6 months","reference":"ODW-879912","created_at":"2020-10-28T08:29:29.960Z"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/address"}}}},"meta":{"api_version":"2022-05-10"}}'
+        body: '{"data":{"id":"429e6d4e-2ee9-4953-aa98-0b3ac07f0f96","type":"address_verifications","attributes":{"service_description":null,"callback_url":null,"callback_method":null,"status":"rejected","reject_reasons":["Address cannot be validated","Proof of address should be not older than of 6 months"],"reference":"ODW-879912","created_at":"2020-10-28T08:29:29.960Z","reject_comment":"Please re-submit with a more recent utility bill.","external_reference_id":"crm-verif-0001"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/address"}}}},"meta":{"api_version":"2022-05-10"}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"address_verifications","id":"429e6d4e-2ee9-4953-aa98-0b3ac07f0f96","attributes":{"external_reference_id":"updated-ref-42"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"429e6d4e-2ee9-4953-aa98-0b3ac07f0f96","type":"address_verifications","attributes":{"service_description":null,"callback_url":null,"callback_method":null,"status":"pending","reject_reasons":null,"reject_comment":null,"reference":"ODW-879912","created_at":"2020-10-28T08:29:29.960Z","external_reference_id":"updated-ref-42"},"relationships":{"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/dids","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/dids"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/relationships/address","related":"https://sandbox-api.didww.com/v3/address_verifications/429e6d4e-2ee9-4953-aa98-0b3ac07f0f96/address"}}}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/address_verifications?include=address'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+            User-Agent: didww-php-sdk/dev-master
+            x-didww-api-version: '2026-04-16'
+        body: '{"data":{"type":"address_verifications","attributes":{"callback_url":"http:\/\/example.com","callback_method":"get"},"relationships":{"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"dids":{"data":[{"type":"dids","id":"a9d64c02-4486-4acb-a9a1-be4c81ff0659"}]}}}}'
+    response:
+        status:
+            code: 401
+            message: Unauthorized
+        headers:
+            Server: nginx
+            Date: 'Fri, 17 Apr 2026 14:41:27 GMT'
+            Content-Type: application/vnd.api+json
+            Content-Length: '97'
+            Connection: keep-alive
+            x-frame-options: SAMEORIGIN
+            x-xss-protection: '0'
+            x-content-type-options: nosniff
+            x-permitted-cross-domain-policies: none
+            referrer-policy: strict-origin-when-cross-origin
+            vary: Accept
+            cache-control: no-cache
+            x-request-id: 59635955-f3cc-4c55-b384-534e6c246f09
+            x-runtime: '0.006077'
+            Vary: Origin
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, X-User-Agent, Cache-Control, value-track'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"errors":[{"title":"Unauthorized","detail":"Authorization failed","code":"401","status":"401"}]}'
+        curl_info:
+            url: 'https://sandbox-api.didww.com/v3/address_verifications?include=address'
+            content_type: application/vnd.api+json
+            http_code: 401
+            header_size: 833
+            request_size: 582
+            filetime: -1
+            ssl_verify_result: 0
+            redirect_count: 0
+            total_time: 3.366938
+            namelookup_time: 0.037511
+            connect_time: 0.154848
+            pretransfer_time: 0.541992
+            size_upload: 298.0
+            size_download: 97.0
+            speed_download: 28.0
+            speed_upload: 88.0
+            download_content_length: 97.0
+            upload_content_length: 298.0
+            starttransfer_time: 3.366912
+            redirect_time: 0.0
+            redirect_url: ''
+            primary_ip: '2a01:ad00:1:3::183'
+            certinfo: {  }
+            primary_port: 443
+            local_ip: '2a01:ad00:2:8:1001::a'
+            local_port: 63621
+            http_version: 2
+            protocol: 2
+            ssl_verifyresult: 0
+            scheme: https
+            appconnect_time_us: 541917
+            queue_time_us: 9
+            connect_time_us: 154848
+            namelookup_time_us: 37511
+            pretransfer_time_us: 541992
+            redirect_time_us: 0
+            starttransfer_time_us: 3366912
+            posttransfer_time_us: 541991
+            total_time_us: 3366938
+            effective_method: POST
+            capath: ''
+            cainfo: ''
+            used_proxy: 0
+            httpauth_used: 0
+            proxyauth_used: 0
+            conn_id: 0
+    index: 0

@@ -1,0 +1,167 @@
+
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/emergency_verifications'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":[{"id":"11111111-2222-3333-4444-555555555555","type":"emergency_verifications","attributes":{"reference":"EV-0001","status":"pending","reject_reasons":null,"reject_comment":null,"callback_url":"https://example.com/emergency/hook","callback_method":"post","external_reference_id":null,"created_at":"2026-04-10T09:00:00.000Z"},"relationships":{"address":{"data":{"id":"88888888-9999-aaaa-bbbb-cccccccccccc","type":"addresses"}},"emergency_calling_service":{"data":{"id":"33333333-4444-5555-6666-777777777777","type":"emergency_calling_services"}},"dids":{"data":[{"id":"11111111-aaaa-bbbb-cccc-dddddddddddd","type":"dids"}]}}}],"meta":{"total_records":1}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/emergency_verifications/01234567-89ab-cdef-0123-456789abcdef'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"01234567-89ab-cdef-0123-456789abcdef","type":"emergency_verifications","attributes":{"reference":"EV-0042","status":"rejected","reject_reasons":["Address does not match identity","Missing proof of occupancy"],"reject_comment":"Please re-submit with updated documentation.","callback_url":"https://example.com/emergency/hook","callback_method":"post","external_reference_id":"ref-xyz-999","created_at":"2026-04-11T10:00:00.000Z"},"relationships":{"address":{"data":{"id":"88888888-9999-aaaa-bbbb-cccccccccccc","type":"addresses"}},"emergency_calling_service":{"data":{"id":"33333333-4444-5555-6666-777777777777","type":"emergency_calling_services"}},"dids":{"data":[{"id":"11111111-aaaa-bbbb-cccc-dddddddddddd","type":"dids"}]}}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/emergency_verifications/01234567-89ab-cdef-0123-456789abcdef'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"emergency_verifications","id":"01234567-89ab-cdef-0123-456789abcdef","attributes":{"external_reference_id":"updated-ev-ref"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"01234567-89ab-cdef-0123-456789abcdef","type":"emergency_verifications","attributes":{"reference":"EV-0042","status":"rejected","reject_reasons":null,"reject_comment":null,"callback_url":"https://example.com/emergency/hook","callback_method":"post","external_reference_id":"updated-ev-ref","created_at":"2026-04-11T10:00:00.000Z"},"relationships":{"address":{"data":{"id":"88888888-9999-aaaa-bbbb-cccccccccccc","type":"addresses"}},"emergency_calling_service":{"data":{"id":"33333333-4444-5555-6666-777777777777","type":"emergency_calling_services"}},"dids":{"data":[{"id":"11111111-aaaa-bbbb-cccc-dddddddddddd","type":"dids"}]}}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/emergency_verifications'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+        body: '{"data":{"type":"emergency_verifications","attributes":{"callback_url":"https:\/\/example.com\/emergency\/hook","callback_method":"post","external_reference_id":"ref-abc-123"},"relationships":{"emergency_calling_service":{"data":{"type":"emergency_calling_services","id":"33333333-4444-5555-6666-777777777777"}},"address":{"data":{"type":"addresses","id":"88888888-9999-aaaa-bbbb-cccccccccccc"}},"dids":{"data":[{"type":"dids","id":"11111111-aaaa-bbbb-cccc-dddddddddddd"}]}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"bbbbbbbb-cccc-dddd-eeee-ffffffffffff","type":"emergency_verifications","attributes":{"reference":"EV-0099","status":"pending","reject_reasons":null,"reject_comment":null,"callback_url":"https://example.com/emergency/hook","callback_method":"post","external_reference_id":"ref-abc-123","created_at":"2026-04-16T12:00:00.000Z"},"relationships":{"address":{"data":{"id":"88888888-9999-aaaa-bbbb-cccccccccccc","type":"addresses"}},"emergency_calling_service":{"data":{"id":"33333333-4444-5555-6666-777777777777","type":"emergency_calling_services"}},"dids":{"data":[{"id":"11111111-aaaa-bbbb-cccc-dddddddddddd","type":"dids"}]}}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/emergency_verifications'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+            User-Agent: didww-php-sdk/dev-master
+            x-didww-api-version: '2026-04-16'
+        body: '{"data":{"type":"emergency_verifications","attributes":{"callback_url":"https:\/\/example.com\/emergency\/hook","callback_method":"post","external_reference_id":"ref-abc-123"},"relationships":{"emergency_calling_service":{"data":{"type":"emergency_calling_services","id":"33333333-4444-5555-6666-777777777777"}},"address":{"data":{"type":"addresses","id":"88888888-9999-aaaa-bbbb-cccccccccccc"}},"dids":{"data":[{"type":"dids","id":"11111111-aaaa-bbbb-cccc-dddddddddddd"}]}}}}'
+    response:
+        status:
+            code: 401
+            message: Unauthorized
+        headers:
+            Server: nginx
+            Date: 'Fri, 17 Apr 2026 14:43:48 GMT'
+            Content-Type: application/vnd.api+json
+            Content-Length: '97'
+            Connection: keep-alive
+            x-frame-options: SAMEORIGIN
+            x-xss-protection: '0'
+            x-content-type-options: nosniff
+            x-permitted-cross-domain-policies: none
+            referrer-policy: strict-origin-when-cross-origin
+            vary: Accept
+            cache-control: no-cache
+            x-request-id: b5f97a70-c4a4-404b-8892-b815944c57e5
+            x-runtime: '0.009513'
+            Vary: Origin
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, X-User-Agent, Cache-Control, value-track'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"errors":[{"title":"Unauthorized","detail":"Authorization failed","code":"401","status":"401"}]}'
+        curl_info:
+            url: 'https://sandbox-api.didww.com/v3/emergency_verifications'
+            content_type: application/vnd.api+json
+            http_code: 401
+            header_size: 833
+            request_size: 746
+            filetime: -1
+            ssl_verify_result: 0
+            redirect_count: 0
+            total_time: 12.661975
+            namelookup_time: 0.002475
+            connect_time: 0.125742
+            pretransfer_time: 0.526177
+            size_upload: 476.0
+            size_download: 97.0
+            speed_download: 7.0
+            speed_upload: 37.0
+            download_content_length: 97.0
+            upload_content_length: 476.0
+            starttransfer_time: 12.66183
+            redirect_time: 0.0
+            redirect_url: ''
+            primary_ip: '2a01:ad00:1:3::183'
+            certinfo: {  }
+            primary_port: 443
+            local_ip: '2a01:ad00:2:8:1001::a'
+            local_port: 64971
+            http_version: 2
+            protocol: 2
+            ssl_verifyresult: 0
+            scheme: https
+            appconnect_time_us: 526014
+            queue_time_us: 7
+            connect_time_us: 125742
+            namelookup_time_us: 2475
+            pretransfer_time_us: 526177
+            redirect_time_us: 0
+            starttransfer_time_us: 12661830
+            posttransfer_time_us: 526174
+            total_time_us: 12661975
+            effective_method: POST
+            capath: ''
+            cainfo: ''
+            used_proxy: 0
+            httpauth_used: 0
+            proxyauth_used: 0
+            conn_id: 0
+    index: 0

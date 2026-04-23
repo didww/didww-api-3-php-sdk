@@ -90,6 +90,11 @@ class Did extends BaseItem
         return $this->attributes['number'];
     }
 
+    public function getEmergencyEnabled(): ?bool
+    {
+        return $this->attribute('emergency_enabled');
+    }
+
     public function getCreatedAt()
     {
         return $this->dateAttribute('created_at');
@@ -133,6 +138,30 @@ class Did extends BaseItem
     public function addressVerification()
     {
         return $this->hasOne(AddressVerification::class);
+    }
+
+    public function emergencyCallingService()
+    {
+        return $this->hasOne(EmergencyCallingService::class);
+    }
+
+    public function setEmergencyCallingService(?EmergencyCallingService $emergencyCallingService)
+    {
+        if (null === $emergencyCallingService) {
+            $this->emergencyCallingService()->dissociate();
+        } else {
+            $this->emergencyCallingService()->associate($emergencyCallingService);
+        }
+    }
+
+    public function emergencyVerification()
+    {
+        return $this->hasOne(EmergencyVerification::class);
+    }
+
+    public function identity()
+    {
+        return $this->hasOne(Identity::class);
     }
 
     public function setVoiceInTrunkGroup(VoiceInTrunkGroup $voiceInTrunkGroup)

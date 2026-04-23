@@ -11,7 +11,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":"Test Company Limited","company_reg_number":"543221","vat_id":"GB1234","description":"test identity","personal_tax_id":"987654321","identity_type":"Business","external_reference_id":"111"},"relationships":{"country":{"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}}}}}'
+        body: '{"data":{"type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":"Test Company Limited","company_reg_number":"543221","vat_id":"GB1234","description":"test identity","personal_tax_id":"987654321","identity_type":"business","external_reference_id":"111"},"relationships":{"country":{"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}}}}}'
     response:
         status:
             http_version: '1.1'
@@ -38,7 +38,7 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"e96ae7d1-11d5-42bc-a5c5-211f3c3788ae","type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":"Test Company Limited","company_reg_number":"543221","vat_id":"GB1234","description":"test identity","personal_tax_id":"987654321","identity_type":"Business","created_at":"2021-04-01T14:56:34.637Z","external_reference_id":"111","verified":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/country"},"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/proofs"}},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/addresses"}},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/permanent_documents"}}}},"included":[{"id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9","type":"countries","attributes":{"name":"United States","prefix":"1","iso":"US"},"relationships":{"regions":{"links":{"self":"https://sandbox-api.didww.com/v3/countries/1f6fc2bd-f081-4202-9b1a-d9cb88d942b9/relationships/regions","related":"https://sandbox-api.didww.com/v3/countries/1f6fc2bd-f081-4202-9b1a-d9cb88d942b9/regions"}}}}],"meta":{"api_version":"2021-04-19"}}'
+        body: '{"data":{"id":"e96ae7d1-11d5-42bc-a5c5-211f3c3788ae","type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":"Test Company Limited","company_reg_number":"543221","vat_id":"GB1234","description":"test identity","personal_tax_id":"987654321","identity_type":"business","created_at":"2021-04-01T14:56:34.637Z","external_reference_id":"111","verified":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/country"},"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/proofs"}},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/addresses"}},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/permanent_documents"}}}},"included":[{"id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9","type":"countries","attributes":{"name":"United States","prefix":"1","iso":"US"},"relationships":{"regions":{"links":{"self":"https://sandbox-api.didww.com/v3/countries/1f6fc2bd-f081-4202-9b1a-d9cb88d942b9/relationships/regions","related":"https://sandbox-api.didww.com/v3/countries/1f6fc2bd-f081-4202-9b1a-d9cb88d942b9/regions"}}}}],"meta":{"api_version":"2021-04-19"}}'
 -
     request:
         method: POST
@@ -51,7 +51,7 @@
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
             api-key: PLACEYOURAPIKEYHERE
-        body: '{"data":{"type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","description":"test identity","personal_tax_id":"987654321","identity_type":"Personal","external_reference_id":"111"},"relationships":{"country":{"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}}}}}'
+        body: '{"data":{"type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","description":"test identity","personal_tax_id":"987654321","identity_type":"personal","external_reference_id":"111"},"relationships":{"country":{"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}}}}}'
     response:
         status:
             http_version: '1.1'
@@ -78,7 +78,7 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"9728ea13-cb5d-41fb-8a7f-796a005b0a13","type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":null,"company_reg_number":null,"vat_id":null,"description":"test identity","personal_tax_id":"987654321","identity_type":"Personal","created_at":"2021-04-01T14:56:38.664Z","external_reference_id":"111","verified":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/proofs"}},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/addresses"}},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/permanent_documents"}}}},"meta":{"api_version":"2021-04-19"}}'
+        body: '{"data":{"id":"9728ea13-cb5d-41fb-8a7f-796a005b0a13","type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":null,"company_reg_number":null,"vat_id":null,"description":"test identity","personal_tax_id":"987654321","identity_type":"personal","created_at":"2021-04-01T14:56:38.664Z","external_reference_id":"111","verified":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/proofs"}},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/addresses"}},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/permanent_documents"}}}},"meta":{"api_version":"2021-04-19"}}'
 -
     request:
         method: PATCH
@@ -118,7 +118,7 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":{"id":"e96ae7d1-11d5-42bc-a5c5-211f3c3788ae","type":"identities","attributes":{"first_name":"Jake","last_name":"Johnson","phone_number":"1111111","id_number":"CED4321","birth_date":"1979-01-01","company_name":"Some Company Limited","company_reg_number":"1222776","vat_id":"GB1235","description":"test","personal_tax_id":"983217654","identity_type":"Business","created_at":"2021-04-01T14:56:34.637Z","external_reference_id":"112","verified":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/proofs"}},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/addresses"}},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/permanent_documents"}}}},"meta":{"api_version":"2021-04-19"}}'
+        body: '{"data":{"id":"e96ae7d1-11d5-42bc-a5c5-211f3c3788ae","type":"identities","attributes":{"first_name":"Jake","last_name":"Johnson","phone_number":"1111111","id_number":"CED4321","birth_date":"1979-01-01","company_name":"Some Company Limited","company_reg_number":"1222776","vat_id":"GB1235","description":"test","personal_tax_id":"983217654","identity_type":"business","created_at":"2021-04-01T14:56:34.637Z","external_reference_id":"112","verified":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/proofs"}},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/addresses"}},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/e96ae7d1-11d5-42bc-a5c5-211f3c3788ae/permanent_documents"}}}},"meta":{"api_version":"2021-04-19"}}'
 -
     request:
         method: DELETE
@@ -190,4 +190,197 @@
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
-        body: '{"data":[{"id":"5e9df058-50d2-4e34-b0d4-d1746b86f41a","type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":null,"company_reg_number":null,"vat_id":null,"description":"test identity","personal_tax_id":"987654321","identity_type":"Personal","created_at":"2021-04-01T12:57:24.025Z","external_reference_id":"111","verified":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/country"},"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/proofs"},"data":[]},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/addresses"},"data":[{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}]},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/permanent_documents"},"data":[]}}},{"id":"9728ea13-cb5d-41fb-8a7f-796a005b0a13","type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":null,"company_reg_number":null,"vat_id":null,"description":"test identity","personal_tax_id":"987654321","identity_type":"Personal","created_at":"2021-04-01T14:56:38.664Z","external_reference_id":"111","verified":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/country"},"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/proofs"},"data":[]},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/addresses"},"data":[]},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/permanent_documents"},"data":[]}}}],"included":[{"id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9","type":"countries","attributes":{"name":"United States","prefix":"1","iso":"US"},"relationships":{"regions":{"links":{"self":"https://sandbox-api.didww.com/v3/countries/1f6fc2bd-f081-4202-9b1a-d9cb88d942b9/relationships/regions","related":"https://sandbox-api.didww.com/v3/countries/1f6fc2bd-f081-4202-9b1a-d9cb88d942b9/regions"}}}},{"id":"d3414687-40f4-4346-a267-c2c65117d28c","type":"addresses","attributes":{"city_name":"Chicago","postal_code":"1234","address":"Main street","description":"some address","created_at":"2021-04-01T13:12:56.632Z"},"relationships":{"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/identity","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/identity"}},"country":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/country","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/proofs","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/proofs"}}}}],"meta":{"total_records":2,"api_version":"2021-04-19"},"links":{"first":"https://sandbox-api.didww.com/v3/identities?include=country%2Caddresses%2Cproofs%2Cpermanent_documents&page%5Bnumber%5D=1&page%5Bsize%5D=5","last":"https://sandbox-api.didww.com/v3/identities?include=country%2Caddresses%2Cproofs%2Cpermanent_documents&page%5Bnumber%5D=1&page%5Bsize%5D=5"}}'
+        body: '{"data":[{"id":"5e9df058-50d2-4e34-b0d4-d1746b86f41a","type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":null,"company_reg_number":null,"vat_id":null,"description":"test identity","personal_tax_id":"987654321","identity_type":"personal","created_at":"2021-04-01T12:57:24.025Z","external_reference_id":"111","verified":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/country"},"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/proofs"},"data":[]},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/addresses"},"data":[{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}]},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/5e9df058-50d2-4e34-b0d4-d1746b86f41a/permanent_documents"},"data":[]}}},{"id":"9728ea13-cb5d-41fb-8a7f-796a005b0a13","type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":null,"company_reg_number":null,"vat_id":null,"description":"test identity","personal_tax_id":"987654321","identity_type":"personal","created_at":"2021-04-01T14:56:38.664Z","external_reference_id":"111","verified":false},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/country"},"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/proofs"},"data":[]},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/addresses"},"data":[]},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/9728ea13-cb5d-41fb-8a7f-796a005b0a13/permanent_documents"},"data":[]}}}],"included":[{"id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9","type":"countries","attributes":{"name":"United States","prefix":"1","iso":"US"},"relationships":{"regions":{"links":{"self":"https://sandbox-api.didww.com/v3/countries/1f6fc2bd-f081-4202-9b1a-d9cb88d942b9/relationships/regions","related":"https://sandbox-api.didww.com/v3/countries/1f6fc2bd-f081-4202-9b1a-d9cb88d942b9/regions"}}}},{"id":"d3414687-40f4-4346-a267-c2c65117d28c","type":"addresses","attributes":{"city_name":"Chicago","postal_code":"1234","address":"Main street","description":"some address","created_at":"2021-04-01T13:12:56.632Z"},"relationships":{"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/identity","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/identity"}},"country":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/country","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/country"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/relationships/proofs","related":"https://sandbox-api.didww.com/v3/addresses/d3414687-40f4-4346-a267-c2c65117d28c/proofs"}}}}],"meta":{"total_records":2,"api_version":"2021-04-19"},"links":{"first":"https://sandbox-api.didww.com/v3/identities?include=country%2Caddresses%2Cproofs%2Cpermanent_documents&page%5Bnumber%5D=1&page%5Bsize%5D=5","last":"https://sandbox-api.didww.com/v3/identities?include=country%2Caddresses%2Cproofs%2Cpermanent_documents&page%5Bnumber%5D=1&page%5Bsize%5D=5"}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/identities?include=country'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+            User-Agent: didww-php-sdk/dev-master
+            x-didww-api-version: '2026-04-16'
+        body: '{"data":{"type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","company_name":"Test Company Limited","company_reg_number":"543221","vat_id":"GB1234","description":"test identity","personal_tax_id":"987654321","identity_type":"business","external_reference_id":"111"},"relationships":{"country":{"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}}}}}'
+    response:
+        status:
+            code: 401
+            message: Unauthorized
+        headers:
+            Server: nginx
+            Date: 'Fri, 17 Apr 2026 14:41:28 GMT'
+            Content-Type: application/vnd.api+json
+            Content-Length: '97'
+            Connection: keep-alive
+            x-frame-options: SAMEORIGIN
+            x-xss-protection: '0'
+            x-content-type-options: nosniff
+            x-permitted-cross-domain-policies: none
+            referrer-policy: strict-origin-when-cross-origin
+            vary: Accept
+            cache-control: no-cache
+            x-request-id: 246a6ad5-e51a-4ff7-a687-c1410961ff88
+            x-runtime: '0.004086'
+            Vary: Origin
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, X-User-Agent, Cache-Control, value-track'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"errors":[{"title":"Unauthorized","detail":"Authorization failed","code":"401","status":"401"}]}'
+        curl_info:
+            url: 'https://sandbox-api.didww.com/v3/identities?include=country'
+            content_type: application/vnd.api+json
+            http_code: 401
+            header_size: 833
+            request_size: 736
+            filetime: -1
+            ssl_verify_result: 0
+            redirect_count: 0
+            total_time: 0.796905
+            namelookup_time: 0.001341
+            connect_time: 0.119736
+            pretransfer_time: 0.480566
+            size_upload: 463.0
+            size_download: 97.0
+            speed_download: 121.0
+            speed_upload: 580.0
+            download_content_length: 97.0
+            upload_content_length: 463.0
+            starttransfer_time: 0.796863
+            redirect_time: 0.0
+            redirect_url: ''
+            primary_ip: '2a01:ad00:1:3::185'
+            certinfo: {  }
+            primary_port: 443
+            local_ip: '2a01:ad00:2:8:1001::a'
+            local_port: 63677
+            http_version: 2
+            protocol: 2
+            ssl_verifyresult: 0
+            scheme: https
+            appconnect_time_us: 480512
+            queue_time_us: 9
+            connect_time_us: 119736
+            namelookup_time_us: 1341
+            pretransfer_time_us: 480566
+            redirect_time_us: 0
+            starttransfer_time_us: 796863
+            posttransfer_time_us: 480565
+            total_time_us: 796905
+            effective_method: POST
+            capath: ''
+            cainfo: ''
+            used_proxy: 0
+            httpauth_used: 0
+            proxyauth_used: 0
+            conn_id: 0
+    index: 0
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/identities'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+            User-Agent: didww-php-sdk/dev-master
+            x-didww-api-version: '2026-04-16'
+        body: '{"data":{"type":"identities","attributes":{"first_name":"John","last_name":"Doe","phone_number":"123456789","id_number":"ABC1234","birth_date":"1970-01-01","description":"test identity","personal_tax_id":"987654321","identity_type":"personal","external_reference_id":"111"},"relationships":{"country":{"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}}}}}'
+    response:
+        status:
+            code: 401
+            message: Unauthorized
+        headers:
+            Server: nginx
+            Date: 'Fri, 17 Apr 2026 14:41:29 GMT'
+            Content-Type: application/vnd.api+json
+            Content-Length: '97'
+            Connection: keep-alive
+            x-frame-options: SAMEORIGIN
+            x-xss-protection: '0'
+            x-content-type-options: nosniff
+            x-permitted-cross-domain-policies: none
+            referrer-policy: strict-origin-when-cross-origin
+            vary: Accept
+            cache-control: no-cache
+            x-request-id: 7f327832-9343-46b5-bd73-049ab58bb495
+            x-runtime: '0.002979'
+            Vary: Origin
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, X-User-Agent, Cache-Control, value-track'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"errors":[{"title":"Unauthorized","detail":"Authorization failed","code":"401","status":"401"}]}'
+        curl_info:
+            url: 'https://sandbox-api.didww.com/v3/identities'
+            content_type: application/vnd.api+json
+            http_code: 401
+            header_size: 833
+            request_size: 634
+            filetime: -1
+            ssl_verify_result: 0
+            redirect_count: 0
+            total_time: 0.794371
+            namelookup_time: 0.001176
+            connect_time: 0.121065
+            pretransfer_time: 0.489921
+            size_upload: 377.0
+            size_download: 97.0
+            speed_download: 122.0
+            speed_upload: 474.0
+            download_content_length: 97.0
+            upload_content_length: 377.0
+            starttransfer_time: 0.794357
+            redirect_time: 0.0
+            redirect_url: ''
+            primary_ip: '2a01:ad00:1:3::185'
+            certinfo: {  }
+            primary_port: 443
+            local_ip: '2a01:ad00:2:8:1001::a'
+            local_port: 63679
+            http_version: 2
+            protocol: 2
+            ssl_verifyresult: 0
+            scheme: https
+            appconnect_time_us: 489865
+            queue_time_us: 10
+            connect_time_us: 121065
+            namelookup_time_us: 1176
+            pretransfer_time_us: 489921
+            redirect_time_us: 0
+            starttransfer_time_us: 794357
+            posttransfer_time_us: 489919
+            total_time_us: 794371
+            effective_method: POST
+            capath: ''
+            cainfo: ''
+            used_proxy: 0
+            httpauth_used: 0
+            proxyauth_used: 0
+            conn_id: 0
+    index: 0
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555?include=birth_country'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"aaaa1111-bbbb-2222-cccc-333344445555","type":"identities","attributes":{"first_name":"Hans","last_name":"Mueller","phone_number":"491234567","id_number":"DE123","birth_date":"1985-03-20","company_name":null,"company_reg_number":null,"vat_id":null,"description":"test identity","personal_tax_id":"111222333","identity_type":"personal","created_at":"2026-04-01T10:00:00.000Z","external_reference_id":"ext-42","verified":false,"contact_email":null},"relationships":{"country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555/relationships/country","related":"https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555/country"}},"birth_country":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555/relationships/birth_country","related":"https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555/birth_country"},"data":{"type":"countries","id":"de-country-uuid"}},"proofs":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555/relationships/proofs","related":"https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555/proofs"}},"addresses":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555/relationships/addresses","related":"https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555/addresses"}},"permanent_documents":{"links":{"self":"https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555/relationships/permanent_documents","related":"https://sandbox-api.didww.com/v3/identities/aaaa1111-bbbb-2222-cccc-333344445555/permanent_documents"}}}},"included":[{"id":"de-country-uuid","type":"countries","attributes":{"name":"Germany","prefix":"49","iso":"DE"},"relationships":{"regions":{"links":{"self":"https://sandbox-api.didww.com/v3/countries/de-country-uuid/relationships/regions","related":"https://sandbox-api.didww.com/v3/countries/de-country-uuid/regions"}}}}]}'

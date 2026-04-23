@@ -24,7 +24,7 @@ class DidGroupTest extends CassetteTest
     public function testFind()
     {
         $uuid = '2187c36d-28fb-436f-8861-5a0f5b5a3ee1';
-        $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,did_group_type,stock_keeping_units,requirement']);
+        $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,did_group_type,stock_keeping_units,address_requirement']);
         $countryRelation = $didGroupDocument->getData()->country();
         $regionRelation = $didGroupDocument->getData()->region();
         $cityRelation = $didGroupDocument->getData()->city();
@@ -34,11 +34,13 @@ class DidGroupTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\DidGroup', $didGroupDocument->getData());
         $this->assertEquals($didGroupDocument->getData()->getAttributes(), [
             'prefix' => '241',
-            'features' => ['voice'],
+            'features' => ['voice_in', 'voice_out', 't38'],
             'is_metered' => false,
             'area_name' => 'Aachen',
             'allow_additional_channels' => true,
+            'service_restrictions' => null,
         ]);
+        $this->assertNull($didGroupDocument->getData()->getServiceRestrictions());
 
         $this->assertInstanceOf('Didww\Item\Country', $countryRelation->getIncluded());
         $this->assertEquals($countryRelation->getIncluded()->getAttributes(), [
@@ -70,10 +72,29 @@ class DidGroupTest extends CassetteTest
         $this->assertEquals(4.8, $stockKeepingUnits[1]->getMonthlyPrice());
         $this->assertEquals(2, $stockKeepingUnits[1]->getChannelsIncludedCount());
 
-        $requirementRelation = $didGroupDocument->getData()->requirement();
+        $requirementRelation = $didGroupDocument->getData()->addressRequirement();
         $requirement = $requirementRelation->getIncluded();
-        $this->assertInstanceOf('Didww\Item\Requirement', $requirement);
-        $this->assertEquals('Any', $requirement->getAttributes()['identity_type']);
+        $this->assertInstanceOf('Didww\Item\AddressRequirement', $requirement);
+        $this->assertEquals('any', $requirement->getAttributes()['identity_type']);
         $this->assertSame(\Didww\Enum\IdentityType::ANY, $requirement->getIdentityType());
+    }
+
+    public function testFeaturesAreParsedAsEnums()
+    {
+        $uuid = '2187c36d-28fb-436f-8861-5a0f5b5a3ee1';
+        $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,did_group_type,stock_keeping_units,address_requirement']);
+        $features = $didGroupDocument->getData()->getFeatures();
+        $this->assertCount(3, $features);
+        $this->assertSame(\Didww\Enum\Feature::VOICE_IN, $features[0]);
+        $this->assertSame(\Didww\Enum\Feature::VOICE_OUT, $features[1]);
+        $this->assertSame(\Didww\Enum\Feature::T38, $features[2]);
+    }
+
+    public function testNewFeatureEnums()
+    {
+        $this->assertEquals('p2p', \Didww\Enum\Feature::P2P->value);
+        $this->assertEquals('a2p', \Didww\Enum\Feature::A2P->value);
+        $this->assertEquals('emergency', \Didww\Enum\Feature::EMERGENCY->value);
+        $this->assertEquals('cnam_out', \Didww\Enum\Feature::CNAM_OUT->value);
     }
 }

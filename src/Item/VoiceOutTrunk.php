@@ -6,8 +6,10 @@ use Didww\Enum\DefaultDstAction;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\OnCliMismatchAction;
 use Didww\Enum\VoiceOutTrunkStatus;
+use Didww\Item\AuthenticationMethod\Base as AuthenticationMethodBase;
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class VoiceOutTrunk extends BaseItem
@@ -15,6 +17,7 @@ class VoiceOutTrunk extends BaseItem
     use Fetchable;
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -25,7 +28,6 @@ class VoiceOutTrunk extends BaseItem
 
     protected $visible = [
         'name',
-        'allowed_sip_ips',
         'on_cli_mismatch_action',
         'allowed_rtp_ips',
         'allow_any_did_as_cli',
@@ -38,6 +40,10 @@ class VoiceOutTrunk extends BaseItem
         'force_symmetric_rtp',
         'rtp_ping',
         'callback_url',
+        'authentication_method',
+        'external_reference_id',
+        'emergency_enable_all',
+        'rtp_timeout',
     ];
 
     public function getName(): string
@@ -48,16 +54,6 @@ class VoiceOutTrunk extends BaseItem
     public function setName(string $name)
     {
         $this->attributes['name'] = $name;
-    }
-
-    public function getAllowedSipIps(): array
-    {
-        return $this->attributes['allowed_sip_ips'];
-    }
-
-    public function setAllowedSipIps(array $allowedSipIps)
-    {
-        $this->attributes['allowed_sip_ips'] = $allowedSipIps;
     }
 
     public function getOnCliMismatchAction(): OnCliMismatchAction
@@ -181,6 +177,55 @@ class VoiceOutTrunk extends BaseItem
         $this->attributes['callback_url'] = $callbackUrl;
     }
 
+    public function getAuthenticationMethod(): ?AuthenticationMethodBase
+    {
+        $data = $this->attribute('authentication_method');
+        if (null === $data || $data instanceof AuthenticationMethodBase) {
+            return $data;
+        }
+
+        if ($data instanceof \stdClass) {
+            $data = json_decode(json_encode($data), true);
+        }
+
+        return AuthenticationMethodBase::fromArray($data);
+    }
+
+    public function setAuthenticationMethod(AuthenticationMethodBase $authenticationMethod)
+    {
+        $this->attributes['authentication_method'] = $authenticationMethod->toJsonApiArray();
+    }
+
+    public function isActive(): bool
+    {
+        return VoiceOutTrunkStatus::ACTIVE === $this->getStatus();
+    }
+
+    public function isBlocked(): bool
+    {
+        return VoiceOutTrunkStatus::BLOCKED === $this->getStatus();
+    }
+
+    public function getRtpTimeout(): ?int
+    {
+        return $this->attribute('rtp_timeout');
+    }
+
+    public function setRtpTimeout(?int $rtpTimeout)
+    {
+        $this->attributes['rtp_timeout'] = $rtpTimeout;
+    }
+
+    public function getEmergencyEnableAll(): ?bool
+    {
+        return $this->attribute('emergency_enable_all');
+    }
+
+    public function setEmergencyEnableAll(bool $emergencyEnableAll)
+    {
+        $this->attributes['emergency_enable_all'] = $emergencyEnableAll;
+    }
+
     public function getCreatedAt()
     {
         return $this->dateAttribute('created_at');
@@ -194,6 +239,16 @@ class VoiceOutTrunk extends BaseItem
     public function setDids(\Swis\JsonApi\Client\Collection $dids)
     {
         $this->dids()->associate($dids);
+    }
+
+    public function emergencyDids()
+    {
+        return $this->hasMany(Did::class, 'emergency_dids');
+    }
+
+    public function setEmergencyDids(\Swis\JsonApi\Client\Collection $emergencyDids)
+    {
+        $this->emergencyDids()->associate($emergencyDids);
     }
 
     public function defaultDid()

@@ -4,6 +4,7 @@ namespace Didww\Item;
 
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class VoiceInTrunkGroup extends BaseItem
@@ -11,6 +12,7 @@ class VoiceInTrunkGroup extends BaseItem
     use Fetchable;
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -22,6 +24,7 @@ class VoiceInTrunkGroup extends BaseItem
     protected $visible = [
         'capacity_limit',
         'name',
+        'external_reference_id',
     ];
 
     public function voiceInTrunks()

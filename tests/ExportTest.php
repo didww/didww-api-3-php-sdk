@@ -16,8 +16,8 @@ class ExportTest extends CassetteTest
         $export = new \Didww\Item\Export();
         $export->setExportType('cdr_in');
         $export->setFilterDidNumber('1234556789');
-        $export->setFilterYear('2019');
-        $export->setFilterMonth('01');
+        $export->setFilterFrom('2026-04-01 00:00:00');
+        $export->setFilterTo('2026-04-15 23:59:59');
 
         $this->assertEquals($export->toJsonApiArray(), [
             'type' => 'exports',
@@ -25,8 +25,8 @@ class ExportTest extends CassetteTest
                 'export_type' => 'cdr_in',
                 'filters' => [
                     'did_number' => '1234556789',
-                    'year' => '2019',
-                    'month' => '01',
+                    'from' => '2026-04-01 00:00:00',
+                    'to' => '2026-04-15 23:59:59',
                 ],
             ],
         ]);
@@ -36,11 +36,12 @@ class ExportTest extends CassetteTest
 
         $this->assertEquals($export->getAttributes(), [
             'created_at' => '2019-01-02T10:23:00.897Z',
-            'status' => 'Pending',
+            'status' => 'pending',
             'url' => null,
             'callback_url' => null,
             'callback_method' => null,
             'export_type' => 'cdr_in',
+            'external_reference_id' => null,
         ]);
     }
 
@@ -49,9 +50,8 @@ class ExportTest extends CassetteTest
         $export = new \Didww\Item\Export();
         $export->setExportType('cdr_out');
         $export->setFilterVoiceOutTrunkId('1f6fc2bd-f081-4202-9b1a-d9cb88d942b9');
-        $export->setFilterYear('2019');
-        $export->setFilterMonth('01');
-        $export->setFilterDay('03');
+        $export->setFilterFrom('2026-04-01 00:00:00');
+        $export->setFilterTo('2026-04-15 23:59:59');
 
         $this->assertEquals($export->toJsonApiArray(), [
             'type' => 'exports',
@@ -59,9 +59,8 @@ class ExportTest extends CassetteTest
                 'export_type' => 'cdr_out',
                 'filters' => [
                     'voice_out_trunk.id' => '1f6fc2bd-f081-4202-9b1a-d9cb88d942b9',
-                    'year' => '2019',
-                    'month' => '01',
-                    'day' => '03',
+                    'from' => '2026-04-01 00:00:00',
+                    'to' => '2026-04-15 23:59:59',
                 ],
             ],
         ]);
@@ -71,11 +70,12 @@ class ExportTest extends CassetteTest
 
         $this->assertEquals($export->getAttributes(), [
             'created_at' => '2019-01-02T10:23:00.897Z',
-            'status' => 'Pending',
+            'status' => 'pending',
             'url' => null,
             'callback_url' => null,
             'callback_method' => null,
             'export_type' => 'cdr_out',
+            'external_reference_id' => null,
         ]);
     }
 
@@ -94,13 +94,27 @@ class ExportTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\Export', $export);
         $this->assertEquals($export->getAttributes(), [
             'created_at' => '2019-01-02T10:23:00.897Z',
-            'status' => 'Completed',
+            'status' => 'completed',
             'url' => 'https://sandbox-api.didww.com/v3/exports/e5352384-6f64-4132-bba1-cda18fbc5896.csv.gz',
             'callback_url' => null,
             'callback_method' => null,
             'export_type' => 'cdr_in',
+            'external_reference_id' => null,
         ]);
         $this->assertEquals(ExportType::CDR_IN, $export->getExportType());
+        $this->assertNull($export->getExternalReferenceId());
+    }
+
+    public function testUpdateExportExternalReferenceId()
+    {
+        $uuid = 'da15f006-5da4-45ca-b0df-735baeadf423';
+        $export = \Didww\Item\Export::build($uuid);
+        $export->setExternalReferenceId('updated-ref-export');
+        $document = $export->save();
+
+        $data = $document->getData();
+        $this->assertInstanceOf('Didww\Item\Export', $data);
+        $this->assertEquals('updated-ref-export', $data->getExternalReferenceId());
         $this->assertNull($export->getCallbackUrl());
         $this->assertNull($export->getCallbackMethod());
     }
@@ -145,7 +159,25 @@ class ExportTest extends CassetteTest
         $export->setCallbackUrl('https://example.com/hook');
         $this->assertEquals('https://example.com/hook', $export->getCallbackUrl());
 
-        $export->setCallbackMethod('POST');
+        $export->setCallbackMethod('post');
         $this->assertEquals(\Didww\Enum\CallbackMethod::POST, $export->getCallbackMethod());
+    }
+
+    public function testExportStatusPredicates()
+    {
+        $pending = new \Didww\Item\Export(['status' => 'pending']);
+        $this->assertTrue($pending->isPending());
+        $this->assertFalse($pending->isProcessing());
+        $this->assertFalse($pending->isCompleted());
+
+        $processing = new \Didww\Item\Export(['status' => 'processing']);
+        $this->assertFalse($processing->isPending());
+        $this->assertTrue($processing->isProcessing());
+        $this->assertFalse($processing->isCompleted());
+
+        $completed = new \Didww\Item\Export(['status' => 'completed']);
+        $this->assertFalse($completed->isPending());
+        $this->assertFalse($completed->isProcessing());
+        $this->assertTrue($completed->isCompleted());
     }
 }

@@ -25,6 +25,7 @@ class ProofTest extends CassetteTest
         $proof = $proofDocument->getData();
         $this->assertInstanceOf('Didww\Item\Proof', $proof);
         $this->assertInstanceOf('Didww\Item\ProofType', $proof->proofType()->getIncluded());
+        $this->assertNull($proof->getExternalReferenceId());
     }
 
     public function testGetExpiresAtReturnsNullWhenNull()

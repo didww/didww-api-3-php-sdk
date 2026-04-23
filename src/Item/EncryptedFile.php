@@ -23,20 +23,20 @@ class EncryptedFile extends BaseItem
         return $this->attribute('description');
     }
 
-    public function getExpireAt(): ?\DateTime
+    public function getExpiresAt(): ?\DateTime
     {
-        return $this->dateAttribute('expire_at');
+        return $this->dateAttribute('expires_at');
     }
 
     /* POST /v3/encrypted_files
      * encrypted_files[encryption_fingerprint] required
-     * encrypted_files[items][][file] required
-     * encrypted_files[items][][description]
+     * encrypted_files[file] required
+     * encrypted_files[description]
      */
-    public static function upload(string $fingerprint, array $filesContent, array $descriptions = [], $boundary = null): UploadResult
+    public static function upload(string $fingerprint, string $fileContent, ?string $description = null, $boundary = null): UploadResult
     {
         $apiKey = \Didww\Configuration::getApiKey();
-        $apiVersion = \Didww\Configuration::getCredentials()->getVersion() ?? '2022-05-10';
+        $apiVersion = \Didww\Configuration::getCredentials()->getVersion() ?? '2026-04-16';
         $baseUri = \Didww\Configuration::getBaseUri();
         $url = $baseUri.'/encrypted_files';
 
@@ -49,19 +49,18 @@ class EncryptedFile extends BaseItem
         $fields = [
             ['name' => 'encrypted_files[encryption_fingerprint]', 'data' => $fingerprint],
         ];
-        $files = [];
-        foreach ($descriptions as &$desc) {
-            array_push($fields, [
-                'name' => 'encrypted_files[items][][description]',
-                'data' => $desc,
-            ]);
+        if (null !== $description) {
+            $fields[] = [
+                'name' => 'encrypted_files[description]',
+                'data' => $description,
+            ];
         }
-        foreach ($filesContent as &$binary) {
-            array_push($files, [
-                'name' => 'encrypted_files[items][][file]',
-                'data' => $binary,
-            ]);
-        }
+        $files = [
+            [
+                'name' => 'encrypted_files[file]',
+                'data' => $fileContent,
+            ],
+        ];
 
         $postData = EncryptedFile::buildDataFiles($delimiter, $files, $fields);
 

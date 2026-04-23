@@ -6,16 +6,16 @@ use Didww\Enum\AreaLevel;
 use Didww\Enum\IdentityType;
 use Didww\Traits\Fetchable;
 
-class Requirement extends BaseItem
+class AddressRequirement extends BaseItem // NOSONAR
 {
     use Fetchable;
 
     public static function getEndpoint(): string
     {
-        return '/requirements';
+        return '/address_requirements';
     }
 
-    protected $type = 'requirements';
+    protected $type = 'address_requirements';
 
     public function getIdentityType(): IdentityType
     {

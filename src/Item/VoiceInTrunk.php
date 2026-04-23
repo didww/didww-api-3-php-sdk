@@ -7,6 +7,7 @@ use Didww\Item\Configuration\Pstn;
 use Didww\Item\Configuration\Sip;
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class VoiceInTrunk extends BaseItem
@@ -14,6 +15,7 @@ class VoiceInTrunk extends BaseItem
     use Fetchable;
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -32,6 +34,7 @@ class VoiceInTrunk extends BaseItem
         'description',
         'ringing_timeout',
         'configuration',
+        'external_reference_id',
     ];
 
     /**

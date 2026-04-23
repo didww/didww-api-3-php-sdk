@@ -29,6 +29,7 @@ class SharedCapacityGroupTest extends CassetteTest
             'shared_channels_count' => 19,
             'metered_channels_count' => 0,
             'created_at' => '2018-06-19T11:41:21.644Z',
+            'external_reference_id' => null,
         ]);
         $this->assertEquals('didww', $group->getName());
         $this->assertEquals(19, $group->getSharedChannelsCount());
@@ -97,6 +98,7 @@ class SharedCapacityGroupTest extends CassetteTest
             'shared_channels_count' => 10,
             'metered_channels_count' => 2,
             'created_at' => '2018-06-19T11:41:21.644Z',
+            'external_reference_id' => null,
         ]);
     }
 
@@ -117,6 +119,7 @@ class SharedCapacityGroupTest extends CassetteTest
             'shared_channels_count' => 10,
             'metered_channels_count' => 2,
             'created_at' => '2018-06-19T11:41:21.644Z',
+            'external_reference_id' => null,
         ]);
 
         $this->assertContainsOnlyInstancesOf('Didww\Item\Did', $didsRelation->getIncluded()->all());
@@ -161,6 +164,7 @@ class SharedCapacityGroupTest extends CassetteTest
             'shared_channels_count' => 5,
             'metered_channels_count' => 0,
             'created_at' => '2019-01-02T09:41:26.083Z',
+            'external_reference_id' => null,
         ]);
     }
 

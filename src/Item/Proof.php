@@ -3,12 +3,14 @@
 namespace Didww\Item;
 
 use Didww\Traits\Deletable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class Proof extends BaseItem
 {
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -16,6 +18,10 @@ class Proof extends BaseItem
     }
 
     protected $type = 'proofs';
+
+    protected $visible = [
+        'external_reference_id',
+    ];
 
     public function getCreatedAt(): ?\DateTime
     {

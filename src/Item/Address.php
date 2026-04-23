@@ -4,6 +4,7 @@ namespace Didww\Item;
 
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class Address extends BaseItem
@@ -11,6 +12,7 @@ class Address extends BaseItem
     use Fetchable;
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -24,6 +26,7 @@ class Address extends BaseItem
         'postal_code',
         'address',
         'description',
+        'external_reference_id',
     ];
 
     public function getCityName(): string

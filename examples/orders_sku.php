@@ -12,10 +12,13 @@ $orderItemAttributes = [
     'sku_id' => $skuId,
     'qty' => 2,
 ];
+// 2026-04-16 external_reference_id -- customer-supplied tag (max 100 chars)
+$suffix = bin2hex(random_bytes(4));
 $orderAttributes = [
     'items' => [
         new Didww\Item\OrderItem\Did($orderItemAttributes),
     ],
+    'external_reference_id' => "php-order-$suffix",
 ];
 $order = new Didww\Item\Order($orderAttributes);
 $orderDocument = $order->save();
@@ -27,10 +30,11 @@ $orderItem = $order->getItems()[0];
 var_dump(
     $order->getId(), // 2989925f-7df3-4dc9-9944-d1fa0f4e8e86
     $order->getAmount(), // 0.18
-    $order->getStatus(), // Pending
+    $order->getStatus(), // pending
     $order->getCreatedAt(), // new \DateTime('2019-01-03 15:46:27')
     $order->getDescription(), // DID
     $order->getReference(), // XXU-610373
+    $order->getExternalReferenceId(), // php-order-...
     $orderItem->getQty(), // 2
     $orderItem->getNrc(), // 0.0
     $orderItem->getMrc(), // 0.09

@@ -8,6 +8,9 @@ use Didww\Enum\CallbackMethod;
 use Didww\Enum\CliFormat;
 use Didww\Enum\Codec;
 use Didww\Enum\DefaultDstAction;
+use Didww\Enum\DiversionRelayPolicy;
+use Didww\Enum\EmergencyCallingServiceStatus;
+use Didww\Enum\EmergencyVerificationStatus;
 use Didww\Enum\ExportStatus;
 use Didww\Enum\ExportType;
 use Didww\Enum\Feature;
@@ -29,20 +32,20 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     {
         $cases = [
             [CliFormat::class, 'raw', CliFormat::RAW],
-            [IdentityType::class, 'Personal', IdentityType::PERSONAL],
-            [IdentityType::class, 'Any', IdentityType::ANY],
-            [OrderStatus::class, 'Completed', OrderStatus::COMPLETED],
-            [CallbackMethod::class, 'POST', CallbackMethod::POST],
+            [IdentityType::class, 'personal', IdentityType::PERSONAL],
+            [IdentityType::class, 'any', IdentityType::ANY],
+            [OrderStatus::class, 'completed', OrderStatus::COMPLETED],
+            [CallbackMethod::class, 'post', CallbackMethod::POST],
             [ExportType::class, 'cdr_in', ExportType::CDR_IN],
-            [ExportStatus::class, 'Pending', ExportStatus::PENDING],
-            [AddressVerificationStatus::class, 'Approved', AddressVerificationStatus::APPROVED],
+            [ExportStatus::class, 'pending', ExportStatus::PENDING],
+            [AddressVerificationStatus::class, 'approved', AddressVerificationStatus::APPROVED],
             [MediaEncryptionMode::class, 'zrtp', MediaEncryptionMode::ZRTP],
             [StirShakenMode::class, 'pai', StirShakenMode::PAI],
             [OnCliMismatchAction::class, 'replace_cli', OnCliMismatchAction::REPLACE_CLI],
             [DefaultDstAction::class, 'allow_all', DefaultDstAction::ALLOW_ALL],
             [VoiceOutTrunkStatus::class, 'active', VoiceOutTrunkStatus::ACTIVE],
             [Feature::class, 'voice_in', Feature::VOICE_IN],
-            [AreaLevel::class, 'Country', AreaLevel::COUNTRY],
+            [AreaLevel::class, 'country', AreaLevel::COUNTRY],
         ];
 
         foreach ($cases as [$enumClass, $rawValue, $expectedCase]) {
@@ -82,10 +85,10 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(3, AddressVerificationStatus::cases());
         $this->assertCount(4, MediaEncryptionMode::cases());
         $this->assertCount(5, StirShakenMode::cases());
-        $this->assertCount(3, OnCliMismatchAction::cases());
+        $this->assertCount(4, OnCliMismatchAction::cases());
         $this->assertCount(2, DefaultDstAction::cases());
         $this->assertCount(2, VoiceOutTrunkStatus::cases());
-        $this->assertCount(5, Feature::cases());
+        $this->assertCount(8, Feature::cases());
         $this->assertCount(4, AreaLevel::cases());
         $this->assertCount(13, Codec::cases());
         $this->assertCount(3, TransportProtocol::cases());
@@ -93,6 +96,9 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(4, TxDtmfFormat::cases());
         $this->assertCount(3, SstRefreshMethod::cases());
         $this->assertCount(47, ReroutingDisconnectCode::cases());
+        $this->assertCount(4, DiversionRelayPolicy::cases());
+        $this->assertCount(6, EmergencyCallingServiceStatus::cases());
+        $this->assertCount(3, EmergencyVerificationStatus::cases());
     }
 
     public function testSipConfigurationSetterAcceptsEnumAndRaw()
@@ -151,6 +157,29 @@ class EnumTest extends \PHPUnit\Framework\TestCase
 
         $trunk->setOnCliMismatchAction('reject_call');
         $this->assertSame('reject_call', $trunk->getAttributes()['on_cli_mismatch_action']);
+    }
+
+    public function testSipConfigurationDiversionRelayPolicy()
+    {
+        $sip = new \Didww\Item\Configuration\Sip();
+
+        $sip->setDiversionRelayPolicy('sip');
+        $this->assertSame(DiversionRelayPolicy::SIP, $sip->getDiversionRelayPolicy());
+        $this->assertSame('sip', $sip->getAttributes()['diversion_relay_policy']);
+
+        $sip->setDiversionRelayPolicy(DiversionRelayPolicy::AS_IS);
+        $this->assertSame(DiversionRelayPolicy::AS_IS, $sip->getDiversionRelayPolicy());
+        $this->assertSame('as_is', $sip->getAttributes()['diversion_relay_policy']);
+    }
+
+    public function testUnknownEnumValueFallsBackToRawString()
+    {
+        // Single enum attribute: unknown value should return raw string, not crash
+        $didGroup = new \Didww\Item\DidGroup();
+        $didGroup->fill(['features' => ['voice_in', 'future_feature_xyz']]);
+        $features = $didGroup->getFeatures();
+        $this->assertSame(Feature::VOICE_IN, $features[0]);
+        $this->assertSame('future_feature_xyz', $features[1]);
     }
 
     public function testCodecArraySetterAcceptsEnumAndRaw()

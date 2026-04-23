@@ -55,6 +55,17 @@ class VoiceInTrunkGroupTest extends CassetteTest
         $this->assertArraySubset($attributes, $voiceInTrunkGroup->getAttributes());
     }
 
+    public function testVoiceInTrunkGroupSetters()
+    {
+        $group = new \Didww\Item\VoiceInTrunkGroup();
+
+        $group->setExternalReferenceId('ref-123');
+        $this->assertEquals('ref-123', $group->getExternalReferenceId());
+
+        $group->setExternalReferenceId(null);
+        $this->assertNull($group->getExternalReferenceId());
+    }
+
     public function testDeleteTrunkGroup()
     {
         $voiceInTrunkGroup = \Didww\Item\VoiceInTrunkGroup::build('b2319703-ce6c-480d-bb53-614e7abcfc96');

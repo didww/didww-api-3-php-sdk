@@ -41,9 +41,9 @@ class DidGroup extends BaseItem
         return $this->hasOne(DidGroupType::class);
     }
 
-    public function requirement()
+    public function addressRequirement()
     {
-        return $this->hasOne(Requirement::class);
+        return $this->hasOne(AddressRequirement::class);
     }
 
     public function getAreaName(): string
@@ -72,5 +72,10 @@ class DidGroup extends BaseItem
     public function getAllowAdditionalChannels(): bool
     {
         return $this->getAttributes()['allow_additional_channels'];
+    }
+
+    public function getServiceRestrictions(): ?string
+    {
+        return $this->attribute('service_restrictions');
     }
 }

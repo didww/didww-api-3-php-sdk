@@ -5,6 +5,7 @@ namespace Didww\Item;
 use Didww\Enum\IdentityType;
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
+use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
 
 class Identity extends BaseItem
@@ -12,6 +13,7 @@ class Identity extends BaseItem
     use Fetchable;
     use Saveable;
     use Deletable;
+    use HasExternalReferenceId;
 
     public static function getEndpoint(): string
     {
@@ -146,16 +148,6 @@ class Identity extends BaseItem
         $this->setEnumAttribute('identity_type', $identityType);
     }
 
-    public function getExternalReferenceId(): ?string
-    {
-        return $this->attribute('external_reference_id');
-    }
-
-    public function setExternalReferenceId(string $externalReferenceId)
-    {
-        $this->attributes['external_reference_id'] = $externalReferenceId;
-    }
-
     public function getContactEmail(): ?string
     {
         return $this->attribute('contact_email');
@@ -184,6 +176,16 @@ class Identity extends BaseItem
     public function setCountry(Country $country)
     {
         $this->country()->associate($country);
+    }
+
+    public function birthCountry()
+    {
+        return $this->hasOne(Country::class, 'birth_country');
+    }
+
+    public function setBirthCountry(Country $birthCountry)
+    {
+        $this->birthCountry()->associate($birthCountry);
     }
 
     public function proofs()

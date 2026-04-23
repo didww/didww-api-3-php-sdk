@@ -29,6 +29,8 @@ class AddressTest extends CassetteTest
         $city = $addresses[0]->city()->getIncluded();
         $this->assertEquals(null, $city);
 
+        $this->assertNull($addresses[0]->getExternalReferenceId());
+
         $this->assertEquals(1, $addressesDocument->getMeta()['total_records']);
     }
 

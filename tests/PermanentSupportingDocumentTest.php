@@ -25,6 +25,7 @@ class PermanentSupportingDocumentTest extends CassetteTest
         $permanentSupportingDoc = $permanentSupportingDocDocument->getData();
         $this->assertInstanceOf('Didww\Item\PermanentSupportingDocument', $permanentSupportingDoc);
         $this->assertInstanceOf('Didww\Item\SupportingDocumentTemplate', $permanentSupportingDoc->template()->getIncluded());
+        $this->assertNull($permanentSupportingDoc->getExternalReferenceId());
     }
 
     public function testDeletePermanentSupportingDocument()

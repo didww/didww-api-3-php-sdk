@@ -76,14 +76,14 @@ class VoiceInTrunkTest extends CassetteTest
         $attributes = [
             'configuration' => new \Didww\Item\Configuration\Sip([
                 'username' => 'username',
-                'host' => '216.58.215.110',
+                'host' => '203.0.113.110',
                 'sst_refresh_method_id' => 1,
                 'port' => 5060,
                 'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
                 'rerouting_disconnect_code_ids' => \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
                 'media_encryption_mode' => 'zrtp',
                 'stir_shaken_mode' => 'pai',
-                'allowed_rtp_ips' => ['127.0.0.1'],
+                'allowed_rtp_ips' => ['203.0.113.1'],
             ]),
             'name' => 'hello, test sip trunk',
         ];
@@ -97,7 +97,7 @@ class VoiceInTrunkTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\Configuration\Sip', $sipConfiguration);
         $this->assertArraySubset($attributes['configuration']->getAttributes(), $sipConfiguration->getAttributes());
 
-        $this->assertEquals('216.58.215.110', $sipConfiguration->getHost());
+        $this->assertEquals('203.0.113.110', $sipConfiguration->getHost());
         $this->assertEquals(SstRefreshMethod::INVITE, $sipConfiguration->getSstRefreshMethodId());
         $this->assertEquals(5060, $sipConfiguration->getPort());
         $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultCodecIds(), $sipConfiguration->getCodecIds());
@@ -105,7 +105,7 @@ class VoiceInTrunkTest extends CassetteTest
         $this->assertEquals('username', $sipConfiguration->getUsername());
         $this->assertEquals(MediaEncryptionMode::ZRTP, $sipConfiguration->getMediaEncryptionMode());
         $this->assertEquals(StirShakenMode::PAI, $sipConfiguration->getStirShakenMode());
-        $this->assertEquals(['127.0.0.1'], $sipConfiguration->getAllowedRtpIps());
+        $this->assertEquals(['203.0.113.1'], $sipConfiguration->getAllowedRtpIps());
         $this->assertEquals($attributes['name'], $voiceInTrunk->getName());
 
         // Additional SIP getter assertions
@@ -188,8 +188,8 @@ class VoiceInTrunkTest extends CassetteTest
     {
         $sip = new \Didww\Item\Configuration\Sip();
 
-        $sip->setHost('10.0.0.1');
-        $this->assertEquals('10.0.0.1', $sip->getHost());
+        $sip->setHost('203.0.113.1');
+        $this->assertEquals('203.0.113.1', $sip->getHost());
 
         $sip->setUsername('testuser');
         $this->assertEquals('testuser', $sip->getUsername());
@@ -275,8 +275,8 @@ class VoiceInTrunkTest extends CassetteTest
         $sip->setStirShakenMode('pai');
         $this->assertEquals(StirShakenMode::PAI, $sip->getStirShakenMode());
 
-        $sip->setAllowedRtpIps(['192.168.1.1']);
-        $this->assertEquals(['192.168.1.1'], $sip->getAllowedRtpIps());
+        $sip->setAllowedRtpIps(['203.0.113.2']);
+        $this->assertEquals(['203.0.113.2'], $sip->getAllowedRtpIps());
     }
 
     public function testVoiceInTrunkSetters()
@@ -304,8 +304,14 @@ class VoiceInTrunkTest extends CassetteTest
         $trunk->setRingingTimeout(30);
         $this->assertEquals(30, $trunk->getRingingTimeout());
 
-        $config = new \Didww\Item\Configuration\Sip(['host' => '1.2.3.4']);
+        $config = new \Didww\Item\Configuration\Sip(['host' => '203.0.113.4']);
         $trunk->setConfiguration($config);
         $this->assertSame($config, $trunk->getConfiguration());
+
+        $trunk->setExternalReferenceId('ref-456');
+        $this->assertEquals('ref-456', $trunk->getExternalReferenceId());
+
+        $trunk->setExternalReferenceId(null);
+        $this->assertNull($trunk->getExternalReferenceId());
     }
 }
