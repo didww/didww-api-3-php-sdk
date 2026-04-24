@@ -15,7 +15,14 @@ This SDK uses [swisnl/json-api-client](https://github.com/swisnl/json-api-client
 
 Read more https://doc.didww.com/api
 
-By default, this SDK sends the `X-DIDWW-API-Version: 2026-04-16` header with each request.
+## API Version
+
+This SDK sends the `X-DIDWW-API-Version: 2026-04-16` header with every request by default.
+
+| Package Version | Branch | DIDWW API Version |
+|-----------------|--------|-------------------|
+| **10.x** | [`master`](https://github.com/didww/didww-api-3-php-sdk) | [`2026-04-16`](https://doc.didww.com/api3/2026-04-16/index.html) |
+| **9.x** | [`2022-05-10`](https://github.com/didww/didww-api-3-php-sdk/tree/2022-05-10) | [`2022-05-10`](https://doc.didww.com/api3/2022-05-10/index.html) |
 
 ## Requirements
 
