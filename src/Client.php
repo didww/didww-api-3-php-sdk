@@ -4,8 +4,6 @@ namespace Didww;
 
 class Client extends \Swis\JsonApi\Client\Client
 {
-    public const SDK_VERSION = '10.0.0-dev';
-
     private const PUBLIC_KEYS_ENDPOINT = '/public_keys';
 
     protected function buildRequest(string $method, string $endpoint, $body = null, array $headers = []): \Psr\Http\Message\RequestInterface
