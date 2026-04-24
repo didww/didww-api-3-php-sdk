@@ -15,6 +15,10 @@ This SDK uses [swisnl/json-api-client](https://github.com/swisnl/json-api-client
 
 Read more https://doc.didww.com/api
 
+## API Version
+
+This branch targets **DIDWW API version `2026-04-16`**. If you need support for the previous API version `2022-05-10`, use the [`2022-05-10`](../../tree/2022-05-10) branch.
+
 By default, this SDK sends the `X-DIDWW-API-Version: 2026-04-16` header with each request.
 
 ## Requirements
