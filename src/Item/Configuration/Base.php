@@ -52,10 +52,11 @@ abstract class Base
     {
         $masked = [];
         foreach ($this->attributes as $key => $value) {
-            $masked[$key] = (in_array($key, $this->sensitiveAttributes, true) && $value !== null)
+            $masked[$key] = (in_array($key, $this->sensitiveAttributes, true) && null !== $value)
                 ? '[FILTERED]'
                 : $value;
         }
+
         return ['type' => $this->getType(), 'attributes' => $masked];
     }
 
