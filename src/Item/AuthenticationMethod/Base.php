@@ -3,22 +3,14 @@
 namespace Didww\Item\AuthenticationMethod;
 
 use Didww\Traits\HasSafeAttributes;
+use Didww\Traits\RedactsSensitiveAttributes;
 
 abstract class Base
 {
     use HasSafeAttributes;
+    use RedactsSensitiveAttributes;
 
     protected $attributes = [];
-
-    /**
-     * Attribute names whose values are credentials. The wire format is
-     * unchanged — toJsonApiArray() still emits the real values — but
-     * __debugInfo() redacts these so var_dump / print_r / default error
-     * reports never leak the credential downstream. Subclasses extend this.
-     *
-     * @var string[]
-     */
-    protected array $sensitiveAttributes = [];
 
     public function __construct(array $attributes = [])
     {
@@ -26,22 +18,6 @@ abstract class Base
     }
 
     abstract public function getType(): string;
-
-    /**
-     * Custom var_dump / print_r output: redact sensitive attribute values
-     * so credentials never leak through default debugging surfaces.
-     */
-    public function __debugInfo(): array
-    {
-        $masked = [];
-        foreach ($this->attributes as $key => $value) {
-            $masked[$key] = (in_array($key, $this->sensitiveAttributes, true) && null !== $value)
-                ? '[FILTERED]'
-                : $value;
-        }
-
-        return ['type' => $this->getType(), 'attributes' => $masked];
-    }
 
     public function fill(array $attributes): void
     {
