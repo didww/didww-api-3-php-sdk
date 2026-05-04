@@ -36,6 +36,7 @@ DIDWW_API_KEY=your_api_key php examples/balance.php
 | [`did_history.php`](did_history.php) | Lists DID ownership history (last 90 days, 2026-04-16). |
 | [`exports.php`](exports.php) | Creates and lists CDR exports, with 2026-04-16 external_reference_id. |
 | [`trunks.php`](trunks.php) | Creates SIP and PSTN trunks with enum-based configuration, prints details. |
+| [`voice_in_trunk_sip_registration.php`](voice_in_trunk_sip_registration.php) | End-to-end SIP registration flow: create with `enabled_sip_registration: true`, rename, disable by setting `host`, re-enable by toggling the flag. The SDK keeps the dependent fields (`host`, `port`, `use_did_in_ruri`) aligned with the server's validation rules automatically. |
 | [`voice_out_trunks.php`](voice_out_trunks.php) | CRUD for voice out trunks with 2026-04-16 polymorphic authentication_method. |
 | [`voice_in_trunk_groups.php`](voice_in_trunk_groups.php) | CRUD for voice in trunk groups with 2026-04-16 external_reference_id. |
 | [`channel_groups.php`](channel_groups.php) | Manages shared capacity groups with 2026-04-16 external_reference_id. |

@@ -317,7 +317,7 @@ class VoiceInTrunkTest extends CassetteTest
         $this->assertNull($trunk->getExternalReferenceId());
     }
 
-    public function testSipConfigurationV35Attributes()
+    public function testSipConfigurationRegistrationAttributes()
     {
         // Real wire shape captured from sandbox: when sip_registration is
         // enabled, host/port/username come back as null and the API rejects

@@ -262,8 +262,19 @@ class Sip extends Base
 
     // ##
 
+    /**
+     * Setting host to a non-null value cascades enabled_sip_registration
+     * and use_did_in_ruri to false because the server requires those
+     * states whenever host is present (API 2026-04-16). Constructor /
+     * fill() bypass this setter, so deserialized server responses keep
+     * their original combinations.
+     */
     public function setHost($newHost)
     {
+        if (null !== $newHost) {
+            $this->attributes['enabled_sip_registration'] = false;
+            $this->attributes['use_did_in_ruri'] = false;
+        }
         $this->attributes['host'] = $newHost;
     }
 
@@ -428,8 +439,26 @@ class Sip extends Base
         $this->setEnumAttribute('network_protocol_priority', $networkProtocolPriority);
     }
 
+    /**
+     * Setting enabled_sip_registration cascades dependent fields:
+     *   - true  -> nullify host / port and emit them as null on the wire
+     *     (host/port must be blank when sip_registration is on). The wire
+     *     emission fires unconditionally so PATCH against an existing trunk
+     *     that already has host/port set server-side is told to clear them.
+     *   - false -> force use_did_in_ruri = false (must be disabled when
+     *     sip_registration is disabled).
+     */
     public function setEnabledSipRegistration(bool $enabledSipRegistration)
     {
+        if (true === $enabledSipRegistration) {
+            // Always emit host: null and port: null on the wire so a PATCH
+            // against an existing trunk that already has them persisted on
+            // the server side is told to clear them.
+            $this->attributes['host'] = null;
+            $this->attributes['port'] = null;
+        } else {
+            $this->attributes['use_did_in_ruri'] = false;
+        }
         $this->attributes['enabled_sip_registration'] = $enabledSipRegistration;
     }
 
