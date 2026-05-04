@@ -3,8 +3,10 @@
 namespace Didww\Item\Configuration;
 
 use Didww\Enum\Codec;
+use Didww\Enum\DiversionInjectMode;
 use Didww\Enum\DiversionRelayPolicy;
 use Didww\Enum\MediaEncryptionMode;
+use Didww\Enum\NetworkProtocolPriority;
 use Didww\Enum\ReroutingDisconnectCode;
 use Didww\Enum\RxDtmfFormat;
 use Didww\Enum\SstRefreshMethod;
@@ -14,6 +16,17 @@ use Didww\Enum\TxDtmfFormat;
 
 class Sip extends Base
 {
+    /**
+     * Server-generated attributes returned in responses but not accepted on
+     * write. Sending them in POST/PATCH triggers a `400 Param not allowed`
+     * server error, so they are stripped from the JSON:API write payload by
+     * `toJsonApiArray()`.
+     */
+    public const READ_ONLY_ATTRIBUTES = [
+        'incoming_auth_username',
+        'incoming_auth_password',
+    ];
+
     public function getType(): string
     {
         return 'sip_configurations';
@@ -175,6 +188,72 @@ class Sip extends Base
         return $this->enumAttribute('diversion_relay_policy', DiversionRelayPolicy::class);
     }
 
+    /**
+     * Diversion header injection mode. (API 2026-04-16).
+     */
+    public function getDiversionInjectMode(): ?DiversionInjectMode
+    {
+        return $this->enumAttribute('diversion_inject_mode', DiversionInjectMode::class);
+    }
+
+    /**
+     * SIP network protocol priority. (API 2026-04-16).
+     */
+    public function getNetworkProtocolPriority(): ?NetworkProtocolPriority
+    {
+        return $this->enumAttribute('network_protocol_priority', NetworkProtocolPriority::class);
+    }
+
+    /**
+     * Whether SIP registration is enabled. When true the server generates
+     * `incoming_auth_username` / `incoming_auth_password` and the trunk's
+     * `host` and `port` must be left blank. When disabling sip registration
+     * on an existing trunk, the same PATCH must also set `host` to a
+     * non-blank value and `use_did_in_ruri` to false, or the server returns
+     * 422. (API 2026-04-16).
+     */
+    public function getEnabledSipRegistration()
+    {
+        return $this->attributes['enabled_sip_registration'] ?? null;
+    }
+
+    /**
+     * When true, the trunk's R-URI uses the DID number. Requires
+     * `enabled_sip_registration` to be true. (API 2026-04-16).
+     */
+    public function getUseDidInRuri()
+    {
+        return $this->attributes['use_did_in_ruri'] ?? null;
+    }
+
+    /**
+     * Enables CNAM resolution for inbound calls on this trunk. (API 2026-04-16).
+     */
+    public function getCnamLookup()
+    {
+        return $this->attributes['cnam_lookup'] ?? null;
+    }
+
+    /**
+     * Server-generated SIP authentication username. Returned in responses when
+     * `enabled_sip_registration` is true. Read-only — the API rejects any
+     * write attempt with `400 Param not allowed`. (API 2026-04-16).
+     */
+    public function getIncomingAuthUsername()
+    {
+        return $this->attributes['incoming_auth_username'] ?? null;
+    }
+
+    /**
+     * Server-generated SIP authentication password. Returned in responses when
+     * `enabled_sip_registration` is true. Read-only — the API rejects any
+     * write attempt with `400 Param not allowed`. (API 2026-04-16).
+     */
+    public function getIncomingAuthPassword()
+    {
+        return $this->attributes['incoming_auth_password'] ?? null;
+    }
+
     // ##
 
     public function setHost($newHost)
@@ -331,5 +410,65 @@ class Sip extends Base
     public function setDiversionRelayPolicy(DiversionRelayPolicy|string $diversionRelayPolicy)
     {
         $this->setEnumAttribute('diversion_relay_policy', $diversionRelayPolicy);
+    }
+
+    public function setDiversionInjectMode(DiversionInjectMode|string $diversionInjectMode)
+    {
+        $this->setEnumAttribute('diversion_inject_mode', $diversionInjectMode);
+    }
+
+    public function setNetworkProtocolPriority(NetworkProtocolPriority|string $networkProtocolPriority)
+    {
+        $this->setEnumAttribute('network_protocol_priority', $networkProtocolPriority);
+    }
+
+    public function setEnabledSipRegistration(bool $enabledSipRegistration)
+    {
+        $this->attributes['enabled_sip_registration'] = $enabledSipRegistration;
+    }
+
+    public function setUseDidInRuri(bool $useDidInRuri)
+    {
+        $this->attributes['use_did_in_ruri'] = $useDidInRuri;
+    }
+
+    public function setCnamLookup(bool $cnamLookup)
+    {
+        $this->attributes['cnam_lookup'] = $cnamLookup;
+    }
+
+    /**
+     * @return DiversionInjectMode[]
+     */
+    public static function getDiversionInjectModes(): array
+    {
+        return DiversionInjectMode::cases();
+    }
+
+    /**
+     * @return NetworkProtocolPriority[]
+     */
+    public static function getNetworkProtocolPriorities(): array
+    {
+        return NetworkProtocolPriority::cases();
+    }
+
+    /**
+     * Serialise to JSON:API form. Read-only attributes (server-generated SIP
+     * registration credentials) are stripped from the payload so that
+     * round-tripping a loaded configuration through PATCH does not echo them
+     * back and trigger `400 Param not allowed`.
+     */
+    public function toJsonApiArray(): array
+    {
+        $payload = parent::toJsonApiArray();
+
+        if (isset($payload['attributes']) && is_array($payload['attributes'])) {
+            foreach (self::READ_ONLY_ATTRIBUTES as $key) {
+                unset($payload['attributes'][$key]);
+            }
+        }
+
+        return $payload;
     }
 }

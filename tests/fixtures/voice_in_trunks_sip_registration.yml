@@ -1,0 +1,196 @@
+
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/voice_in_trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+            User-Agent: didww-php-sdk/dev-master
+            x-didww-api-version: '2026-04-16'
+        body: '{"data":{"type":"voice_in_trunks","attributes":{"configuration":{"type":"sip_configurations","attributes":{"enabled_sip_registration":true,"use_did_in_ruri":true,"cnam_lookup":true,"diversion_relay_policy":"as_is","diversion_inject_mode":"did_number","network_protocol_priority":"prefer_ipv4","codec_ids":[9,7],"transport_protocol_id":1}},"name":"sip-registration-trunk","priority":1,"weight":100,"cli_format":"e164","ringing_timeout":30}}}'
+    response:
+        status:
+            code: 201
+            message: Created
+        headers:
+            Server: nginx
+            Date: 'Thu, 30 Apr 2026 15:46:18 GMT'
+            Content-Type: application/vnd.api+json
+            Content-Length: '1926'
+            Connection: keep-alive
+            x-frame-options: SAMEORIGIN
+            x-xss-protection: '0'
+            x-content-type-options: nosniff
+            x-permitted-cross-domain-policies: none
+            referrer-policy: strict-origin-when-cross-origin
+            vary: Accept
+            etag: 'W/"c65bc1b175d64fae3da5cc94e627ea98"'
+            cache-control: 'max-age=0, private, must-revalidate'
+            x-request-id: 6589e4a9-42e7-40e1-9909-4f0b1786ff83
+            x-runtime: '0.106775'
+            Vary: Origin
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, X-User-Agent, Cache-Control, value-track'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"0b54819f-7306-41ab-a985-80e23dcbaec2","type":"voice_in_trunks","attributes":{"external_reference_id":null,"priority":1,"capacity_limit":null,"weight":100,"name":"sip-registration-trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":30,"configuration":{"type":"sip_configurations","attributes":{"username":null,"host":null,"port":null,"codec_ids":[9,7],"rx_dtmf_format_id":1,"tx_dtmf_format_id":1,"resolve_ruri":false,"auth_enabled":false,"auth_user":null,"auth_password":null,"auth_from_user":null,"auth_from_domain":null,"sst_enabled":false,"sst_min_timer":600,"sst_max_timer":900,"sst_accept_501":true,"sip_timer_b":8000,"dns_srv_failover_timer":2000,"rtp_ping":false,"rtp_timeout":30,"force_symmetric_rtp":false,"symmetric_rtp_ignore_rtcp":false,"rerouting_disconnect_code_ids":null,"sst_session_expires":null,"sst_refresh_method_id":1,"transport_protocol_id":1,"max_transfers":0,"max_30x_redirects":0,"media_encryption_mode":"disabled","stir_shaken_mode":"disabled","allowed_rtp_ips":null,"network_protocol_priority":"prefer_ipv4","enabled_sip_registration":true,"use_did_in_ruri":true,"diversion_relay_policy":"as_is","diversion_inject_mode":"did_number","cnam_lookup":true,"incoming_auth_username":"3cf5RQEzegAyRYAc","incoming_auth_password":"5MBcq2VZhLQfcXvA"}},"created_at":"2026-04-30T15:46:18.868Z"},"relationships":{"voice_in_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/relationships/voice_in_trunk_group","related":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/voice_in_trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/relationships/pop","related":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/pop"}}}},"meta":{"api_version":"2026-04-16"}}'
+    index: 0
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+            User-Agent: didww-php-sdk/dev-master
+            x-didww-api-version: '2026-04-16'
+    response:
+        status:
+            code: 200
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Thu, 30 Apr 2026 15:46:19 GMT'
+            Content-Type: application/vnd.api+json
+            Content-Length: '1926'
+            Connection: keep-alive
+            x-frame-options: SAMEORIGIN
+            x-xss-protection: '0'
+            x-content-type-options: nosniff
+            x-permitted-cross-domain-policies: none
+            referrer-policy: strict-origin-when-cross-origin
+            vary: Accept
+            etag: 'W/"c65bc1b175d64fae3da5cc94e627ea98"'
+            cache-control: 'max-age=0, private, must-revalidate'
+            x-request-id: 2449c249-e54d-4502-9765-4669f2b6ce57
+            x-runtime: '0.020439'
+            Vary: Origin
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, X-User-Agent, Cache-Control, value-track'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"0b54819f-7306-41ab-a985-80e23dcbaec2","type":"voice_in_trunks","attributes":{"external_reference_id":null,"priority":1,"capacity_limit":null,"weight":100,"name":"sip-registration-trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":30,"configuration":{"type":"sip_configurations","attributes":{"username":null,"host":null,"port":null,"codec_ids":[9,7],"rx_dtmf_format_id":1,"tx_dtmf_format_id":1,"resolve_ruri":false,"auth_enabled":false,"auth_user":null,"auth_password":null,"auth_from_user":null,"auth_from_domain":null,"sst_enabled":false,"sst_min_timer":600,"sst_max_timer":900,"sst_accept_501":true,"sip_timer_b":8000,"dns_srv_failover_timer":2000,"rtp_ping":false,"rtp_timeout":30,"force_symmetric_rtp":false,"symmetric_rtp_ignore_rtcp":false,"rerouting_disconnect_code_ids":null,"sst_session_expires":null,"sst_refresh_method_id":1,"transport_protocol_id":1,"max_transfers":0,"max_30x_redirects":0,"media_encryption_mode":"disabled","stir_shaken_mode":"disabled","allowed_rtp_ips":null,"network_protocol_priority":"prefer_ipv4","enabled_sip_registration":true,"use_did_in_ruri":true,"diversion_relay_policy":"as_is","diversion_inject_mode":"did_number","cnam_lookup":true,"incoming_auth_username":"3cf5RQEzegAyRYAc","incoming_auth_password":"5MBcq2VZhLQfcXvA"}},"created_at":"2026-04-30T15:46:18.868Z"},"relationships":{"voice_in_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/relationships/voice_in_trunk_group","related":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/voice_in_trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/relationships/pop","related":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/pop"}}}},"meta":{"api_version":"2026-04-16"}}'
+    index: 0
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+            User-Agent: didww-php-sdk/dev-master
+            x-didww-api-version: '2026-04-16'
+        body: '{"data":{"type":"voice_in_trunks","id":"0b54819f-7306-41ab-a985-80e23dcbaec2","attributes":{"configuration":{"type":"sip_configurations","attributes":{"enabled_sip_registration":false,"use_did_in_ruri":false,"host":"203.0.113.10"}}}}}'
+    response:
+        status:
+            code: 200
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Thu, 30 Apr 2026 15:46:20 GMT'
+            Content-Type: application/vnd.api+json
+            Content-Length: '1910'
+            Connection: keep-alive
+            x-frame-options: SAMEORIGIN
+            x-xss-protection: '0'
+            x-content-type-options: nosniff
+            x-permitted-cross-domain-policies: none
+            referrer-policy: strict-origin-when-cross-origin
+            vary: Accept
+            etag: 'W/"e802f2f2a81afc6ac941c5c64fc9e468"'
+            cache-control: 'max-age=0, private, must-revalidate'
+            x-request-id: 11dca213-378a-4bab-acb6-8fb2eae006f1
+            x-runtime: '0.062913'
+            Vary: Origin
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, X-User-Agent, Cache-Control, value-track'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"0b54819f-7306-41ab-a985-80e23dcbaec2","type":"voice_in_trunks","attributes":{"external_reference_id":null,"priority":1,"capacity_limit":null,"weight":100,"name":"sip-registration-trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":30,"configuration":{"type":"sip_configurations","attributes":{"username":null,"host":"203.0.113.10","port":null,"codec_ids":[9,7],"rx_dtmf_format_id":1,"tx_dtmf_format_id":1,"resolve_ruri":false,"auth_enabled":false,"auth_user":null,"auth_password":null,"auth_from_user":null,"auth_from_domain":null,"sst_enabled":false,"sst_min_timer":600,"sst_max_timer":900,"sst_accept_501":true,"sip_timer_b":8000,"dns_srv_failover_timer":2000,"rtp_ping":false,"rtp_timeout":30,"force_symmetric_rtp":false,"symmetric_rtp_ignore_rtcp":false,"rerouting_disconnect_code_ids":null,"sst_session_expires":null,"sst_refresh_method_id":1,"transport_protocol_id":1,"max_transfers":0,"max_30x_redirects":0,"media_encryption_mode":"disabled","stir_shaken_mode":"disabled","allowed_rtp_ips":null,"network_protocol_priority":"prefer_ipv4","enabled_sip_registration":false,"use_did_in_ruri":false,"diversion_relay_policy":"as_is","diversion_inject_mode":"did_number","cnam_lookup":true,"incoming_auth_username":null,"incoming_auth_password":null}},"created_at":"2026-04-30T15:46:18.868Z"},"relationships":{"voice_in_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/relationships/voice_in_trunk_group","related":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/voice_in_trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/relationships/pop","related":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/pop"}}}},"meta":{"api_version":"2026-04-16"}}'
+    index: 0
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+            User-Agent: didww-php-sdk/dev-master
+            x-didww-api-version: '2026-04-16'
+    response:
+        status:
+            code: 200
+            message: OK
+        headers:
+            Server: nginx
+            Date: 'Thu, 30 Apr 2026 15:46:21 GMT'
+            Content-Type: application/vnd.api+json
+            Content-Length: '1910'
+            Connection: keep-alive
+            x-frame-options: SAMEORIGIN
+            x-xss-protection: '0'
+            x-content-type-options: nosniff
+            x-permitted-cross-domain-policies: none
+            referrer-policy: strict-origin-when-cross-origin
+            vary: Accept
+            etag: 'W/"e802f2f2a81afc6ac941c5c64fc9e468"'
+            cache-control: 'max-age=0, private, must-revalidate'
+            x-request-id: fb6f1a1b-9c76-4712-9a29-db47f7b46787
+            x-runtime: '0.047942'
+            Vary: Origin
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, X-User-Agent, Cache-Control, value-track'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+        body: '{"data":{"id":"0b54819f-7306-41ab-a985-80e23dcbaec2","type":"voice_in_trunks","attributes":{"external_reference_id":null,"priority":1,"capacity_limit":null,"weight":100,"name":"sip-registration-trunk","cli_format":"e164","cli_prefix":null,"description":null,"ringing_timeout":30,"configuration":{"type":"sip_configurations","attributes":{"username":null,"host":"203.0.113.10","port":null,"codec_ids":[9,7],"rx_dtmf_format_id":1,"tx_dtmf_format_id":1,"resolve_ruri":false,"auth_enabled":false,"auth_user":null,"auth_password":null,"auth_from_user":null,"auth_from_domain":null,"sst_enabled":false,"sst_min_timer":600,"sst_max_timer":900,"sst_accept_501":true,"sip_timer_b":8000,"dns_srv_failover_timer":2000,"rtp_ping":false,"rtp_timeout":30,"force_symmetric_rtp":false,"symmetric_rtp_ignore_rtcp":false,"rerouting_disconnect_code_ids":null,"sst_session_expires":null,"sst_refresh_method_id":1,"transport_protocol_id":1,"max_transfers":0,"max_30x_redirects":0,"media_encryption_mode":"disabled","stir_shaken_mode":"disabled","allowed_rtp_ips":null,"network_protocol_priority":"prefer_ipv4","enabled_sip_registration":false,"use_did_in_ruri":false,"diversion_relay_policy":"as_is","diversion_inject_mode":"did_number","cnam_lookup":true,"incoming_auth_username":null,"incoming_auth_password":null}},"created_at":"2026-04-30T15:46:18.868Z"},"relationships":{"voice_in_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/relationships/voice_in_trunk_group","related":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/voice_in_trunk_group"}},"pop":{"links":{"self":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/relationships/pop","related":"https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2/pop"}}}},"meta":{"api_version":"2026-04-16"}}'
+    index: 1
+-
+    request:
+        method: DELETE
+        url: 'https://sandbox-api.didww.com/v3/voice_in_trunks/0b54819f-7306-41ab-a985-80e23dcbaec2'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            api-key: PLACEYOURAPIKEYHERE
+            User-Agent: didww-php-sdk/dev-master
+            x-didww-api-version: '2026-04-16'
+    response:
+        status:
+            code: 204
+            message: 'No Content'
+        headers:
+            Server: nginx
+            Date: 'Thu, 30 Apr 2026 15:46:22 GMT'
+            Connection: keep-alive
+            x-frame-options: SAMEORIGIN
+            x-xss-protection: '0'
+            x-content-type-options: nosniff
+            x-permitted-cross-domain-policies: none
+            referrer-policy: strict-origin-when-cross-origin
+            vary: Accept
+            cache-control: no-cache
+            x-request-id: 4a2a8ace-51d8-405e-a1f3-e74fbe980944
+            x-runtime: '0.098313'
+            Vary: Origin
+            Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, X-User-Agent, Cache-Control, value-track'
+            Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
+            Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+            Access-Control-Allow-Credentials: 'true'
+    index: 0
