@@ -8,6 +8,8 @@ class CredentialsAndIp extends Base
 {
     use HasIpAttributes;
 
+    protected array $sensitiveAttributes = ['username', 'password'];
+
     public function getType(): string
     {
         return 'credentials_and_ip';

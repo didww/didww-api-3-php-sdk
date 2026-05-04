@@ -27,6 +27,12 @@ class Sip extends Base
         'incoming_auth_password',
     ];
 
+    protected array $sensitiveAttributes = [
+        'auth_password',
+        'incoming_auth_username',
+        'incoming_auth_password',
+    ];
+
     public function getType(): string
     {
         return 'sip_configurations';
