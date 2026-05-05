@@ -3,10 +3,12 @@
 namespace Didww\Item\AuthenticationMethod;
 
 use Didww\Traits\HasSafeAttributes;
+use Didww\Traits\RedactsSensitiveAttributes;
 
 abstract class Base
 {
     use HasSafeAttributes;
+    use RedactsSensitiveAttributes;
 
     protected $attributes = [];
 

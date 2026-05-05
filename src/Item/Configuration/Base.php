@@ -12,11 +12,13 @@ use Didww\Enum\TransportProtocol;
 use Didww\Enum\TxDtmfFormat;
 use Didww\Traits\HasEnumAttributes;
 use Didww\Traits\HasSafeAttributes;
+use Didww\Traits\RedactsSensitiveAttributes;
 
 abstract class Base
 {
     use HasSafeAttributes;
     use HasEnumAttributes;
+    use RedactsSensitiveAttributes;
 
     protected $attributes = [];
 

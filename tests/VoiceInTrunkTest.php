@@ -3,7 +3,9 @@
 namespace Didww\Tests;
 
 use Didww\Enum\CliFormat;
+use Didww\Enum\DiversionInjectMode;
 use Didww\Enum\MediaEncryptionMode;
+use Didww\Enum\NetworkProtocolPriority;
 use Didww\Enum\RxDtmfFormat;
 use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\StirShakenMode;
@@ -313,5 +315,57 @@ class VoiceInTrunkTest extends CassetteTest
 
         $trunk->setExternalReferenceId(null);
         $this->assertNull($trunk->getExternalReferenceId());
+    }
+
+    public function testSipConfigurationRegistrationAttributes()
+    {
+        // Real wire shape captured from sandbox: when sip_registration is
+        // enabled, host/port/username come back as null and the API rejects
+        // any attempt to set them.
+        $config = new \Didww\Item\Configuration\Sip([
+            'host' => null,
+            'port' => null,
+            'username' => null,
+            'enabled_sip_registration' => true,
+            'use_did_in_ruri' => true,
+            'cnam_lookup' => true,
+            'diversion_inject_mode' => 'did_number',
+            'network_protocol_priority' => 'prefer_ipv4',
+            'incoming_auth_username' => 'sipreg-user-1',
+            'incoming_auth_password' => 's3cret-Pa55',
+        ]);
+
+        $this->assertTrue($config->getEnabledSipRegistration());
+        $this->assertTrue($config->getUseDidInRuri());
+        $this->assertTrue($config->getCnamLookup());
+        $this->assertEquals(DiversionInjectMode::DID_NUMBER, $config->getDiversionInjectMode());
+        $this->assertEquals(NetworkProtocolPriority::PREFER_IPV4, $config->getNetworkProtocolPriority());
+        $this->assertEquals('sipreg-user-1', $config->getIncomingAuthUsername());
+        $this->assertEquals('s3cret-Pa55', $config->getIncomingAuthPassword());
+    }
+
+    public function testSipConfigurationStripsReadOnlyCredentialsFromWritePayload()
+    {
+        // Simulates a caller who loaded a SIP configuration from the server
+        // (incoming_auth_* populated) and submits it back. The server returns
+        // 400 Param not allowed if these are echoed in the request body, so
+        // the SDK MUST strip them from the JSON:API payload.
+        //
+        // Note: host is intentionally not set — the API requires it to be
+        // blank when enabled_sip_registration is true.
+        $config = new \Didww\Item\Configuration\Sip([
+            'enabled_sip_registration' => true,
+            'use_did_in_ruri' => true,
+            'incoming_auth_username' => 'sipreg-user-1',
+            'incoming_auth_password' => 's3cret-Pa55',
+        ]);
+
+        $payload = $config->toJsonApiArray();
+
+        $this->assertArrayHasKey('attributes', $payload);
+        $this->assertArrayHasKey('enabled_sip_registration', $payload['attributes']);
+        $this->assertArrayHasKey('use_did_in_ruri', $payload['attributes']);
+        $this->assertArrayNotHasKey('incoming_auth_username', $payload['attributes']);
+        $this->assertArrayNotHasKey('incoming_auth_password', $payload['attributes']);
     }
 }
