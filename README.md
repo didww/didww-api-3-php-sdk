@@ -478,6 +478,8 @@ echo $identity->getBirthDate()->format('Y-m-d');    // e.g. "1990-05-20"
 
 ## Filtering, Sorting, and Pagination
 
+> See [`FILTERS.md`](FILTERS.md) for the canonical list of `filter[KEY]` keys accepted by every list endpoint, verified live against the DIDWW API at version `2026-04-16`.
+
 ```php
 $regionsDocument = Didww\Item\Region::all([
     'filter' => ['country.id' => 'uuid', 'name' => 'Arizona'],
