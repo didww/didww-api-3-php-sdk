@@ -1,4 +1,4 @@
-# DIDWW v3.5 (2026-04-16) — Server-side filter reference
+# DIDWW 2026-04-16 — Server-side filter reference
 
 This is the canonical list of `filter[KEY]` query parameters accepted by each list endpoint of the DIDWW API at version `2026-04-16` — the default API version targeted by this SDK.
 
