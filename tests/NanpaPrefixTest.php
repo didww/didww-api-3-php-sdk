@@ -19,7 +19,7 @@ class NanpaPrefixTest extends CassetteTest
     public function testMetaData()
     {
         $nanpaPrefixDocument = \Didww\Item\NanpaPrefix::all();
-        $this->assertEquals('2022-05-09', $nanpaPrefixDocument->getMeta()['api_version']);
+        $this->assertEquals('2026-04-16', $nanpaPrefixDocument->getMeta()['api_version']);
     }
 
     public function testCount()
