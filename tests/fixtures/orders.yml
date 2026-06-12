@@ -266,7 +266,7 @@
             Cache-Control: no-cache
             X-Request-Id: 57da6099-adad-4358-a448-9e517f7dcd88
             X-Runtime: '0.058566'
-            Access-Control-Allow-Origin: 'https://doc.in.didww.com'
+            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, auth-key, x-api-key, api-key, x-api-token, x-admin-session-token, Cache-Control, value-track'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
