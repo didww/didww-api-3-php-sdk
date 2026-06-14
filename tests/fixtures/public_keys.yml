@@ -31,7 +31,6 @@
             Cache-Control: 'max-age=0, private, must-revalidate'
             X-Request-Id: e7407d7f-80dc-430d-9bb1-4fc24eba5111
             X-Runtime: '0.006473'
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, Cache-Control'
             Access-Control-Expose-Headers: 'Date, X-Request-Id, Content-Disposition'
             Access-Control-Allow-Methods: GET

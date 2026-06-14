@@ -31,7 +31,6 @@
             Cache-Control: 'max-age=0, private, must-revalidate'
             X-Request-Id: 239aa092-3bd6-4843-8ba1-1a46a0f5625e
             X-Runtime: '0.042133'
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
@@ -69,7 +68,6 @@
             Cache-Control: 'max-age=0, private, must-revalidate'
             X-Request-Id: e22ae841-8f9f-411a-8256-1db088153017
             X-Runtime: '0.093495'
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'

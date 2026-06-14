@@ -33,7 +33,6 @@
             Cache-Control: 'max-age=0, private, must-revalidate'
             X-Request-Id: 3f540391-ec00-42d9-93b6-f4add6840770
             X-Runtime: '0.217836'
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
@@ -73,7 +72,6 @@
             Cache-Control: 'max-age=0, private, must-revalidate'
             X-Request-Id: 3f540391-ec00-42d9-93b6-f4add6840770
             X-Runtime: '0.217836'
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
@@ -111,7 +109,6 @@
             Cache-Control: 'max-age=0, private, must-revalidate'
             X-Request-Id: 78798ddb-78c1-4cdd-8dd0-81cd4134d502
             X-Runtime: '0.192358'
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
@@ -149,7 +146,6 @@
             Cache-Control: 'max-age=0, private, must-revalidate'
             X-Request-Id: ede6cf40-7baf-4a08-b751-d8ac712968aa
             X-Runtime: '0.038676'
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
@@ -201,7 +197,6 @@
             Last-Modified: 'Wed, 02 Jan 2019 11:32:50 GMT'
             ETag: '"5c2ca162-1fb44"'
             Accept-Ranges: bytes
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'

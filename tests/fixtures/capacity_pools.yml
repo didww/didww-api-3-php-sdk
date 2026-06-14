@@ -33,7 +33,6 @@
             Cache-Control: 'max-age=0, private, must-revalidate'
             X-Request-Id: f1ebfb1e-d4b5-4d3e-92c0-1c88b0a13195
             X-Runtime: '0.176165'
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
@@ -71,7 +70,6 @@
             Cache-Control: 'max-age=0, private, must-revalidate'
             X-Request-Id: 760b47fd-de02-469d-bd7f-74c8bd8d8b8d
             X-Runtime: '0.406830'
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
@@ -109,7 +107,6 @@
             Cache-Control: 'max-age=0, private, must-revalidate'
             X-Request-Id: 64084b07-b452-43df-b93c-39b03339b6c9
             X-Runtime: '0.254942'
-            Access-Control-Allow-Origin: '*'
             Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, x-api-key, api-key, x-api-token, Cache-Control'
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
