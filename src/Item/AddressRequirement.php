@@ -22,12 +22,18 @@ class AddressRequirement extends BaseItem // NOSONAR
         return $this->enumAttribute('identity_type', IdentityType::class);
     }
 
-    public function getPersonalAreaLevel(): AreaLevel
+    /**
+     * Null when the country does not accept a personal identity.
+     */
+    public function getPersonalAreaLevel(): ?AreaLevel
     {
         return $this->enumAttribute('personal_area_level', AreaLevel::class);
     }
 
-    public function getBusinessAreaLevel(): AreaLevel
+    /**
+     * Null when the country does not accept a business identity.
+     */
+    public function getBusinessAreaLevel(): ?AreaLevel
     {
         return $this->enumAttribute('business_area_level', AreaLevel::class);
     }
@@ -52,14 +58,20 @@ class AddressRequirement extends BaseItem // NOSONAR
         return $this->attributes['address_proof_qty'];
     }
 
-    public function getPersonalMandatoryFields(): array
+    /**
+     * Null when no field is mandatory for a personal identity.
+     */
+    public function getPersonalMandatoryFields(): ?array
     {
-        return $this->attributes['personal_mandatory_fields'];
+        return $this->attribute('personal_mandatory_fields');
     }
 
-    public function getBusinessMandatoryFields(): array
+    /**
+     * Null when no field is mandatory for a business identity.
+     */
+    public function getBusinessMandatoryFields(): ?array
     {
-        return $this->attributes['business_mandatory_fields'];
+        return $this->attribute('business_mandatory_fields');
     }
 
     public function getServiceDescriptionRequired(): bool

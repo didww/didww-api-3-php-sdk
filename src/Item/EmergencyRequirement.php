@@ -32,14 +32,20 @@ class EmergencyRequirement extends BaseItem
         return $this->attributes['address_area_level'];
     }
 
-    public function getPersonalAreaLevel(): string
+    /**
+     * Null when the country does not accept a personal identity for emergency calling.
+     */
+    public function getPersonalAreaLevel(): ?string
     {
-        return $this->attributes['personal_area_level'];
+        return $this->attribute('personal_area_level');
     }
 
-    public function getBusinessAreaLevel(): string
+    /**
+     * Null when the country does not accept a business identity for emergency calling.
+     */
+    public function getBusinessAreaLevel(): ?string
     {
-        return $this->attributes['business_area_level'];
+        return $this->attribute('business_area_level');
     }
 
     public function getAddressMandatoryFields(): array

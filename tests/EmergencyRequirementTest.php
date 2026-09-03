@@ -19,13 +19,15 @@ class EmergencyRequirementTest extends CassetteTest
         $first = $data[0];
         $this->assertEquals('personal', $first->getIdentityType());
         $this->assertEquals('city', $first->getAddressAreaLevel());
-        $this->assertEquals('city', $first->getPersonalAreaLevel());
-        $this->assertEquals('city', $first->getBusinessAreaLevel());
+        $this->assertEquals('country', $first->getPersonalAreaLevel());
+        $this->assertNull($first->getBusinessAreaLevel());
         $this->assertEquals(['street', 'city', 'postal_code'], $first->getAddressMandatoryFields());
         $this->assertEquals(['first_name', 'last_name'], $first->getPersonalMandatoryFields());
-        $this->assertEquals(['company_name', 'tax_number'], $first->getBusinessMandatoryFields());
+        $this->assertEquals([], $first->getBusinessMandatoryFields());
         $this->assertEquals('7-14 days', $first->getEstimateSetupTime());
         $this->assertNull($first->getRequirementRestrictionMessage());
+        $this->assertSame('0.0', $first->getMeta()['setup_price']);
+        $this->assertSame('0.75', $first->getMeta()['monthly_price']);
     }
 
     public function testFindEmergencyRequirement()
@@ -37,10 +39,15 @@ class EmergencyRequirementTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\EmergencyRequirement', $data);
         $this->assertEquals($uuid, $data->getId());
         $this->assertEquals('business', $data->getIdentityType());
+        $this->assertEquals('area', $data->getAddressAreaLevel());
+        $this->assertNull($data->getPersonalAreaLevel());
+        $this->assertEquals('world_wide', $data->getBusinessAreaLevel());
         $this->assertEquals('7-14 days', $data->getEstimateSetupTime());
         $this->assertEquals(
             'Additional compliance review is required for this country.',
             $data->getRequirementRestrictionMessage()
         );
+        $this->assertSame('0.0', $data->getMeta()['setup_price']);
+        $this->assertSame('2.5', $data->getMeta()['monthly_price']);
     }
 }

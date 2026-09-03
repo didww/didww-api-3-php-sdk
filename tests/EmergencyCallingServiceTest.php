@@ -58,10 +58,10 @@ class EmergencyCallingServiceTest extends CassetteTest
         $this->assertEquals('personal', $emergencyRequirement->getIdentityType());
         $this->assertEquals('city', $emergencyRequirement->getAddressAreaLevel());
         $this->assertEquals('country', $emergencyRequirement->getPersonalAreaLevel());
-        $this->assertEquals('country', $emergencyRequirement->getBusinessAreaLevel());
+        $this->assertNull($emergencyRequirement->getBusinessAreaLevel());
         $this->assertEquals(['Street', 'Building Number', 'Zip Code', 'City'], $emergencyRequirement->getAddressMandatoryFields());
         $this->assertEquals(['First Name', 'Last Name'], $emergencyRequirement->getPersonalMandatoryFields());
-        $this->assertEquals(['Company Name'], $emergencyRequirement->getBusinessMandatoryFields());
+        $this->assertEquals([], $emergencyRequirement->getBusinessMandatoryFields());
         $this->assertEquals(3, $emergencyRequirement->getEstimateSetupTime());
         $this->assertNull($emergencyRequirement->getRequirementRestrictionMessage());
 

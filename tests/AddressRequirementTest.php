@@ -3,6 +3,7 @@
 namespace Didww\Tests;
 
 use Didww\Enum\AreaLevel;
+use Didww\Enum\IdentityType;
 
 class AddressRequirementTest extends CassetteTest
 {
@@ -20,6 +21,12 @@ class AddressRequirementTest extends CassetteTest
         $this->assertContainsOnlyInstancesOf('Didww\Item\AddressRequirement', $requirements);
 
         $this->assertEquals(73, $requirementsDocument->getMeta()['total_records']);
+
+        $businessOnly = $requirements[0];
+        $this->assertEquals(IdentityType::BUSINESS, $businessOnly->getIdentityType());
+        $this->assertNull($businessOnly->getPersonalAreaLevel());
+        $this->assertEquals(AreaLevel::WORLDWIDE, $businessOnly->getBusinessAreaLevel());
+        $this->assertNull($businessOnly->getBusinessMandatoryFields());
     }
 
     public function testFindWithIncludes()
