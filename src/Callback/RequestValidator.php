@@ -5,16 +5,30 @@ namespace Didww\Callback;
 class RequestValidator
 {
     private static $headerName = 'X-DIDWW-Signature';
-    private $apiKey;
+    private $callbackSecret;
 
     public static function getHeaderName(): string
     {
         return RequestValidator::$headerName;
     }
 
-    public function __construct(string $apiKey)
+    /**
+     * @param string|null $callbackSecret the callback secret enabled in the DIDWW User Panel
+     * @param string|null $apiKey         deprecated alias of $callbackSecret, kept for named-argument callers
+     */
+    public function __construct(?string $callbackSecret = null, ?string $apiKey = null)
     {
-        $this->apiKey = $apiKey;
+        if (null !== $callbackSecret && null !== $apiKey) {
+            throw new \InvalidArgumentException('Pass either $callbackSecret or the deprecated $apiKey, not both.');
+        }
+        if (null !== $apiKey) {
+            @trigger_error('The $apiKey argument of '.self::class.'::__construct() is deprecated, pass $callbackSecret instead.', E_USER_DEPRECATED);
+        }
+        $secret = $callbackSecret ?? $apiKey;
+        if (null === $secret) {
+            throw new \InvalidArgumentException('A callback secret is required.');
+        }
+        $this->callbackSecret = $secret;
     }
 
     /**
@@ -42,7 +56,7 @@ class RequestValidator
             $data .= $key.$value;
         }
 
-        return hash_hmac('sha1', $data, $this->apiKey);
+        return hash_hmac('sha1', $data, $this->callbackSecret);
     }
 
     private function normalizeUrl(string $url): string
