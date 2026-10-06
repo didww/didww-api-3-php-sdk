@@ -6,9 +6,9 @@ class RequestValidatorTest extends BaseTest
 {
     public function testSandbox()
     {
-        $apiKey = 'SOMEAPIKEY';
+        $callbackSecret = 'SOMEAPIKEY';
         $signature = '18050028b6b22d0ed516706fba1c1af8d6a8f9d5';
-        $validator = new \Didww\Callback\RequestValidator($apiKey);
+        $validator = new \Didww\Callback\RequestValidator(callbackSecret: $callbackSecret);
         $url = 'http://example.com/callback.php?id=7ae7c48f-d48a-499f-9dc1-c9217014b457&reject_reason=&status=approved&type=address_verifications'; // NOSONAR
         $this->assertTrue($validator->validate(
             $url,
@@ -22,11 +22,55 @@ class RequestValidatorTest extends BaseTest
         ));
     }
 
+    public function testApiKeyNamedArgumentIsADeprecatedAlias()
+    {
+        $deprecations = [];
+        set_error_handler(function (int $errno, string $errstr) use (&$deprecations): bool {
+            $deprecations[] = [$errno, $errstr];
+
+            return true;
+        }, E_USER_DEPRECATED);
+        try {
+            $validator = new \Didww\Callback\RequestValidator(apiKey: 'SOMEAPIKEY');
+        } finally {
+            restore_error_handler();
+        }
+        $this->assertSame(
+            [[E_USER_DEPRECATED, 'The $apiKey argument of Didww\Callback\RequestValidator::__construct() is deprecated, pass $callbackSecret instead.']],
+            $deprecations
+        );
+        $url = 'http://example.com/callback.php?id=7ae7c48f-d48a-499f-9dc1-c9217014b457&reject_reason=&status=approved&type=address_verifications'; // NOSONAR
+        $this->assertTrue($validator->validate(
+            $url,
+            [
+                'status' => 'approved',
+                'id' => '7ae7c48f-d48a-499f-9dc1-c9217014b457',
+                'type' => 'address_verifications',
+                'reject_reason' => '',
+            ],
+            '18050028b6b22d0ed516706fba1c1af8d6a8f9d5'
+        ));
+    }
+
+    public function testRejectsBothCallbackSecretAndApiKey()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not both');
+        (new \Didww\Callback\RequestValidator(callbackSecret: 'SOMEAPIKEY', apiKey: 'OTHERAPIKEY'))->validate('http://example.com/callback', [], 'signature'); // NOSONAR
+    }
+
+    public function testRequiresACallbackSecret()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('A callback secret is required.');
+        (new \Didww\Callback\RequestValidator())->validate('http://example.com/callback', [], 'signature'); // NOSONAR
+    }
+
     public function testValidRequest()
     {
-        $apiKey = 'SOMEAPIKEY';
+        $callbackSecret = 'SOMEAPIKEY';
         $signature = 'fe99e416c3547f2f59002403ec856ea386d05b2f';
-        $validator = new \Didww\Callback\RequestValidator($apiKey);
+        $validator = new \Didww\Callback\RequestValidator($callbackSecret);
         $this->assertTrue($validator->validate(
             'http://example.com/callbacks', // NOSONAR
             [
@@ -40,9 +84,9 @@ class RequestValidatorTest extends BaseTest
 
     public function testValidRequestWithQueryAndFragment()
     {
-        $apiKey = 'OTHERAPIKEY';
+        $callbackSecret = 'OTHERAPIKEY';
         $signature = '32754ba93ac1207e540c0cf90371e7786b3b1cde';
-        $validator = new \Didww\Callback\RequestValidator($apiKey);
+        $validator = new \Didww\Callback\RequestValidator($callbackSecret);
         $this->assertTrue($validator->validate(
             'http://example.com/callbacks?foo=bar#baz', // NOSONAR
             [
@@ -56,9 +100,9 @@ class RequestValidatorTest extends BaseTest
 
     public function testEmptySignatureRequest()
     {
-        $apiKey = 'SOMEAPIKEY';
+        $callbackSecret = 'SOMEAPIKEY';
         $signature = '';
-        $validator = new \Didww\Callback\RequestValidator($apiKey);
+        $validator = new \Didww\Callback\RequestValidator($callbackSecret);
         $this->assertFalse($validator->validate(
             'http://example.com/callbacks', // NOSONAR
             [
@@ -72,9 +116,9 @@ class RequestValidatorTest extends BaseTest
 
     public function testInvalidSignatureRequest()
     {
-        $apiKey = 'SOMEAPIKEY';
+        $callbackSecret = 'SOMEAPIKEY';
         $signature = 'fbdb1d1b18aa6c08324b7d64b71fb76370690e1d';
-        $validator = new \Didww\Callback\RequestValidator($apiKey);
+        $validator = new \Didww\Callback\RequestValidator($callbackSecret);
         $this->assertFalse($validator->validate(
             'http://example.com/callbacks', // NOSONAR
             [
@@ -91,9 +135,9 @@ class RequestValidatorTest extends BaseTest
      */
     public function testDocumentationExample()
     {
-        $apiKey = 'szrdgh6547umt7tht7xbqhj6g9gdbyp7'; // NOSONAR
+        $callbackSecret = 'szrdgh6547umt7tht7xbqhj6g9gdbyp7'; // NOSONAR
         $signature = '30f66e9d72eb5e193051fd02952f70d8e934b4ff';
-        $validator = new \Didww\Callback\RequestValidator($apiKey);
+        $validator = new \Didww\Callback\RequestValidator($callbackSecret);
         $this->assertTrue($validator->validate(
             'https://mycompany.com/didww_callbacks?opaque=123',
             [
@@ -136,8 +180,8 @@ class RequestValidatorTest extends BaseTest
     #[\PHPUnit\Framework\Attributes\DataProvider('urlNormalizationProvider')]
     public function testUrlNormalization(string $url, string $expectedSignature)
     {
-        $apiKey = 'SOMEAPIKEY';
-        $validator = new \Didww\Callback\RequestValidator($apiKey);
+        $callbackSecret = 'SOMEAPIKEY';
+        $validator = new \Didww\Callback\RequestValidator($callbackSecret);
         $this->assertTrue($validator->validate(
             $url,
             [
