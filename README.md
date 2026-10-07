@@ -559,8 +559,10 @@ $uploadResult = Didww\Item\EncryptedFile::upload($fingerprint, [$encData], ['fil
 
 Validate incoming webhook callbacks from DIDWW using HMAC-SHA1 signature verification.
 
+Initialize the validator with the callback secret that is enabled in the DIDWW User Panel (**APIs → DIDWW API 3 → Callback Secrets**). DIDWW signs every callback with it and sends callbacks only while a callback secret is enabled.
+
 ```php
-$validator = new Didww\Callback\RequestValidator('YOUR_API_KEY');
+$validator = new Didww\Callback\RequestValidator('YOUR_CALLBACK_SECRET');
 
 $valid = $validator->validate(
     $requestUrl,      // full original URL
