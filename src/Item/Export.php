@@ -119,23 +119,24 @@ class Export extends BaseItem
             return 'Failed to open destination file for writing';
         }
 
-        $options = [
-            CURLOPT_HTTPHEADER => [
-                "Api-Key: $apiKey",
-                'User-Agent: didww-php-sdk/'.\Didww\Client::sdkVersion(),
-                'X-DIDWW-API-Version: '.(\Didww\Configuration::getCredentials()->getVersion() ?? '2026-04-16'),
-            ],
-            CURLOPT_FILE => $destHandle,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_URL => $this->getAttributes()['url'],
-            CURLOPT_FAILONERROR => true, // HTTP code > 400 will throw curl error
-        ];
-        $ch = curl_init();
-        curl_setopt_array($ch, $options);
-        $return = curl_exec($ch);
-        $error = false === $return ? curl_error($ch) : null;
-        unset($ch);
-        if ($ownHandle) {
+        try {
+            \Didww\Configuration::getHttpClient()->request('GET', $this->getAttributes()['url'], [
+                'headers' => [
+                    'Api-Key' => $apiKey,
+                    'User-Agent' => 'didww-php-sdk/'.\Didww\Client::sdkVersion(),
+                    'X-DIDWW-API-Version' => \Didww\Configuration::getCredentials()->getVersion() ?? '2026-04-16',
+                ],
+                'sink' => $destHandle,
+                'allow_redirects' => true,
+                // HTTP code >= 400 will throw a GuzzleException, same as CURLOPT_FAILONERROR before.
+            ]);
+            $error = null;
+        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+            $error = $e->getMessage();
+        }
+        // Guzzle's 'sink' stream wrapper already closes the underlying resource once
+        // the response body has been written to it.
+        if ($ownHandle && is_resource($destHandle)) {
             fclose($destHandle);
         }
 
@@ -155,7 +156,7 @@ class Export extends BaseItem
             return $result;
         }
 
-        $gz = gzopen($tmpFile, 'rb');
+        $gz = fopen('compress.zlib://'.$tmpFile, 'rb');
         if (false === $gz) {
             unlink($tmpFile);
 
@@ -165,15 +166,13 @@ class Export extends BaseItem
         $ownHandle = !is_resource($dest);
         $destHandle = $ownHandle ? fopen($dest, 'wb') : $dest;
         if ($ownHandle && false === $destHandle) {
-            gzclose($gz);
+            fclose($gz);
             unlink($tmpFile);
 
             return 'Failed to open destination file for writing';
         }
-        while (!gzeof($gz)) {
-            fwrite($destHandle, gzread($gz, 8192));
-        }
-        gzclose($gz);
+        stream_copy_to_stream($gz, $destHandle);
+        fclose($gz);
         if ($ownHandle) {
             fclose($destHandle);
         }

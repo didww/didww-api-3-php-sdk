@@ -8,6 +8,8 @@ class Configuration
 
     private static $credentials;
 
+    private static $httpClient;
+
     public static function getCredentials()
     {
         return self::$credentials;
@@ -18,11 +20,17 @@ class Configuration
         return self::$documentClient;
     }
 
+    public static function getHttpClient()
+    {
+        return self::$httpClient;
+    }
+
     public static function configure(Credentials $credentials, array $httpClientConfig = [])
     {
         self::$credentials = $credentials;
 
         $httpClient = new \GuzzleHttp\Client($httpClientConfig);
+        self::$httpClient = $httpClient;
 
         $client = new Client($httpClient);
         $client->setBaseUri($credentials->getEndpoint());
