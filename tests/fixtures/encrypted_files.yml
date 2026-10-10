@@ -183,3 +183,41 @@
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
         body: '{"data":{"id":"371eafbd-ac6a-485c-aadf-9e3c5da37eb4","type":"encrypted_files","attributes":{"description":null,"expires_at":"2021-04-06T16:38:34.437Z"}},"meta":{"api_version":"2026-04-16"}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/encrypted_files'
+        headers:
+            Api-Key: PLACEYOURAPIKEYHERE
+            X-DIDWW-API-Version: '2026-04-16'
+            Content-Type: 'multipart/form-data; boundary=-------------TESTBOUNDARY0001'
+            Content-Length: '501'
+            Accept: application/json
+        body: "---------------TESTBOUNDARY0001\r\nContent-Disposition: form-data; name=\"encrypted_files[encryption_fingerprint]\"\r\n\r\nfp-abc123\r\n---------------TESTBOUNDARY0001\r\nContent-Disposition: form-data; name=\"encrypted_files[description]\"\r\n\r\ntest upload description\r\n---------------TESTBOUNDARY0001\r\nContent-Disposition: form-data; name=\"encrypted_files[file]\"; filename=\"file.enc\"\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\nplain file bytes\r\n---------------TESTBOUNDARY0001--\r\n"
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"aaaa1111-2222-3333-4444-555566667777","type":"encrypted_files","attributes":{"description":"test upload description","expires_at":"2026-04-22T10:00:00.000Z"}},"meta":{"api_version":"2026-04-16"}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/encrypted_files'
+        headers:
+            Api-Key: PLACEYOURAPIKEYHERE
+            X-DIDWW-API-Version: '2026-04-16'
+            Content-Type: 'multipart/form-data; boundary=-------------TESTBOUNDARY0002'
+            Content-Length: '370'
+            Accept: application/json
+        body: "---------------TESTBOUNDARY0002\r\nContent-Disposition: form-data; name=\"encrypted_files[encryption_fingerprint]\"\r\n\r\nfp-error-999\r\n---------------TESTBOUNDARY0002\r\nContent-Disposition: form-data; name=\"encrypted_files[file]\"; filename=\"file.enc\"\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\nbad content\r\n---------------TESTBOUNDARY0002--\r\n"
+    response:
+        status:
+            http_version: '1.1'
+            code: '422'
+            message: 'Unprocessable Entity'
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"errors":[{"title":"Invalid fingerprint"}]}'
