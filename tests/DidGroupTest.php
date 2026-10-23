@@ -24,11 +24,10 @@ class DidGroupTest extends CassetteTest
     public function testFind()
     {
         $uuid = '2187c36d-28fb-436f-8861-5a0f5b5a3ee1';
-        $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,did_group_type,stock_keeping_units,address_requirement']);
+        $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,stock_keeping_units,address_requirement']);
         $countryRelation = $didGroupDocument->getData()->country();
         $regionRelation = $didGroupDocument->getData()->region();
         $cityRelation = $didGroupDocument->getData()->city();
-        $didGroupTypeRelation = $didGroupDocument->getData()->didGroupType();
         $stockKeepingUnitsRelation = $didGroupDocument->getData()->stockKeepingUnits();
 
         $this->assertInstanceOf('Didww\Item\DidGroup', $didGroupDocument->getData());
@@ -39,8 +38,12 @@ class DidGroupTest extends CassetteTest
             'area_name' => 'Aachen',
             'allow_additional_channels' => true,
             'service_restrictions' => null,
+            'number_type' => 'local',
+            'is_demo' => false,
         ]);
         $this->assertNull($didGroupDocument->getData()->getServiceRestrictions());
+        $this->assertSame(\Didww\Enum\NumberType::LOCAL, $didGroupDocument->getData()->getNumberType());
+        $this->assertFalse($didGroupDocument->getData()->getIsDemo());
 
         $this->assertInstanceOf('Didww\Item\Country', $countryRelation->getIncluded());
         $this->assertEquals($countryRelation->getIncluded()->getAttributes(), [
@@ -54,11 +57,6 @@ class DidGroupTest extends CassetteTest
         $this->assertInstanceOf('Didww\Item\City', $cityRelation->getIncluded());
         $this->assertEquals($cityRelation->getIncluded()->getAttributes(), [
             'name' => 'Aachen',
-        ]);
-
-        $this->assertInstanceOf('Didww\Item\DidGroupType', $didGroupTypeRelation->getIncluded());
-        $this->assertEquals($didGroupTypeRelation->getIncluded()->getAttributes(), [
-            'name' => 'Local',
         ]);
 
         $stockKeepingUnits = $stockKeepingUnitsRelation->getIncluded()->all();
@@ -82,12 +80,20 @@ class DidGroupTest extends CassetteTest
     public function testFeaturesAreParsedAsEnums()
     {
         $uuid = '2187c36d-28fb-436f-8861-5a0f5b5a3ee1';
-        $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,did_group_type,stock_keeping_units,address_requirement']);
+        $didGroupDocument = \Didww\Item\DidGroup::find($uuid, ['include' => 'country,region,city,stock_keeping_units,address_requirement']);
         $features = $didGroupDocument->getData()->getFeatures();
         $this->assertCount(3, $features);
         $this->assertSame(\Didww\Enum\Feature::VOICE_IN, $features[0]);
         $this->assertSame(\Didww\Enum\Feature::VOICE_OUT, $features[1]);
         $this->assertSame(\Didww\Enum\Feature::T38, $features[2]);
+    }
+
+    public function testUnknownNumberTypeFallsBackToRawString()
+    {
+        $didGroup = new \Didww\Item\DidGroup(['number_type' => 'future_type', 'is_demo' => true]);
+        $this->assertSame('future_type', $didGroup->getNumberType());
+        $this->assertTrue($didGroup->getIsDemo());
+        $this->assertNull((new \Didww\Item\DidGroup())->getNumberType());
     }
 
     public function testNewFeatureEnums()

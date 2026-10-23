@@ -4,6 +4,7 @@ namespace Didww\Item;
 
 use Didww\Enum\AreaLevel;
 use Didww\Enum\IdentityType;
+use Didww\Enum\NumberType;
 use Didww\Traits\Fetchable;
 
 class AddressRequirement extends BaseItem // NOSONAR
@@ -89,9 +90,9 @@ class AddressRequirement extends BaseItem // NOSONAR
         return $this->hasOne(Country::class);
     }
 
-    public function didGroupType()
+    public function getNumberType(): NumberType|string|null
     {
-        return $this->hasOne(DidGroupType::class);
+        return $this->enumAttribute('number_type', NumberType::class);
     }
 
     public function personalPermanentDocument()

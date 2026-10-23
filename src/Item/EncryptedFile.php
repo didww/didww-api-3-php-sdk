@@ -28,19 +28,19 @@ class EncryptedFile extends BaseItem
         return $this->dateAttribute('expires_at');
     }
 
-    /* POST /v3/encrypted_files
-     * encrypted_files[encryption_fingerprint] required
-     * encrypted_files[file] required
-     * encrypted_files[description]
+    /**
+     * POST /v3/encrypted_files with the multipart fields
+     * encrypted_files[encryption_fingerprint], encrypted_files[file] and
+     * encrypted_files[description].
+     *
+     * The body is built in memory, so the upload is sent once more with a new
+     * access token when the API refuses the current one. A transport failure
+     * gives an UploadResult with response code 0.
+     *
+     * @throws \Didww\Exception\DidwwAuthException when no access token can be obtained
      */
     public static function upload(string $fingerprint, string $fileContent, ?string $description = null, $boundary = null): UploadResult
     {
-        $apiKey = \Didww\Configuration::getApiKey();
-        $apiVersion = \Didww\Configuration::getCredentials()->getVersion() ?? '2026-04-16';
-        $baseUri = \Didww\Configuration::getBaseUri();
-        $url = $baseUri.'/encrypted_files';
-
-        $curl = curl_init();
         if (null == $boundary) {
             $boundary = uniqid();
         }
@@ -64,27 +64,22 @@ class EncryptedFile extends BaseItem
 
         $postData = EncryptedFile::buildDataFiles($delimiter, $files, $fields);
 
-        curl_setopt_array($curl, [
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => $postData,
-            CURLOPT_HTTPHEADER => [
-                "Api-Key: $apiKey",
-                "X-DIDWW-API-Version: $apiVersion",
-                'Content-Type: multipart/form-data; boundary='.$delimiter,
-                'Content-Length: '.strlen($postData),
-                'Accept: application/json',
-            ],
-        ]);
+        try {
+            $response = \Didww\Configuration::getHttpClient()->request('POST', \Didww\Configuration::getBaseUri().'/encrypted_files', [
+                'headers' => [
+                    'Content-Type' => 'multipart/form-data; boundary='.$delimiter,
+                    'Accept' => 'application/json',
+                ],
+                'body' => $postData,
+                'allow_redirects' => false,
+                'http_errors' => false,
+                'cookies' => false,
+            ]);
+        } catch (\GuzzleHttp\Exception\TransferException) {
+            return new UploadResult(false, 0);
+        }
 
-        $response = curl_exec($curl);
-        $responseCode = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-
-        return new UploadResult($response, $responseCode);
+        return new UploadResult((string) $response->getBody(), $response->getStatusCode());
     }
 
     private static function buildDataFiles(string $delimiter, array $files, array $fields): string

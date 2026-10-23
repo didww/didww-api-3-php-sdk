@@ -1,0 +1,8 @@
+{
+  "access_token": "test-access-token",
+  "token_type": "Bearer",
+  "expires_in": 900,
+  "aud": ["api.didww.com"],
+  "scope": "full",
+  "api_version": "2026-10-22"
+}

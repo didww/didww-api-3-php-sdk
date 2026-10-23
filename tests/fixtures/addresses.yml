@@ -10,7 +10,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"addresses","attributes":{"city_name":"New York","postal_code":"123","address":"some street","description":"test address"},"relationships":{"country":{"data":{"type":"countries","id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9"}},"identity":{"data":{"type":"identities","id":"5e9df058-50d2-4e34-b0d4-d1746b86f41a"}}}}}'
     response:
         status:
@@ -50,7 +50,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"addresses","id":"bf69bc70-e1c2-442c-9f30-335ee299b663","attributes":{"city_name":"Chicago","postal_code":"1234","address":"Main street","description":"some address"}}}'
     response:
         status:
@@ -89,7 +89,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -123,7 +123,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'

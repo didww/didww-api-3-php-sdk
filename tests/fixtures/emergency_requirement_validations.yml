@@ -10,7 +10,7 @@
             User-Agent: GuzzleHttp/7
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"emergency_requirement_validations","relationships":{"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"identity":{"data":{"type":"identities","id":"5e9df058-50d2-4e34-b0d4-d1746b86f41a"}},"emergency_requirement":{"data":{"type":"emergency_requirements","id":"aea92b24-a044-4864-9740-89d3e15b65c7"}}}}}'
     response:
         status:

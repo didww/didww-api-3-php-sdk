@@ -26,6 +26,7 @@ class EmergencyRequirementTest extends CassetteTest
         $this->assertEquals([], $first->getBusinessMandatoryFields());
         $this->assertEquals('7-14 days', $first->getEstimateSetupTime());
         $this->assertNull($first->getRequirementRestrictionMessage());
+        $this->assertSame(\Didww\Enum\NumberType::LOCAL, $first->getNumberType());
         $this->assertSame('0.0', $first->getMeta()['setup_price']);
         $this->assertSame('0.75', $first->getMeta()['monthly_price']);
     }

@@ -33,7 +33,6 @@ class AddressRequirementTest extends CassetteTest
     {
         $includes = [
             'country',
-            'did_group_type',
             'personal_permanent_document',
             'business_permanent_document',
             'personal_onetime_document',
@@ -63,7 +62,9 @@ class AddressRequirementTest extends CassetteTest
             'business_mandatory_fields' => ['Proof of ID', 'VAT Number / TAX Code', 'Country', 'Company ID', 'Representative Tax ID'],
             'service_description_required' => true,
             'restriction_message' => 'End User Registration is Required',
+            'number_type' => 'local',
         ], $requirement->getAttributes());
+        $this->assertSame(\Didww\Enum\NumberType::LOCAL, $requirement->getNumberType());
 
         // Typed getter assertions
         $this->assertEquals(AreaLevel::WORLDWIDE, $requirement->getPersonalAreaLevel());
@@ -79,7 +80,6 @@ class AddressRequirementTest extends CassetteTest
 
         // Relationship method assertions
         $this->assertNotNull($requirement->country());
-        $this->assertNotNull($requirement->didGroupType());
         $this->assertNotNull($requirement->personalPermanentDocument());
         $this->assertNotNull($requirement->businessPermanentDocument());
         $this->assertNotNull($requirement->personalOnetimeDocument());

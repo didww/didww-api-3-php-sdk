@@ -1,0 +1,37 @@
+{
+  "data": [
+    {
+      "id": "d8e4d372-42a6-4bb6-80ec-6c29c49aa9fd",
+      "type": "prices",
+      "attributes": {
+        "source_prefix": null,
+        "destination_prefix": "49151",
+        "country": "Germany",
+        "mcc": 262,
+        "mcc_name": "Germany",
+        "mnc": 1,
+        "mnc_name": "Telekom Deutschland",
+        "reject_sms": false,
+        "price": "0.075000"
+      }
+    },
+    {
+      "id": "e554d414-527f-411f-b021-e63c554606c4",
+      "type": "prices",
+      "attributes": {
+        "source_prefix": null,
+        "destination_prefix": "49151",
+        "country": "Germany",
+        "mcc": 262,
+        "mcc_name": "Germany",
+        "mnc": 2,
+        "mnc_name": "Vodafone",
+        "reject_sms": true,
+        "price": null
+      }
+    }
+  ],
+  "meta": {
+    "total_records": 2
+  }
+}

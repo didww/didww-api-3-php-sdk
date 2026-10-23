@@ -125,6 +125,16 @@ class Did extends BaseItem
         return $this->hasOne(VoiceInTrunkGroup::class);
     }
 
+    public function smsTrunk()
+    {
+        return $this->hasOne(SmsTrunk::class);
+    }
+
+    public function smsTrunkGroup()
+    {
+        return $this->hasOne(SmsTrunkGroup::class);
+    }
+
     public function capacityPool()
     {
         return $this->hasOne(CapacityPool::class);
@@ -174,6 +184,36 @@ class Did extends BaseItem
     {
         $this->voiceInTrunk()->associate($voiceInTrunk);
         $this->voiceInTrunkGroup()->dissociate();
+    }
+
+    /**
+     * Routes inbound SMS to the trunk and clears sms_trunk_group. Null
+     * unassigns the trunk only.
+     */
+    public function setSmsTrunk(?SmsTrunk $smsTrunk)
+    {
+        if (null === $smsTrunk) {
+            $this->smsTrunk()->dissociate();
+
+            return;
+        }
+        $this->smsTrunk()->associate($smsTrunk);
+        $this->smsTrunkGroup()->dissociate();
+    }
+
+    /**
+     * Routes inbound SMS to the trunk group and clears sms_trunk. Null
+     * unassigns the group only.
+     */
+    public function setSmsTrunkGroup(?SmsTrunkGroup $smsTrunkGroup)
+    {
+        if (null === $smsTrunkGroup) {
+            $this->smsTrunkGroup()->dissociate();
+
+            return;
+        }
+        $this->smsTrunkGroup()->associate($smsTrunkGroup);
+        $this->smsTrunk()->dissociate();
     }
 
     public function setCapacityPool(CapacityPool $capacityPool)

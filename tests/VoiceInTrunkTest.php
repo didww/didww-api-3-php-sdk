@@ -6,6 +6,7 @@ use Didww\Enum\CliFormat;
 use Didww\Enum\DiversionInjectMode;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\NetworkProtocolPriority;
+use Didww\Enum\Pop;
 use Didww\Enum\RxDtmfFormat;
 use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\StirShakenMode;
@@ -21,15 +22,13 @@ class VoiceInTrunkTest extends CassetteTest
 
     public function testAllWithIncludesAndPagination()
     {
-        $voiceInTrunksDocument = \Didww\Item\VoiceInTrunk::all(['sort' => '-created_at', 'include' => 'trunk_group,pop', 'page' => ['size' => 4, 'number' => 1]]);
+        $voiceInTrunksDocument = \Didww\Item\VoiceInTrunk::all(['sort' => '-created_at', 'include' => 'voice_in_trunk_group', 'page' => ['size' => 4, 'number' => 1]]);
         $voiceInTrunks = $voiceInTrunksDocument->getData();
         $this->assertContainsOnlyInstancesOf('Didww\Item\VoiceInTrunk', $voiceInTrunks);
         $voiceInTrunkGroup = $voiceInTrunks[0]->voiceInTrunkGroup()->getIncluded();
 
-        $pop = $voiceInTrunks[1]->pop()->getIncluded();
-
-        $this->assertInstanceOf('Didww\Item\Pop', $pop);
-        $this->assertEquals('DE, FRA', $pop->getName());
+        $this->assertNull($voiceInTrunks[0]->getPop());
+        $this->assertSame(Pop::FRA, $voiceInTrunks[1]->getPop());
         $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
 
         $this->assertInstanceOf('Didww\Item\Configuration\Pstn', $voiceInTrunks[0]->getConfiguration());
@@ -171,19 +170,60 @@ class VoiceInTrunkTest extends CassetteTest
     public function testUpdateRelationships()
     {
         $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('a80006b6-4183-4865-8b99-7ebbd359a762');
-        $voiceInTrunk->setPop(\Didww\Item\Pop::build('ba7ccbef-82ac-4372-9391-eac90d5c9479'));
+        $voiceInTrunk->setPop(Pop::FRA);
         $voiceInTrunk->setVoiceInTrunkGroup(\Didww\Item\VoiceInTrunkGroup::build('837c5764-a6c3-456f-aa37-71fc8f8ca07b'));
-        $voiceInTrunkDocument = $voiceInTrunk->save(['include' => 'pop,trunk_group']);
+        $voiceInTrunkDocument = $voiceInTrunk->save(['include' => 'voice_in_trunk_group']);
         $this->assertFalse($voiceInTrunkDocument->hasErrors());
         $voiceInTrunk = $voiceInTrunkDocument->getData();
 
         $voiceInTrunkGroup = $voiceInTrunk->voiceInTrunkGroup()->getIncluded();
-        $pop = $voiceInTrunk->pop()->getIncluded();
 
-        $this->assertInstanceOf('Didww\Item\Pop', $pop);
+        $this->assertSame(Pop::FRA, $voiceInTrunk->getPop());
         $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
-        $this->assertEquals('ba7ccbef-82ac-4372-9391-eac90d5c9479', $pop->getId());
         $this->assertEquals('837c5764-a6c3-456f-aa37-71fc8f8ca07b', $voiceInTrunkGroup->getId());
+    }
+
+    public function testCreateWithPop()
+    {
+        $voiceInTrunk = new \Didww\Item\VoiceInTrunk();
+        $voiceInTrunk->setConfiguration(new \Didww\Item\Configuration\Pstn(['dst' => '558540420024']));
+        $voiceInTrunk->setName('hello, test pstn trunk');
+        $voiceInTrunk->setPop(Pop::FRA);
+        $this->assertSame([
+            'type' => 'voice_in_trunks',
+            'attributes' => [
+                'configuration' => ['type' => 'pstn_configurations', 'attributes' => ['dst' => '558540420024']],
+                'name' => 'hello, test pstn trunk',
+                'pop' => 'FRA',
+            ],
+        ], $voiceInTrunk->toJsonApiArray());
+
+        $created = $voiceInTrunk->save()->getData();
+        $this->assertSame(Pop::FRA, $created->getPop());
+    }
+
+    public function testUpdateFromLoadedClearsPop()
+    {
+        $voiceInTrunk = \Didww\Item\VoiceInTrunk::find('41b94706-325e-4704-a433-d65105758836')->getData();
+        $this->assertSame(Pop::FRA, $voiceInTrunk->getPop());
+
+        $voiceInTrunk->setPop(null);
+        $this->assertSame([
+            'type' => 'voice_in_trunks',
+            'id' => '41b94706-325e-4704-a433-d65105758836',
+            'attributes' => ['pop' => null],
+        ], $voiceInTrunk->toJsonApiPatchArray());
+
+        $updated = $voiceInTrunk->save()->getData();
+        $this->assertNull($updated->getPop());
+    }
+
+    public function testCreateWithoutPopOmitsIt()
+    {
+        $voiceInTrunk = new \Didww\Item\VoiceInTrunk();
+        $voiceInTrunk->setName('trunk');
+
+        $this->assertArrayNotHasKey('pop', $voiceInTrunk->toJsonApiArray()['attributes']);
     }
 
     public function testSipSetters()
@@ -315,6 +355,16 @@ class VoiceInTrunkTest extends CassetteTest
 
         $trunk->setExternalReferenceId(null);
         $this->assertNull($trunk->getExternalReferenceId());
+
+        $trunk->setPop(Pop::AMS);
+        $this->assertSame(Pop::AMS, $trunk->getPop());
+        $this->assertSame('AMS', $trunk->getAttributes()['pop']);
+
+        $trunk->setPop('XYZ');
+        $this->assertSame('XYZ', $trunk->getPop());
+
+        $trunk->setPop(null);
+        $this->assertNull($trunk->getPop());
     }
 
     public function testSipConfigurationRegistrationAttributes()
