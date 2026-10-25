@@ -9,7 +9,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -47,7 +47,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -71,7 +71,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"address_verifications","attributes":{"callback_url":"http:\/\/example.com","callback_method":"get"},"relationships":{"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"dids":{"data":[{"type":"dids","id":"a9d64c02-4486-4acb-a9a1-be4c81ff0659"}]}}}}'
     response:
         status:
@@ -110,7 +110,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -134,7 +134,7 @@
             User-Agent: GuzzleHttp/7
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"address_verifications","id":"429e6d4e-2ee9-4953-aa98-0b3ac07f0f96","attributes":{"external_reference_id":"updated-ref-42"}}}'
     response:
         status:
@@ -154,9 +154,8 @@
             Accept-Encoding: ''
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
             User-Agent: didww-php-sdk/dev-master
-            x-didww-api-version: '2026-04-16'
         body: '{"data":{"type":"address_verifications","attributes":{"callback_url":"http:\/\/example.com","callback_method":"get"},"relationships":{"address":{"data":{"type":"addresses","id":"d3414687-40f4-4346-a267-c2c65117d28c"}},"dids":{"data":[{"type":"dids","id":"a9d64c02-4486-4acb-a9a1-be4c81ff0659"}]}}}}'
     response:
         status:

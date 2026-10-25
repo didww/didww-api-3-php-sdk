@@ -26,6 +26,8 @@ class EmergencyCallingServiceTest extends CassetteTest
         $this->assertNull($first->getCanceledAt());
         $this->assertInstanceOf(\DateTime::class, $first->getCreatedAt());
         $this->assertInstanceOf(\DateTime::class, $first->getRenewDate());
+        $this->assertSame('2026-05-01', $first->getRenewDate()->format('Y-m-d'));
+        $this->assertSame(\Didww\Enum\NumberType::LOCAL, $first->getNumberType());
     }
 
     public function testFindEmergencyCallingService()

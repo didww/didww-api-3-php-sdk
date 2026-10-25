@@ -84,7 +84,7 @@ $dids = Did::all([
         'did_group.features' => 'emergency',
         'emergency_enabled' => 'false',
     ],
-    'include' => 'did_group,did_group.country,did_group.did_group_type,emergency_calling_service',
+    'include' => 'did_group,did_group.country,emergency_calling_service',
     'sort' => '-created_at',
     'page' => ['size' => 10, 'number' => 1],
 ])->getData();
@@ -103,23 +103,24 @@ if (!$selectedDid) {
 }
 $didGroup = $selectedDid->didGroup()->getIncluded();
 $country = $didGroup ? $didGroup->country()->getIncluded() : null;
-$didGroupType = $didGroup ? $didGroup->didGroupType()->getIncluded() : null;
+$numberType = $didGroup ? $didGroup->getNumberType() : null;
+$numberTypeValue = $numberType instanceof BackedEnum ? $numberType->value : $numberType;
 
 echo 'DID: '.$selectedDid->getNumber().' ('.$selectedDid->getId().")\n";
 echo '  Country: '.($country ? $country->getName() : 'N/A')."\n";
-echo '  DID Group Type: '.($didGroupType ? $didGroupType->name : 'N/A')."\n";
+echo '  Number Type: '.($numberTypeValue ?? 'N/A')."\n";
 
-// Step 2: Get emergency requirements for this country + did_group_type
+// Step 2: Get emergency requirements for this country + number_type
 echo "\n=== Step 2: Get Emergency Requirements ===\n";
 $requirements = EmergencyRequirement::all([
     'filter' => [
         'country.id' => $country->getId(),
-        'did_group_type.id' => $didGroupType->getId(),
+        'number_type' => $numberTypeValue,
     ],
 ])->getData();
 
 if (0 === count($requirements)) {
-    exit("No emergency requirements found for this country/did_group_type.\n");
+    exit("No emergency requirements found for this country/number_type.\n");
 }
 
 $emergencyRequirement = $requirements[0];

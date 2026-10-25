@@ -12,14 +12,22 @@ use Didww\Enum\DiversionRelayPolicy;
 use Didww\Enum\EmergencyCallingServiceStatus;
 use Didww\Enum\EmergencyVerificationStatus;
 use Didww\Enum\ExportStatus;
+use Didww\Enum\ExportTrunkType;
 use Didww\Enum\ExportType;
 use Didww\Enum\Feature;
 use Didww\Enum\IdentityType;
 use Didww\Enum\MediaEncryptionMode;
+use Didww\Enum\NumberType;
 use Didww\Enum\OnCliMismatchAction;
 use Didww\Enum\OrderStatus;
+use Didww\Enum\Pop;
 use Didww\Enum\ReroutingDisconnectCode;
 use Didww\Enum\RxDtmfFormat;
+use Didww\Enum\SenderIdVerificationStatus;
+use Didww\Enum\SenderType;
+use Didww\Enum\SmsBodyType;
+use Didww\Enum\SmsHttpMethod;
+use Didww\Enum\SmsServerLocation;
 use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\StirShakenMode;
 use Didww\Enum\TransportProtocol;
@@ -46,6 +54,17 @@ class EnumTest extends \PHPUnit\Framework\TestCase
             [VoiceOutTrunkStatus::class, 'active', VoiceOutTrunkStatus::ACTIVE],
             [Feature::class, 'voice_in', Feature::VOICE_IN],
             [AreaLevel::class, 'country', AreaLevel::COUNTRY],
+            [ExportType::class, 'sms_in', ExportType::SMS_IN],
+            [ExportType::class, 'sms_out', ExportType::SMS_OUT],
+            [ExportTrunkType::class, 'SMPP SMSC', ExportTrunkType::SMPP_SMSC],
+            [ExportTrunkType::class, 'HTTP IN', ExportTrunkType::HTTP_IN],
+            [NumberType::class, 'toll_free', NumberType::TOLL_FREE],
+            [Pop::class, 'FRA', Pop::FRA],
+            [SmsHttpMethod::class, 'put', SmsHttpMethod::PUT],
+            [SmsBodyType::class, 'html_url_encoded', SmsBodyType::HTML_URL_ENCODED],
+            [SmsServerLocation::class, 'ams', SmsServerLocation::AMS],
+            [SenderIdVerificationStatus::class, 'closing_in_process', SenderIdVerificationStatus::CLOSING_IN_PROCESS],
+            [SenderType::class, 'long_code', SenderType::LONG_CODE],
         ];
 
         foreach ($cases as [$enumClass, $rawValue, $expectedCase]) {
@@ -80,7 +99,15 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(3, IdentityType::cases());
         $this->assertCount(3, OrderStatus::cases());
         $this->assertCount(2, CallbackMethod::cases());
-        $this->assertCount(2, ExportType::cases());
+        $this->assertCount(4, ExportType::cases());
+        $this->assertCount(4, ExportTrunkType::cases());
+        $this->assertCount(6, NumberType::cases());
+        $this->assertCount(7, Pop::cases());
+        $this->assertCount(3, SmsHttpMethod::cases());
+        $this->assertCount(4, SmsBodyType::cases());
+        $this->assertCount(2, SmsServerLocation::cases());
+        $this->assertCount(6, SenderIdVerificationStatus::cases());
+        $this->assertCount(5, SenderType::cases());
         $this->assertCount(3, ExportStatus::cases());
         $this->assertCount(3, AddressVerificationStatus::cases());
         $this->assertCount(4, MediaEncryptionMode::cases());

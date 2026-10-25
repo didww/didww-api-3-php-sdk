@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "title": "Price not found",
+      "detail": "No effective price covers this number in the assigned plan.",
+      "code": "price_not_found",
+      "status": "404"
+    }
+  ]
+}

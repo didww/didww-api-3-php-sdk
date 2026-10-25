@@ -71,6 +71,8 @@ class DidReservationTest extends CassetteTest
             'is_metered' => false,
             'area_name' => 'Saddleback Valley',
             'allow_additional_channels' => true,
+            'number_type' => 'local',
+            'is_demo' => false,
         ]);
         $this->assertContainsOnlyInstancesOf('Didww\Item\StockKeepingUnit', $stockKeepingUnitsRelation->getIncluded()->all());
         $this->assertCount(2, $stockKeepingUnitsRelation->getIncluded()->all());

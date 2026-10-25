@@ -9,7 +9,7 @@
             User-Agent: GuzzleHttp/7
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -28,7 +28,7 @@
             User-Agent: GuzzleHttp/7
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -48,7 +48,7 @@
             User-Agent: GuzzleHttp/7
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"voice_out_trunks","id":"425ce763-a3a9-49b4-af5b-ada1a65c8864","attributes":{"media_encryption_mode":"disabled"}}}'
     response:
         status:
@@ -68,7 +68,7 @@
             User-Agent: GuzzleHttp/7
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -86,7 +86,7 @@
             Accept-Encoding: ''
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"voice_out_trunks","attributes":{"name":"php-test","authentication_method":{"type":"ip_only","attributes":{"allowed_sip_ips":["203.0.113.0\/24"]}},"on_cli_mismatch_action":"replace_cli"},"relationships":{"default_did":{"data":{"type":"dids","id":"7a028c32-e6b6-4c86-bf01-90f901b37012"}},"dids":{"data":[{"type":"dids","id":"7a028c32-e6b6-4c86-bf01-90f901b37012"}]}}}}'
     response:
         status:
@@ -107,7 +107,7 @@
             User-Agent: GuzzleHttp/7
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -127,7 +127,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"voice_out_trunks","id":"01234567-89ab-cdef-0123-456789abcdef","attributes":{"emergency_enable_all":true}}}'
     response:
         status:
@@ -152,7 +152,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"voice_out_trunks","id":"01234567-89ab-cdef-0123-456789abcdef","relationships":{"emergency_dids":{"data":[{"type":"dids","id":"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"},{"type":"dids","id":"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"}]}}}}'
     response:
         status:
@@ -176,7 +176,7 @@
             User-Agent: GuzzleHttp/7
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -195,7 +195,7 @@
             Accept-Encoding: ''
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"voice_out_trunks","attributes":{"name":"SDK Test twilio create","authentication_method":{"type":"twilio","attributes":{"twilio_account_sid":"AC33333333333333333333333333333333"}},"on_cli_mismatch_action":"reject_call"}}}'
     response:
         status:

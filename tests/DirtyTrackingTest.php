@@ -131,6 +131,79 @@ class DirtyTrackingTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Setting sms_trunk sends sms_trunk_group as an explicit null.
+     */
+    public function testSetSmsTrunkClearsSmsTrunkGroup()
+    {
+        $did = \Didww\Item\Did::build('test-uuid');
+        $did->setSmsTrunk(\Didww\Item\SmsTrunk::build('sms-trunk-uuid'));
+
+        $this->assertEquals([
+            'type' => 'dids',
+            'id' => 'test-uuid',
+            'relationships' => [
+                'sms_trunk' => ['data' => ['type' => 'sms_trunks', 'id' => 'sms-trunk-uuid']],
+                'sms_trunk_group' => ['data' => null],
+            ],
+        ], $did->toJsonApiPatchArray());
+    }
+
+    /**
+     * Setting sms_trunk_group sends sms_trunk as an explicit null.
+     */
+    public function testSetSmsTrunkGroupClearsSmsTrunk()
+    {
+        $did = \Didww\Item\Did::build('test-uuid');
+        $did->setSmsTrunkGroup(\Didww\Item\SmsTrunkGroup::build('sms-trunk-group-uuid'));
+
+        $this->assertEquals([
+            'type' => 'dids',
+            'id' => 'test-uuid',
+            'relationships' => [
+                'sms_trunk_group' => ['data' => ['type' => 'sms_trunk_groups', 'id' => 'sms-trunk-group-uuid']],
+                'sms_trunk' => ['data' => null],
+            ],
+        ], $did->toJsonApiPatchArray());
+    }
+
+    /**
+     * Unassigning sms_trunk leaves sms_trunk_group alone.
+     */
+    public function testUnsetSmsTrunkSendsOnlySmsTrunk()
+    {
+        $did = \Didww\Item\Did::build('test-uuid');
+        $did->setSmsTrunk(null);
+
+        $this->assertSame([
+            'type' => 'dids',
+            'id' => 'test-uuid',
+            'relationships' => [
+                'sms_trunk' => ['data' => null],
+            ],
+        ], $did->toJsonApiPatchArray());
+    }
+
+    /**
+     * On a loaded DID whose sms_trunk_group is already null, only sms_trunk is dirty.
+     */
+    public function testLoadedDidSetSmsTrunkSendsOnlyChangedRelationship()
+    {
+        $did = \Didww\Item\Did::build('test-uuid');
+        $did->setSmsTrunkGroup(null);
+        $did->syncPersistedState();
+
+        $did->setSmsTrunk(\Didww\Item\SmsTrunk::build('sms-trunk-uuid'));
+
+        $this->assertSame([
+            'type' => 'dids',
+            'id' => 'test-uuid',
+            'relationships' => [
+                'sms_trunk' => ['data' => ['type' => 'sms_trunks', 'id' => 'sms-trunk-uuid']],
+            ],
+        ], $did->toJsonApiPatchArray());
+    }
+
+    /**
      * After syncPersistedState, no dirty fields should be detected.
      */
     public function testSyncPersistedStateClearsDirtyState()

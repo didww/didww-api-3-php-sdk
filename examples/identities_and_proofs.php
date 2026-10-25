@@ -23,6 +23,7 @@ foreach ($identities->take(10) as $identity) {
     echo '  Name: '.$identity->getFirstName().' '.$identity->getLastName()."\n";
     echo '  Phone: '.$identity->getPhoneNumber()."\n";
     echo '  Type: '.$identity->getIdentityType()->value."\n";
+    echo '  Company Website: '.($identity->getCompanyWebsite() ?? 'null')."\n";
     $country = $identity->country()->getIncluded();
     echo '  Country: '.($country ? $country->getName() : 'null')."\n";
     $birthCountry = $identity->birthCountry()->getIncluded();

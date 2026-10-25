@@ -208,6 +208,42 @@ class IdentityTest extends CassetteTest
         $this->assertEquals('test@example.com', $attributes['contact_email']);
     }
 
+    public function testCompanyWebsiteInWhitelist()
+    {
+        $identity = new \Didww\Item\Identity();
+        $identity->setCompanyWebsite('https://www.example.org');
+        $this->assertSame('https://www.example.org', $identity->getCompanyWebsite());
+        $this->assertSame('https://www.example.org', $identity->toJsonApiArray()['attributes']['company_website']);
+
+        $identity->setCompanyWebsite(null);
+        $this->assertNull($identity->getCompanyWebsite());
+        $this->assertArrayHasKey('company_website', $identity->toJsonApiArray()['attributes']);
+    }
+
+    public function testCreatePersonalOmitsCompanyWebsite()
+    {
+        $identity = new \Didww\Item\Identity();
+        $identity->setIdentityType('personal');
+        $identity->setFirstName('John');
+        $identity->setLastName('Doe');
+
+        $this->assertArrayNotHasKey('company_website', $identity->toJsonApiArray()['attributes']);
+    }
+
+    public function testUpdateCompanyWebsite()
+    {
+        $identity = \Didww\Item\Identity::build('e96ae7d1-11d5-42bc-a5c5-211f3c3788ae');
+        $identity->setCompanyWebsite('https://www.example.org');
+        $this->assertSame([
+            'type' => 'identities',
+            'id' => 'e96ae7d1-11d5-42bc-a5c5-211f3c3788ae',
+            'attributes' => ['company_website' => 'https://www.example.org'],
+        ], $identity->toJsonApiPatchArray());
+
+        $updated = $identity->save()->getData();
+        $this->assertSame('https://www.example.org', $updated->getCompanyWebsite());
+    }
+
     public function testBirthCountryRelation()
     {
         $identity = new \Didww\Item\Identity();

@@ -41,7 +41,8 @@ if ($trunkDocument->hasErrors()) {
         $trunk->getName(), // "My New Custom Sip Trunk 5c2e393794b07"
         $trunk->getCliFormat(), // CliFormat::RAW
         $trunk->getCreatedAt(), // object(DateTime)
-        $trunk->getRingingTimeout() // int(30)
+        $trunk->getRingingTimeout(), // int(30)
+        $trunk->getPop() // null (DIDWW chooses) or a Didww\Enum\Pop, e.g. Pop::NYC
     );
 
     // Configuration enum getters

@@ -1,0 +1,37 @@
+{
+  "data": [
+    {
+      "id": "df73d9e4-46ce-4af0-817e-f090dc8144f1",
+      "type": "prices",
+      "attributes": {
+        "destination": "1800",
+        "country": "United States",
+        "src_country_name": null,
+        "source_type": "cellular",
+        "rate": "0.025",
+        "connection_fee": "0.0",
+        "initial_interval": 60,
+        "next_interval": 60,
+        "reject_calls": false
+      }
+    },
+    {
+      "id": "cb1335e1-6cfd-4921-8724-153d9ed67ac3",
+      "type": "prices",
+      "attributes": {
+        "destination": "44800",
+        "country": "United Kingdom",
+        "src_country_name": "United Kingdom",
+        "source_type": "fixed",
+        "rate": null,
+        "connection_fee": null,
+        "initial_interval": 60,
+        "next_interval": 60,
+        "reject_calls": true
+      }
+    }
+  ],
+  "meta": {
+    "total_records": 2
+  }
+}

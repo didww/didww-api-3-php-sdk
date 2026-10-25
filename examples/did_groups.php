@@ -24,6 +24,8 @@ foreach ($didGroups as $didGroup) {
         $didGroup->getIsMetered(), // false
         $didGroup->getAllowAdditionalChannels(), // true
         $didGroup->getServiceRestrictions(), // 2026-04-16
+        $didGroup->getNumberType(), // NumberType::LOCAL
+        $didGroup->getIsDemo(), // false
         count($didGroup->stockKeepingUnits()->getIncluded()->all()) // 2
     );
     $stockKeepingUnit = $didGroup->stockKeepingUnits()->getIncluded()->all()[0];

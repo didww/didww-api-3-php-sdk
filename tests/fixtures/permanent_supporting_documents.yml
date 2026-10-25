@@ -10,7 +10,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"permanent_supporting_documents","relationships":{"identity":{"data":{"type":"identities","id":"5e9df058-50d2-4e34-b0d4-d1746b86f41a"}},"template":{"data":{"type":"supporting_document_templates","id":"4199435f-646e-4e9d-a143-8f3b972b10c5"}},"files":{"data":[{"type":"encrypted_files","id":"254b3c2d-c40c-4ff7-93b1-a677aee7fa10"}]}}}}'
     response:
         status:
@@ -49,7 +49,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'

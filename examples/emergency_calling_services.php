@@ -9,7 +9,7 @@ use Didww\Item\EmergencyCallingService;
 
 echo "=== Listing Emergency Calling Services ===\n";
 $document = EmergencyCallingService::all([
-    'include' => 'country,did_group_type,emergency_requirement',
+    'include' => 'country,emergency_requirement',
     'page' => ['size' => 10, 'number' => 1],
 ]);
 $services = $document->getData();
@@ -20,6 +20,8 @@ foreach ($services as $service) {
     echo '  Name: '.$service->getName()."\n";
     echo '  Reference: '.$service->getReference()."\n";
     echo '  Status: '.$service->getStatus()->value."\n";
+    $numberType = $service->getNumberType();
+    echo '  Number Type: '.($numberType instanceof BackedEnum ? $numberType->value : ($numberType ?? 'N/A'))."\n";
     echo '  Created At: '.$service->getCreatedAt()->format('Y-m-d H:i:s')."\n";
     $renewDate = $service->getRenewDate();
     echo '  Renew Date: '.($renewDate ? $renewDate->format('Y-m-d') : 'N/A')."\n";

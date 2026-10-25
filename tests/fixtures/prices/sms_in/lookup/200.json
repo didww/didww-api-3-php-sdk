@@ -1,0 +1,21 @@
+{
+  "data": [
+    {
+      "id": "e93f925e-25ee-4060-bd50-a790b4945d3f",
+      "type": "prices",
+      "attributes": {
+        "source_prefix": null,
+        "source_number_length_min": 1,
+        "source_number_length_max": 15,
+        "destination_prefix": "1",
+        "destination_number_length_min": 11,
+        "destination_number_length_max": 11,
+        "country": "United States",
+        "price": "0.005000"
+      }
+    }
+  ],
+  "meta": {
+    "total_records": 1
+  }
+}

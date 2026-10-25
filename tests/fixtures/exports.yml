@@ -10,7 +10,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"exports","attributes":{"export_type":"cdr_in","filters":{"did_number":"1234556789","from":"2026-04-01 00:00:00","to":"2026-04-15 23:59:59"}}}}'
     response:
         status:
@@ -49,7 +49,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"exports","attributes":{"export_type":"cdr_out","filters":{"voice_out_trunk.id":"1f6fc2bd-f081-4202-9b1a-d9cb88d942b9","from":"2026-04-01 00:00:00","to":"2026-04-15 23:59:59"}}}}'
     response:
         status:
@@ -87,7 +87,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -124,7 +124,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.54.0 PHP/7.1.14'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -161,7 +161,7 @@
             User-Agent: GuzzleHttp/7
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"exports","id":"da15f006-5da4-45ca-b0df-735baeadf423","attributes":{"external_reference_id":"updated-ref-export","filters":[]}}}'
     response:
         status:
@@ -178,9 +178,8 @@
         url: 'https://sandbox-api.didww.com/v3/exports/02bf6df4-3af9-416c-96be-16e5b7eeb651.csv.gz'
         headers:
             Host: sandbox-api.didww.com
-            Api-Key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
             User-Agent: didww-php-sdk/dev-master
-            X-DIDWW-API-Version: '2026-04-16'
     response:
         status:
             http_version: '1.1'
@@ -201,3 +200,45 @@
             Access-Control-Allow-Methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS'
             Access-Control-Allow-Credentials: 'true'
         body: 'H4sIAAAAAAAAE62QwWrDMBBE7/0KHWPYpLIbp45PLVYLPhRC7XyAkBcqsLVBuya/Xzc1oW5z7EHS8gbNjGSs4H3rB1SN2ChqdWyrBMyVVhQCur/8JXQza2iMDsHUBgyy+GDFUwAzxsugVoyOp6ue3exVBy/eCsWfsKIO4R35RIERWur714iongcaw1d8YxJoMQ6z/1J4Q8GInao+7OTW81KtRhYaMKqpYoN9f1UP5INwcpfptFin2VrvlM7LTJd5AQBb2D9mD5eV5vtdngH7U/mLPXW+O583jgbQi/dvdQFNfVASbWDrLp1l+jkaBfRGa73Yv4+bRW7XkCnqf7M/AdMMsWsKAgAA'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/exports'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"exports","attributes":{"export_type":"sms_in","filters":{"from":"2026-10-01 00:00:00","to":"2026-10-15 00:00:00","trunk_type":["SMPP SMSC","HTTP IN"],"destination_address_eq":"12125550100"}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"5a2d3e4f-6b7c-4d8e-9f0a-1b2c3d4e5f60","type":"exports","attributes":{"export_type":"sms_in","status":"pending","created_at":"2026-10-01T09:00:00.000Z","url":null,"callback_url":null,"callback_method":null,"external_reference_id":null,"filters":{"from":"2026-10-01 00:00:00","to":"2026-10-15 00:00:00","trunk_type":["SMPP SMSC","HTTP IN"],"destination_address_eq":"12125550100"}}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/exports'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"exports","attributes":{"export_type":"sms_out","filters":{"from":"2026-10-01 00:00:00","to":"2026-10-15 00:00:00","sms_trunk.id":["b2c3d4e5-0000-4000-8000-000000000001","b2c3d4e5-0000-4000-8000-000000000003"],"service_type":"a2p","sender_id_verification.id":"c3d4e5f6-0000-4000-8000-000000000002"}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f","type":"exports","attributes":{"export_type":"sms_out","status":"pending","created_at":"2026-10-01T09:00:00.000Z","url":null,"callback_url":null,"callback_method":null,"external_reference_id":null,"filters":{"from":"2026-10-01 00:00:00","to":"2026-10-15 00:00:00","sms_trunk.id":["b2c3d4e5-0000-4000-8000-000000000001","b2c3d4e5-0000-4000-8000-000000000003"],"service_type":"a2p","sender_id_verification.id":"c3d4e5f6-0000-4000-8000-000000000002"}}}}'

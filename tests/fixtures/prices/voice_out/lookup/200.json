@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "id": "7b82cac2-c42a-4fa9-8da4-ccba2843068f",
+      "type": "prices",
+      "attributes": {
+        "prefix": "4930",
+        "country": "Germany",
+        "network": "Fixed",
+        "rate": "0.0045",
+        "connection_fee": "0.0",
+        "initial_increment": 1,
+        "recurring_increment": 1,
+        "next_rate": "0.005",
+        "next_connection_fee": "0.0",
+        "next_initial_increment": 30,
+        "next_recurring_increment": 6,
+        "effective_at": "2026-11-01T00:00:00.000Z",
+        "comment": "Increase and Billing increment change",
+        "reject_calls": false,
+        "category": "International"
+      }
+    },
+    {
+      "id": "9159cccf-ec23-459a-b63b-94a0ade0fa51",
+      "type": "prices",
+      "attributes": {
+        "prefix": "493",
+        "country": "Germany",
+        "network": "Fixed",
+        "rate": "0.0012",
+        "connection_fee": "0.0",
+        "initial_increment": 1,
+        "recurring_increment": 1,
+        "next_rate": null,
+        "next_connection_fee": null,
+        "next_initial_increment": null,
+        "next_recurring_increment": null,
+        "effective_at": null,
+        "comment": null,
+        "reject_calls": false,
+        "category": "Origin based"
+      }
+    }
+  ],
+  "meta": {
+    "total_records": 2
+  }
+}

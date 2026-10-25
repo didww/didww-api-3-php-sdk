@@ -40,7 +40,7 @@ class UploadResult
 
     public function getErrors(): array
     {
-        return null == $this->responseData ? [] : $this->responseData['errors'];
+        return $this->responseData['errors'] ?? [];
     }
 
     public function getId(): ?string

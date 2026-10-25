@@ -1,6 +1,6 @@
 <?php
 
-// List, create, and download exports (2026-04-16).
+// List, create, and download exports.
 // Demonstrates external_reference_id and from/to filter semantics.
 
 require_once 'bootstrap.php';
@@ -28,8 +28,9 @@ $suffix = bin2hex(random_bytes(4));
 
 $export = new Export();
 $export->setExportType(ExportType::CDR_OUT);
-$export->setFilterFrom('2026-04-01T00:00:00.000Z');
-$export->setFilterTo('2026-04-16T00:00:00.000Z');
+$today = new DateTimeImmutable('today', new DateTimeZone('UTC'));
+$export->setFilterFrom($today->modify('-1 day')->format('Y-m-d H:i:s'));
+$export->setFilterTo($today->format('Y-m-d H:i:s'));
 $export->setExternalReferenceId("php-export-$suffix");
 
 $document = $export->save();

@@ -2,11 +2,12 @@
 
 namespace Didww\Item;
 
+use Didww\Enum\NumberType;
 use Didww\Traits\Fetchable;
 
 /**
  * Requirements that must be satisfied before ordering an emergency
- * calling service for a given country/did_group_type. Introduced in API 2026-04-16.
+ * calling service for a given country/number_type. Introduced in API 2026-04-16.
  *
  * Resource-level meta carries: setup_price, monthly_price (when customer has a matching plan).
  * Access via $requirement->getMeta() (inherited from SWIS Item).
@@ -78,8 +79,8 @@ class EmergencyRequirement extends BaseItem
         return $this->hasOne(Country::class);
     }
 
-    public function didGroupType()
+    public function getNumberType(): NumberType|string|null
     {
-        return $this->hasOne(DidGroupType::class);
+        return $this->enumAttribute('number_type', NumberType::class);
     }
 }
