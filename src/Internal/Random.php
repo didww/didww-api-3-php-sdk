@@ -7,9 +7,6 @@ namespace Didww\Internal;
  */
 final class Random
 {
-    // 2^53: every integer below it is exact in a float, so the quotient never rounds up to 1.
-    private const RESOLUTION = 9007199254740992;
-
     private function __construct()
     {
         // Static helpers only; not meant to be instantiated.
@@ -20,6 +17,16 @@ final class Random
      */
     public static function fraction(): float
     {
-        return random_int(0, self::RESOLUTION - 1) / self::RESOLUTION;
+        $resolution = self::resolution();
+
+        return random_int(0, $resolution - 1) / $resolution;
+    }
+
+    // A power of two that is a native integer: 2^53 (every integer below it
+    // is exact in a float, so the quotient never rounds up to 1) on 64-bit
+    // builds, 2^30 on 32-bit ones.
+    private static function resolution(): int
+    {
+        return PHP_INT_SIZE >= 8 ? 1 << 53 : 1 << 30;
     }
 }

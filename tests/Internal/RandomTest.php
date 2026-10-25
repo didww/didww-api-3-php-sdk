@@ -19,4 +19,12 @@ class RandomTest extends TestCase
 
         $this->assertGreaterThan(900, count(array_unique($values)));
     }
+
+    public function testResolutionIsANativeInteger()
+    {
+        $resolution = (new \ReflectionMethod(Random::class, 'resolution'))->invoke(null);
+
+        $this->assertIsInt($resolution);
+        $this->assertSame(PHP_INT_SIZE >= 8 ? 9007199254740992 : 1073741824, $resolution);
+    }
 }
