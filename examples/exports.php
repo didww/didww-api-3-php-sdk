@@ -28,8 +28,9 @@ $suffix = bin2hex(random_bytes(4));
 
 $export = new Export();
 $export->setExportType(ExportType::CDR_OUT);
-$export->setFilterFrom(gmdate('Y-m-d', strtotime('-1 day')).' 00:00:00');
-$export->setFilterTo(gmdate('Y-m-d').' 00:00:00');
+$today = new DateTimeImmutable('today', new DateTimeZone('UTC'));
+$export->setFilterFrom($today->modify('-1 day')->format('Y-m-d H:i:s'));
+$export->setFilterTo($today->format('Y-m-d H:i:s'));
 $export->setExternalReferenceId("php-export-$suffix");
 
 $document = $export->save();

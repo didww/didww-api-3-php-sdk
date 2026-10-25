@@ -39,8 +39,9 @@ function createExport(Export $export, string $title): void
     echo "\n";
 }
 
-$from = gmdate('Y-m-d', strtotime('-1 day')).' 00:00:00'; // inclusive
-$to = gmdate('Y-m-d').' 00:00:00';                         // exclusive
+$today = new DateTimeImmutable('today', new DateTimeZone('UTC'));
+$from = $today->modify('-1 day')->format('Y-m-d H:i:s'); // inclusive
+$to = $today->format('Y-m-d H:i:s');                      // exclusive
 $suffix = bin2hex(random_bytes(4));
 
 $smsOut = new Export();
