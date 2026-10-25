@@ -4,6 +4,7 @@ namespace Didww\Tests\Auth;
 
 use Didww\Auth\Audience;
 use Didww\Auth\BearerMiddleware;
+use Didww\Auth\Psr16TokenStore;
 use Didww\Auth\TokenProvider;
 use Didww\Configuration;
 use Didww\Exception\AuthErrorKind;
@@ -12,6 +13,7 @@ use Didww\Internal\GuzzleExceptions;
 use Didww\Item\Did;
 use Didww\Item\Export;
 use Didww\Item\PublicKey;
+use Didww\Tests\Support\ArrayCache;
 use Didww\Tests\Support\ConfiguresMockHttp;
 use Didww\Tests\Support\MockHttp;
 use Didww\Tests\Support\TraceArgs;
@@ -90,6 +92,24 @@ class BearerMiddlewareTest extends TestCase
         $this->assertSame('PATCH', $second->getMethod());
         $this->assertNotSame('', (string) $first->getBody());
         $this->assertSame((string) $first->getBody(), (string) $second->getBody());
+    }
+
+    public function testRetryMintsWhenTheStoreKeepsTheRefusedToken()
+    {
+        $cache = new class extends ArrayCache {
+            public function delete(string $key): bool
+            {
+                return false;
+            }
+        };
+        $this->configureMock(tokenStore: new Psr16TokenStore($cache))->append(MockHttp::token('token-1'), self::unauthorized(), MockHttp::token('token-2'), self::jsonApi());
+
+        $document = Did::all();
+
+        $this->assertFalse($document->hasErrors());
+        $this->assertCount(2, $this->http->requestsTo('/token'));
+        $this->assertSame('Bearer token-1', $this->http->request(1)->getHeaderLine('Authorization'));
+        $this->assertSame('Bearer token-2', $this->http->request(3)->getHeaderLine('Authorization'));
     }
 
     public function testSecond401DropsReplacementToken()

@@ -4,6 +4,7 @@ namespace Didww\Tests;
 
 use Didww\Auth\TokenProvider;
 use Didww\Credentials;
+use Didww\Exception\AuthErrorKind;
 use Didww\Exception\DidwwAuthException;
 use Didww\Item\Export;
 use Didww\Tests\Support\ConfiguresMockHttp;
@@ -179,7 +180,8 @@ class ExportDownloadTest extends TestCase
         try {
             $this->export()->download($dest);
             $this->fail('Expected a DidwwAuthException');
-        } catch (DidwwAuthException) {
+        } catch (DidwwAuthException $e) {
+            $this->assertSame(AuthErrorKind::INVALID_CLIENT, $e->getKind());
         }
         $this->assertSame([], glob($this->dir.'/*'));
     }
@@ -195,13 +197,13 @@ class ExportDownloadTest extends TestCase
             'environment host in upper case with a trailing dot' => [$proxy, 'https://API.didww.com./v3/exports/1.csv.gz', true],
             'base URL with the default port' => ['https://proxy.example.com:443/v3', 'https://proxy.example.com/v3/exports/1.csv.gz', true],
             'base URL with a trailing dot' => ['https://proxy.example.com./v3', 'https://proxy.example.com/v3/exports/1.csv.gz', true],
-            'http base URL with the default port' => ['http://proxy.example.com/v3', 'http://proxy.example.com:80/v3/exports/1.csv.gz', true],
+            'http base URL with the default port' => ['http://proxy.example.com/v3', 'http://proxy.example.com:80/v3/exports/1.csv.gz', true], // NOSONAR the scheme is part of the origin under test
             'third host' => [$proxy, 'https://other.example.com/v3/exports/1.csv.gz', false],
             'other environment host' => [$proxy, 'https://sandbox-api.didww.com/v3/exports/1.csv.gz', false],
-            'environment host over http' => [$proxy, 'http://api.didww.com/v3/exports/1.csv.gz', false],
+            'environment host over http' => [$proxy, 'http://api.didww.com/v3/exports/1.csv.gz', false], // NOSONAR the scheme is part of the origin under test
             'environment host on another port' => [$proxy, 'https://api.didww.com:8443/v3/exports/1.csv.gz', false],
             'base URL host on another port' => [$proxy, 'https://proxy.example.com:8443/v3/exports/1.csv.gz', false],
-            'default https port over http' => [$proxy, 'http://proxy.example.com:443/v3/exports/1.csv.gz', false],
+            'default https port over http' => [$proxy, 'http://proxy.example.com:443/v3/exports/1.csv.gz', false], // NOSONAR the scheme is part of the origin under test
             'relative URL' => [$proxy, '/v3/exports/1.csv.gz', false],
         ];
     }

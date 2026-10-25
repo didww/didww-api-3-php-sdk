@@ -12,7 +12,8 @@ final class ArrayLogger extends AbstractLogger
     /** @var list<array{level: string, message: string, context: array}> */
     public array $records = [];
 
-    public function log($level, \Stringable|string $message, array $context = []): void
+    // $message is left untyped: psr/log 1.1 declares log() without types.
+    public function log($level, $message, array $context = []): void
     {
         $this->records[] = ['level' => (string) $level, 'message' => (string) $message, 'context' => $context];
     }

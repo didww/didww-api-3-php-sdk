@@ -59,7 +59,6 @@ function deleteItem($item, string $what): void
 
 $suffix = bin2hex(random_bytes(4));
 
-echo "=== Creating SMS Trunks ===\n";
 $webhook = new HttpIn();
 $webhook->setUrl('https://example.com/sms');
 $webhook->setHttpMethod(SmsHttpMethod::GET);
@@ -69,11 +68,6 @@ $email = new SmsToEmail();
 $email->setSendTo('sms@example.com');
 $email->setSubject('Inbound SMS');
 $email->setMessage('You have a new message.');
-
-$trunks = array_filter([
-    createSmsTrunk("PHP primary $suffix", 200, $webhook),
-    createSmsTrunk("PHP fallback $suffix", 100, $email),
-]);
 
 // Groups the trunks; returns the group, or null after printing the errors.
 function groupTrunks(array $trunks, string $suffix): ?SmsTrunkGroup
@@ -110,10 +104,21 @@ function listGroups(): void
     }
 }
 
+// Each trunk is kept as soon as it is created, so that the cleanup below
+// deletes it even when a later step fails.
+$trunks = [];
 $group = null;
 try {
+    echo "=== Creating SMS Trunks ===\n";
+    foreach ([["PHP primary $suffix", 200, $webhook], ["PHP fallback $suffix", 100, $email]] as [$name, $priority, $configuration]) {
+        $trunk = createSmsTrunk($name, $priority, $configuration);
+        if (null !== $trunk) {
+            $trunks[] = $trunk;
+        }
+    }
+
     if (2 === count($trunks)) {
-        $group = groupTrunks(array_values($trunks), $suffix);
+        $group = groupTrunks($trunks, $suffix);
     }
     if (null !== $group) {
         listGroups();

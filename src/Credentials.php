@@ -136,7 +136,7 @@ class Credentials
 
     private static function validateVersion(string $version): void
     {
-        if (!preg_match('/\A[0-9]{4}-[0-9]{2}-[0-9]{2}\z/', $version)) {
+        if (!preg_match('/\A\d{4}-\d{2}-\d{2}\z/', $version)) {
             throw new \InvalidArgumentException(sprintf('API version must be a YYYY-MM-DD date, got "%s"', $version));
         }
         if (strcmp($version, self::DEFAULT_API_VERSION) < 0) {

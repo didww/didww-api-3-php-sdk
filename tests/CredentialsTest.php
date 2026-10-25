@@ -27,7 +27,7 @@ class CredentialsTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('API version 2026-04-16 is not supported: this SDK requires 2026-10-22 or later; use didww/didww-api-3-php-sdk 10.x (branch release-10) for 2026-04-16');
 
-        new Credentials('PLACEYOURAPIKEYHERE', 'sandbox', '2026-04-16');
+        self::create('PLACEYOURAPIKEYHERE', 'sandbox', '2026-04-16');
     }
 
     public static function malformedVersionProvider(): array
@@ -41,7 +41,7 @@ class CredentialsTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('API version must be a YYYY-MM-DD date');
 
-        new Credentials('PLACEYOURAPIKEYHERE', 'sandbox', $version);
+        self::create('PLACEYOURAPIKEYHERE', 'sandbox', $version);
     }
 
     public function testScope()
@@ -55,7 +55,7 @@ class CredentialsTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Scope must be "read" or "full", got "admin"');
 
-        new Credentials('k', 'sandbox', null, 'admin');
+        self::create('k', 'sandbox', null, 'admin');
     }
 
     public static function unknownEnvironmentProvider(): array
@@ -69,7 +69,7 @@ class CredentialsTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Environment must be "production" or "sandbox"');
 
-        new Credentials('k', $env);
+        self::create('k', $env);
     }
 
     public function testEmptyApiKeyRejected()
@@ -77,7 +77,7 @@ class CredentialsTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('API key is required');
 
-        new Credentials('', 'sandbox');
+        self::create('', 'sandbox');
     }
 
     public static function invalidApiKeyProvider(): array
@@ -89,7 +89,7 @@ class CredentialsTest extends \PHPUnit\Framework\TestCase
     public function testApiKeyWithForbiddenCharactersRejected(string $apiKey)
     {
         try {
-            new Credentials($apiKey, 'sandbox');
+            self::create($apiKey, 'sandbox');
             $this->fail('Expected an InvalidArgumentException');
         } catch (\InvalidArgumentException $e) {
             $this->assertSame('API key contains characters not allowed in an HTTP header', $e->getMessage());
@@ -132,5 +132,11 @@ class CredentialsTest extends \PHPUnit\Framework\TestCase
     public function testApiKeyIsASensitiveParameter()
     {
         $this->assertNotEmpty((new \ReflectionParameter([Credentials::class, '__construct'], 'apiKey'))->getAttributes(\SensitiveParameter::class));
+    }
+
+    // Constructs Credentials for the tests that expect the constructor to throw.
+    private static function create(mixed ...$arguments): Credentials
+    {
+        return new Credentials(...$arguments);
     }
 }

@@ -407,7 +407,7 @@ class SmsTrunkTest extends CassetteTest
         $this->assertNull((new SmsTrunk(['configuration' => null]))->getConfiguration());
 
         $this->expectException(\InvalidArgumentException::class);
-        new SmsTrunk(['configuration' => 'http_in']);
+        (new SmsTrunk())->fill(['configuration' => 'http_in']);
     }
 
     public function testDebugOutputHidesCredentials()

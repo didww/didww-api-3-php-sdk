@@ -87,7 +87,7 @@ final class Attributes
         if (null === $value) {
             return null;
         }
-        if (is_int($value) || is_float($value) || (is_string($value) && preg_match('/\A-?[0-9]+(\.[0-9]+)?\z/', $value))) {
+        if (is_int($value) || is_float($value) || (is_string($value) && preg_match('/\A-?\d+(\.\d+)?\z/', $value))) {
             return (float) $value;
         }
 

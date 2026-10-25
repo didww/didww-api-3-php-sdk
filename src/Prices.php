@@ -26,6 +26,7 @@ final class Prices
 
     private function __construct()
     {
+        // Static accessors only; not meant to be instantiated.
     }
 
     /**

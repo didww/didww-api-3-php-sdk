@@ -50,9 +50,7 @@ final class BearerMiddleware
     public function __invoke(callable $handler): callable
     {
         return function (RequestInterface $request, array $options) use ($handler): PromiseInterface {
-            $audience = array_key_exists(self::AUDIENCE_OPTION, $options)
-                ? $options[self::AUDIENCE_OPTION]
-                : ($this->isPublicEndpoint($request) ? null : Audience::API);
+            $audience = $this->audience($request, $options);
             $httpErrors = !empty($options['http_errors']);
             unset($options[self::AUDIENCE_OPTION]);
             $options['allow_redirects'] = false;
@@ -91,6 +89,17 @@ final class BearerMiddleware
 
             return $this->settle($request, $response, $httpErrors);
         };
+    }
+
+    // The AUDIENCE_OPTION of the request; without it, none for a public
+    // endpoint and Audience::API for any other.
+    private function audience(RequestInterface $request, array $options): mixed
+    {
+        if (array_key_exists(self::AUDIENCE_OPTION, $options)) {
+            return $options[self::AUDIENCE_OPTION];
+        }
+
+        return $this->isPublicEndpoint($request) ? null : Audience::API;
     }
 
     // A transport error is rethrown without the token in its request.

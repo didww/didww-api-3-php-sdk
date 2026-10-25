@@ -79,6 +79,7 @@ final class NoMetadataStreamWrapper
 
     public function stream_close(): void
     {
+        // The contents stay in memory for the test; there is nothing to release.
     }
 
     public function stream_stat(): array

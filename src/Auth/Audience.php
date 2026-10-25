@@ -16,5 +16,6 @@ final class Audience
 
     private function __construct()
     {
+        // Constants only; not meant to be instantiated.
     }
 }

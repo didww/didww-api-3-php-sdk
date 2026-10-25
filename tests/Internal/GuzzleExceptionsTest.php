@@ -89,7 +89,7 @@ class GuzzleExceptionsTest extends TestCase
     {
         $inner = TraceArgs::keepingArgs(static function () {
             try {
-                (static function (array $options) {
+                (static function (array $options) { // NOSONAR $options puts the key into the trace under test
                     throw new \InvalidArgumentException('Status code must be an integer value between 1xx and 5xx.');
                 })(['headers' => ['Api-Key' => 'secret-key']]);
             } catch (\InvalidArgumentException $e) {

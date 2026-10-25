@@ -17,7 +17,10 @@ function exampleEnv(string $name): ?string
     return false === $value || '' === $value ? null : $value;
 }
 
-$apiKey = exampleEnv('DIDWW_API_KEY') ?? exit("Please provide an DIDWW API key!\n");
+$apiKey = exampleEnv('DIDWW_API_KEY');
+if (null === $apiKey) {
+    exit("Please provide an DIDWW API key!\n");
+}
 
 $credentials = new Didww\Credentials($apiKey, exampleEnv('DIDWW_ENV') ?? 'sandbox');
 

@@ -152,6 +152,7 @@ final class ResponseSink implements StreamInterface
 
     public function close(): void
     {
+        // The destination belongs to the caller, who closes it; nothing else is held.
     }
 
     public function detach()

@@ -29,6 +29,10 @@ class Export extends BaseItem
 
     private const MAX_ERROR_BODY_SIZE = 1048576;
     private const ERROR_BODY_TIMEOUT = 60;
+    private const TEMP_FILE_FAILED = 'Failed to create temporary file';
+    private const OPEN_DESTINATION_FAILED = 'Failed to open destination file for writing';
+    private const WRITE_EXPORT_FAILED = 'Failed to write the export to ';
+    private const WRITE_STREAM_FAILED = 'Failed to write the export to the destination stream';
 
     public static function getEndpoint(): string
     {
@@ -274,22 +278,9 @@ class Export extends BaseItem
         $tmpFile = false;
         $handle = false;
         try {
-            if (is_resource($dest)) {
-                $tmpFile = tempnam(sys_get_temp_dir(), 'didww_export_');
-                $handle = false === $tmpFile ? false : @fopen($tmpFile, 'w+b');
-                if (false === $handle) {
-                    return 'Failed to create temporary file';
-                }
-            } else {
-                // Next to $dest, so that the rename is atomic; created first, so
-                // that its mode follows the umask and a missing directory shows.
-                $tmpFile = $dest.'.'.bin2hex(random_bytes(8)).'.tmp';
-                $handle = @fopen($tmpFile, 'xb');
-                if (false === $handle) {
-                    $tmpFile = false;
-
-                    return 'Failed to open destination file for writing';
-                }
+            [$handle, $tmpFile] = self::openDownloadFile($dest);
+            if (false === $handle) {
+                return is_resource($dest) ? self::TEMP_FILE_FAILED : self::OPEN_DESTINATION_FAILED;
             }
 
             $result = self::fetch($url, $handle);
@@ -297,16 +288,12 @@ class Export extends BaseItem
                 return $result;
             }
             if (!is_resource($dest)) {
-                if (!fclose($handle)) {
-                    return 'Failed to write the export to '.$dest;
-                }
-
-                return @rename($tmpFile, $dest) ? true : 'Failed to write the export to '.$dest;
+                return self::moveDownloadFile($handle, $tmpFile, $dest);
             }
             rewind($handle);
             $copied = stream_copy_to_stream($handle, $dest);
 
-            return false === $copied ? 'Failed to write the export to the destination stream' : true;
+            return false === $copied ? self::WRITE_STREAM_FAILED : true;
         } finally {
             if (is_resource($handle)) {
                 fclose($handle);
@@ -342,28 +329,20 @@ class Export extends BaseItem
             $csvFile = $dest.'.'.bin2hex(random_bytes(8)).'.tmp';
             $handle = @fopen($csvFile, 'x');
             if (false === $handle) {
-                return 'Failed to open destination file for writing';
+                return self::OPEN_DESTINATION_FAILED;
             }
             fclose($handle);
         } else {
             $csvFile = tempnam(sys_get_temp_dir(), 'didww_export_');
             if (false === $csvFile) {
-                return 'Failed to create temporary file';
+                return self::TEMP_FILE_FAILED;
             }
         }
         // tempnam() creates it with mode 0600, which the download keeps.
         $gzFile = tempnam(sys_get_temp_dir(), 'didww_export_');
 
         try {
-            $gz = false === $gzFile ? false : @fopen($gzFile, 'r+b');
-            if (false === $gz) {
-                return 'Failed to create temporary file';
-            }
-            try {
-                $result = self::fetch($url, $gz);
-            } finally {
-                fclose($gz);
-            }
+            $result = self::fetchToFile($url, $gzFile);
             if (true !== $result) {
                 return $result;
             }
@@ -371,17 +350,8 @@ class Export extends BaseItem
             if (true !== $result) {
                 return $result;
             }
-            if ($ownHandle) {
-                return @rename($csvFile, $dest) ? true : 'Failed to write the export to '.$dest;
-            }
-            $source = @fopen($csvFile, 'rb');
-            if (false === $source) {
-                return 'Failed to read the decompressed export';
-            }
-            $copied = stream_copy_to_stream($source, $dest);
-            fclose($source);
 
-            return false === $copied ? 'Failed to write the export to the destination stream' : true;
+            return self::deliverCsv($csvFile, $dest, $ownHandle);
         } finally {
             foreach ([$gzFile, $csvFile] as $file) {
                 if (false !== $file && file_exists($file)) {
@@ -389,6 +359,65 @@ class Export extends BaseItem
                 }
             }
         }
+    }
+
+    // Opens the file a download is written to: a temporary file for a stream
+    // $dest, or a new file next to a path $dest, so that the rename is atomic;
+    // created first, so that its mode follows the umask and a missing directory
+    // shows. Returns the handle (false when it cannot be opened) and the file
+    // to remove afterwards (false when there is none).
+    private static function openDownloadFile($dest): array
+    {
+        if (is_resource($dest)) {
+            $tmpFile = tempnam(sys_get_temp_dir(), 'didww_export_');
+
+            return [false === $tmpFile ? false : @fopen($tmpFile, 'w+b'), $tmpFile];
+        }
+        $tmpFile = $dest.'.'.bin2hex(random_bytes(8)).'.tmp';
+        $handle = @fopen($tmpFile, 'xb');
+
+        return [$handle, false === $handle ? false : $tmpFile];
+    }
+
+    // Closes the downloaded file and moves it to the path $dest.
+    private static function moveDownloadFile($handle, string $tmpFile, string $dest): true|string
+    {
+        if (!fclose($handle)) {
+            return self::WRITE_EXPORT_FAILED.$dest;
+        }
+
+        return @rename($tmpFile, $dest) ? true : self::WRITE_EXPORT_FAILED.$dest;
+    }
+
+    // Downloads the export file into $gzFile.
+    private static function fetchToFile(string $url, string|false $gzFile): true|string
+    {
+        $gz = false === $gzFile ? false : @fopen($gzFile, 'r+b');
+        if (false === $gz) {
+            return self::TEMP_FILE_FAILED;
+        }
+        try {
+            return self::fetch($url, $gz);
+        } finally {
+            fclose($gz);
+        }
+    }
+
+    // Moves the decompressed $csvFile to the path $dest, or copies it to the
+    // stream $dest.
+    private static function deliverCsv(string $csvFile, $dest, bool $ownHandle): true|string
+    {
+        if ($ownHandle) {
+            return @rename($csvFile, $dest) ? true : self::WRITE_EXPORT_FAILED.$dest;
+        }
+        $source = @fopen($csvFile, 'rb');
+        if (false === $source) {
+            return 'Failed to read the decompressed export';
+        }
+        $copied = stream_copy_to_stream($source, $dest);
+        fclose($source);
+
+        return false === $copied ? self::WRITE_STREAM_FAILED : true;
     }
 
     // The download URL, checked by checkDownloadUrl().
@@ -467,7 +496,7 @@ class Export extends BaseItem
         if (false === $output) {
             fclose($input);
 
-            return 'Failed to open destination file for writing';
+            return self::OPEN_DESTINATION_FAILED;
         }
         $stream = null;
         try {

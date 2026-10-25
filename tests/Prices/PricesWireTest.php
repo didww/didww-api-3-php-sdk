@@ -186,7 +186,7 @@ class PricesWireTest extends TestCase
         // curl ends the stalled body with a timeout (errno 28), the error of the
         // stall limit too.
         $this->serve([$stalled, $stalled, $stalled], ['timeout' => 1]);
-        $service = Prices::voiceIn()->withRetryTiming(static function (float $seconds): void {}, static fn (): float => 0.0);
+        $service = Prices::voiceIn()->withRetryTiming(static fn () => null, static fn (): float => 0.0);
 
         $e = $this->expectPricesError(fn () => $service->download($this->path()), PricesErrorKind::SERVICE_UNAVAILABLE);
 

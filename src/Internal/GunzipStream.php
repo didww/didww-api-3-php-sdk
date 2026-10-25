@@ -64,14 +64,14 @@ final class GunzipStream
 
     public function stream_open(string $path, string $mode, int $options, ?string &$openedPath): bool
     {
-        $options = stream_context_get_options($this->context)[self::PROTOCOL] ?? [];
-        $source = $options['source'] ?? null;
+        $contextOptions = stream_context_get_options($this->context)[self::PROTOCOL] ?? [];
+        $source = $contextOptions['source'] ?? null;
         if (!is_resource($source) || !str_contains($mode, 'r')) {
             return false;
         }
         $this->source = $source;
-        $this->errorPrefix = (string) ($options['error_prefix'] ?? '');
-        $this->bomChecked = (bool) ($options['keep_bom'] ?? false);
+        $this->errorPrefix = (string) ($contextOptions['error_prefix'] ?? '');
+        $this->bomChecked = (bool) ($contextOptions['keep_bom'] ?? false);
         $this->inflate = self::newInflate();
 
         return true;

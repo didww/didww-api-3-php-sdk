@@ -202,6 +202,7 @@ class PriceFileReaderTest extends TestCase
         try {
             foreach (PriceFileReader::rows(self::fixturePath('voice_in_prices.csv.gz')) as $row) {
                 ++$calls;
+                $this->assertNotNull($row);
                 throw $stop;
             }
         } catch (\LogicException $e) {
@@ -215,6 +216,7 @@ class PriceFileReaderTest extends TestCase
         $before = count(get_resources('stream'));
         $rows = PriceFileReader::rows(self::fixturePath('voice_in_prices.csv.gz'));
         foreach ($rows as $row) {
+            $this->assertNotNull($row);
             $this->assertGreaterThan($before, count(get_resources('stream')));
             break;
         }

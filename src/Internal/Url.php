@@ -9,6 +9,7 @@ final class Url
 {
     private function __construct()
     {
+        // Static helpers only; not meant to be instantiated.
     }
 
     /**

@@ -152,7 +152,9 @@ class ExportDecompressTest extends TestCase
                 $modes[basename($file)] = fileperms($file) & 0777;
             }
         }));
-        $umask = umask(022);
+        // A umask that lets the group read new files, which the downloaded
+        // gzip must not follow.
+        $umask = umask(0027);
         try {
             $this->assertTrue($this->export()->downloadAndDecompress($this->dir.'/export.csv'));
         } finally {

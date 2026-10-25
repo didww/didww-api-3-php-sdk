@@ -88,10 +88,11 @@ if ($document->hasErrors()) {
     exit(1);
 }
 $httpIn = $document->getData();
-echo 'Created SMS trunk: '.$httpIn->getId().' - '.$httpIn->getName()."\n";
-echo '  Configuration: '.$httpIn->getConfiguration()->getType().' -> '.$httpIn->getConfiguration()->getUrl()."\n";
 
 try {
+    echo 'Created SMS trunk: '.$httpIn->getId().' - '.$httpIn->getName()."\n";
+    echo '  Configuration: '.$httpIn->getConfiguration()->getType().' -> '.$httpIn->getConfiguration()->getUrl()."\n";
+
     // The configuration type cannot change; attributes left out keep their values.
     echo "\n=== Updating HTTP IN Trunk ===\n";
     $configuration = new HttpIn();

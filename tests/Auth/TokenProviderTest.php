@@ -3,12 +3,14 @@
 namespace Didww\Tests\Auth;
 
 use Didww\Auth\MemoryTokenStore;
+use Didww\Auth\Psr16TokenStore;
 use Didww\Auth\Scope;
 use Didww\Auth\TokenProvider;
 use Didww\Auth\TokenStore;
 use Didww\Credentials;
 use Didww\Exception\AuthErrorKind;
 use Didww\Exception\DidwwAuthException;
+use Didww\Tests\Support\ArrayCache;
 use Didww\Tests\Support\ArrayLogger;
 use Didww\Tests\Support\FailingTokenStore;
 use Didww\Tests\Support\MockHttp;
@@ -564,7 +566,7 @@ class TokenProviderTest extends TestCase
     {
         $this->http->append(MockHttp::token());
         $logger = new class extends \Psr\Log\AbstractLogger {
-            public function log($level, \Stringable|string $message, array $context = []): void
+            public function log($level, $message, array $context = []): void
             {
                 throw new \RuntimeException('logger down');
             }
@@ -595,6 +597,29 @@ class TokenProviderTest extends TestCase
 
         $this->assertSame('token-1', $provider->token('api.didww.com')->getAccessToken());
         $this->assertSame(1, $this->http->count());
+    }
+
+    public function testRefusedTokenKeptByTheStoreIsNotReused()
+    {
+        $this->http->append(MockHttp::token('token-1'), MockHttp::token('token-2'));
+        $cache = new class extends ArrayCache {
+            public function delete(string $key): bool
+            {
+                return false;
+            }
+        };
+        $store = new Psr16TokenStore($cache);
+        $provider = $this->provider(store: $store);
+        $provider->token('api.didww.com');
+
+        $provider->invalidate('api.didww.com', 'token-1');
+
+        $this->assertSame('token-1', $store->get($provider->cacheKey('api.didww.com'))->getAccessToken());
+        $this->assertSame('token-2', $provider->token('api.didww.com')->getAccessToken());
+        $this->assertSame('token-2', $store->get($provider->cacheKey('api.didww.com'))->getAccessToken());
+        $this->assertSame('token-2', $provider->token('api.didww.com')->getAccessToken());
+        $this->assertSame(2, $this->http->count());
+        $this->assertSame(['DIDWW token store delete failed'], $this->logger->messages('warning'));
     }
 
     public function testStoreFailuresAreLoggedNotFatal()

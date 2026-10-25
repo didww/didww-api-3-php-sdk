@@ -6,6 +6,7 @@ use Didww\Credentials;
 use Didww\Exception\AuthErrorKind;
 use Didww\Exception\DidwwAuthException;
 use Didww\Internal\GuzzleExceptions;
+use Didww\Internal\Random;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Utils;
@@ -42,6 +43,9 @@ final class TokenProvider
     private string $authUrl;
     private string $apiKeyDigest;
 
+    /** @var array<string, string> per cache key, the refused access token that a store failing to evict it may still return, until a new token is stored */
+    private array $refused = [];
+
     /** @var callable(float): void */
     private $sleep;
     /** @var callable(): float */
@@ -71,7 +75,7 @@ final class TokenProvider
                 usleep((int) round($seconds * 1e6));
             }
         };
-        $this->random = $random ?? static fn (): float => mt_rand() / (mt_getrandmax() + 1);
+        $this->random = $random ?? static fn (): float => Random::fraction();
         $this->clock = $clock ?? static fn (): float => hrtime(true) / 1e9;
     }
 
@@ -85,7 +89,7 @@ final class TokenProvider
         $key = $this->cacheKey($audience);
         try {
             $token = $this->store->get($key);
-            if (null !== $token && '' !== $token->getAccessToken()) {
+            if (null !== $token && '' !== $token->getAccessToken() && !$this->isRefused($key, $token)) {
                 return $token;
             }
         } catch (\Throwable $e) {
@@ -95,6 +99,7 @@ final class TokenProvider
         $token = $this->mint($audience);
         try {
             $this->store->set($key, $token, $token->getExpiresIn());
+            unset($this->refused[$key]);
         } catch (\Throwable $e) {
             $this->warning('DIDWW token store write failed', $e);
         }
@@ -104,11 +109,14 @@ final class TokenProvider
 
     /**
      * Evicts the cached token for $audience only while it is still the refused
-     * one, so that a token minted meanwhile by another caller survives.
+     * one, so that a token minted meanwhile by another caller survives. The
+     * refused token is remembered, so that token() mints a new one even when
+     * the store keeps it.
      */
     public function invalidate(string $audience, #[\SensitiveParameter] string $refusedAccessToken): void
     {
         $key = $this->cacheKey($audience);
+        $this->refused[$key] = $refusedAccessToken;
         try {
             $token = $this->store->get($key);
         } catch (\Throwable $e) {
@@ -143,6 +151,11 @@ final class TokenProvider
     public static function forgetRateLimits(): void
     {
         self::$blockedUntil = [];
+    }
+
+    private function isRefused(string $key, #[\SensitiveParameter] AccessToken $token): bool
+    {
+        return isset($this->refused[$key]) && hash_equals($this->refused[$key], $token->getAccessToken());
     }
 
     private function mint(string $audience): AccessToken
@@ -304,7 +317,7 @@ final class TokenProvider
     // value counts as one second.
     private static function retryAfterSeconds(string $header): int
     {
-        if (!preg_match('/\A\s*[0-9]{1,9}\s*\z/', $header)) {
+        if (!preg_match('/\A\s*\d{1,9}\s*\z/', $header)) {
             return 1;
         }
 

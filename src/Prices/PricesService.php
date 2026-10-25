@@ -6,6 +6,7 @@ use Didww\Auth\BearerMiddleware;
 use Didww\Configuration;
 use Didww\Exception\DidwwPricesException;
 use Didww\Exception\PricesErrorKind;
+use Didww\Internal\Random;
 use Didww\Internal\Url;
 use Didww\Prices\Internal\ResponseSink;
 use GuzzleHttp\Exception\GuzzleException;
@@ -72,7 +73,7 @@ final class PricesService
                 usleep((int) round($seconds * 1e6));
             }
         };
-        $this->random = static fn (): float => mt_rand() / (mt_getrandmax() + 1);
+        $this->random = static fn (): float => Random::fraction();
     }
 
     /**
@@ -351,21 +352,28 @@ final class PricesService
         try {
             $response = $client->request($method, $url, $options);
         } catch (GuzzleException $e) {
-            if (null !== $sink->getWriteError()) {
-                throw $sink->getWriteError();
-            }
-            $response = ($e instanceof ResponseException ? $e->getResponse() : null) ?? $statsResponse;
-            if (null === $response || 200 === $response->getStatusCode()) {
-                throw new DidwwPricesException(PricesErrorKind::CONNECTION_ERROR, $response?->getStatusCode(), previous: $e);
-            }
-            if ($response !== $sink->getResponse()) {
-                $sink->begin($response);
-            }
-
-            return $response;
+            return self::answerOfFailedTransfer($e, $sink, $statsResponse);
         }
         if (null !== $sink->getWriteError()) {
             throw $sink->getWriteError();
+        }
+
+        return $response;
+    }
+
+    // The answer of a transfer that failed, for mapping, when it is not a 200
+    // and its sink took no write error; otherwise throws.
+    private static function answerOfFailedTransfer(#[\SensitiveParameter] GuzzleException $e, ResponseSink $sink, ?ResponseInterface $statsResponse): ResponseInterface
+    {
+        if (null !== $sink->getWriteError()) {
+            throw $sink->getWriteError();
+        }
+        $response = ($e instanceof ResponseException ? $e->getResponse() : null) ?? $statsResponse;
+        if (null === $response || 200 === $response->getStatusCode()) {
+            throw new DidwwPricesException(PricesErrorKind::CONNECTION_ERROR, $response?->getStatusCode(), previous: $e);
+        }
+        if ($response !== $sink->getResponse()) {
+            $sink->begin($response);
         }
 
         return $response;
@@ -493,7 +501,7 @@ final class PricesService
     {
         $value = trim($response->getHeaderLine('Retry-After'));
 
-        return preg_match('/\A[0-9]{1,9}\z/', $value) ? (int) $value : null;
+        return preg_match('/\A\d{1,9}\z/', $value) ? (int) $value : null;
     }
 
     // $retryAfter plus a random extra of up to a fifth of it, or up to a second

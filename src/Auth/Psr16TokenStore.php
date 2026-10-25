@@ -10,7 +10,8 @@ use Psr\SimpleCache\CacheInterface;
  * short-lived processes share tokens instead of minting one per request.
  *
  * Tokens are stored as arrays (AccessToken::toArray()) under keys mapped to
- * "didww_token_v1_" plus 48 hex digits, which fit the PSR-16 key rules.
+ * "didww_token_v1_" plus 48 hex digits, which fit the PSR-16 key rules. A
+ * cache that answers false to set() or delete() makes them throw.
  */
 final class Psr16TokenStore implements TokenStore
 {
@@ -30,16 +31,21 @@ final class Psr16TokenStore implements TokenStore
     public function set(string $key, #[\SensitiveParameter] AccessToken $token, int $ttl): void
     {
         try {
-            $this->cache->set(self::cacheKey($key), $token->toArray(), $ttl > 0 ? $ttl : null);
+            $stored = $this->cache->set(self::cacheKey($key), $token->toArray(), $ttl > 0 ? $ttl : null);
         } catch (\Throwable $e) {
             // Its trace holds the token as a plain array, so it is not chained.
             throw new \RuntimeException($e::class.': '.$e->getMessage());
+        }
+        if (false === $stored) {
+            throw new \UnexpectedValueException('The PSR-16 cache did not store the token');
         }
     }
 
     public function delete(string $key): void
     {
-        $this->cache->delete(self::cacheKey($key));
+        if (false === $this->cache->delete(self::cacheKey($key))) {
+            throw new \UnexpectedValueException('The PSR-16 cache did not delete the token');
+        }
     }
 
     public function __debugInfo(): array

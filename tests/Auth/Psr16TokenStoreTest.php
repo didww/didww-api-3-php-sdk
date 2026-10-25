@@ -49,6 +49,38 @@ class Psr16TokenStoreTest extends TestCase
         }
     }
 
+    public function testWriteAnsweredFalseThrows()
+    {
+        $cache = new class extends ArrayCache {
+            public function set(string $key, mixed $value, \DateInterval|int|null $ttl = null): bool
+            {
+                return false;
+            }
+        };
+
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('The PSR-16 cache did not store the token');
+
+        (new Psr16TokenStore($cache))->set(self::KEY, new AccessToken('t1', 'Bearer', 900, ['api.didww.com'], 'full', '2026-10-22', new \DateTimeImmutable()), 900);
+    }
+
+    public function testDeleteAnsweredFalseThrows()
+    {
+        $cache = new class extends ArrayCache {
+            public function delete(string $key): bool
+            {
+                return false;
+            }
+        };
+        $store = new Psr16TokenStore($cache);
+        $store->set(self::KEY, new AccessToken('t1', 'Bearer', 900, ['api.didww.com'], 'full', '2026-10-22', new \DateTimeImmutable()), 900);
+
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('The PSR-16 cache did not delete the token');
+
+        $store->delete(self::KEY);
+    }
+
     public function testTtlZeroMeansNoExpiry()
     {
         $cache = new ArrayCache();
