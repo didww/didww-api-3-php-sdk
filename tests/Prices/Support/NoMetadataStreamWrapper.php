@@ -15,6 +15,8 @@ final class NoMetadataStreamWrapper
 
     public static bool $failRename = false;
 
+    public static bool $failWrite = false;
+
     /** @var resource|null */
     public $context;
 
@@ -26,6 +28,7 @@ final class NoMetadataStreamWrapper
     {
         self::$files = [];
         self::$failRename = false;
+        self::$failWrite = false;
         if (!in_array(self::PROTOCOL, stream_get_wrappers(), true)) {
             stream_wrapper_register(self::PROTOCOL, self::class);
         }
@@ -62,6 +65,9 @@ final class NoMetadataStreamWrapper
 
     public function stream_write(string $data): int
     {
+        if (self::$failWrite) {
+            return 0;
+        }
         self::$files[$this->path] .= $data;
 
         return strlen($data);

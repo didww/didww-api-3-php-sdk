@@ -7,11 +7,13 @@ use Didww\Credentials;
 use Didww\Exception\AuthErrorKind;
 use Didww\Exception\DidwwAuthException;
 use Didww\Item\Export;
+use Didww\Tests\Prices\Support\NoMetadataStreamWrapper;
 use Didww\Tests\Support\ConfiguresMockHttp;
 use Didww\Tests\Support\ListsDirectoryFiles;
 use Didww\Tests\Support\MockHttp;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\TransferStats;
@@ -123,6 +125,42 @@ class ExportDownloadTest extends TestCase
         $this->assertSame([$dest], $this->files());
     }
 
+    public function testDestinationWriteFailureReturnsMessage()
+    {
+        $this->configureMock()->append(MockHttp::token(), new Response(200, ['Retry-After' => '30'], 'gzip-bytes'));
+        NoMetadataStreamWrapper::register();
+        NoMetadataStreamWrapper::$failWrite = true;
+        $retryAfter = 99;
+        try {
+            $result = $this->export()->download(NoMetadataStreamWrapper::PROTOCOL.'://exports/export.csv.gz', $retryAfter);
+        } finally {
+            NoMetadataStreamWrapper::unregister();
+        }
+
+        $this->assertSame('Failed to write the downloaded export', $result);
+        $this->assertNull($retryAfter);
+    }
+
+    public function testFailureAfterTheHeadersKeepsTheStatus()
+    {
+        // A handler that reports the answer only to on_stats before the
+        // transfer fails, without an exception that carries it.
+        $this->configureMock()->append(MockHttp::token());
+        $this->http->stack->push(static fn (callable $handler) => static function (RequestInterface $request, array $options) use ($handler) {
+            if ('/token' === $request->getUri()->getPath()) {
+                return $handler($request, $options);
+            }
+            $options['on_stats'](new TransferStats($request, new Response(503, ['Retry-After' => '5'])));
+
+            return Create::rejectionFor(new ConnectException('cURL error 56: Recv failure', $request));
+        });
+        $retryAfter = null;
+
+        $this->assertSame('Export download failed with status 503', $this->export()->download($this->dir.'/export.csv.gz', $retryAfter));
+        $this->assertSame(5, $retryAfter);
+        $this->assertSame([], $this->files());
+    }
+
     public function testTransportFailureReturnsMessage()
     {
         $this->configureMock()->append(MockHttp::token(), new ConnectException('cURL error 28: Operation timed out', new Request('GET', self::URL)));
@@ -176,7 +214,8 @@ class ExportDownloadTest extends TestCase
         try {
             $this->export()->{$method}($this->dir."/export\0.csv.gz");
             $this->fail('expected a ValueError');
-        } catch (\ValueError) {
+        } catch (\ValueError $e) {
+            $this->assertSame('The destination path must not contain any null bytes', $e->getMessage());
         }
         $this->assertSame(0, $this->http->count());
         $this->assertSame([], $this->files());

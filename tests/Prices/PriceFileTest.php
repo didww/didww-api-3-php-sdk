@@ -657,7 +657,8 @@ class PriceFileTest extends TestCase
         try {
             Prices::voiceIn()->download($this->path("prices\0.csv.gz"));
             $this->fail('expected a ValueError');
-        } catch (\ValueError) {
+        } catch (\ValueError $e) {
+            $this->assertSame('The destination path must not contain any null bytes', $e->getMessage());
         }
         $this->assertSame(0, $this->http->count());
         $this->assertSame([], $this->dirEntries());
