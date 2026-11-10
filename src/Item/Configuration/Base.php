@@ -2,7 +2,6 @@
 
 namespace Didww\Item\Configuration;
 
-use Didww\Enum\Codec;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\ReroutingDisconnectCode;
 use Didww\Enum\RxDtmfFormat;
@@ -99,14 +98,6 @@ abstract class Base
     }
 
     /**
-     * @return Codec[]
-     */
-    public static function getCodecs(): array
-    {
-        return Codec::cases();
-    }
-
-    /**
      * @return ReroutingDisconnectCode[]
      */
     public static function getDefaultReroutingDisconnectCodeIds(): array
@@ -157,20 +148,6 @@ abstract class Base
             ReroutingDisconnectCode::SIP_604_DOES_NOT_EXIST_ANYWHERE,
             ReroutingDisconnectCode::SIP_606_NOT_ACCEPTABLE,
             ReroutingDisconnectCode::RINGING_TIMEOUT,
-        ];
-    }
-
-    /**
-     * @return Codec[]
-     */
-    public static function getDefaultCodecIds(): array
-    {
-        return [
-            Codec::PCMU,
-            Codec::PCMA,
-            Codec::G729,
-            Codec::G723,
-            Codec::TELEPHONE_EVENT,
         ];
     }
 

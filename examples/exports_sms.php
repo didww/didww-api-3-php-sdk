@@ -8,16 +8,18 @@
 //     from inclusive, to exclusive
 //   - setFilterSourceAddressEq() / setFilterSourceAddressCont(),
 //     setFilterDestinationAddressEq() / setFilterDestinationAddressCont(),
-//     setFilterStatus(), setFilterSmsId()
+//     setFilterStatus() (sms_in: success, failed, queued; sms_out:
+//     routing_error, in_progress, queued, failed, success), setFilterSmsId()
 //   - setFilterSmsTrunkId(): one id or an array of ids
 //   - sms_in only: setFilterTrunkType(), one or more Didww\Enum\ExportTrunkType
-//   - sms_out only: setFilterServiceType() ("a2p" or "p2p"),
+//   - sms_out only: setFilterServiceType(), a Didww\Enum\ExportServiceType,
 //     setFilterSenderIdVerificationId()
 //
 // Usage: DIDWW_API_KEY=your_api_key php examples/exports_sms.php
 
 require_once 'bootstrap.php';
 
+use Didww\Enum\ExportServiceType;
 use Didww\Enum\ExportStatus;
 use Didww\Enum\ExportTrunkType;
 use Didww\Enum\ExportType;
@@ -48,7 +50,7 @@ $smsOut = new Export();
 $smsOut->setExportType(ExportType::SMS_OUT);
 $smsOut->setFilterFrom($from);
 $smsOut->setFilterTo($to);
-$smsOut->setFilterServiceType('a2p');
+$smsOut->setFilterServiceType(ExportServiceType::A2P);
 $smsOut->setExternalReferenceId("php-sms-out-$suffix");
 createExport($smsOut, 'SMS-Out export (A2P, yesterday)');
 
@@ -56,9 +58,9 @@ $smsIn = new Export();
 $smsIn->setExportType(ExportType::SMS_IN);
 $smsIn->setFilterFrom($from);
 $smsIn->setFilterTo($to);
-$smsIn->setFilterTrunkType([ExportTrunkType::HTTP_IN, ExportTrunkType::EMAIL]);
+$smsIn->setFilterTrunkType([ExportTrunkType::HTTP_IN, ExportTrunkType::SMS_TO_EMAIL]);
 $smsIn->setExternalReferenceId("php-sms-in-$suffix");
-createExport($smsIn, 'SMS-In export (HTTP IN and email trunks, yesterday)');
+createExport($smsIn, 'SMS-In export (HTTP IN and SMS to email trunks, yesterday)');
 
 echo "=== Completed SMS-Out exports ===\n";
 $completed = Export::all(['filter' => [

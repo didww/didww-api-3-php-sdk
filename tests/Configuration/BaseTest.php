@@ -2,7 +2,6 @@
 
 namespace Didww\Tests\Configuration;
 
-use Didww\Enum\Codec;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\ReroutingDisconnectCode;
 use Didww\Enum\RxDtmfFormat;
@@ -48,13 +47,6 @@ class BaseTest extends \PHPUnit\Framework\TestCase
         $this->assertContainsOnlyInstancesOf(ReroutingDisconnectCode::class, $options);
     }
 
-    public function testGetCodecs()
-    {
-        $options = \Didww\Item\Configuration\Base::getCodecs();
-        $this->assertCount(13, $options);
-        $this->assertContainsOnlyInstancesOf(Codec::class, $options);
-    }
-
     public function testGetDefaultReroutingDisconnectCodeIds()
     {
         $options = \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds();
@@ -62,11 +54,10 @@ class BaseTest extends \PHPUnit\Framework\TestCase
         $this->assertContainsOnlyInstancesOf(ReroutingDisconnectCode::class, $options);
     }
 
-    public function testGetDefaultCodecIds()
+    public function testNoDefaultCodecList()
     {
-        $options = \Didww\Item\Configuration\Base::getDefaultCodecIds();
-        $this->assertCount(5, $options);
-        $this->assertContainsOnlyInstancesOf(Codec::class, $options);
+        // The server chooses the codecs of a trunk created without them.
+        $this->assertFalse(method_exists(\Didww\Item\Configuration\Base::class, 'getDefaultCodecIds'));
     }
 
     public function testGetMediaEncryptionModes()

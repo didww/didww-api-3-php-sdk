@@ -109,6 +109,10 @@ class Identity extends BaseItem
         $this->attributes['company_reg_number'] = $companyRegNumber;
     }
 
+    /**
+     * VAT identification number, listed as `tax_id` in the mandatory fields
+     * of AddressRequirement and EmergencyRequirement.
+     */
     public function getVatId(): ?string
     {
         return $this->attribute('vat_id');

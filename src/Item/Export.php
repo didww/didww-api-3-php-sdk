@@ -3,12 +3,15 @@
 namespace Didww\Item;
 
 use Didww\Enum\CallbackMethod;
+use Didww\Enum\ExportServiceType;
 use Didww\Enum\ExportStatus;
 use Didww\Enum\ExportTrunkType;
 use Didww\Enum\ExportType;
 use Didww\Internal\GunzipStream;
+use Didww\Internal\TempFile;
 use Didww\Internal\Url;
 use Didww\Prices\Internal\ResponseSink;
+use Didww\RetryAfter;
 use Didww\Traits\Fetchable;
 use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
@@ -137,8 +140,9 @@ class Export extends BaseItem
     }
 
     /**
-     * sms_in, sms_out: messages in this state, e.g. `Success`, `Failed`,
-     * `Queued` (sms_in) or `Routing Error`, `In Progress` (sms_out).
+     * sms_in, sms_out: messages in this state: `success`, `failed` or
+     * `queued` (sms_in); `routing_error`, `in_progress`, `queued`, `failed` or
+     * `success` (sms_out).
      */
     public function setFilterStatus(string $status)
     {
@@ -173,10 +177,10 @@ class Export extends BaseItem
             : ($trunkType instanceof \BackedEnum ? $trunkType->value : $trunkType);
     }
 
-    /** sms_out: `a2p` or `p2p` traffic, in any letter case. */
-    public function setFilterServiceType(string $serviceType)
+    /** sms_out: `a2p` or `p2p` traffic. */
+    public function setFilterServiceType(ExportServiceType|string $serviceType)
     {
-        $this->filters['service_type'] = $serviceType;
+        $this->filters['service_type'] = $serviceType instanceof \BackedEnum ? $serviceType->value : $serviceType;
     }
 
     /**
@@ -265,15 +269,23 @@ class Export extends BaseItem
      * seconds. A path $dest is replaced atomically and left untouched on
      * failure.
      *
-     * @param string|resource $dest a file path or a writable stream
+     * A 429 (`too_many_requests`) means that the request budget of the
+     * account is spent. It is not retried: wait $retryAfter seconds before
+     * downloading again.
+     *
+     * @param string|resource $dest       a file path or a writable stream
+     * @param int|null        $retryAfter set to the Retry-After seconds of an answer other than 200 (see RetryAfter::seconds()), otherwise null
+     *
+     * @param-out int|null $retryAfter
      *
      * @return true|string true, or an error message when the download failed
      *
      * @throws \InvalidArgumentException           when the URL is missing or on another origin
      * @throws \Didww\Exception\DidwwAuthException when no access token can be obtained
      */
-    public function download($dest)
+    public function download($dest, ?int &$retryAfter = null)
     {
+        $retryAfter = null;
         $url = $this->downloadUrl();
         $tmpFile = false;
         $handle = false;
@@ -283,7 +295,7 @@ class Export extends BaseItem
                 return is_resource($dest) ? self::TEMP_FILE_FAILED : self::OPEN_DESTINATION_FAILED;
             }
 
-            $result = self::fetch($url, $handle);
+            $result = self::fetch($url, $handle, $retryAfter);
             if (true !== $result) {
                 return $result;
             }
@@ -312,21 +324,26 @@ class Export extends BaseItem
      * $dest is replaced atomically and left untouched on failure; a stream
      * $dest is written only after the whole file has been decompressed.
      *
-     * @param string|resource $dest a file path or a writable stream
+     * @param string|resource $dest       a file path or a writable stream
+     * @param int|null        $retryAfter set like that of download()
+     *
+     * @param-out int|null $retryAfter
      *
      * @return true|string true, or an error message when the download or the decompression failed
      *
      * @throws \InvalidArgumentException           when the URL is missing or on another origin
      * @throws \Didww\Exception\DidwwAuthException when no access token can be obtained
      */
-    public function downloadAndDecompress($dest)
+    public function downloadAndDecompress($dest, ?int &$retryAfter = null)
     {
+        $retryAfter = null;
         $url = $this->downloadUrl();
         $ownHandle = !is_resource($dest);
         if ($ownHandle) {
-            // Next to $dest, so that the rename is atomic; created first, so
-            // that its mode follows the umask and a missing directory shows.
-            $csvFile = $dest.'.'.bin2hex(random_bytes(8)).'.tmp';
+            // In the directory of $dest, so that the rename is atomic; created
+            // first, so that its mode follows the umask and a missing
+            // directory shows.
+            $csvFile = TempFile::pathNextTo($dest);
             $handle = @fopen($csvFile, 'x');
             if (false === $handle) {
                 return self::OPEN_DESTINATION_FAILED;
@@ -342,7 +359,7 @@ class Export extends BaseItem
         $gzFile = tempnam(sys_get_temp_dir(), 'didww_export_');
 
         try {
-            $result = self::fetchToFile($url, $gzFile);
+            $result = self::fetchToFile($url, $gzFile, $retryAfter);
             if (true !== $result) {
                 return $result;
             }
@@ -362,9 +379,9 @@ class Export extends BaseItem
     }
 
     // Opens the file a download is written to: a temporary file for a stream
-    // $dest, or a new file next to a path $dest, so that the rename is atomic;
-    // created first, so that its mode follows the umask and a missing directory
-    // shows. Returns the handle (false when it cannot be opened) and the file
+    // $dest, or a new file in the directory of a path $dest, so that the
+    // rename is atomic; created first, so that its mode follows the umask and
+    // a missing directory shows. Returns the handle (false when it cannot be opened) and the file
     // to remove afterwards (false when there is none).
     private static function openDownloadFile($dest): array
     {
@@ -373,7 +390,7 @@ class Export extends BaseItem
 
             return [false === $tmpFile ? false : @fopen($tmpFile, 'w+b'), $tmpFile];
         }
-        $tmpFile = $dest.'.'.bin2hex(random_bytes(8)).'.tmp';
+        $tmpFile = TempFile::pathNextTo($dest);
         $handle = @fopen($tmpFile, 'xb');
 
         return [$handle, false === $handle ? false : $tmpFile];
@@ -390,14 +407,14 @@ class Export extends BaseItem
     }
 
     // Downloads the export file into $gzFile.
-    private static function fetchToFile(string $url, string|false $gzFile): true|string
+    private static function fetchToFile(string $url, string|false $gzFile, ?int &$retryAfter): true|string
     {
         $gz = false === $gzFile ? false : @fopen($gzFile, 'r+b');
         if (false === $gz) {
             return self::TEMP_FILE_FAILED;
         }
         try {
-            return self::fetch($url, $gz);
+            return self::fetch($url, $gz, $retryAfter);
         } finally {
             fclose($gz);
         }
@@ -435,8 +452,9 @@ class Export extends BaseItem
     // Sends the download request and writes the body of a 200 answer to
     // $handle; returns true or an error message. The body of any other answer
     // is read up to MAX_ERROR_BODY_SIZE bytes within ERROR_BODY_TIMEOUT
-    // seconds, after which the transfer is aborted.
-    private static function fetch(string $url, $handle): true|string
+    // seconds, after which the transfer is aborted; its Retry-After goes to
+    // $retryAfter.
+    private static function fetch(string $url, $handle, ?int &$retryAfter): true|string
     {
         $sink = new ResponseSink($handle, false, self::MAX_ERROR_BODY_SIZE, self::ERROR_BODY_TIMEOUT);
         $client = \Didww\Configuration::getHttpClient();
@@ -477,6 +495,9 @@ class Export extends BaseItem
             return 'Failed to write the downloaded export';
         }
         $status = $response->getStatusCode();
+        if (200 !== $status) {
+            $retryAfter = RetryAfter::seconds($response);
+        }
         if (200 === $status && !$sink->isComplete($response)) {
             return 'Export download failed: incomplete body';
         }

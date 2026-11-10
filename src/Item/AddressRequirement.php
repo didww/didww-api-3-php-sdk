@@ -60,19 +60,29 @@ class AddressRequirement extends BaseItem // NOSONAR
     }
 
     /**
-     * Null when no field is mandatory for a personal identity.
+     * Identity fields that must be filled in for a personal identity, by the
+     * field names as the API spells them, among `birth_date`, `country`,
+     * `birth_country`, `id_number`, `personal_tax_id` and `contact_email`.
+     * Empty when none are.
+     *
+     * @return list<string>
      */
-    public function getPersonalMandatoryFields(): ?array
+    public function getPersonalMandatoryFields(): array
     {
-        return $this->attribute('personal_mandatory_fields');
+        return $this->attribute('personal_mandatory_fields') ?? [];
     }
 
     /**
-     * Null when no field is mandatory for a business identity.
+     * Identity fields that must be filled in for a business identity, by the
+     * field names as the API spells them, among `id_number`, `tax_id`
+     * (Identity::getVatId()), `country`, `company_reg_number`,
+     * `personal_tax_id` and `contact_email`. Empty when none are.
+     *
+     * @return list<string>
      */
-    public function getBusinessMandatoryFields(): ?array
+    public function getBusinessMandatoryFields(): array
     {
-        return $this->attribute('business_mandatory_fields');
+        return $this->attribute('business_mandatory_fields') ?? [];
     }
 
     public function getServiceDescriptionRequired(): bool

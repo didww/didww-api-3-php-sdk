@@ -2,6 +2,7 @@
 
 namespace Didww\Item;
 
+use Didww\RetryAfter;
 use Didww\Traits\Deletable;
 use Didww\Traits\Fetchable;
 use Didww\UploadResult;
@@ -34,8 +35,10 @@ class EncryptedFile extends BaseItem
      * encrypted_files[description].
      *
      * The body is built in memory, so the upload is sent once more with a new
-     * access token when the API refuses the current one. A transport failure
-     * gives an UploadResult with response code 0.
+     * access token when the API refuses the current one. An error status is
+     * reported in the UploadResult, with getRetryAfter() for a 429
+     * (`too_many_requests`), which is not retried. A transport failure gives
+     * an UploadResult with response code 0.
      *
      * @throws \Didww\Exception\DidwwAuthException when no access token can be obtained
      */
@@ -79,7 +82,7 @@ class EncryptedFile extends BaseItem
             return new UploadResult(false, 0);
         }
 
-        return new UploadResult((string) $response->getBody(), $response->getStatusCode());
+        return new UploadResult((string) $response->getBody(), $response->getStatusCode(), RetryAfter::seconds($response));
     }
 
     private static function buildDataFiles(string $delimiter, array $files, array $fields): string

@@ -3,6 +3,8 @@
 require_once 'bootstrap.php';
 
 use Didww\Enum\CliFormat;
+use Didww\Enum\Codec;
+use Didww\Enum\IceMode;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\TransportProtocol;
@@ -15,7 +17,9 @@ $trunkSipConfig = new Didww\Item\Configuration\Sip([
     'transport_protocol_id' => TransportProtocol::UDP,
     'media_encryption_mode' => MediaEncryptionMode::DISABLED,
     'port' => 5060,
-    'codec_ids' => Didww\Item\Configuration\Base::getDefaultCodecIds(),
+    // codec names in priority order; left out, the trunk offers pcmu, pcma, g729, g723 and telephone_event
+    'codecs' => [Codec::PCMA, Codec::PCMU, Codec::TELEPHONE_EVENT],
+    'ice_mode' => IceMode::ACCEPT,
     'rerouting_disconnect_code_ids' => Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
 ]);
 
@@ -42,7 +46,7 @@ if ($trunkDocument->hasErrors()) {
         $trunk->getCliFormat(), // CliFormat::RAW
         $trunk->getCreatedAt(), // object(DateTime)
         $trunk->getRingingTimeout(), // int(30)
-        $trunk->getPop() // null (DIDWW chooses) or a Didww\Enum\Pop, e.g. Pop::NYC
+        $trunk->getPop() // null (DIDWW chooses) or a Didww\Enum\Pop, e.g. Pop::NYC ("nyc")
     );
 
     // Configuration enum getters
@@ -50,6 +54,7 @@ if ($trunkDocument->hasErrors()) {
     var_dump(
         $sip->getSstRefreshMethodId(), // SstRefreshMethod::INVITE
         $sip->getMediaEncryptionMode(), // MediaEncryptionMode::DISABLED
-        $sip->getCodecIds() // [Codec::PCMU, Codec::PCMA, ...]
+        $sip->getCodecs(), // [Codec::PCMA, Codec::PCMU, Codec::TELEPHONE_EVENT]
+        $sip->getIceMode() // IceMode::ACCEPT
     );
 }

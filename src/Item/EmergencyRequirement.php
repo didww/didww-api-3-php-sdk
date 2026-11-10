@@ -49,16 +49,38 @@ class EmergencyRequirement extends BaseItem
         return $this->attribute('business_area_level');
     }
 
+    /**
+     * Address fields that must be filled in, by the field names as the API
+     * spells them (`area`). Empty when none are.
+     *
+     * @return list<string>
+     */
     public function getAddressMandatoryFields(): array
     {
         return $this->attributes['address_mandatory_fields'];
     }
 
+    /**
+     * Fields that must be filled in for a personal identity, by the field
+     * names as the API spells them, among `birth_date`, `country`,
+     * `id_number`, `personal_tax_id` and `contact_email`. Empty when none are.
+     *
+     * @return list<string>
+     */
     public function getPersonalMandatoryFields(): array
     {
         return $this->attributes['personal_mandatory_fields'];
     }
 
+    /**
+     * Fields that must be filled in for a business identity, by the field
+     * names as the API spells them, among `id_number`, `tax_id`
+     * (Identity::getVatId()), `country`, `company_reg_number`,
+     * `personal_tax_id`, `contact_email` and `birth_date`. Empty when none
+     * are.
+     *
+     * @return list<string>
+     */
     public function getBusinessMandatoryFields(): array
     {
         return $this->attributes['business_mandatory_fields'];

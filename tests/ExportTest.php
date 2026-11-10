@@ -2,6 +2,7 @@
 
 namespace Didww\Tests;
 
+use Didww\Enum\ExportServiceType;
 use Didww\Enum\ExportTrunkType;
 use Didww\Enum\ExportType;
 
@@ -86,7 +87,7 @@ class ExportTest extends CassetteTest
         $export->setExportType(ExportType::SMS_IN);
         $export->setFilterFrom('2026-10-01 00:00:00');
         $export->setFilterTo('2026-10-15 00:00:00');
-        $export->setFilterTrunkType([ExportTrunkType::SMPP_SMSC, 'HTTP IN']);
+        $export->setFilterTrunkType([ExportTrunkType::SMPP_SMSC, 'http_in']);
         $export->setFilterDestinationAddressEq('12125550100');
 
         $this->assertSame([
@@ -96,7 +97,7 @@ class ExportTest extends CassetteTest
                 'filters' => [
                     'from' => '2026-10-01 00:00:00',
                     'to' => '2026-10-15 00:00:00',
-                    'trunk_type' => ['SMPP SMSC', 'HTTP IN'],
+                    'trunk_type' => ['smpp_smsc', 'http_in'],
                     'destination_address_eq' => '12125550100',
                 ],
             ],
@@ -116,7 +117,7 @@ class ExportTest extends CassetteTest
         $export->setFilterFrom('2026-10-01 00:00:00');
         $export->setFilterTo('2026-10-15 00:00:00');
         $export->setFilterSmsTrunkId(['b2c3d4e5-0000-4000-8000-000000000001', 'b2c3d4e5-0000-4000-8000-000000000003']);
-        $export->setFilterServiceType('a2p');
+        $export->setFilterServiceType(ExportServiceType::A2P);
         $export->setFilterSenderIdVerificationId('c3d4e5f6-0000-4000-8000-000000000002');
 
         $this->assertSame([
@@ -151,11 +152,11 @@ class ExportTest extends CassetteTest
         $export->setFilterSourceAddressCont('AC');
         $export->setFilterDestinationAddressEq('12125550105');
         $export->setFilterDestinationAddressCont('1212');
-        $export->setFilterStatus('Success');
+        $export->setFilterStatus('routing_error');
         $export->setFilterSmsTrunkId('b2c3d4e5-0000-4000-8000-000000000001');
         $export->setFilterSmsId('sms-1');
-        $export->setFilterTrunkType(ExportTrunkType::EMAIL);
-        $export->setFilterServiceType('P2P');
+        $export->setFilterTrunkType(ExportTrunkType::SMS_TO_EMAIL);
+        $export->setFilterServiceType('p2p');
         $export->setFilterSenderIdVerificationId(['c3d4e5f6-0000-4000-8000-000000000002']);
         $export->setFilter('future_key', ExportTrunkType::HTTP_IN);
 
@@ -170,13 +171,13 @@ class ExportTest extends CassetteTest
             'source_address_cont' => 'AC',
             'destination_address_eq' => '12125550105',
             'destination_address_cont' => '1212',
-            'status' => 'Success',
+            'status' => 'routing_error',
             'sms_trunk.id' => 'b2c3d4e5-0000-4000-8000-000000000001',
             'sms_id' => 'sms-1',
-            'trunk_type' => 'Email',
-            'service_type' => 'P2P',
+            'trunk_type' => 'sms_to_email',
+            'service_type' => 'p2p',
             'sender_id_verification.id' => ['c3d4e5f6-0000-4000-8000-000000000002'],
-            'future_key' => 'HTTP IN',
+            'future_key' => 'http_in',
         ], $export->toJsonApiArray()['attributes']['filters']);
     }
 
@@ -185,10 +186,10 @@ class ExportTest extends CassetteTest
         $export = new \Didww\Item\Export();
         $export->setFilterSmsTrunkId(array_unique(['a', 'a', 'b']));
         $export->setFilterSenderIdVerificationId(array_filter(['c', '', 'd']));
-        $export->setFilterTrunkType(array_filter([ExportTrunkType::EMAIL, null, ExportTrunkType::HTTP_IN]));
+        $export->setFilterTrunkType(array_filter([ExportTrunkType::SMS_TO_EMAIL, null, ExportTrunkType::HTTP_IN]));
 
         $this->assertSame(
-            '{"sms_trunk.id":["a","b"],"sender_id_verification.id":["c","d"],"trunk_type":["Email","HTTP IN"]}',
+            '{"sms_trunk.id":["a","b"],"sender_id_verification.id":["c","d"],"trunk_type":["sms_to_email","http_in"]}',
             json_encode($export->toJsonApiArray()['attributes']['filters'])
         );
     }

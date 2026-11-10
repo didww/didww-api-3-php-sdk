@@ -41,12 +41,13 @@ class PriceFileReaderTest extends TestCase
             'Src country name' => '',
             'Source type' => 'cellular',
             'Destination' => '44800',
-            'Rate (USD, excl. VAT)' => '',
-            'Connection fee (USD, excl. VAT)' => '',
+            'Rate' => '',
+            'Connection fee' => '',
             'Initial interval' => '60',
             'Next interval' => '60',
             'Reject calls' => 'true',
         ], $rows[0]);
+        $this->assertSame('0.0125', $rows[1]['Rate']);
         $this->assertSame(['44800', '4480012', '1800', '1800'], array_column($rows, 'Destination'));
     }
 
@@ -54,7 +55,7 @@ class PriceFileReaderTest extends TestCase
     {
         $rows = self::rows(self::fixturePath('voice_out_prices.csv.gz'));
 
-        $this->assertCount(4, $rows);
+        $this->assertCount(5, $rows);
         $this->assertSame([
             'Category' => 'International',
             'Country' => 'Germany',
@@ -62,8 +63,8 @@ class PriceFileReaderTest extends TestCase
             'Prefix' => '4930',
             'Rate' => '0.0045',
             'Connection fee' => '0.0',
-            'Initial Increment' => '1',
-            'Recurring Increment' => '1',
+            'Initial increment' => '1',
+            'Recurring increment' => '1',
             'Reject calls' => 'false',
             'Next rate' => '0.005',
             'Next connection fee' => '0.0',
@@ -73,10 +74,10 @@ class PriceFileReaderTest extends TestCase
             'Comment' => 'Increase and Billing increment change',
         ], $rows[0]);
         $this->assertSame('Origin based', $rows[1]['Category']);
-        $this->assertSame('99950,99951,99952', $rows[2]['Prefix']);
-        $this->assertSame('New Breakout', $rows[3]['Network']);
-        $this->assertSame('', $rows[3]['Rate']);
-        $this->assertSame('true', $rows[3]['Reject calls']);
+        $this->assertSame(['99950', '99951'], [$rows[2]['Prefix'], $rows[3]['Prefix']]);
+        $this->assertSame('New Breakout', $rows[4]['Network']);
+        $this->assertSame('', $rows[4]['Rate']);
+        $this->assertSame('true', $rows[4]['Reject calls']);
     }
 
     public function testReadsStreamFromCurrentPositionAndLeavesItOpen()

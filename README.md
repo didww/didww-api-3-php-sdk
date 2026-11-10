@@ -297,6 +297,8 @@ $requirements = Didww\Item\AddressRequirement::all()->getData();
 $balance = Didww\Item\Balance::find()->getData();
 ```
 
+`AddressRequirement::getPersonalMandatoryFields()` and `getBusinessMandatoryFields()` list the identity fields that must be filled in, by the field names as the API spells them: `birth_date`, `country`, `birth_country`, `id_number`, `personal_tax_id` and `contact_email` for a personal identity, and `id_number`, `tax_id`, `country`, `company_reg_number`, `personal_tax_id` and `contact_email` for a business one. `tax_id` is the VAT number of the identity (`Identity::getVatId()`). Each list is empty when no field is mandatory, never `null`. `EmergencyRequirement` has the same getters, also by API field name, with its own lists: `birth_date`, `country`, `id_number`, `personal_tax_id` and `contact_email` for a personal identity, `id_number`, `tax_id`, `country`, `company_reg_number`, `personal_tax_id`, `contact_email` and `birth_date` for a business one, and `getAddressMandatoryFields()` with `area`.
+
 `DidGroup`, `AddressRequirement`, `EmergencyRequirement` and `EmergencyCallingService` have `getNumberType()`, which returns a `Didww\Enum\NumberType` (`LOCAL`, `NATIONAL`, `MOBILE`, `TOLL_FREE`, `SHARED_COST`, `GLOBAL`), or the raw string for a value this SDK does not know. `DidGroup::getIsDemo()` flags demo groups.
 
 ### DIDs
@@ -382,6 +384,7 @@ $trunk = $trunk->save()->getData();
 ```php
 use Didww\Enum\CliFormat;
 use Didww\Enum\Codec;
+use Didww\Enum\IceMode;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\TransportProtocol;
@@ -390,7 +393,8 @@ use Didww\Enum\TransportProtocol;
 $sip = new Didww\Item\Configuration\Sip([
     'host' => 'sip.example.com',
     'port' => 5060,
-    'codec_ids' => Didww\Item\Configuration\Base::getDefaultCodecIds(),
+    'codecs' => [Codec::PCMA, Codec::PCMU, Codec::TELEPHONE_EVENT],
+    'ice_mode' => IceMode::ACCEPT,
     'transport_protocol_id' => TransportProtocol::UDP,
     'sst_refresh_method_id' => SstRefreshMethod::INVITE,
     'media_encryption_mode' => MediaEncryptionMode::DISABLED,
@@ -414,7 +418,9 @@ $trunk->save();
 $trunk->delete();
 ```
 
-`pop` is a plain string attribute. `getPop()` returns a `Didww\Enum\Pop` (`NYC`, `FRA`, `LAC`, `MIA`, `SG`, `HK`, `AMS`), or the raw string for a value this SDK does not know; `setPop()` takes a `Pop`, a string, or `null` to let DIDWW choose. It is no longer a relationship and cannot be included.
+`codecs` lists the codecs offered on calls to the trunk by name, in priority order: the first has the highest priority. It replaces `codec_ids`; `setCodecs()` and the constructor take `Didww\Enum\Codec` cases or strings, and `getCodecs()` returns `Codec` cases (the raw string for a name this SDK does not know). Left out, the trunk offers `pcmu`, `pcma`, `g729`, `g723` and `telephone_event`. `ice_mode`, `rtcp_mux_mode` and `rtcp_feedback_mode` take `disabled` (the default), `accept` or `initiate` (`Didww\Enum\IceMode`, `RtcpMuxMode` and `RtcpFeedbackMode`).
+
+`pop` is a plain string attribute. `getPop()` returns a `Didww\Enum\Pop` (`NYC`, `FRA`, `LAC`, `MIA`, `SG`, `HK`, `AMS`: `nyc`, `fra`, `lac`, `mia`, `sg`, `hk`, `ams`), or the raw string for a value this SDK does not know; `setPop()` takes a `Pop`, a string, or `null` to let DIDWW choose. It is no longer a relationship and cannot be included.
 
 ```php
 $trunk = Didww\Item\VoiceInTrunk::find('trunk-uuid')->getData();
@@ -474,6 +480,8 @@ $group->setCapacityLimit(50);
 $groupDocument = $group->save();
 ```
 
+Deleting a trunk group also deletes the trunks in it. It is refused (422) while the group or one of its trunks is routed to a DID: route those DIDs elsewhere first.
+
 ### Voice Out Trunks
 
 Voice Out Trunks use a polymorphic `authentication_method` (2026-04-16). Three types are supported:
@@ -484,6 +492,7 @@ Voice Out Trunks use a polymorphic `authentication_method` (2026-04-16). Three t
 
 ```php
 use Didww\Enum\OnCliMismatchAction;
+use Didww\Enum\VoiceOutCodec;
 use Didww\Item\AuthenticationMethod\CredentialsAndIp;
 
 $trunk = new Didww\Item\VoiceOutTrunk();
@@ -494,11 +503,14 @@ $trunk->setAuthenticationMethod(new CredentialsAndIp([
     'allowed_sip_ips' => ['203.0.113.0/24'],
 ]));
 $trunk->setOnCliMismatchAction(OnCliMismatchAction::REPLACE_CLI);
+$trunk->setCodecs([VoiceOutCodec::OPUS, VoiceOutCodec::PCMA, VoiceOutCodec::TELEPHONE_EVENT]);
 $trunk->setDefaultDid(Didww\Item\Did::build('did-uuid'));
 $trunkDocument = $trunk->save();
 // $trunkDocument->getData()->getAuthenticationMethod()->getUsername() -- server-generated
 // $trunkDocument->getData()->getAuthenticationMethod()->getPassword() -- server-generated
 ```
+
+`codecs` lists the codecs offered on calls from the trunk by name, in priority order: the first has the highest priority. The names are the `Didww\Enum\VoiceOutCodec` cases, which differ from those of an inbound SIP trunk (`Codec`); `getCodecs()` returns the raw string for a name this SDK does not know. Left out, the trunk offers `pcma`, `pcmu` and `telephone_event`. `ice_mode`, `rtcp_mux_mode` and `rtcp_feedback_mode` take `disabled`, `accept` (the default) or `initiate` (`setIceMode()`, `setRtcpMuxMode()` and `setRtcpFeedbackMode()`).
 
 ### SMS Trunks
 
@@ -659,6 +671,10 @@ $reservation = new Didww\Item\DidReservation();
 $reservation->setDescription('Reserved for client');
 $reservation->setAvailableDid(Didww\Item\AvailableDid::build('available-did-uuid'));
 $reservationDocument = $reservation->save();
+$reservationDocument->getData()->getExpiresAt(); // \DateTime
+
+// The reservations that expire first
+$reservations = Didww\Item\DidReservation::all(['sort' => 'expires_at'])->getData();
 
 // Delete reservation
 $reservation->delete();
@@ -706,6 +722,7 @@ $addressDocument = $address->save();
 ### Exports
 
 ```php
+use Didww\Enum\ExportServiceType;
 use Didww\Enum\ExportType;
 
 // CDR export
@@ -720,7 +737,7 @@ $export = new Didww\Item\Export();
 $export->setExportType(ExportType::SMS_OUT);
 $export->setFilterFrom('2026-10-01 00:00:00');
 $export->setFilterTo('2026-10-02 00:00:00');
-$export->setFilterServiceType('a2p');
+$export->setFilterServiceType(ExportServiceType::A2P);
 $export->setFilterSmsTrunkId(['sms-trunk-uuid']); // sent as "sms_trunk.id"
 $export = $export->save()->getData();
 
@@ -741,11 +758,13 @@ if ($export->isCompleted()) {
 - `cdr_out`: `setFilterVoiceOutTrunkId()` (`voice_out_trunk.id`), `setFilterSource()`, `setFilterCli()`, `setFilterDestination()`;
 - `sms_in` and `sms_out`: `setFilterSourceAddressEq()`, `setFilterSourceAddressCont()`, `setFilterDestinationAddressEq()`, `setFilterDestinationAddressCont()`, `setFilterStatus()`, `setFilterSmsId()`, `setFilterSmsTrunkId()` (`sms_trunk.id`, one id or an array of ids);
 - `sms_in` only: `setFilterTrunkType()`, one or more `Didww\Enum\ExportTrunkType` values;
-- `sms_out` only: `setFilterServiceType()` (`a2p` or `p2p`) and `setFilterSenderIdVerificationId()` (`sender_id_verification.id`, one id or an array of ids).
+- `sms_out` only: `setFilterServiceType()`, a `Didww\Enum\ExportServiceType` value, and `setFilterSenderIdVerificationId()` (`sender_id_verification.id`, one id or an array of ids).
+
+Filter values are lowercase: `service_type` is `a2p` or `p2p`, `trunk_type` is one or more of `smpp_smsc`, `smpp_esme`, `sms_to_email` and `http_in`, and `status` is `success`, `failed` or `queued` for `sms_in`, and `routing_error`, `in_progress`, `queued`, `failed` or `success` for `sms_out`.
 
 `setFilter($key, $value)` sets any other key.
 
-`download()` and `downloadAndDecompress()` take a file path or a writable stream and return `true`, or an error message string when the download failed (an HTTP status other than 200, a transport or a file error). `download()` replaces a path only when the download succeeds. Because the bearer token is sent with it, the export URL must be on the origin (scheme, host and port) of the JSON:API base URL or of the environment's API URL, which the API builds export URLs on even when `baseUrl:` points elsewhere; any other URL throws an `\InvalidArgumentException` and nothing is sent. Redirects are not followed, and the body of an error answer is read for the message up to 1 MiB within 60 s. A token that cannot be obtained throws a `DidwwAuthException`.
+`download()` and `downloadAndDecompress()` take a file path or a writable stream and return `true`, or an error message string when the download failed (an HTTP status other than 200, a transport or a file error). `download()` replaces a path only when the download succeeds. Because the bearer token is sent with it, the export URL must be on the origin (scheme, host and port) of the JSON:API base URL or of the environment's API URL, which the API builds export URLs on even when `baseUrl:` points elsewhere; any other URL throws an `\InvalidArgumentException` and nothing is sent. Redirects are not followed, and the body of an error answer is read for the message up to 1 MiB within 60 s. A download to a path is written through a temporary file `.didww-<16 hex digits>.tmp` in the directory of the path. Both take an optional second argument, set to the `Retry-After` seconds of an answer other than 200 (`null` when there is none), as in `$export->download($path, $retryAfter)`; see [Error Handling](#error-handling). A token that cannot be obtained throws a `DidwwAuthException`.
 
 ### Address Verifications
 
@@ -867,10 +886,10 @@ $prices->download($stream); // any writable stream resource or Psr\Http\Message\
 ```
 
 - `fetch($path)` sends the modification time of the file at `$path` as `If-Modified-Since`, when the file is there; an unchanged price file is answered 304 and the file is kept. A file written by `download($path)` or `fetch()` gets the `Last-Modified` of the response as its modification time, so the date matches the copy on disk. On a stream wrapper that cannot set modification times (no `stream_metadata()`), the file keeps the time it was written, so use `download($path, $file->getLastModified())` with the date you kept instead of `fetch()` there. `fetch()` trusts the modification time of any file at `$path`: a file copied or changed by other means can be answered 304 and kept, so replace such a file with `download($path)`.
-- `download($path)` and `fetch()` write the body into a temporary file next to `$path`, unique to the call, which gets the mode of a new file (`0666` minus the umask) and replaces `$path` atomically only on a 200. A 304 or an error leaves an existing file untouched, the temporary file is always removed, and concurrent downloads to one path do not mix their bytes.
+- `download($path)` and `fetch()` write the body into a temporary file `.didww-<16 hex digits>.tmp` in the directory of `$path`, unique to the call, which gets the mode of a new file (`0666` minus the umask) and replaces `$path` atomically only on a 200. A 304 or an error leaves an existing file untouched, the temporary file is always removed, and concurrent downloads to one path do not mix their bytes.
 - `download($stream, $ifModifiedSince = null)` writes the body into the stream only on a 200, as it arrives, so after a transfer error the stream may hold part of it. An exception thrown by the stream propagates as is.
 - `head()`, `download()` and `fetch()` return a `Didww\Prices\PriceFile`: `getStatusCode()`, `getLastModified()` (`null` when absent), `getContentLength()`, `getFilename()`, `getBytesWritten()` and `isNotModified()`.
-- `PriceFileReader::rows($pathOrStream)` gunzips a downloaded file and yields each row as an array keyed by the header line as is. The Voice OUT file has 15 columns. The SMS OUT files have 9: `Source prefix`, `Destination prefix`, `Country`, `MCC`, `MCC name`, `MNC`, `MNC name`, `Reject SMS` and `Price (USD, excl. VAT)`. The rows are read lazily. Input that is not gzip, a file cut short and a row whose field count differs from the header throw an `\UnexpectedValueException`, after the rows before it have been yielded. A path that cannot be opened throws a `\RuntimeException` when the rows are first read.
+- `PriceFileReader::rows($pathOrStream)` gunzips a downloaded file and yields each row as an array keyed by the header line as is. Prices are in USD with VAT excluded. Voice IN: `Country`, `Src country name`, `Source type`, `Destination`, `Rate`, `Connection fee`, `Initial interval`, `Next interval` and `Reject calls`. Voice OUT: `Category`, `Country`, `Network`, `Prefix` (one prefix per row), `Rate`, `Connection fee`, `Initial increment`, `Recurring increment`, `Reject calls`, `Next rate`, `Next connection fee`, `Next initial increment`, `Next recurring increment`, `Effective date` and `Comment`. SMS OUT: `Source prefix`, `Destination prefix`, `Country`, `MCC`, `MCC name`, `MNC`, `MNC name`, `Reject SMS` (`true` or `false`) and `Price`. SMS IN: `Source prefix`, `Source number length min`, `Source number length max`, `Destination prefix`, `Destination number length min`, `Destination number length max`, `Country` and `Price`. The rows are read lazily. Input that is not gzip, a file cut short and a row whose field count differs from the header throw an `\UnexpectedValueException`, after the rows before it have been yielded. A path that cannot be opened throws a `\RuntimeException` when the rows are first read.
 - Only `Last-Modified` and `If-Modified-Since` are used. The service sends no `ETag`, and the SDK never sends `If-None-Match`, which would make the service ignore `If-Modified-Since`.
 - A 503 on a price file is retried up to 2 times when its `Retry-After` is 60 seconds or less, after waiting that long (at least 1 s) plus a small random delay so that clients do not retry in step. Otherwise it throws `PricesErrorKind::SERVICE_UNAVAILABLE` with `getRetryAfter()`. Lookups are not retried. The wait blocks the process: **run price file downloads from the command line or a scheduled job (cron), not within a web request.**
 - A 404 `price_not_found` throws `PricesErrorKind::PRICE_NOT_FOUND`; any other 404, `price_plan_not_assigned` included, and any 404 on `head()`, which has no body, throws `PricesErrorKind::PRICE_PLAN_NOT_ASSIGNED`. `getErrorCode()` holds the code of the answer, or `price_plan_not_assigned` for a 404 without one.
@@ -917,6 +936,22 @@ if ($document->hasErrors()) {
 ```
 
 The authentication failures of the API arrive the same way: a 401 still answered after the token was replaced once, and a 403 such as `insufficient_scope` for a write with a `read` token, which is never retried, are document errors with `getStatus()` `"401"` or `"403"`. `EncryptedFile::upload()` reports any error status in its `UploadResult` (`success()`, `getResponseCode()`, `getErrors()`), and a transport failure as response code 0. `Export::download()` returns an error message for any status other than 200. A transport failure of a JSON:API call throws the Guzzle exception (`GuzzleHttp\Exception\TransferException`) as before.
+
+A 429 (`too_many_requests`) means the request budget of the account for the current window is spent. It arrives the same way: as a document error with `getStatus()` `"429"`, in the `UploadResult` of `EncryptedFile::upload()`, or as the error message of `Export::download()` and `downloadAndDecompress()`. The SDK does not retry it, as a write may not be safe to send twice: wait the `Retry-After` seconds before sending the request again. `Didww\RetryAfter::seconds($document)` reads them from the document of a JSON:API call, `UploadResult::getRetryAfter()` from an upload, and the optional second argument of the export downloads is set to them. Each is the `Retry-After` of an error answer, whatever its status, and `null` when it is missing or not a number of seconds.
+
+```php
+use Didww\RetryAfter;
+
+$document = $trunk->save();
+if ($document->hasErrors() && '429' === $document->getErrors()->first()->getStatus()) {
+    echo 'API rate limit, retry after ' . RetryAfter::seconds($document) . " s\n";
+}
+
+$result = $export->download('/var/data/export.csv.gz', $retryAfter);
+if (true !== $result && null !== $retryAfter) {
+    echo "$result, retry after $retryAfter s\n";
+}
+```
 
 The token service and the prices services throw exceptions instead, which carry a kind:
 
@@ -1075,7 +1110,7 @@ echo $identity->getBirthDate()->format('Y-m-d');    // e.g. "1990-05-20"
 
 ## Enums
 
-The SDK provides PHP 8.2+ backed enum classes for all API option fields (for example `CallbackMethod`, `IdentityType`, `OrderStatus`, `ExportType`, `CliFormat`, `OnCliMismatchAction`, `MediaEncryptionMode`, `TransportProtocol`, `Codec`, and more).
+The SDK provides PHP 8.2+ backed enum classes for all API option fields (for example `CallbackMethod`, `IdentityType`, `OrderStatus`, `ExportType`, `CliFormat`, `OnCliMismatchAction`, `MediaEncryptionMode`, `TransportProtocol`, `Codec`, `VoiceOutCodec`, `IceMode`, and more).
 
 ```php
 use Didww\Enum\CallbackMethod;
@@ -1098,7 +1133,7 @@ $trunk->setOnCliMismatchAction(OnCliMismatchAction::REPLACE_CLI);
 $trunk->setOnCliMismatchAction('replace_cli');
 ```
 
-Getters of the newer attributes (`getNumberType()`, `getPop()`, the SMS trunk configuration and Sender ID verification getters, `VoiceOutPrice::getCategory()`) return the enum, or the raw string for a value this SDK version does not know yet.
+Getters of the newer attributes (`getNumberType()`, `getPop()`, `getCodecs()`, `getIceMode()`, `getRtcpMuxMode()`, `getRtcpFeedbackMode()`, the SMS trunk configuration and Sender ID verification getters, `VoiceOutPrice::getCategory()`) return the enum, or the raw string for a value this SDK version does not know yet.
 
 ### Available Enums
 
@@ -1112,7 +1147,8 @@ Namespace `Didww\Enum`, unless noted:
 | `CallbackMethod` | `string` | `POST`, `GET` |
 | `ExportType` | `string` | `CDR_IN`, `CDR_OUT`, `SMS_IN`, `SMS_OUT` |
 | `ExportStatus` | `string` | `PENDING`, `PROCESSING`, `COMPLETED` |
-| `ExportTrunkType` | `string` | `SMPP_SMSC`, `SMPP_ESME`, `EMAIL`, `HTTP_IN` (`trunk_type` filter of `sms_in` exports) |
+| `ExportTrunkType` | `string` | `SMPP_SMSC`, `SMPP_ESME`, `SMS_TO_EMAIL`, `HTTP_IN` (`trunk_type` filter of `sms_in` exports) |
+| `ExportServiceType` | `string` | `A2P`, `P2P` (`service_type` filter of `sms_out` exports) |
 | `AddressVerificationStatus` | `string` | `PENDING`, `APPROVED`, `REJECTED` |
 | `MediaEncryptionMode` | `string` | `DISABLED`, `SRTP_SDES`, `SRTP_DTLS`, `ZRTP` |
 | `StirShakenMode` | `string` | `DISABLED`, `ORIGINAL`, `PAI`, `ORIGINAL_PAI`, `VERSTAT` |
@@ -1122,13 +1158,15 @@ Namespace `Didww\Enum`, unless noted:
 | `Feature` | `string` | `VOICE_IN`, `VOICE_OUT`, `T38`, `SMS_IN`, `P2P`, `A2P`, `EMERGENCY`, `CNAM_OUT` |
 | `AreaLevel` | `string` | `WORLDWIDE`, `COUNTRY`, `AREA`, `CITY` |
 | `NumberType` | `string` | `LOCAL`, `NATIONAL`, `MOBILE`, `TOLL_FREE`, `SHARED_COST`, `GLOBAL` |
-| `Pop` | `string` | `NYC`, `FRA`, `LAC`, `MIA`, `SG`, `HK`, `AMS` |
+| `Pop` | `string` | `NYC`, `FRA`, `LAC`, `MIA`, `SG`, `HK`, `AMS` (values in lowercase, such as `nyc`) |
 | `SenderIdVerificationStatus` | `string` | `ACTIVE`, `CHANGES_REQUIRED`, `CLOSED`, `CLOSING_IN_PROCESS`, `IN_PROCESS`, `NEW` |
 | `SenderType` | `string` | `ALPHANUMERIC`, `CARRIER`, `LONG_CODE`, `SHORT_CODE`, `TOLL_FREE` |
 | `SmsHttpMethod` | `string` | `GET`, `POST`, `PUT` |
 | `SmsBodyType` | `string` | `JSON`, `HTML_MULTIPART`, `HTML_URL_ENCODED`, `RAW` |
 | `SmsServerLocation` | `string` | `NYC`, `AMS` |
-| `Codec` | `int` | `TELEPHONE_EVENT(6)`, `G723(7)`, `G729(8)`, `PCMU(9)`, `PCMA(10)`, ... |
+| `Codec` | `string` | Codecs of an inbound SIP trunk: `TELEPHONE_EVENT`, `G723`, `G729`, `PCMU`, `PCMA`, `SPEEX`, `GSM`, `G726_32`, `G721`, `G726_24`, `G726_40`, `G726_16`, `L16`, `AMR`, `AMR_WB` |
+| `VoiceOutCodec` | `string` | Codecs of a Voice OUT trunk: `TELEPHONE_EVENT`, `G723`, `G729`, `PCMU`, `PCMA`, `GSM`, `G722`, `OPUS`, `AMR`, `AMR_WB` |
+| `IceMode`, `RtcpMuxMode`, `RtcpFeedbackMode` | `string` | `DISABLED`, `ACCEPT`, `INITIATE` |
 | `TransportProtocol` | `int` | `UDP(1)`, `TCP(2)`, `TLS(3)` |
 | `RxDtmfFormat` | `int` | `RFC_2833(1)`, `SIP_INFO(2)`, `RFC_2833_OR_SIP_INFO(3)` |
 | `TxDtmfFormat` | `int` | `DISABLED(0)`, `RFC_2833(1)`, `SIP_INFO_RELAY(2)`, `SIP_INFO_DTMF(4)` |
@@ -1155,6 +1193,8 @@ $encData = $enc->encrypt($fileContents);
 $uploadResult = Didww\Item\EncryptedFile::upload($fingerprint, $encData, 'file description');
 if ($uploadResult->success()) {
     echo $uploadResult->getId() . "\n";
+} elseif (429 === $uploadResult->getResponseCode()) {
+    echo 'Retry after ' . $uploadResult->getRetryAfter() . " s\n";
 }
 ```
 
@@ -1204,13 +1244,15 @@ Most code keeps working: `new Credentials($apiKey, $env)` and `Configuration::co
 - **API version.** `X-DIDWW-API-Version` is no longer sent: the version is requested in the token. The default is `2026-10-22`, and an earlier version throws an `\InvalidArgumentException`. A `null` version in `Credentials` now means the default, not "send no version".
 - **Validation.** `Credentials` and `configure()` throw an `\InvalidArgumentException` for invalid values (see [Validation](#validation)). An environment other than `production` and `sandbox` is rejected; 10.x fell back to the sandbox.
 - **Removed methods.** `Didww\Client::setApiKey()` and `Client::setVersion()` are removed: authentication and the API version come from `Credentials` and `configure()`.
+- **Codecs.** The SIP configuration of a Voice IN trunk takes codec names: `Sip::getCodecs()` and `setCodecs()` (the `codecs` attribute) replace `getCodecIds()` and `setCodecIds()` (`codec_ids`), and `Didww\Enum\Codec` is backed by the names (`'pcmu'`) instead of the ids (`9`). `Configuration\Base::getDefaultCodecIds()` and `Base::getCodecs()` are removed: the server chooses the codecs of a trunk created without them, and `Codec::cases()` lists the names.
+- **API values.** `ProofType::getEntityType()` and the `entity_type` filter of proof types use `address`, `business` and `personal`; the filter refuses another spelling, such as `Address`. `AddressRequirement::getPersonalMandatoryFields()` and `getBusinessMandatoryFields()` return an empty array when no field is mandatory; 10.x declared them `array` but returned the attribute as sent, so the `null` that API `2026-04-16` sends in that case threw a `TypeError`. The address requirement lists `tax_id` instead of `vat_id`, and the emergency requirement lists API field names, such as `tax_id` and `area`, instead of labels (see [Read-Only Resources](#read-only-resources)).
 - **Removed resources.** `Didww\Item\Pop` and `Didww\Item\DidGroupType` are removed, with the `did_group_type` relationship. `DidGroup`, `AddressRequirement`, `EmergencyRequirement` and `EmergencyCallingService` have `getNumberType()` instead of `didGroupType()`; filter with `number_type` instead of `did_group_type.id`. `VoiceInTrunk::pop()` is removed and `setPop()` takes a `Didww\Enum\Pop`, a string or `null`; read it with `getPop()`.
 - **HTTP defaults.** 10.x used the Guzzle defaults (redirects followed, responses decompressed, no timeouts). 11.x connects within 10 s, aborts a transfer that stalls (under 1 byte/s) for 60 s, follows no redirects and decompresses nothing (see [HTTP client](#http-client-proxy-tls-timeouts)). A `timeout` you pass, such as `['timeout' => 20]`, still works, but it now also bounds price and export file downloads.
 - **Export download and file upload.** `Export::download()`, `Export::downloadAndDecompress()` and `EncryptedFile::upload()` go through the Guzzle client of the SDK with the bearer token. An export downloads only from the API origin (an `\InvalidArgumentException` otherwise), only a 200 succeeds, and redirects are not followed; the `true|string` result is unchanged.
 - **Guzzle 8.** `guzzlehttp/guzzle` `^8.0.1` is required (10.x allowed Guzzle 7). Guzzle 8 changes its own API, so update any code of yours that uses Guzzle directly, such as a `handler`, middleware or callbacks you pass in `$httpClientConfig`, following Guzzle's upgrade guide. In particular a transport failure of a JSON:API call now throws Guzzle 8's exception classes: only a `GuzzleHttp\Exception\ResponseException` (such as a timeout after the response headers, `ResponseTimeoutException`) has `getResponse()`, a `ConnectException` or `NetworkException` has none, and `getHandlerContext()` is gone.
 - **Requirements.** `ext-zlib` and `psr/log` are now required.
 
-New in 11.0.0: [SMS trunks](#sms-trunks), [SMS trunk groups](#sms-trunk-groups), [Sender ID verifications](#sender-id-verifications), [DID SMS routing](#sms-routing), `sms_in` and `sms_out` [exports](#exports), [prices](#prices), `DidGroup::getIsDemo()`, `Identity` company website, and the `scope:`, `tokenStore:`, `logger:` and URL arguments of `configure()`.
+New in 11.0.0: [SMS trunks](#sms-trunks), [SMS trunk groups](#sms-trunk-groups), [Sender ID verifications](#sender-id-verifications), [DID SMS routing](#sms-routing), `sms_in` and `sms_out` [exports](#exports), [prices](#prices), `DidGroup::getIsDemo()`, `Identity` company website, the `codecs`, `ice_mode`, `rtcp_mux_mode` and `rtcp_feedback_mode` of [Voice OUT trunks](#voice-out-trunks) and of the SIP configuration of [Voice IN trunks](#voice-in-trunks) (`Didww\Enum\VoiceOutCodec`, `IceMode`, `RtcpMuxMode` and `RtcpFeedbackMode`), `Didww\Enum\ExportServiceType`, the `Retry-After` of a 429 (`Didww\RetryAfter`, `UploadResult::getRetryAfter()` and the `$retryAfter` argument of the export downloads, see [Error Handling](#error-handling)), and the `scope:`, `tokenStore:`, `logger:` and URL arguments of `configure()`.
 
 ## Development
 

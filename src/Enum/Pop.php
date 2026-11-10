@@ -7,11 +7,11 @@ namespace Didww\Enum;
  */
 enum Pop: string
 {
-    case NYC = 'NYC';
-    case FRA = 'FRA';
-    case LAC = 'LAC';
-    case MIA = 'MIA';
-    case SG = 'SG';
-    case HK = 'HK';
-    case AMS = 'AMS';
+    case NYC = 'nyc';
+    case FRA = 'fra';
+    case LAC = 'lac';
+    case MIA = 'mia';
+    case SG = 'sg';
+    case HK = 'hk';
+    case AMS = 'ams';
 }

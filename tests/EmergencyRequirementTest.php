@@ -21,8 +21,8 @@ class EmergencyRequirementTest extends CassetteTest
         $this->assertEquals('city', $first->getAddressAreaLevel());
         $this->assertEquals('country', $first->getPersonalAreaLevel());
         $this->assertNull($first->getBusinessAreaLevel());
-        $this->assertEquals(['street', 'city', 'postal_code'], $first->getAddressMandatoryFields());
-        $this->assertEquals(['first_name', 'last_name'], $first->getPersonalMandatoryFields());
+        $this->assertEquals(['area'], $first->getAddressMandatoryFields());
+        $this->assertEquals(['birth_date', 'id_number'], $first->getPersonalMandatoryFields());
         $this->assertEquals([], $first->getBusinessMandatoryFields());
         $this->assertEquals('7-14 days', $first->getEstimateSetupTime());
         $this->assertNull($first->getRequirementRestrictionMessage());

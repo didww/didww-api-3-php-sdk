@@ -219,7 +219,7 @@ Two other kinds of filters follow the list endpoints: the [`filters` of an expor
 
 ## ProofType — `GET /v3/proof_types`
 
-- `filter[entity_type]`
+- `filter[entity_type]` — `address`, `business` or `personal`
 
 ## Region — `GET /v3/regions`
 
@@ -302,11 +302,11 @@ Set them with the `Didww\Item\Export` setters, or with `setFilter($key, $value)`
 | `source_address_cont` | `sms_in`, `sms_out` | `setFilterSourceAddressCont()` |
 | `destination_address_eq` | `sms_in`, `sms_out` | `setFilterDestinationAddressEq()` |
 | `destination_address_cont` | `sms_in`, `sms_out` | `setFilterDestinationAddressCont()` |
-| `status` | `sms_in` (`Success`, `Failed`, `Queued`), `sms_out` (`Routing Error`, `In Progress`, `Queued`, `Failed`, `Success`) | `setFilterStatus()` |
+| `status` | `sms_in` (`success`, `failed`, `queued`), `sms_out` (`routing_error`, `in_progress`, `queued`, `failed`, `success`) | `setFilterStatus()` |
 | `sms_id` | `sms_in`, `sms_out` | `setFilterSmsId()` |
 | `sms_trunk.id` | `sms_in`, `sms_out` — one id or an array of ids | `setFilterSmsTrunkId()` |
-| `trunk_type` | `sms_in` — one or an array of `Didww\Enum\ExportTrunkType` values | `setFilterTrunkType()` |
-| `service_type` | `sms_out` — `a2p` or `p2p`, in any letter case | `setFilterServiceType()` |
+| `trunk_type` | `sms_in` — one or an array of `Didww\Enum\ExportTrunkType` values (`smpp_smsc`, `smpp_esme`, `sms_to_email`, `http_in`) | `setFilterTrunkType()` |
+| `service_type` | `sms_out` — a `Didww\Enum\ExportServiceType` value (`a2p` or `p2p`) | `setFilterServiceType()` |
 | `sender_id_verification.id` | `sms_out` — one id or an array of ids | `setFilterSenderIdVerificationId()` |
 
 ## Price lookups — `GET /v3/…/lookup/prices`

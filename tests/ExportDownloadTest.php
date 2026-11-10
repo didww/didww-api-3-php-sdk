@@ -8,8 +8,10 @@ use Didww\Exception\AuthErrorKind;
 use Didww\Exception\DidwwAuthException;
 use Didww\Item\Export;
 use Didww\Tests\Support\ConfiguresMockHttp;
+use Didww\Tests\Support\ListsDirectoryFiles;
 use Didww\Tests\Support\MockHttp;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\TransferStats;
@@ -21,6 +23,7 @@ use Psr\Http\Message\ResponseInterface;
 class ExportDownloadTest extends TestCase
 {
     use ConfiguresMockHttp;
+    use ListsDirectoryFiles;
 
     private const EXPORT_ID = '9df99644-f1a5-4a3c-99a4-559d758eb96b';
     private const URL = 'https://sandbox-api.didww.com/v3/exports/9df99644-f1a5-4a3c-99a4-559d758eb96b.csv.gz';
@@ -36,7 +39,7 @@ class ExportDownloadTest extends TestCase
     protected function tearDown(): void
     {
         TokenProvider::forgetRateLimits();
-        foreach (glob($this->dir.'/*') as $file) {
+        foreach ($this->files() as $file) {
             unlink($file);
         }
         rmdir($this->dir);
@@ -51,7 +54,7 @@ class ExportDownloadTest extends TestCase
         $this->assertTrue($this->export()->download($dest));
 
         $this->assertSame($gzip, file_get_contents($dest));
-        $this->assertSame([$dest], glob($this->dir.'/*'), 'no temporary file is left behind');
+        $this->assertSame([$dest], $this->files(), 'no temporary file is left behind');
         $request = $this->http->request(1);
         $this->assertSame(self::URL, (string) $request->getUri());
         $this->assertSame('Bearer token-1', $request->getHeaderLine('Authorization'));
@@ -103,7 +106,7 @@ class ExportDownloadTest extends TestCase
         $this->assertSame($message, $this->export()->download($dest));
 
         $this->assertSame('previous', file_get_contents($dest));
-        $this->assertSame([$dest], glob($this->dir.'/*'));
+        $this->assertSame([$dest], $this->files());
         $this->assertSame(2, $this->http->count(), 'a redirect is not followed');
     }
 
@@ -117,7 +120,7 @@ class ExportDownloadTest extends TestCase
         $this->assertSame('Export download failed: incomplete body', $this->export()->download($dest));
 
         $this->assertSame('previous', file_get_contents($dest));
-        $this->assertSame([$dest], glob($this->dir.'/*'));
+        $this->assertSame([$dest], $this->files());
     }
 
     public function testTransportFailureReturnsMessage()
@@ -126,7 +129,57 @@ class ExportDownloadTest extends TestCase
         $dest = $this->dir.'/export.csv.gz';
 
         $this->assertSame('Export download failed: cURL error 28: Operation timed out', $this->export()->download($dest));
-        $this->assertSame([], glob($this->dir.'/*'));
+        $this->assertSame([], $this->files());
+    }
+
+    public static function longNameProvider(): array
+    {
+        return [
+            'download' => ['download', 'gzip-bytes', 'gzip-bytes'],
+            'download and decompress' => ['downloadAndDecompress', gzencode("a,b\n1,2\n"), "a,b\n1,2\n"],
+        ];
+    }
+
+    #[DataProvider('longNameProvider')]
+    public function testLongDestinationNameUsesShortTemporaryName(string $method, string $body, string $written)
+    {
+        $name = str_repeat('e', 243).'.csv.gz';
+        $during = null;
+        $this->configureMock()->append(MockHttp::token(), new Response(200, [], $body));
+        $this->http->stack->push(Middleware::tap(function (RequestInterface $request) use (&$during): void {
+            if ('/token' !== $request->getUri()->getPath()) {
+                $during = array_map('basename', $this->files());
+            }
+        }));
+
+        $this->assertTrue($this->export()->{$method}($this->dir.'/'.$name));
+
+        $this->assertCount(1, $during);
+        $this->assertMatchesRegularExpression('/\A\.didww-[0-9a-f]{16}\.tmp\z/', $during[0]);
+        $this->assertSame($written, file_get_contents($this->dir.'/'.$name));
+        $this->assertSame([$this->dir.'/'.$name], $this->files());
+    }
+
+    public static function downloadMethodProvider(): array
+    {
+        return [
+            'download' => ['download'],
+            'download and decompress' => ['downloadAndDecompress'],
+        ];
+    }
+
+    #[DataProvider('downloadMethodProvider')]
+    public function testNullByteInDestinationFailsBeforeRequest(string $method)
+    {
+        $this->configureMock()->append(MockHttp::token(), new Response(200, [], gzencode("a,b\n1,2\n")));
+
+        try {
+            $this->export()->{$method}($this->dir."/export\0.csv.gz");
+            $this->fail('expected a ValueError');
+        } catch (\ValueError) {
+        }
+        $this->assertSame(0, $this->http->count());
+        $this->assertSame([], $this->files());
     }
 
     public function testMissingDirectoryReturnsMessage()
@@ -183,7 +236,7 @@ class ExportDownloadTest extends TestCase
         } catch (DidwwAuthException $e) {
             $this->assertSame(AuthErrorKind::INVALID_CLIENT, $e->getKind());
         }
-        $this->assertSame([], glob($this->dir.'/*'));
+        $this->assertSame([], $this->files());
     }
 
     public static function originProvider(): array
@@ -230,7 +283,7 @@ class ExportDownloadTest extends TestCase
             $this->assertStringContainsString('does not match the API base URL', $e->getMessage());
         }
         $this->assertSame(0, $this->http->count());
-        $this->assertSame([], glob($this->dir.'/*'));
+        $this->assertSame([], $this->files());
     }
 
     public function testMissingUrlThrows()

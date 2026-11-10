@@ -15,7 +15,7 @@ final class PriceFileReader
 
     /**
      * Yields the rows of a gzipped price file, each keyed by the header line
-     * as is (for example "Rate (USD, excl. VAT)").
+     * as is (for example "Rate").
      *
      * A UTF-8 byte order mark is skipped, empty lines are skipped and a file
      * with only a header has no rows; bytes are not transcoded. Input that is

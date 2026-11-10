@@ -12,6 +12,7 @@ use Didww\Tests\Prices\Support\NoMetadataStreamWrapper;
 use Didww\Tests\Prices\Support\PricesHelpers;
 use Didww\Tests\Support\TraceArgs;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
@@ -620,14 +621,46 @@ class PriceFileTest extends TestCase
 
     public function testDownloadToPathLeavesOtherTempFiles()
     {
-        file_put_contents($this->path().'.tmp', 'concurrent download');
+        file_put_contents($this->path('.didww-0123456789abcdef.tmp'), 'concurrent download');
         $this->configureMock()->append(self::voiceInToken(), self::priceFile($this->gzip));
 
         Prices::voiceIn()->download($this->path());
 
         $this->assertSame($this->gzip, file_get_contents($this->path()));
-        $this->assertSame('concurrent download', file_get_contents($this->path().'.tmp'));
-        $this->assertSame(['voice_in_prices.csv.gz', 'voice_in_prices.csv.gz.tmp'], $this->dirEntries());
+        $this->assertSame('concurrent download', file_get_contents($this->path('.didww-0123456789abcdef.tmp')));
+        $this->assertSame(['.didww-0123456789abcdef.tmp', 'voice_in_prices.csv.gz'], $this->dirEntries());
+    }
+
+    public function testDownloadToPathWithLongNameUsesShortTempName()
+    {
+        $name = str_repeat('p', 243).'.csv.gz';
+        $during = null;
+        $this->configureMock()->append(self::voiceInToken(), self::priceFile($this->gzip));
+        $this->http->stack->push(Middleware::tap(function (RequestInterface $request) use (&$during): void {
+            if ('/token' !== $request->getUri()->getPath()) {
+                $during = $this->dirEntries();
+            }
+        }));
+
+        Prices::voiceIn()->download($this->path($name));
+
+        $this->assertCount(1, $during);
+        $this->assertMatchesRegularExpression('/\A\.didww-[0-9a-f]{16}\.tmp\z/', $during[0]);
+        $this->assertSame($this->gzip, file_get_contents($this->path($name)));
+        $this->assertSame([$name], $this->dirEntries());
+    }
+
+    public function testDownloadToPathWithNullByteFailsBeforeRequest()
+    {
+        $this->configureMock()->append(self::voiceInToken(), self::priceFile($this->gzip));
+
+        try {
+            Prices::voiceIn()->download($this->path("prices\0.csv.gz"));
+            $this->fail('expected a ValueError');
+        } catch (\ValueError) {
+        }
+        $this->assertSame(0, $this->http->count());
+        $this->assertSame([], $this->dirEntries());
     }
 
     public function testDownloadToPathErrorKeepsExistingFile()

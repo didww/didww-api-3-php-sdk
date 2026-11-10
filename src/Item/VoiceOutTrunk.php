@@ -3,8 +3,12 @@
 namespace Didww\Item;
 
 use Didww\Enum\DefaultDstAction;
+use Didww\Enum\IceMode;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\OnCliMismatchAction;
+use Didww\Enum\RtcpFeedbackMode;
+use Didww\Enum\RtcpMuxMode;
+use Didww\Enum\VoiceOutCodec;
 use Didww\Enum\VoiceOutTrunkStatus;
 use Didww\Item\AuthenticationMethod\Base as AuthenticationMethodBase;
 use Didww\Traits\Deletable;
@@ -44,6 +48,10 @@ class VoiceOutTrunk extends BaseItem
         'external_reference_id',
         'emergency_enable_all',
         'rtp_timeout',
+        'codecs',
+        'ice_mode',
+        'rtcp_mux_mode',
+        'rtcp_feedback_mode',
     ];
 
     public function getName(): string
@@ -224,6 +232,68 @@ class VoiceOutTrunk extends BaseItem
     public function setEmergencyEnableAll(bool $emergencyEnableAll)
     {
         $this->attributes['emergency_enable_all'] = $emergencyEnableAll;
+    }
+
+    /**
+     * Codecs offered on calls from the trunk, in priority order: the first has
+     * the highest priority. Left out on create, the trunk offers `pcma`,
+     * `pcmu` and `telephone_event`. A name this SDK does not know is returned
+     * as the raw string. (API 2026-10-22).
+     *
+     * @return array<VoiceOutCodec|string>|null
+     */
+    public function getCodecs(): ?array
+    {
+        return $this->enumArrayAttribute('codecs', VoiceOutCodec::class);
+    }
+
+    /**
+     * @param array<VoiceOutCodec|string> $codecs codec names in priority order, the first is the highest
+     */
+    public function setCodecs(array $codecs)
+    {
+        $this->setEnumArrayAttribute('codecs', array_values($codecs));
+    }
+
+    /**
+     * ICE on calls from the trunk. Defaults to `accept`. (API 2026-10-22).
+     */
+    public function getIceMode(): IceMode|string|null
+    {
+        return $this->enumAttribute('ice_mode', IceMode::class);
+    }
+
+    public function setIceMode(IceMode|string $iceMode)
+    {
+        $this->setEnumAttribute('ice_mode', $iceMode);
+    }
+
+    /**
+     * RTP and RTCP on one port on calls from the trunk. Defaults to `accept`.
+     * (API 2026-10-22).
+     */
+    public function getRtcpMuxMode(): RtcpMuxMode|string|null
+    {
+        return $this->enumAttribute('rtcp_mux_mode', RtcpMuxMode::class);
+    }
+
+    public function setRtcpMuxMode(RtcpMuxMode|string $rtcpMuxMode)
+    {
+        $this->setEnumAttribute('rtcp_mux_mode', $rtcpMuxMode);
+    }
+
+    /**
+     * RTCP feedback (AVPF) on calls from the trunk. Defaults to `accept`.
+     * (API 2026-10-22).
+     */
+    public function getRtcpFeedbackMode(): RtcpFeedbackMode|string|null
+    {
+        return $this->enumAttribute('rtcp_feedback_mode', RtcpFeedbackMode::class);
+    }
+
+    public function setRtcpFeedbackMode(RtcpFeedbackMode|string $rtcpFeedbackMode)
+    {
+        $this->setEnumAttribute('rtcp_feedback_mode', $rtcpFeedbackMode);
     }
 
     public function getCreatedAt()
