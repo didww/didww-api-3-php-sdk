@@ -3,8 +3,12 @@
 namespace Didww\Tests;
 
 use Didww\Enum\DefaultDstAction;
+use Didww\Enum\IceMode;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\OnCliMismatchAction;
+use Didww\Enum\RtcpFeedbackMode;
+use Didww\Enum\RtcpMuxMode;
+use Didww\Enum\VoiceOutCodec;
 use Didww\Enum\VoiceOutTrunkStatus;
 
 class VoiceOutTrunkTest extends CassetteTest
@@ -25,8 +29,21 @@ class VoiceOutTrunkTest extends CassetteTest
         $voiceOutTrunk->setName('php-test');
         $voiceOutTrunk->setAuthenticationMethod($authMethod);
         $voiceOutTrunk->setOnCliMismatchAction('replace_cli');
+        $voiceOutTrunk->setCodecs([VoiceOutCodec::OPUS, 'pcma', VoiceOutCodec::TELEPHONE_EVENT]);
+        $voiceOutTrunk->setIceMode(IceMode::INITIATE);
+        $voiceOutTrunk->setRtcpMuxMode('disabled');
+        $voiceOutTrunk->setRtcpFeedbackMode(RtcpFeedbackMode::ACCEPT);
         $voiceOutTrunk->setDefaultDid($did);
         $voiceOutTrunk->setDids($dids);
+        $this->assertSame([
+            'name' => 'php-test',
+            'authentication_method' => ['type' => 'ip_only', 'attributes' => ['allowed_sip_ips' => ['203.0.113.0/24']]],
+            'on_cli_mismatch_action' => 'replace_cli',
+            'codecs' => ['opus', 'pcma', 'telephone_event'],
+            'ice_mode' => 'initiate',
+            'rtcp_mux_mode' => 'disabled',
+            'rtcp_feedback_mode' => 'accept',
+        ], $voiceOutTrunk->toJsonApiArray()['attributes']);
         $voiceOutTrunkDocument = $voiceOutTrunk->save();
 
         $data = $voiceOutTrunkDocument->getData();
@@ -79,6 +96,11 @@ class VoiceOutTrunkTest extends CassetteTest
         $defaultDidRelation = $data->defaultDid();
         $this->assertInstanceOf('Didww\Item\Did', $defaultDidRelation->getIncluded());
         $this->assertEquals('7de7f718-4042-4d74-9fe9-863fa1777520', $defaultDidRelation->getIncluded()->getId());
+
+        $this->assertSame([VoiceOutCodec::G722, VoiceOutCodec::OPUS, VoiceOutCodec::TELEPHONE_EVENT], $data->getCodecs());
+        $this->assertSame(IceMode::DISABLED, $data->getIceMode());
+        $this->assertSame(RtcpMuxMode::INITIATE, $data->getRtcpMuxMode());
+        $this->assertSame(RtcpFeedbackMode::ACCEPT, $data->getRtcpFeedbackMode());
     }
 
     public function testFindVoiceOutTrunkWithIpOnlyAuth()
@@ -146,6 +168,21 @@ class VoiceOutTrunkTest extends CassetteTest
         $uuid = '425ce763-a3a9-49b4-af5b-ada1a65c8864';
         $voiceOutTrunk = \Didww\Item\VoiceOutTrunk::build($uuid);
         $voiceOutTrunk->setMediaEncryptionMode('disabled');
+        $voiceOutTrunk->setCodecs([VoiceOutCodec::AMR_WB, VoiceOutCodec::PCMU]);
+        $voiceOutTrunk->setIceMode('disabled');
+        $voiceOutTrunk->setRtcpMuxMode(RtcpMuxMode::INITIATE);
+        $voiceOutTrunk->setRtcpFeedbackMode('disabled');
+        $this->assertSame([
+            'type' => 'voice_out_trunks',
+            'id' => $uuid,
+            'attributes' => [
+                'media_encryption_mode' => 'disabled',
+                'codecs' => ['amr_wb', 'pcmu'],
+                'ice_mode' => 'disabled',
+                'rtcp_mux_mode' => 'initiate',
+                'rtcp_feedback_mode' => 'disabled',
+            ],
+        ], $voiceOutTrunk->toJsonApiPatchArray());
         $voiceOutTrunkDocument = $voiceOutTrunk->save();
 
         $data = $voiceOutTrunkDocument->getData();

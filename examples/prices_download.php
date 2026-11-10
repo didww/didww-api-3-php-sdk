@@ -79,7 +79,7 @@ try {
     echo "\n=== First rows ===\n";
     $n = 0;
     foreach (PriceFileReader::rows($path) as $row) {
-        echo '  '.($row['Country'] ?? '').' '.($row['Destination'] ?? '').' '.($row['Source type'] ?? '').': '.($row['Rate (USD, excl. VAT)'] ?? '')."\n";
+        echo '  '.($row['Country'] ?? '').' '.($row['Destination'] ?? '').' '.($row['Source type'] ?? '').': '.($row['Rate'] ?? '')."\n";
         if (FIRST_ROWS === ++$n) {
             break;
         }

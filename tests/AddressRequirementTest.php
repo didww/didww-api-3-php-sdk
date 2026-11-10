@@ -26,7 +26,7 @@ class AddressRequirementTest extends CassetteTest
         $this->assertEquals(IdentityType::BUSINESS, $businessOnly->getIdentityType());
         $this->assertNull($businessOnly->getPersonalAreaLevel());
         $this->assertEquals(AreaLevel::WORLDWIDE, $businessOnly->getBusinessAreaLevel());
-        $this->assertNull($businessOnly->getBusinessMandatoryFields());
+        $this->assertSame([], $businessOnly->getBusinessMandatoryFields());
     }
 
     public function testFindWithIncludes()
@@ -58,8 +58,8 @@ class AddressRequirementTest extends CassetteTest
             'personal_proof_qty' => 1,
             'business_proof_qty' => 1,
             'address_proof_qty' => 1,
-            'personal_mandatory_fields' => ['Birth Date', 'Country', 'Personal Tax ID'],
-            'business_mandatory_fields' => ['Proof of ID', 'VAT Number / TAX Code', 'Country', 'Company ID', 'Representative Tax ID'],
+            'personal_mandatory_fields' => ['birth_date', 'country', 'personal_tax_id'],
+            'business_mandatory_fields' => ['id_number', 'tax_id', 'country', 'company_reg_number', 'personal_tax_id'],
             'service_description_required' => true,
             'restriction_message' => 'End User Registration is Required',
             'number_type' => 'local',
@@ -73,8 +73,8 @@ class AddressRequirementTest extends CassetteTest
         $this->assertEquals(1, $requirement->getPersonalProofQty());
         $this->assertEquals(1, $requirement->getBusinessProofQty());
         $this->assertEquals(1, $requirement->getAddressProofQty());
-        $this->assertEquals(['Birth Date', 'Country', 'Personal Tax ID'], $requirement->getPersonalMandatoryFields());
-        $this->assertEquals(['Proof of ID', 'VAT Number / TAX Code', 'Country', 'Company ID', 'Representative Tax ID'], $requirement->getBusinessMandatoryFields());
+        $this->assertSame(['birth_date', 'country', 'personal_tax_id'], $requirement->getPersonalMandatoryFields());
+        $this->assertSame(['id_number', 'tax_id', 'country', 'company_reg_number', 'personal_tax_id'], $requirement->getBusinessMandatoryFields());
         $this->assertTrue($requirement->getServiceDescriptionRequired());
         $this->assertEquals('End User Registration is Required', $requirement->getRestrictionMessage());
 
@@ -87,6 +87,16 @@ class AddressRequirementTest extends CassetteTest
         $this->assertNotNull($requirement->personalProofTypes());
         $this->assertNotNull($requirement->businessProofTypes());
         $this->assertNotNull($requirement->addressProofTypes());
+        $this->assertSame('address', $requirement->addressProofTypes()->getIncluded()->first()->getEntityType());
+        $this->assertSame('personal', $requirement->personalProofTypes()->getIncluded()->first()->getEntityType());
+    }
+
+    public function testMandatoryFieldsWithoutTheAttributesAreEmpty()
+    {
+        $requirement = new \Didww\Item\AddressRequirement();
+
+        $this->assertSame([], $requirement->getPersonalMandatoryFields());
+        $this->assertSame([], $requirement->getBusinessMandatoryFields());
     }
 
     public function testEndpoint()

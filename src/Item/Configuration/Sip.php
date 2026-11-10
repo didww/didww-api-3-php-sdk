@@ -5,9 +5,12 @@ namespace Didww\Item\Configuration;
 use Didww\Enum\Codec;
 use Didww\Enum\DiversionInjectMode;
 use Didww\Enum\DiversionRelayPolicy;
+use Didww\Enum\IceMode;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\NetworkProtocolPriority;
 use Didww\Enum\ReroutingDisconnectCode;
+use Didww\Enum\RtcpFeedbackMode;
+use Didww\Enum\RtcpMuxMode;
 use Didww\Enum\RxDtmfFormat;
 use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\StirShakenMode;
@@ -49,11 +52,43 @@ class Sip extends Base
     }
 
     /**
-     * @return Codec[]|null
+     * Codecs offered on calls to the trunk, in priority order: the first has
+     * the highest priority. Left out on create, the trunk offers `pcmu`,
+     * `pcma`, `g729`, `g723` and `telephone_event`. A name this SDK does not
+     * know is returned as the raw string. (API 2026-10-22: replaces
+     * `codec_ids`).
+     *
+     * @return array<Codec|string>|null
      */
-    public function getCodecIds(): ?array
+    public function getCodecs(): ?array
     {
-        return $this->enumArrayAttribute('codec_ids', Codec::class);
+        return $this->enumArrayAttribute('codecs', Codec::class);
+    }
+
+    /**
+     * ICE on calls to the trunk. Defaults to `disabled`. (API 2026-10-22).
+     */
+    public function getIceMode(): IceMode|string|null
+    {
+        return $this->enumAttribute('ice_mode', IceMode::class);
+    }
+
+    /**
+     * RTP and RTCP on one port on calls to the trunk. Defaults to
+     * `disabled`. (API 2026-10-22).
+     */
+    public function getRtcpMuxMode(): RtcpMuxMode|string|null
+    {
+        return $this->enumAttribute('rtcp_mux_mode', RtcpMuxMode::class);
+    }
+
+    /**
+     * RTCP feedback (AVPF) on calls to the trunk. Defaults to `disabled`.
+     * (API 2026-10-22).
+     */
+    public function getRtcpFeedbackMode(): RtcpFeedbackMode|string|null
+    {
+        return $this->enumAttribute('rtcp_feedback_mode', RtcpFeedbackMode::class);
     }
 
     public function getRxDtmfFormatId(): ?RxDtmfFormat
@@ -289,11 +324,26 @@ class Sip extends Base
     }
 
     /**
-     * @param array<Codec|int> $newCodecIds
+     * @param array<Codec|string> $codecs codec names in priority order, the first is the highest
      */
-    public function setCodecIds(array $newCodecIds)
+    public function setCodecs(array $codecs)
     {
-        $this->setEnumArrayAttribute('codec_ids', $newCodecIds);
+        $this->setEnumArrayAttribute('codecs', array_values($codecs));
+    }
+
+    public function setIceMode(IceMode|string $iceMode)
+    {
+        $this->setEnumAttribute('ice_mode', $iceMode);
+    }
+
+    public function setRtcpMuxMode(RtcpMuxMode|string $rtcpMuxMode)
+    {
+        $this->setEnumAttribute('rtcp_mux_mode', $rtcpMuxMode);
+    }
+
+    public function setRtcpFeedbackMode(RtcpFeedbackMode|string $rtcpFeedbackMode)
+    {
+        $this->setEnumAttribute('rtcp_feedback_mode', $rtcpFeedbackMode);
     }
 
     public function setRxDtmfFormatId(RxDtmfFormat|int $newRxDtmfFormatId)

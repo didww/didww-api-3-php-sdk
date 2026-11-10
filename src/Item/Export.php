@@ -3,15 +3,19 @@
 namespace Didww\Item;
 
 use Didww\Enum\CallbackMethod;
+use Didww\Enum\ExportServiceType;
 use Didww\Enum\ExportStatus;
 use Didww\Enum\ExportTrunkType;
 use Didww\Enum\ExportType;
 use Didww\Internal\GunzipStream;
+use Didww\Internal\TempFile;
 use Didww\Internal\Url;
 use Didww\Prices\Internal\ResponseSink;
+use Didww\RetryAfter;
 use Didww\Traits\Fetchable;
 use Didww\Traits\HasExternalReferenceId;
 use Didww\Traits\Saveable;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ResponseException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\TransferStats;
@@ -137,8 +141,9 @@ class Export extends BaseItem
     }
 
     /**
-     * sms_in, sms_out: messages in this state, e.g. `Success`, `Failed`,
-     * `Queued` (sms_in) or `Routing Error`, `In Progress` (sms_out).
+     * sms_in, sms_out: messages in this state: `success`, `failed` or
+     * `queued` (sms_in); `routing_error`, `in_progress`, `queued`, `failed` or
+     * `success` (sms_out).
      */
     public function setFilterStatus(string $status)
     {
@@ -173,10 +178,10 @@ class Export extends BaseItem
             : ($trunkType instanceof \BackedEnum ? $trunkType->value : $trunkType);
     }
 
-    /** sms_out: `a2p` or `p2p` traffic, in any letter case. */
-    public function setFilterServiceType(string $serviceType)
+    /** sms_out: `a2p` or `p2p` traffic. */
+    public function setFilterServiceType(ExportServiceType|string $serviceType)
     {
-        $this->filters['service_type'] = $serviceType;
+        $this->filters['service_type'] = $serviceType instanceof \BackedEnum ? $serviceType->value : $serviceType;
     }
 
     /**
@@ -265,15 +270,23 @@ class Export extends BaseItem
      * seconds. A path $dest is replaced atomically and left untouched on
      * failure.
      *
-     * @param string|resource $dest a file path or a writable stream
+     * A 429 (`too_many_requests`) means that the request budget of the
+     * account is spent. It is not retried: wait $retryAfter seconds before
+     * downloading again.
+     *
+     * @param string|resource $dest       a file path or a writable stream
+     * @param int|null        $retryAfter set to the Retry-After seconds of an answer other than 200 (see RetryAfter::seconds()), otherwise null
+     *
+     * @param-out int|null $retryAfter
      *
      * @return true|string true, or an error message when the download failed
      *
      * @throws \InvalidArgumentException           when the URL is missing or on another origin
      * @throws \Didww\Exception\DidwwAuthException when no access token can be obtained
      */
-    public function download($dest)
+    public function download($dest, ?int &$retryAfter = null)
     {
+        $retryAfter = null;
         $url = $this->downloadUrl();
         $tmpFile = false;
         $handle = false;
@@ -283,17 +296,9 @@ class Export extends BaseItem
                 return is_resource($dest) ? self::TEMP_FILE_FAILED : self::OPEN_DESTINATION_FAILED;
             }
 
-            $result = self::fetch($url, $handle);
-            if (true !== $result) {
-                return $result;
-            }
-            if (!is_resource($dest)) {
-                return self::moveDownloadFile($handle, $tmpFile, $dest);
-            }
-            rewind($handle);
-            $copied = stream_copy_to_stream($handle, $dest);
+            $result = self::fetch($url, $handle, $retryAfter);
 
-            return false === $copied ? self::WRITE_STREAM_FAILED : true;
+            return true === $result ? self::deliverDownload($handle, $tmpFile, $dest) : $result;
         } finally {
             if (is_resource($handle)) {
                 fclose($handle);
@@ -312,46 +317,35 @@ class Export extends BaseItem
      * $dest is replaced atomically and left untouched on failure; a stream
      * $dest is written only after the whole file has been decompressed.
      *
-     * @param string|resource $dest a file path or a writable stream
+     * @param string|resource $dest       a file path or a writable stream
+     * @param int|null        $retryAfter set like that of download()
+     *
+     * @param-out int|null $retryAfter
      *
      * @return true|string true, or an error message when the download or the decompression failed
      *
      * @throws \InvalidArgumentException           when the URL is missing or on another origin
      * @throws \Didww\Exception\DidwwAuthException when no access token can be obtained
      */
-    public function downloadAndDecompress($dest)
+    public function downloadAndDecompress($dest, ?int &$retryAfter = null)
     {
+        $retryAfter = null;
         $url = $this->downloadUrl();
         $ownHandle = !is_resource($dest);
-        if ($ownHandle) {
-            // Next to $dest, so that the rename is atomic; created first, so
-            // that its mode follows the umask and a missing directory shows.
-            $csvFile = $dest.'.'.bin2hex(random_bytes(8)).'.tmp';
-            $handle = @fopen($csvFile, 'x');
-            if (false === $handle) {
-                return self::OPEN_DESTINATION_FAILED;
-            }
-            fclose($handle);
-        } else {
-            $csvFile = tempnam(sys_get_temp_dir(), 'didww_export_');
-            if (false === $csvFile) {
-                return self::TEMP_FILE_FAILED;
-            }
+        $csvFile = self::createCsvFile($dest, $ownHandle);
+        if (false === $csvFile) {
+            return $ownHandle ? self::OPEN_DESTINATION_FAILED : self::TEMP_FILE_FAILED;
         }
         // tempnam() creates it with mode 0600, which the download keeps.
         $gzFile = tempnam(sys_get_temp_dir(), 'didww_export_');
 
         try {
-            $result = self::fetchToFile($url, $gzFile);
-            if (true !== $result) {
-                return $result;
-            }
-            $result = self::gunzipFile($gzFile, $csvFile);
-            if (true !== $result) {
-                return $result;
+            $result = self::fetchToFile($url, $gzFile, $retryAfter);
+            if (true === $result) {
+                $result = self::gunzipFile($gzFile, $csvFile);
             }
 
-            return self::deliverCsv($csvFile, $dest, $ownHandle);
+            return true === $result ? self::deliverCsv($csvFile, $dest, $ownHandle) : $result;
         } finally {
             foreach ([$gzFile, $csvFile] as $file) {
                 if (false !== $file && file_exists($file)) {
@@ -362,10 +356,10 @@ class Export extends BaseItem
     }
 
     // Opens the file a download is written to: a temporary file for a stream
-    // $dest, or a new file next to a path $dest, so that the rename is atomic;
-    // created first, so that its mode follows the umask and a missing directory
-    // shows. Returns the handle (false when it cannot be opened) and the file
-    // to remove afterwards (false when there is none).
+    // $dest, or a new file in the directory of a path $dest, so that the
+    // rename is atomic; created first, so that its mode follows the umask and
+    // a missing directory shows. Returns the handle (false when it cannot be
+    // opened) and the file to remove afterwards (false when there is none).
     private static function openDownloadFile($dest): array
     {
         if (is_resource($dest)) {
@@ -373,10 +367,23 @@ class Export extends BaseItem
 
             return [false === $tmpFile ? false : @fopen($tmpFile, 'w+b'), $tmpFile];
         }
-        $tmpFile = $dest.'.'.bin2hex(random_bytes(8)).'.tmp';
+        $tmpFile = TempFile::pathNextTo($dest);
         $handle = @fopen($tmpFile, 'xb');
 
         return [$handle, false === $handle ? false : $tmpFile];
+    }
+
+    // Moves the downloaded file to the path $dest, or copies it to the stream
+    // $dest.
+    private static function deliverDownload($handle, string|false $tmpFile, $dest): true|string
+    {
+        if (!is_resource($dest)) {
+            return self::moveDownloadFile($handle, $tmpFile, $dest);
+        }
+        rewind($handle);
+        $copied = stream_copy_to_stream($handle, $dest);
+
+        return false === $copied ? self::WRITE_STREAM_FAILED : true;
     }
 
     // Closes the downloaded file and moves it to the path $dest.
@@ -389,15 +396,35 @@ class Export extends BaseItem
         return @rename($tmpFile, $dest) ? true : self::WRITE_EXPORT_FAILED.$dest;
     }
 
+    // Creates the file the decompressed export is written to: for a path
+    // $dest, a new file in its directory, so that the rename is atomic,
+    // created first, so that its mode follows the umask and a missing
+    // directory shows; for a stream $dest, a temporary file. False when it
+    // cannot be created.
+    private static function createCsvFile($dest, bool $ownHandle): string|false
+    {
+        if (!$ownHandle) {
+            return tempnam(sys_get_temp_dir(), 'didww_export_');
+        }
+        $csvFile = TempFile::pathNextTo($dest);
+        $handle = @fopen($csvFile, 'x');
+        if (false === $handle) {
+            return false;
+        }
+        fclose($handle);
+
+        return $csvFile;
+    }
+
     // Downloads the export file into $gzFile.
-    private static function fetchToFile(string $url, string|false $gzFile): true|string
+    private static function fetchToFile(string $url, string|false $gzFile, ?int &$retryAfter): true|string
     {
         $gz = false === $gzFile ? false : @fopen($gzFile, 'r+b');
         if (false === $gz) {
             return self::TEMP_FILE_FAILED;
         }
         try {
-            return self::fetch($url, $gz);
+            return self::fetch($url, $gz, $retryAfter);
         } finally {
             fclose($gz);
         }
@@ -435,53 +462,76 @@ class Export extends BaseItem
     // Sends the download request and writes the body of a 200 answer to
     // $handle; returns true or an error message. The body of any other answer
     // is read up to MAX_ERROR_BODY_SIZE bytes within ERROR_BODY_TIMEOUT
-    // seconds, after which the transfer is aborted.
-    private static function fetch(string $url, $handle): true|string
+    // seconds, after which the transfer is aborted; its Retry-After goes to
+    // $retryAfter.
+    private static function fetch(string $url, $handle, ?int &$retryAfter): true|string
     {
         $sink = new ResponseSink($handle, false, self::MAX_ERROR_BODY_SIZE, self::ERROR_BODY_TIMEOUT);
+        $response = self::send($url, $sink);
+        if (is_string($response)) {
+            return $response;
+        }
+        $status = $response->getStatusCode();
+        if (200 !== $status) {
+            $retryAfter = RetryAfter::seconds($response);
+
+            return self::statusError($status, $sink->getErrorBody());
+        }
+
+        return $sink->isComplete($response) ? true : 'Export download failed: incomplete body';
+    }
+
+    // Sends the download request with $sink as its sink. Returns the answer,
+    // that of a failed transfer included when it is not a 200, or the error
+    // message of a transfer that failed without such an answer or whose sink
+    // could not be written.
+    private static function send(string $url, ResponseSink $sink): ResponseInterface|string
+    {
         $client = \Didww\Configuration::getHttpClient();
-        $clientOnHeaders = $client instanceof \GuzzleHttp\Client ? $client->getConfig('on_headers') : null;
-        $clientOnStats = $client instanceof \GuzzleHttp\Client ? $client->getConfig('on_stats') : null;
         $statsResponse = null;
         try {
-            $response = $client->request('GET', $url, [
-                'sink' => $sink,
-                'on_headers' => static function ($response, #[\SensitiveParameter] ...$more) use ($sink, $clientOnHeaders): void {
-                    if ($response instanceof ResponseInterface) {
-                        $sink->begin($response);
-                    }
-                    if (is_callable($clientOnHeaders)) {
-                        $clientOnHeaders($response, ...$more);
-                    }
-                },
-                // The answer of a transfer that fails after its headers.
-                'on_stats' => static function (#[\SensitiveParameter] TransferStats $stats, #[\SensitiveParameter] ...$more) use (&$statsResponse, $clientOnStats): void {
-                    $statsResponse = $stats->getResponse();
-                    if (is_callable($clientOnStats)) {
-                        $clientOnStats($stats, ...$more);
-                    }
-                },
-                'stream' => false,
-                'allow_redirects' => false,
-                'http_errors' => false,
-                'decode_content' => false,
-                'cookies' => false,
-            ]);
+            $response = $client->request('GET', $url, self::downloadOptions($client, $sink, $statsResponse));
         } catch (TransferException $e) {
             $response = ($e instanceof ResponseException ? $e->getResponse() : null) ?? $statsResponse;
             if (null === $sink->getWriteError() && (null === $response || 200 === $response->getStatusCode())) {
                 return 'Export download failed: '.$e->getMessage();
             }
         }
-        if (null !== $sink->getWriteError()) {
-            return 'Failed to write the downloaded export';
-        }
-        $status = $response->getStatusCode();
-        if (200 === $status && !$sink->isComplete($response)) {
-            return 'Export download failed: incomplete body';
-        }
 
-        return 200 === $status ? true : self::statusError($status, $sink->getErrorBody());
+        return null === $sink->getWriteError() ? $response : 'Failed to write the downloaded export';
+    }
+
+    // The request options of a download: $sink as the sink, the callbacks of
+    // the client kept, and the answer of a transfer that fails after its
+    // headers kept in $statsResponse.
+    private static function downloadOptions(ClientInterface $client, ResponseSink $sink, ?ResponseInterface &$statsResponse): array
+    {
+        $clientOnHeaders = $client instanceof \GuzzleHttp\Client ? $client->getConfig('on_headers') : null;
+        $clientOnStats = $client instanceof \GuzzleHttp\Client ? $client->getConfig('on_stats') : null;
+
+        return [
+            'sink' => $sink,
+            'on_headers' => static function ($response, #[\SensitiveParameter] ...$more) use ($sink, $clientOnHeaders): void {
+                if ($response instanceof ResponseInterface) {
+                    $sink->begin($response);
+                }
+                if (is_callable($clientOnHeaders)) {
+                    $clientOnHeaders($response, ...$more);
+                }
+            },
+            // The answer of a transfer that fails after its headers.
+            'on_stats' => static function (#[\SensitiveParameter] TransferStats $stats, #[\SensitiveParameter] ...$more) use (&$statsResponse, $clientOnStats): void {
+                $statsResponse = $stats->getResponse();
+                if (is_callable($clientOnStats)) {
+                    $clientOnStats($stats, ...$more);
+                }
+            },
+            'stream' => false,
+            'allow_redirects' => false,
+            'http_errors' => false,
+            'decode_content' => false,
+            'cookies' => false,
+        ];
     }
 
     // Decompresses the gzip file $gzFile into $csvFile, keeping the bytes as

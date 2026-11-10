@@ -7,6 +7,7 @@ use Didww\Credentials;
 use Didww\Item\Export;
 use Didww\Tests\Prices\Support\ScriptedServer;
 use Didww\Tests\Support\FixedTokenStore;
+use Didww\Tests\Support\ListsDirectoryFiles;
 use GuzzleHttp\Handler\StreamHandler;
 use GuzzleHttp\HandlerStack;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -22,6 +23,8 @@ use VCR\VCR;
 #[RequiresPhpExtension('curl')]
 class ExportWireTest extends TestCase
 {
+    use ListsDirectoryFiles;
+
     private const EXPORT_ID = '9df99644-f1a5-4a3c-99a4-559d758eb96b';
 
     private ?ScriptedServer $server = null;
@@ -37,7 +40,7 @@ class ExportWireTest extends TestCase
     protected function tearDown(): void
     {
         $this->server?->stop();
-        foreach (glob($this->dir.'/*') as $file) {
+        foreach ($this->files() as $file) {
             unlink($file);
         }
         rmdir($this->dir);
@@ -61,7 +64,7 @@ class ExportWireTest extends TestCase
 
         $this->assertSame('Export download failed with status 404', $result);
         $this->assertLessThan(5, microtime(true) - $started);
-        $this->assertSame([], glob($this->dir.'/*'));
+        $this->assertSame([], $this->files());
     }
 
     public function testStalledErrorBodyKeepsTheStatus()
@@ -77,7 +80,7 @@ class ExportWireTest extends TestCase
         $result = $export->download($this->dir.'/export.csv.gz');
 
         $this->assertSame('Export download failed with status 503', $result);
-        $this->assertSame([], glob($this->dir.'/*'));
+        $this->assertSame([], $this->files());
     }
 
     public function testTruncatedBodyWithStreamHandlerKeepsTheDestination()
@@ -95,7 +98,7 @@ class ExportWireTest extends TestCase
         $this->assertStringStartsWith('Export download failed: ', $result);
         $this->assertStringNotContainsString('status', $result);
         $this->assertSame('old export', file_get_contents($dest));
-        $this->assertSame([$dest], glob($this->dir.'/*'));
+        $this->assertSame([$dest], $this->files());
     }
 
     public static function streamingClientProvider(): array

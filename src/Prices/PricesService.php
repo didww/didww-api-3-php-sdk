@@ -7,8 +7,10 @@ use Didww\Configuration;
 use Didww\Exception\DidwwPricesException;
 use Didww\Exception\PricesErrorKind;
 use Didww\Internal\Random;
+use Didww\Internal\TempFile;
 use Didww\Internal\Url;
 use Didww\Prices\Internal\ResponseSink;
+use Didww\RetryAfter;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ResponseException;
 use GuzzleHttp\TransferStats;
@@ -178,11 +180,11 @@ final class PricesService
      * (see PriceFileReader). A non-null $ifModifiedSince is sent as
      * If-Modified-Since; a 304 answer writes nothing.
      *
-     * A path is written through a temporary file next to it, which replaces
-     * the path only when the download succeeds, so a failed download leaves an
-     * existing file as it was. The new file gets the mode of a new file (0666
-     * minus the umask) and the Last-Modified of the answer as its modification
-     * time.
+     * A path is written through a temporary file `.didww-<16 hex digits>.tmp`
+     * in its directory, which replaces the path only when the download
+     * succeeds, so a failed download leaves an existing file as it was. The
+     * new file gets the mode of a new file (0666 minus the umask) and the
+     * Last-Modified of the answer as its modification time.
      *
      * A stream gets only the bytes of a 200 answer, but may hold partial data
      * when the transfer fails.
@@ -271,12 +273,12 @@ final class PricesService
         }
     }
 
-    // Creates a new file next to $path with a random suffix. Unlike tempnam(),
-    // which uses mode 0600, the file gets 0666 minus the umask.
+    // Creates a new file with a random name in the directory of $path. Unlike
+    // tempnam(), which uses mode 0600, the file gets 0666 minus the umask.
     private static function createTempFile(string $path): array
     {
         for ($attempt = 1;; ++$attempt) {
-            $tempPath = $path.'.'.bin2hex(random_bytes(8)).'.tmp';
+            $tempPath = TempFile::pathNextTo($path);
             error_clear_last();
             $handle = @fopen($tempPath, 'xb');
             if (false !== $handle) {
@@ -305,7 +307,7 @@ final class PricesService
             if (200 === $status || 304 === $status) {
                 return PriceFile::fromResponse($response, 200 === $status ? $sink->getBytesWritten() : 0);
             }
-            $retryAfter = self::retryAfter($response);
+            $retryAfter = RetryAfter::seconds($response);
             if (503 === $status && null !== $retryAfter && $attempt <= self::MAX_UNAVAILABLE_RETRIES && $retryAfter <= self::MAX_UNAVAILABLE_RETRY_AFTER) {
                 ($this->sleep)($this->spread(max($retryAfter, 1)));
                 continue;
@@ -493,15 +495,7 @@ final class PricesService
             $code = 'price_plan_not_assigned';
         }
 
-        return new DidwwPricesException($kind, $status, $code, $errors, self::retryAfter($response));
-    }
-
-    // The Retry-After of an answer given in seconds; an HTTP date is ignored.
-    private static function retryAfter(ResponseInterface $response): ?int
-    {
-        $value = trim($response->getHeaderLine('Retry-After'));
-
-        return preg_match('/\A\d{1,9}\z/', $value) ? (int) $value : null;
+        return new DidwwPricesException($kind, $status, $code, $errors, RetryAfter::seconds($response));
     }
 
     // $retryAfter plus a random extra of up to a fifth of it, or up to a second

@@ -11,10 +11,12 @@ use Didww\Enum\DefaultDstAction;
 use Didww\Enum\DiversionRelayPolicy;
 use Didww\Enum\EmergencyCallingServiceStatus;
 use Didww\Enum\EmergencyVerificationStatus;
+use Didww\Enum\ExportServiceType;
 use Didww\Enum\ExportStatus;
 use Didww\Enum\ExportTrunkType;
 use Didww\Enum\ExportType;
 use Didww\Enum\Feature;
+use Didww\Enum\IceMode;
 use Didww\Enum\IdentityType;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\NumberType;
@@ -22,6 +24,8 @@ use Didww\Enum\OnCliMismatchAction;
 use Didww\Enum\OrderStatus;
 use Didww\Enum\Pop;
 use Didww\Enum\ReroutingDisconnectCode;
+use Didww\Enum\RtcpFeedbackMode;
+use Didww\Enum\RtcpMuxMode;
 use Didww\Enum\RxDtmfFormat;
 use Didww\Enum\SenderIdVerificationStatus;
 use Didww\Enum\SenderType;
@@ -32,6 +36,7 @@ use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\StirShakenMode;
 use Didww\Enum\TransportProtocol;
 use Didww\Enum\TxDtmfFormat;
+use Didww\Enum\VoiceOutCodec;
 use Didww\Enum\VoiceOutTrunkStatus;
 
 class EnumTest extends \PHPUnit\Framework\TestCase
@@ -56,10 +61,18 @@ class EnumTest extends \PHPUnit\Framework\TestCase
             [AreaLevel::class, 'country', AreaLevel::COUNTRY],
             [ExportType::class, 'sms_in', ExportType::SMS_IN],
             [ExportType::class, 'sms_out', ExportType::SMS_OUT],
-            [ExportTrunkType::class, 'SMPP SMSC', ExportTrunkType::SMPP_SMSC],
-            [ExportTrunkType::class, 'HTTP IN', ExportTrunkType::HTTP_IN],
+            [ExportTrunkType::class, 'smpp_smsc', ExportTrunkType::SMPP_SMSC],
+            [ExportTrunkType::class, 'sms_to_email', ExportTrunkType::SMS_TO_EMAIL],
+            [ExportTrunkType::class, 'http_in', ExportTrunkType::HTTP_IN],
+            [ExportServiceType::class, 'a2p', ExportServiceType::A2P],
             [NumberType::class, 'toll_free', NumberType::TOLL_FREE],
-            [Pop::class, 'FRA', Pop::FRA],
+            [Pop::class, 'fra', Pop::FRA],
+            [Codec::class, 'pcmu', Codec::PCMU],
+            [Codec::class, 'amr_wb', Codec::AMR_WB],
+            [VoiceOutCodec::class, 'opus', VoiceOutCodec::OPUS],
+            [IceMode::class, 'accept', IceMode::ACCEPT],
+            [RtcpMuxMode::class, 'initiate', RtcpMuxMode::INITIATE],
+            [RtcpFeedbackMode::class, 'disabled', RtcpFeedbackMode::DISABLED],
             [SmsHttpMethod::class, 'put', SmsHttpMethod::PUT],
             [SmsBodyType::class, 'html_url_encoded', SmsBodyType::HTML_URL_ENCODED],
             [SmsServerLocation::class, 'ams', SmsServerLocation::AMS],
@@ -77,7 +90,6 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     public function testIntEnumRoundTrip()
     {
         $cases = [
-            [Codec::class, 9, Codec::PCMU],
             [TransportProtocol::class, 1, TransportProtocol::UDP],
             [RxDtmfFormat::class, 1, RxDtmfFormat::RFC_2833],
             [TxDtmfFormat::class, 0, TxDtmfFormat::DISABLED],
@@ -117,7 +129,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(2, VoiceOutTrunkStatus::cases());
         $this->assertCount(8, Feature::cases());
         $this->assertCount(4, AreaLevel::cases());
-        $this->assertCount(13, Codec::cases());
+        $this->assertCount(2, ExportServiceType::cases());
         $this->assertCount(3, TransportProtocol::cases());
         $this->assertCount(3, RxDtmfFormat::cases());
         $this->assertCount(4, TxDtmfFormat::cases());
@@ -126,6 +138,20 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(4, DiversionRelayPolicy::cases());
         $this->assertCount(6, EmergencyCallingServiceStatus::cases());
         $this->assertCount(3, EmergencyVerificationStatus::cases());
+    }
+
+    public function testValuesFollowTheApi()
+    {
+        $values = static fn (string $enumClass): array => array_map(static fn (\BackedEnum $case) => $case->value, $enumClass::cases());
+
+        $this->assertSame(['telephone_event', 'g723', 'g729', 'pcmu', 'pcma', 'speex', 'gsm', 'g726_32', 'g721', 'g726_24', 'g726_40', 'g726_16', 'l16', 'amr', 'amr_wb'], $values(Codec::class));
+        $this->assertSame(['telephone_event', 'g723', 'g729', 'pcmu', 'pcma', 'gsm', 'g722', 'opus', 'amr', 'amr_wb'], $values(VoiceOutCodec::class));
+        foreach ([IceMode::class, RtcpMuxMode::class, RtcpFeedbackMode::class] as $mode) {
+            $this->assertSame(['disabled', 'accept', 'initiate'], $values($mode), $mode);
+        }
+        $this->assertSame(['nyc', 'fra', 'lac', 'mia', 'sg', 'hk', 'ams'], $values(Pop::class));
+        $this->assertSame(['smpp_smsc', 'smpp_esme', 'sms_to_email', 'http_in'], $values(ExportTrunkType::class));
+        $this->assertSame(['a2p', 'p2p'], $values(ExportServiceType::class));
     }
 
     public function testSipConfigurationSetterAcceptsEnumAndRaw()
@@ -158,14 +184,16 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $sip = new \Didww\Item\Configuration\Sip([
             'media_encryption_mode' => MediaEncryptionMode::ZRTP,
             'stir_shaken_mode' => StirShakenMode::PAI,
-            'codec_ids' => [Codec::PCMU, Codec::PCMA],
+            'codecs' => [Codec::PCMU, Codec::PCMA],
+            'ice_mode' => IceMode::ACCEPT,
             'sst_refresh_method_id' => SstRefreshMethod::INVITE,
         ]);
 
         $attrs = $sip->getAttributes();
         $this->assertSame('zrtp', $attrs['media_encryption_mode']);
         $this->assertSame('pai', $attrs['stir_shaken_mode']);
-        $this->assertSame([9, 10], $attrs['codec_ids']);
+        $this->assertSame(['pcmu', 'pcma'], $attrs['codecs']);
+        $this->assertSame('accept', $attrs['ice_mode']);
         $this->assertSame(1, $attrs['sst_refresh_method_id']);
     }
 
@@ -213,16 +241,19 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     {
         $sip = new \Didww\Item\Configuration\Sip();
 
-        // Test with enum array
-        $sip->setCodecIds([Codec::PCMU, Codec::PCMA]);
-        $this->assertSame([9, 10], $sip->getAttributes()['codec_ids']);
+        $sip->setCodecs([Codec::PCMA, Codec::AMR_WB]);
+        $this->assertSame(['pcma', 'amr_wb'], $sip->getAttributes()['codecs']);
 
-        // Test with raw int array
-        $sip->setCodecIds([7, 8]);
-        $this->assertSame([7, 8], $sip->getAttributes()['codec_ids']);
+        $sip->setCodecs(['g729', Codec::PCMU, 'future_codec']);
+        $this->assertSame(['g729', 'pcmu', 'future_codec'], $sip->getAttributes()['codecs']);
+        $this->assertSame([Codec::G729, Codec::PCMU, 'future_codec'], $sip->getCodecs());
 
-        // Test with mixed array
-        $sip->setCodecIds([Codec::G729, 9]);
-        $this->assertSame([8, 9], $sip->getAttributes()['codec_ids']);
+        $sip->setCodecs([1 => Codec::PCMA, 3 => 'g729']);
+        $this->assertSame(['pcma', 'g729'], $sip->getAttributes()['codecs']);
+
+        $trunk = new \Didww\Item\VoiceOutTrunk();
+        $trunk->setCodecs([1 => VoiceOutCodec::OPUS, 3 => 'g722']);
+        $this->assertSame(['opus', 'g722'], $trunk->getAttributes()['codecs']);
+        $this->assertSame([VoiceOutCodec::OPUS, VoiceOutCodec::G722], $trunk->getCodecs());
     }
 }

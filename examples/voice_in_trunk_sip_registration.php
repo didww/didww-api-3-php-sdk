@@ -22,7 +22,7 @@ $sip = new Sip([
     'enabled_sip_registration' => true,
     'use_did_in_ruri' => true,
     'cnam_lookup' => false,
-    'codec_ids' => [9, 8],
+    'codecs' => ['pcmu', 'g729'],
     'transport_protocol_id' => 1,
 ]);
 $trunk = new VoiceInTrunk([

@@ -5,6 +5,7 @@ namespace Didww\Tests;
 use Didww\Auth\TokenProvider;
 use Didww\Item\Export;
 use Didww\Tests\Support\ConfiguresMockHttp;
+use Didww\Tests\Support\ListsDirectoryFiles;
 use Didww\Tests\Support\MockHttp;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
@@ -14,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 class ExportDecompressTest extends TestCase
 {
     use ConfiguresMockHttp;
+    use ListsDirectoryFiles;
 
     private const EXPORT_ID = '9df99644-f1a5-4a3c-99a4-559d758eb96b';
     private const URL = 'https://sandbox-api.didww.com/v3/exports/9df99644-f1a5-4a3c-99a4-559d758eb96b.csv.gz';
@@ -30,7 +32,7 @@ class ExportDecompressTest extends TestCase
     protected function tearDown(): void
     {
         TokenProvider::forgetRateLimits();
-        foreach (glob($this->dir.'/*') as $file) {
+        foreach ($this->files() as $file) {
             unlink($file);
         }
         rmdir($this->dir);
@@ -45,7 +47,7 @@ class ExportDecompressTest extends TestCase
         $this->assertTrue($this->export()->downloadAndDecompress($dest));
 
         $this->assertSame(self::CSV, file_get_contents($dest), 'the bytes are kept as they are, a byte order mark included');
-        $this->assertSame([$dest], glob($this->dir.'/*'), 'no temporary file is left behind');
+        $this->assertSame([$dest], $this->files(), 'no temporary file is left behind');
         $this->assertFalse($this->http->options(1)['decode_content']);
     }
 
@@ -95,7 +97,7 @@ class ExportDecompressTest extends TestCase
         $this->assertIsString($result);
         $this->assertStringStartsWith($message, $result);
         $this->assertSame('previous', file_get_contents($dest));
-        $this->assertSame([$dest], glob($this->dir.'/*'), 'no partial or temporary file is left behind');
+        $this->assertSame([$dest], $this->files(), 'no partial or temporary file is left behind');
     }
 
     #[DataProvider('invalidBodyProvider')]
@@ -106,7 +108,7 @@ class ExportDecompressTest extends TestCase
 
         $this->assertStringStartsWith($message, (string) $this->export()->downloadAndDecompress($dest));
 
-        $this->assertSame([], glob($this->dir.'/*'));
+        $this->assertSame([], $this->files());
     }
 
     #[DataProvider('invalidBodyProvider')]
@@ -130,7 +132,7 @@ class ExportDecompressTest extends TestCase
         $this->assertSame('Export download failed with status 404', $this->export()->downloadAndDecompress($dest));
 
         $this->assertSame('previous', file_get_contents($dest));
-        $this->assertSame([$dest], glob($this->dir.'/*'));
+        $this->assertSame([$dest], $this->files());
     }
 
     public function testMissingDirectoryReturnsMessageBeforeDownloading()
