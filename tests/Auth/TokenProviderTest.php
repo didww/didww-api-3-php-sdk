@@ -60,7 +60,7 @@ class TokenProviderTest extends TestCase
         $this->assertSame(900, $token->getExpiresIn());
         $this->assertSame(['api.didww.com'], $token->getAudience());
         $this->assertSame('full', $token->getScope());
-        $this->assertSame('2026-10-22', $token->getApiVersion());
+        $this->assertSame('2026-11-19', $token->getApiVersion());
 
         $this->assertSame(1, $this->http->count());
         $request = $this->http->request(0);
@@ -131,8 +131,8 @@ class TokenProviderTest extends TestCase
 
         $this->assertNotSame($api->getAccessToken(), $vin->getAccessToken());
         $this->assertSame(2, $this->http->count());
-        $this->assertJsonStringEqualsJsonString('{"aud":["api.didww.com"],"api_version":"2026-10-22"}', (string) $this->http->request(0)->getBody());
-        $this->assertJsonStringEqualsJsonString('{"aud":["api-vin.didww.com"],"api_version":"2026-10-22"}', (string) $this->http->request(1)->getBody());
+        $this->assertJsonStringEqualsJsonString('{"aud":["api.didww.com"],"api_version":"2026-11-19"}', (string) $this->http->request(0)->getBody());
+        $this->assertJsonStringEqualsJsonString('{"aud":["api-vin.didww.com"],"api_version":"2026-11-19"}', (string) $this->http->request(1)->getBody());
     }
 
     public function testTokenSharedThroughStore()
@@ -164,7 +164,7 @@ class TokenProviderTest extends TestCase
         $key = fn (string $apiKey = 'key-1', ?string $version = null, ?Scope $scope = null, string $authUrl = 'https://auth.example.com', string $audience = 'api.didww.com') => (new TokenProvider($this->guzzle(), $authUrl, new Credentials($apiKey, 'sandbox', $version, $scope), new MemoryTokenStore(), $this->logger))->cacheKey($audience);
         $base = $key();
 
-        $this->assertSame('didww:token:v1:2e1c5435f0e67f91d34497fabf69840a945923a47982fad172c353b3f26be539', $base);
+        $this->assertSame('didww:token:v1:7f410b6b26861d5df39c9b3d800faec7f2feefa0c6949246c8d0cd3580714f57', $base);
         $this->assertSame($base, $key(authUrl: 'https://auth.example.com/'));
         $this->assertNotSame($base, $key(audience: 'api-sms.didww.com'));
         $this->assertNotSame($base, $key(version: '2099-01-01'));
@@ -526,7 +526,7 @@ class TokenProviderTest extends TestCase
 
         $this->provider()->token('api.didww.com');
 
-        $this->assertSame(['DIDWW token api_version mismatch: requested 2026-10-22, granted 2099-01-01'], $this->logger->messages('warning'));
+        $this->assertSame(['DIDWW token api_version mismatch: requested 2026-11-19, granted 2099-01-01'], $this->logger->messages('warning'));
     }
 
     public function testNoWarningWhenGrantMatches()
@@ -557,7 +557,7 @@ class TokenProviderTest extends TestCase
         $context = $this->logger->records[0]['context'];
         $this->assertSame(['api.didww.com'], $context['aud']);
         $this->assertSame('full', $context['scope']);
-        $this->assertSame('2026-10-22', $context['api_version']);
+        $this->assertSame('2026-11-19', $context['api_version']);
         $this->assertSame(900, $context['expires_in']);
         $this->assertArrayHasKey('duration_ms', $context);
     }

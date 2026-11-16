@@ -16,7 +16,7 @@ class Credentials
      * The API version requested when no other is configured. Earlier versions
      * are not supported by this major version of the SDK.
      */
-    public const DEFAULT_API_VERSION = '2026-10-22';
+    public const DEFAULT_API_VERSION = '2026-11-19';
 
     private const ENDPOINTS = [
         'production' => [

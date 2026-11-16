@@ -4,7 +4,7 @@ namespace Didww\Enum;
 
 /**
  * Codec of a Voice OUT trunk (VoiceOutTrunk::setCodecs()). An inbound SIP
- * trunk has its own list, Codec. (API 2026-10-22).
+ * trunk has its own list, Codec. (API 2026-11-19).
  */
 enum VoiceOutCodec: string
 {

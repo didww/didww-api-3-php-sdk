@@ -193,7 +193,7 @@ class ConfigurationTest extends TestCase
 
         Did::all();
 
-        $this->assertSame(['DIDWW token api_version mismatch: requested 2026-10-22, granted 2099-01-01'], $logger->messages('warning'));
+        $this->assertSame(['DIDWW token api_version mismatch: requested 2026-11-19, granted 2099-01-01'], $logger->messages('warning'));
     }
 
     public function testRawHttpClientSendsNoToken()

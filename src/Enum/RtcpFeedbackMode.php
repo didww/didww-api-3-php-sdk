@@ -4,7 +4,7 @@ namespace Didww\Enum;
 
 /**
  * RTCP feedback (AVPF) on the calls of a trunk: not used, accepted when the
- * other side offers it, or initiated by DIDWW. (API 2026-10-22).
+ * other side offers it, or initiated by DIDWW. (API 2026-11-19).
  */
 enum RtcpFeedbackMode: string
 {

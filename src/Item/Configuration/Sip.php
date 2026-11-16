@@ -55,7 +55,7 @@ class Sip extends Base
      * Codecs offered on calls to the trunk, in priority order: the first has
      * the highest priority. Left out on create, the trunk offers `pcmu`,
      * `pcma`, `g729`, `g723` and `telephone_event`. A name this SDK does not
-     * know is returned as the raw string. (API 2026-10-22: replaces
+     * know is returned as the raw string. (API 2026-11-19: replaces
      * `codec_ids`).
      *
      * @return array<Codec|string>|null
@@ -66,7 +66,7 @@ class Sip extends Base
     }
 
     /**
-     * ICE on calls to the trunk. Defaults to `disabled`. (API 2026-10-22).
+     * ICE on calls to the trunk. Defaults to `disabled`. (API 2026-11-19).
      */
     public function getIceMode(): IceMode|string|null
     {
@@ -75,7 +75,7 @@ class Sip extends Base
 
     /**
      * RTP and RTCP on one port on calls to the trunk. Defaults to
-     * `disabled`. (API 2026-10-22).
+     * `disabled`. (API 2026-11-19).
      */
     public function getRtcpMuxMode(): RtcpMuxMode|string|null
     {
@@ -84,7 +84,7 @@ class Sip extends Base
 
     /**
      * RTCP feedback (AVPF) on calls to the trunk. Defaults to `disabled`.
-     * (API 2026-10-22).
+     * (API 2026-11-19).
      */
     public function getRtcpFeedbackMode(): RtcpFeedbackMode|string|null
     {

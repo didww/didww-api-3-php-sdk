@@ -1,10 +1,10 @@
-# DIDWW 2026-10-22 — Server-side filter reference
+# DIDWW 2026-11-19 — Server-side filter reference
 
-This is the canonical list of `filter[KEY]` query parameters accepted by each list endpoint of the DIDWW API at version `2026-10-22` — the default API version targeted by this SDK.
+This is the canonical list of `filter[KEY]` query parameters accepted by each list endpoint of the DIDWW API at version `2026-11-19` — the default API version targeted by this SDK.
 
 The SDK passes filters through as untyped string→string maps (e.g. `Didww\Item\Region::all(['filter' => ['country.id' => $uuid]])`), so this document is the authoritative source for which keys actually do something on the server.
 
-Keys that already existed at version `2026-04-16` were verified live against the DIDWW API at that version. Keys added at version `2026-10-22` are taken from its published OpenAPI document.
+Keys that already existed at version `2026-04-16` were verified live against the DIDWW API at that version. Keys added at version `2026-11-19` are taken from its published OpenAPI document.
 
 Pass values URL-encoded as strings. Where the server accepts arrays, comma-separate the values.
 

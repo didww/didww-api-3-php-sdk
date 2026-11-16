@@ -17,15 +17,15 @@ Read more https://doc.didww.com/api
 
 ## API Version
 
-This SDK targets DIDWW API version `2026-10-22` (`Didww\Credentials::DEFAULT_API_VERSION`). The version is not sent as a header: it is requested in the `api_version` of every access token the SDK mints (see [Authentication](#authentication)).
+This SDK targets DIDWW API version `2026-11-19` (`Didww\Credentials::DEFAULT_API_VERSION`). The version is not sent as a header: it is requested in the `api_version` of every access token the SDK mints (see [Authentication](#authentication)).
 
 | Package Version | Branch | DIDWW API Version |
 |-----------------|--------|-------------------|
-| **11.x** | [`master`](https://github.com/didww/didww-api-3-php-sdk) | [`2026-10-22`](https://doc.didww.com/api3/2026-10-22/index.html) |
+| **11.x** | [`master`](https://github.com/didww/didww-api-3-php-sdk) | [`2026-11-19`](https://doc.didww.com/api3/2026-11-19/index.html) |
 | **10.x** | [`release-10`](https://github.com/didww/didww-api-3-php-sdk/tree/release-10) | [`2026-04-16`](https://doc.didww.com/api3/2026-04-16/index.html) |
 | **9.x** | [`2022-05-10`](https://github.com/didww/didww-api-3-php-sdk/tree/2022-05-10) | [`2022-05-10`](https://doc.didww.com/api3/2022-05-10/index.html) |
 
-A later version can be requested through `Credentials` or the `apiVersion` argument of `Configuration::configure()`. A value that is not a `YYYY-MM-DD` date, or a version earlier than `2026-10-22`, throws an `\InvalidArgumentException`. The resources of earlier API versions are not in this package: use 10.x from the [`release-10`](https://github.com/didww/didww-api-3-php-sdk/tree/release-10) branch for API `2026-04-16` (see [Migrating from 10.x](#migrating-from-10x)).
+A later version can be requested through `Credentials` or the `apiVersion` argument of `Configuration::configure()`. A value that is not a `YYYY-MM-DD` date, or a version earlier than `2026-11-19`, throws an `\InvalidArgumentException`. The resources of earlier API versions are not in this package: use 10.x from the [`release-10`](https://github.com/didww/didww-api-3-php-sdk/tree/release-10) branch for API `2026-04-16` (see [Migrating from 10.x](#migrating-from-10x)).
 
 ## Requirements
 
@@ -109,7 +109,7 @@ The API key is sent only to the token service. An overridden URL, for example to
 
 - an empty API key, or one with a character that cannot be sent in an HTTP header (a control character other than tab, such as a trailing newline, or a byte outside ASCII, such as a non-breaking space);
 - an environment other than `production` and `sandbox` (use the URL arguments of `configure()` for other hosts);
-- an API version that is not a `YYYY-MM-DD` date, or that is earlier than `2026-10-22`;
+- an API version that is not a `YYYY-MM-DD` date, or that is earlier than `2026-11-19`;
 - a scope other than `read` and `full`;
 - a base, token service or prices URL that is not an http or https URL with a host, or that has a query or fragment.
 
@@ -909,7 +909,7 @@ $regions = $regionsDocument->getData();
 
 ## Filter Reference
 
-> See [`FILTERS.md`](FILTERS.md) for the list of `filter[KEY]` keys accepted by every list endpoint at API version `2026-10-22`.
+> See [`FILTERS.md`](FILTERS.md) for the list of `filter[KEY]` keys accepted by every list endpoint at API version `2026-11-19`.
 
 ## Error Handling
 
@@ -1236,12 +1236,12 @@ For the SMS trunk configuration types, see [SMS Trunks](#sms-trunks).
 
 ## Migrating from 10.x
 
-11.0.0 targets API `2026-10-22` only. To stay on API `2026-04-16`, keep 10.x (`^10.2`, branch [`release-10`](https://github.com/didww/didww-api-3-php-sdk/tree/release-10)).
+11.0.0 targets API `2026-11-19` only. To stay on API `2026-04-16`, keep 10.x (`^10.2`, branch [`release-10`](https://github.com/didww/didww-api-3-php-sdk/tree/release-10)).
 
 Most code keeps working: `new Credentials($apiKey, $env)` and `Configuration::configure($credentials, $httpClientConfig)` are unchanged, and the SDK mints the access tokens itself. The breaking changes:
 
 - **Authentication.** Every request carries a bearer token minted from the API key (see [Authentication](#authentication)). The `Api-Key` header is sent only to the token service, so outgoing traffic must reach `auth.didww.com` (`auth-sandbox.didww.com` in the sandbox). The token service can throw a `DidwwAuthException` from any call.
-- **API version.** `X-DIDWW-API-Version` is no longer sent: the version is requested in the token. The default is `2026-10-22`, and an earlier version throws an `\InvalidArgumentException`. A `null` version in `Credentials` now means the default, not "send no version".
+- **API version.** `X-DIDWW-API-Version` is no longer sent: the version is requested in the token. The default is `2026-11-19`, and an earlier version throws an `\InvalidArgumentException`. A `null` version in `Credentials` now means the default, not "send no version".
 - **Validation.** `Credentials` and `configure()` throw an `\InvalidArgumentException` for invalid values (see [Validation](#validation)). An environment other than `production` and `sandbox` is rejected; 10.x fell back to the sandbox.
 - **Removed methods.** `Didww\Client::setApiKey()` and `Client::setVersion()` are removed: authentication and the API version come from `Credentials` and `configure()`.
 - **Codecs.** The SIP configuration of a Voice IN trunk takes codec names: `Sip::getCodecs()` and `setCodecs()` (the `codecs` attribute) replace `getCodecIds()` and `setCodecIds()` (`codec_ids`), and `Didww\Enum\Codec` is backed by the names (`'pcmu'`) instead of the ids (`9`). `Configuration\Base::getDefaultCodecIds()` and `Base::getCodecs()` are removed: the server chooses the codecs of a trunk created without them, and `Codec::cases()` lists the names.
