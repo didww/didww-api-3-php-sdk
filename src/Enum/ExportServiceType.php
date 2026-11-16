@@ -3,7 +3,7 @@
 namespace Didww\Enum;
 
 /**
- * Value of the `service_type` filter of an sms_out export. (API 2026-10-22).
+ * Value of the `service_type` filter of an sms_out export. (API 2026-11-19).
  */
 enum ExportServiceType: string
 {

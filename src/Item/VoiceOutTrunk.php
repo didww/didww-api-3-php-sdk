@@ -238,7 +238,7 @@ class VoiceOutTrunk extends BaseItem
      * Codecs offered on calls from the trunk, in priority order: the first has
      * the highest priority. Left out on create, the trunk offers `pcma`,
      * `pcmu` and `telephone_event`. A name this SDK does not know is returned
-     * as the raw string. (API 2026-10-22).
+     * as the raw string. (API 2026-11-19).
      *
      * @return array<VoiceOutCodec|string>|null
      */
@@ -256,7 +256,7 @@ class VoiceOutTrunk extends BaseItem
     }
 
     /**
-     * ICE on calls from the trunk. Defaults to `accept`. (API 2026-10-22).
+     * ICE on calls from the trunk. Defaults to `accept`. (API 2026-11-19).
      */
     public function getIceMode(): IceMode|string|null
     {
@@ -270,7 +270,7 @@ class VoiceOutTrunk extends BaseItem
 
     /**
      * RTP and RTCP on one port on calls from the trunk. Defaults to `accept`.
-     * (API 2026-10-22).
+     * (API 2026-11-19).
      */
     public function getRtcpMuxMode(): RtcpMuxMode|string|null
     {
@@ -284,7 +284,7 @@ class VoiceOutTrunk extends BaseItem
 
     /**
      * RTCP feedback (AVPF) on calls from the trunk. Defaults to `accept`.
-     * (API 2026-10-22).
+     * (API 2026-11-19).
      */
     public function getRtcpFeedbackMode(): RtcpFeedbackMode|string|null
     {

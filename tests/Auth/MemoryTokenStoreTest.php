@@ -73,6 +73,6 @@ class MemoryTokenStoreTest extends TestCase
 
     private function token(string $accessToken): AccessToken
     {
-        return new AccessToken($accessToken, 'Bearer', 60, ['api.didww.com'], 'full', '2026-10-22', new \DateTimeImmutable());
+        return new AccessToken($accessToken, 'Bearer', 60, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable());
     }
 }

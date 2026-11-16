@@ -22,7 +22,7 @@ final class FixedTokenStore implements TokenStore
             900,
             [Audience::API, Audience::VOICE_IN, Audience::VOICE_OUT, Audience::SMS],
             'full',
-            '2026-10-22',
+            '2026-11-19',
             new \DateTimeImmutable('2026-10-22T00:00:00Z'),
         );
     }

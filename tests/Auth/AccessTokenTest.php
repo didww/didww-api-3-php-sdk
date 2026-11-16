@@ -16,7 +16,7 @@ class AccessTokenTest extends TestCase
         $this->assertSame(900, $token->getExpiresIn());
         $this->assertSame(['api.didww.com'], $token->getAudience());
         $this->assertSame('full', $token->getScope());
-        $this->assertSame('2026-10-22', $token->getApiVersion());
+        $this->assertSame('2026-11-19', $token->getApiVersion());
     }
 
     public function testArrayRoundTrip()
@@ -54,6 +54,6 @@ class AccessTokenTest extends TestCase
 
     private function token(): AccessToken
     {
-        return new AccessToken('secret-token-value', 'Bearer', 900, ['api.didww.com'], 'full', '2026-10-22', new \DateTimeImmutable('2026-10-22T10:00:00+00:00'));
+        return new AccessToken('secret-token-value', 'Bearer', 900, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable('2026-10-22T10:00:00+00:00'));
     }
 }

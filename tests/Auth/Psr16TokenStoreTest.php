@@ -17,7 +17,7 @@ class Psr16TokenStoreTest extends TestCase
     {
         $cache = new ArrayCache();
         $store = new Psr16TokenStore($cache);
-        $token = new AccessToken('t1', 'Bearer', 900, ['api.didww.com'], 'full', '2026-10-22', new \DateTimeImmutable('2026-10-22T10:00:00+00:00'));
+        $token = new AccessToken('t1', 'Bearer', 900, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable('2026-10-22T10:00:00+00:00'));
 
         $store->set(self::KEY, $token, 900);
 
@@ -40,7 +40,7 @@ class Psr16TokenStoreTest extends TestCase
         $store = new Psr16TokenStore($cache);
 
         try {
-            TraceArgs::keepingArgs(fn () => $store->set(self::KEY, new AccessToken('secret-token', 'Bearer', 900, ['api.didww.com'], 'full', '2026-10-22', new \DateTimeImmutable()), 900));
+            TraceArgs::keepingArgs(fn () => $store->set(self::KEY, new AccessToken('secret-token', 'Bearer', 900, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable()), 900));
             $this->fail('No exception');
         } catch (\RuntimeException $e) {
             $this->assertSame('RuntimeException: cache unavailable', $e->getMessage());
@@ -61,7 +61,7 @@ class Psr16TokenStoreTest extends TestCase
         $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage('The PSR-16 cache did not store the token');
 
-        (new Psr16TokenStore($cache))->set(self::KEY, new AccessToken('t1', 'Bearer', 900, ['api.didww.com'], 'full', '2026-10-22', new \DateTimeImmutable()), 900);
+        (new Psr16TokenStore($cache))->set(self::KEY, new AccessToken('t1', 'Bearer', 900, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable()), 900);
     }
 
     public function testDeleteAnsweredFalseThrows()
@@ -73,7 +73,7 @@ class Psr16TokenStoreTest extends TestCase
             }
         };
         $store = new Psr16TokenStore($cache);
-        $store->set(self::KEY, new AccessToken('t1', 'Bearer', 900, ['api.didww.com'], 'full', '2026-10-22', new \DateTimeImmutable()), 900);
+        $store->set(self::KEY, new AccessToken('t1', 'Bearer', 900, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable()), 900);
 
         $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage('The PSR-16 cache did not delete the token');
@@ -86,7 +86,7 @@ class Psr16TokenStoreTest extends TestCase
         $cache = new ArrayCache();
         $store = new Psr16TokenStore($cache);
 
-        $store->set(self::KEY, new AccessToken('t1', 'Bearer', 0, ['api.didww.com'], 'full', '2026-10-22', new \DateTimeImmutable()), 0);
+        $store->set(self::KEY, new AccessToken('t1', 'Bearer', 0, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable()), 0);
 
         $this->assertNull($cache->ttls[Psr16TokenStore::cacheKey(self::KEY)]);
     }
@@ -109,7 +109,7 @@ class Psr16TokenStoreTest extends TestCase
     {
         $cache = new ArrayCache();
         $store = new Psr16TokenStore($cache);
-        $store->set(self::KEY, new AccessToken('t1', 'Bearer', 900, ['api.didww.com'], 'full', '2026-10-22', new \DateTimeImmutable()), 900);
+        $store->set(self::KEY, new AccessToken('t1', 'Bearer', 900, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable()), 900);
 
         $store->delete(self::KEY);
 

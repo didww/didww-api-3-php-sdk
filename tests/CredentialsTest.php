@@ -12,7 +12,7 @@ class CredentialsTest extends \PHPUnit\Framework\TestCase
     {
         $credentials = new Credentials('PLACEYOURAPIKEYHERE', 'sandbox');
 
-        $this->assertSame('2026-10-22', $credentials->getVersion());
+        $this->assertSame('2026-11-19', $credentials->getVersion());
         $this->assertSame(Credentials::DEFAULT_API_VERSION, $credentials->getVersion());
         $this->assertNull($credentials->getScope());
     }
@@ -25,14 +25,14 @@ class CredentialsTest extends \PHPUnit\Framework\TestCase
     public function testEarlierApiVersionRejected()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('API version 2026-04-16 is not supported: this SDK requires 2026-10-22 or later; use didww/didww-api-3-php-sdk 10.x (branch release-10) for 2026-04-16');
+        $this->expectExceptionMessage('API version 2026-04-16 is not supported: this SDK requires 2026-11-19 or later; use didww/didww-api-3-php-sdk 10.x (branch release-10) for 2026-04-16');
 
         self::create('PLACEYOURAPIKEYHERE', 'sandbox', '2026-04-16');
     }
 
     public static function malformedVersionProvider(): array
     {
-        return [['2026-10-22'."\n"], ['2026-1-22'], ['20261022'], ['latest'], ['']];
+        return [['2026-11-19'."\n"], ['2026-1-19'], ['20261119'], ['latest'], ['']];
     }
 
     #[DataProvider('malformedVersionProvider')]

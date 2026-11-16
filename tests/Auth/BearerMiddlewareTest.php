@@ -261,7 +261,7 @@ class BearerMiddlewareTest extends TestCase
         Configuration::getHttpClient()->request('GET', 'https://api-vin-sandbox.didww.com/v3/prices.csv.gz', [BearerMiddleware::AUDIENCE_OPTION => Audience::VOICE_IN]);
         Configuration::getHttpClient()->request('GET', 'https://sandbox-api.didww.com/storage/public/file.pdf', [BearerMiddleware::AUDIENCE_OPTION => false]);
 
-        $this->assertJsonStringEqualsJsonString('{"aud":["api-vin.didww.com"],"api_version":"2026-10-22"}', (string) $this->http->request(0)->getBody());
+        $this->assertJsonStringEqualsJsonString('{"aud":["api-vin.didww.com"],"api_version":"2026-11-19"}', (string) $this->http->request(0)->getBody());
         $this->assertSame('Bearer vin-token', $this->http->request(1)->getHeaderLine('Authorization'));
         $this->assertArrayNotHasKey(BearerMiddleware::AUDIENCE_OPTION, $this->http->options(1));
         $this->assertFalse($this->http->request(2)->hasHeader('Authorization'));

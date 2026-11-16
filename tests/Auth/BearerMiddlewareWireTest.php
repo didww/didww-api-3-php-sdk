@@ -63,7 +63,7 @@ class BearerMiddlewareWireTest extends TestCase
 
             public function get(string $key): ?AccessToken
             {
-                return new AccessToken($this->accessToken, 'Bearer', 900, [Audience::API], 'full', '2026-10-22', new \DateTimeImmutable('2026-10-22T00:00:00Z'));
+                return new AccessToken($this->accessToken, 'Bearer', 900, [Audience::API], 'full', '2026-11-19', new \DateTimeImmutable('2026-10-22T00:00:00Z'));
             }
 
             public function set(string $key, AccessToken $token, int $ttl): void

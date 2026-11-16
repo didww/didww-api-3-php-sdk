@@ -60,7 +60,7 @@ final class MockHttp
         return $requests;
     }
 
-    public static function token(string $accessToken = 'token-1', array $audience = ['api.didww.com'], string $scope = 'full', string $apiVersion = '2026-10-22', int $expiresIn = 900): Response
+    public static function token(string $accessToken = 'token-1', array $audience = ['api.didww.com'], string $scope = 'full', string $apiVersion = '2026-11-19', int $expiresIn = 900): Response
     {
         return new Response(200, ['Content-Type' => 'application/json'], json_encode([
             'access_token' => $accessToken,
