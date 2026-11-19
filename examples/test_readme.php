@@ -1005,8 +1005,33 @@ Readme::check('Voice IN trunk groups: create', function () {
 
 Readme::section('Voice Out Trunks');
 
+// A DID of a DID group with the voice_out feature, which a Voice OUT trunk
+// accepts as its default DID; ordered when the account has none.
+function didWithVoiceOut(): Did
+{
+    $did = dataOf(Did::all([
+        'filter' => ['did_group.features' => 'voice_out', 'terminated' => 'false'],
+        'page' => ['size' => 1, 'number' => 1],
+    ]), 'listing the DIDs with the voice_out feature')->first();
+    if (null !== $did) {
+        return $did;
+    }
+    $availableDids = dataOf(AvailableDid::all([
+        'filter' => ['did_group.features' => 'voice_out'],
+        'include' => 'did_group.stock_keeping_units',
+        'page' => ['size' => 1, 'number' => 1],
+    ]), 'listing the available DIDs with the voice_out feature');
+    ensure($availableDids->isNotEmpty(), 'no available DID with the voice_out feature');
+    $order = new Order([
+        'items' => [new AvailableDidOrderItem(['sku_id' => skuIdOf($availableDids[0]), 'available_did_id' => $availableDids[0]->getId()])],
+    ]);
+
+    return didsOfCompletedOrder(dataOf($order->save(), 'ordering a DID with the voice_out feature'))->first()
+        ?? throw new UnexpectedValueException('the order has no DID');
+}
+
 Readme::check('Voice OUT trunks: create with credentials_and_ip', function () {
-    $did = firstDid();
+    $did = didWithVoiceOut();
     $trunk = new VoiceOutTrunk();
     $trunk->setName('My Outbound Trunk '.suffix());
     $trunk->setAuthenticationMethod(new CredentialsAndIp([
@@ -1417,7 +1442,7 @@ Readme::check('Address verifications: create', function () {
     foreach ([['area_name' => 'Kiev'], []] as $filter) {
         $didGroup = dataOf(DidGroup::all([
             'filter' => $filter + ['country.id' => $ukraine, 'number_type' => NumberType::LOCAL->value, 'is_available' => 'true'],
-            'include' => 'city.area,stock_keeping_units,address_requirement',
+            'include' => 'city,stock_keeping_units,address_requirement',
             'page' => ['size' => 100, 'number' => 1],
         ]), 'listing the local DID groups of Ukraine')->first($needsAnAddress);
         if (null !== $didGroup) {
@@ -1462,13 +1487,6 @@ Readme::check('Address verifications: create', function () {
         $newAddress->setAddress("1 Khreshchatyk St, office $suffix");
         $newAddress->setIdentity(Identity::build($identity->getId()));
         $newAddress->setCountry(Country::build($ukraine));
-        if ($city) {
-            $newAddress->city()->associate(City::build($city->getId()));
-            $area = $city->area()->getIncluded();
-            if ($area) {
-                $newAddress->area()->associate(Area::build($area->getId()));
-            }
-        }
         $address = dataOf($newAddress->save(), 'creating the address');
         Readme::$createdAddressIds[] = $address->getId();
 
@@ -1530,17 +1548,21 @@ Readme::check('Emergency services: requirements and calling services', function 
     note(count(dataOf(EmergencyCallingService::all(), 'listing emergency calling services')).' emergency calling services');
 });
 
-// A DID with the emergency feature in the country, with no emergency calling
-// service or verification yet; ordered when the account has none.
+// A DID with the emergency feature in the country, with no identity,
+// emergency calling service or verification yet (an emergency verification
+// binds the DID to the identity of its address); ordered when the account
+// has none.
 function didForEmergency(string $countryId): Did
 {
-    $include = 'did_group,emergency_calling_service,emergency_verification';
+    $include = 'did_group,identity,emergency_calling_service,emergency_verification';
     $dids = dataOf(Did::all([
         'filter' => ['did_group.features' => 'emergency', 'country.id' => $countryId, 'emergency_enabled' => 'false', 'terminated' => 'false'],
         'include' => $include,
         'sort' => '-created_at',
     ]), 'listing the DIDs with the emergency feature');
-    $did = $dids->first(fn (Did $did) => null === $did->emergencyCallingService()->getIncluded() && null === $did->emergencyVerification()->getIncluded());
+    $did = $dids->first(fn (Did $did) => null === $did->identity()->getIncluded()
+        && null === $did->emergencyCallingService()->getIncluded()
+        && null === $did->emergencyVerification()->getIncluded());
     if (null !== $did) {
         return $did;
     }
@@ -1560,11 +1582,9 @@ function didForEmergency(string $countryId): Did
 }
 
 Readme::check('Emergency services: create an emergency verification', function () {
-    // An address of the account with its identity, one in Ukraine when there is one
-    $parameters = ['include' => 'country,identity', 'page' => ['size' => 50, 'number' => 1]];
-    $notCreatedHere = fn (Address $address) => !in_array($address->getId(), Readme::$createdAddressIds, true) && null !== $address->identity()->getIncluded();
-    $address = dataOf(Address::all(['filter' => ['country.id' => countryId('UA')]] + $parameters), 'listing the addresses in Ukraine')->first($notCreatedHere)
-        ?? dataOf(Address::all($parameters), 'listing the addresses')->first($notCreatedHere);
+    // The first address of the account with its identity, as emergency_scenario.php uses it
+    $address = dataOf(Address::all(['include' => 'country,identity', 'page' => ['size' => 50, 'number' => 1]]), 'listing the addresses')
+        ->first(fn (Address $address) => !in_array($address->getId(), Readme::$createdAddressIds, true) && null !== $address->identity()->getIncluded());
     ensure(null !== $address, 'the account has no address with an identity');
     $country = $address->country()->getIncluded();
     $did = didForEmergency($country->getId());
