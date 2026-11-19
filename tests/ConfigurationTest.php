@@ -161,7 +161,7 @@ class ConfigurationTest extends TestCase
 
         $this->assertSame('2099-01-01', Configuration::getCredentials()->getVersion());
         $this->assertSame(Scope::READ, Configuration::getCredentials()->getScope());
-        $this->assertJsonStringEqualsJsonString('{"aud":["api.didww.com"],"api_version":"2099-01-01","scope":"read"}', (string) $this->http->request(0)->getBody());
+        $this->assertJsonStringEqualsJsonString('{"aud":["api.didww.com"],"api_version":"2099-01-01","scope":"read","expires_in":3600}', (string) $this->http->request(0)->getBody());
     }
 
     public function testEarlierApiVersionOverrideRejected()
