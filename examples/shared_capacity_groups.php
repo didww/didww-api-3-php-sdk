@@ -1,6 +1,9 @@
 <?php
 
-// Lists shared capacity groups in capacity pools.
+// Shared capacity groups: creates a group in a capacity pool, lists the
+// groups of that pool, updates the group and deletes it, also when a step
+// fails. Shared channels come from the channels purchased in the pool (see
+// orders_capacity.php); metered channels are billed per minute.
 // 2026-04-16 adds external_reference_id for customer tagging.
 //
 // Usage: DIDWW_API_KEY=your_api_key php examples/shared_capacity_groups.php
@@ -10,44 +13,80 @@ require_once 'bootstrap.php';
 use Didww\Item\CapacityPool;
 use Didww\Item\SharedCapacityGroup;
 
-// List shared capacity groups
-echo "=== Existing Shared Capacity Groups ===\n";
-$document = SharedCapacityGroup::all(['include' => 'capacity_pool']);
-$sharedGroups = $document->getData();
-echo 'Found '.count($sharedGroups)." shared capacity groups\n";
-
-foreach ($sharedGroups->take(10) as $group) {
-    echo "\nGroup: ".$group->getName()."\n";
-    echo '  ID: '.$group->getId()."\n";
-    echo '  Shared channels: '.$group->getSharedChannelsCount()."\n";
-    echo '  Metered channels: '.$group->getMeteredChannelsCount()."\n";
-    $extRef = $group->getExternalReferenceId();
-    if ($extRef) {
-        echo '  External reference: '.$extRef."\n";
-    }
-    $capacityPool = $group->capacityPool()->getIncluded();
-    if ($capacityPool) {
-        echo '  Capacity pool: '.$capacityPool->getName()."\n";
+function printErrors(string $message, $document): void
+{
+    echo $message.":\n";
+    foreach ($document->getErrors() as $error) {
+        echo '  - '.($error->getDetail() ?? $error->getTitle())."\n";
     }
 }
 
-// Get a specific capacity pool and show its shared capacity groups
-echo "\n=== Capacity Pool with Shared Groups ===\n";
-$poolDocument = CapacityPool::all(['include' => 'shared_capacity_groups']);
-$capacityPools = $poolDocument->getData();
+function printGroup(SharedCapacityGroup $group): void
+{
+    echo '  ID: '.$group->getId()."\n";
+    echo '  Name: '.$group->getName()."\n";
+    echo '  Shared channels: '.$group->getSharedChannelsCount()."\n";
+    echo '  Metered channels: '.$group->getMeteredChannelsCount()."\n";
+    echo '  External reference: '.($group->getExternalReferenceId() ?? 'null')."\n";
+}
 
-if (!empty($capacityPools)) {
-    $pool = $capacityPools[0];
-    echo 'Capacity Pool: '.$pool->getName()."\n";
-    $groups = $pool->sharedCapacityGroups()->getIncluded();
-    if ($groups && count($groups->all()) > 0) {
-        echo '  Total channels: '.$pool->getTotalChannelsCount()."\n";
-        echo '  Assigned channels: '.$pool->getAssignedChannelsCount()."\n";
-        echo "  Shared Capacity Groups:\n";
-        foreach ($groups->all() as $group) {
-            echo '    - '.$group->getName().' ('.$group->getSharedChannelsCount().' shared, '.$group->getMeteredChannelsCount()." metered)\n";
-        }
+$pools = CapacityPool::all()->getData();
+if (0 === count($pools)) {
+    exit("No capacity pools found.\n");
+}
+$pool = $pools[0];
+echo 'Using capacity pool: '.$pool->getName().' ('.$pool->getId().")\n";
+
+// set name (should be unique)
+$suffix = bin2hex(random_bytes(4));
+
+echo "\n=== Creating Shared Capacity Group ===\n";
+$group = new SharedCapacityGroup();
+$group->setName("PHP Channel Group $suffix");
+$group->setMeteredChannelsCount(10);
+// see orders_capacity.php to purchase shared channels in the pool
+$group->setSharedChannelsCount(1);
+// set capacity pool as a source of purchased channels
+$group->setCapacityPool(CapacityPool::build($pool->getId()));
+$group->setExternalReferenceId("php-scg-$suffix");
+
+$document = $group->save();
+if ($document->hasErrors()) {
+    printErrors('Error creating shared capacity group', $document);
+    exit(1);
+}
+$group = $document->getData();
+
+try {
+    printGroup($group);
+
+    echo "\n=== Shared Capacity Groups of the Pool ===\n";
+    $groups = SharedCapacityGroup::all([
+        'filter' => ['capacity_pool.id' => $pool->getId()],
+        'include' => 'capacity_pool',
+    ])->getData();
+    foreach ($groups as $listed) {
+        $listedPool = $listed->capacityPool()->getIncluded();
+        echo '  '.$listed->getName().' ('.$listed->getSharedChannelsCount().' shared, '.$listed->getMeteredChannelsCount().' metered)';
+        echo ' in '.($listedPool ? $listedPool->getName() : 'unknown pool')."\n";
+    }
+
+    echo "\n=== Updating Shared Capacity Group ===\n";
+    // Only the changed attributes are sent.
+    $group->setName("PHP Channel Group $suffix (updated)");
+    $group->setMeteredChannelsCount(5);
+    $document = $group->save();
+    if ($document->hasErrors()) {
+        printErrors('Error updating shared capacity group', $document);
     } else {
-        echo "  No shared capacity groups\n";
+        printGroup($document->getData());
+    }
+} finally {
+    echo "\n=== Deleting Shared Capacity Group ===\n";
+    $document = $group->delete();
+    if ($document->hasErrors()) {
+        printErrors('Error deleting shared capacity group '.$group->getId(), $document);
+    } else {
+        echo "Shared capacity group deleted\n";
     }
 }
