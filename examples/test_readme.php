@@ -1410,14 +1410,20 @@ function didNeedingAnAddress(DidGroup $didGroup): Did
 
 Readme::check('Address verifications: create', function () {
     $ukraine = countryId('UA');
-    $didGroups = dataOf(DidGroup::all([
-        'filter' => ['country.id' => $ukraine, 'number_type' => NumberType::LOCAL->value, 'is_available' => 'true'],
-        'include' => 'city.area,stock_keeping_units,address_requirement',
-        'page' => ['size' => 50, 'number' => 1],
-    ]), 'listing the local DID groups of Ukraine');
-    $didGroup = $didGroups
-        ->sortBy(fn (DidGroup $group) => str_contains(strtolower($group->getAreaName()), 'odes') ? 0 : 1)
-        ->first(fn (DidGroup $group) => null !== $group->addressRequirement()->getIncluded() && $group->stockKeepingUnits()->getIncluded()->isNotEmpty());
+    // Kiev has an address requirement, not every Ukrainian city does; the
+    // requirement is only in the answer with include=address_requirement
+    $needsAnAddress = fn (DidGroup $group) => null !== $group->addressRequirement()->getIncluded() && $group->stockKeepingUnits()->getIncluded()->isNotEmpty();
+    $didGroup = null;
+    foreach ([['area_name' => 'Kiev'], []] as $filter) {
+        $didGroup = dataOf(DidGroup::all([
+            'filter' => $filter + ['country.id' => $ukraine, 'number_type' => NumberType::LOCAL->value, 'is_available' => 'true'],
+            'include' => 'city.area,stock_keeping_units,address_requirement',
+            'page' => ['size' => 100, 'number' => 1],
+        ]), 'listing the local DID groups of Ukraine')->first($needsAnAddress);
+        if (null !== $didGroup) {
+            break;
+        }
+    }
     ensure(null !== $didGroup, 'no local DID group of Ukraine with an address requirement and numbers in stock');
     $requirement = dataOf(AddressRequirement::find($didGroup->addressRequirement()->getIncluded()->getId(), [
         'include' => 'personal_proof_types,business_proof_types,address_proof_types,personal_permanent_document,business_permanent_document',
@@ -1452,8 +1458,8 @@ Readme::check('Address verifications: create', function () {
         $city = $didGroup->city()->getIncluded();
         $newAddress = new Address();
         $newAddress->setCityName($city ? $city->name : $didGroup->getAreaName());
-        $newAddress->setPostalCode('65000');
-        $newAddress->setAddress("1 Derybasivska St, office $suffix");
+        $newAddress->setPostalCode('01001');
+        $newAddress->setAddress("1 Khreshchatyk St, office $suffix");
         $newAddress->setIdentity(Identity::build($identity->getId()));
         $newAddress->setCountry(Country::build($ukraine));
         if ($city) {
