@@ -6,11 +6,13 @@ use Didww\Auth\AccessToken;
 use Didww\Auth\Psr16TokenStore;
 use Didww\Auth\TokenProvider;
 use Didww\Tests\Support\ArrayCache;
-use Didww\Tests\Support\TraceArgs;
+use Didww\Tests\Support\AssertsFailedStoreWrite;
 use PHPUnit\Framework\TestCase;
 
 class Psr16TokenStoreTest extends TestCase
 {
+    use AssertsFailedStoreWrite;
+
     private const KEY = TokenProvider::CACHE_KEY_PREFIX.'2e1c5435f0e67f91d34497fabf69840a945923a47982fad172c353b3f26be539';
 
     public function testRoundTrip()
@@ -37,16 +39,8 @@ class Psr16TokenStoreTest extends TestCase
                 throw new \RuntimeException('cache unavailable');
             }
         };
-        $store = new Psr16TokenStore($cache);
 
-        try {
-            TraceArgs::keepingArgs(fn () => $store->set(self::KEY, new AccessToken('secret-token', 'Bearer', 900, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable()), 900));
-            $this->fail('No exception');
-        } catch (\RuntimeException $e) {
-            $this->assertSame('RuntimeException: cache unavailable', $e->getMessage());
-            $this->assertNull($e->getPrevious());
-            $this->assertStringNotContainsString('secret-token', print_r($e->getTrace(), true));
-        }
+        $this->assertFailedWriteKeepsNoToken(new Psr16TokenStore($cache), 'RuntimeException: cache unavailable');
     }
 
     public function testWriteAnsweredFalseThrows()

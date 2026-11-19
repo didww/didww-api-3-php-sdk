@@ -32,7 +32,8 @@ A later version can be requested through `Credentials` or the `apiVersion` argum
 - PHP 8.2+
 - [Guzzle](https://github.com/guzzle/guzzle) 8 (`guzzlehttp/guzzle` `^8.0.1`)
 - Extensions: `ext-curl`, `ext-json`, `ext-openssl`, `ext-zlib`
-- Optional: [`psr/simple-cache`](https://packagist.org/packages/psr/simple-cache) and a PSR-16 cache implementation, to share access tokens between processes (see [Token cache](#token-cache))
+- Recommended under PHP-FPM or mod_php: `ext-apcu`, so that web requests share access tokens (see [Token cache](#token-cache))
+- Optional: [`psr/simple-cache`](https://packagist.org/packages/psr/simple-cache) and a PSR-16 cache implementation, to share access tokens between servers
 
 ## Installation
 
@@ -95,7 +96,7 @@ Didww\Configuration::configure(
 | `$httpClientConfig` | `[]` | [Guzzle configuration](https://docs.guzzlephp.org/en/stable/request-options.html), used on top of the SDK defaults. See [HTTP client](#http-client-proxy-tls-timeouts). |
 | `apiVersion:` | the version of `$credentials` (`Credentials::DEFAULT_API_VERSION`) | API version requested in every token. See [API Version](#api-version). |
 | `scope:` | the scope of `$credentials` (none) | `Didww\Auth\Scope::READ`, `Scope::FULL`, `'read'` or `'full'`. Without a scope none is requested and the token service grants `full`. See [Scope](#scope). |
-| `tokenStore:` | an in-memory store shared by the process | A `Didww\Auth\TokenStore`. See [Token cache](#token-cache). |
+| `tokenStore:` | `ApcuTokenStore` where APCu is enabled outside the CLI, otherwise an in-memory store shared by the process | A `Didww\Auth\TokenStore`. See [Token cache](#token-cache). |
 | `logger:` | `Psr\Log\NullLogger` | PSR-3 logger for the token warnings and debug messages. See [Logging](#logging). |
 | `baseUrl:` | API URL of the environment | JSON:API base URL, with or without `/v3`. |
 | `authUrl:` | Token service of the environment | Token service base URL. |
@@ -196,17 +197,18 @@ The SDK compares each token it receives with what it asked for:
 
 Tokens are cached in a `Didww\Auth\TokenStore`, keyed by the token service URL, the API key (as a SHA-256 hash), the audience, the API version and the scope. Each entry is stored for the token's `expires_in`.
 
-The default `Didww\Auth\MemoryTokenStore` keeps the tokens in process memory, and every `configure()` call of the process without its own store shares it. A long-running worker (a queue consumer, a daemon, a CLI job) therefore reuses its tokens. **Under PHP-FPM or mod_php the process memory lasts one request, so every request would mint new tokens:** pass a store that outlives the request, such as `Didww\Auth\Psr16TokenStore` over a [PSR-16](https://www.php-fig.org/psr/psr-16/) cache (requires `psr/simple-cache`):
+Every `configure()` call of the process without its own store shares one default store:
+
+- **Outside the CLI (PHP-FPM, mod_php and other web servers) with APCu enabled:** `Didww\Auth\ApcuTokenStore`. APCu is shared by the workers of the server, so a web request reuses the tokens minted by earlier ones.
+- **Otherwise:** `Didww\Auth\MemoryTokenStore`, in process memory. A long-running worker (a queue consumer, a daemon, a CLI job) reuses its tokens. **Under PHP-FPM or mod_php without APCu the process memory lasts one request, so every request mints new tokens:** enable APCu, or pass a store that outlives the request.
+
+APCu memory is shared by every pool of one PHP-FPM master. Where the sites of other owners run under the same master, as on shared hosting, pass `tokenStore: new Didww\Auth\MemoryTokenStore()` or a store of your own. To share tokens between servers, use `Didww\Auth\Psr16TokenStore` over a [PSR-16](https://www.php-fig.org/psr/psr-16/) cache (requires `psr/simple-cache`):
 
 ```php
-use Symfony\Component\Cache\Adapter\ApcuAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Cache\Psr16Cache;
 
-// One server: APCu is shared by the PHP-FPM workers
-$cache = new Psr16Cache(new ApcuAdapter('didww'));
-
-// Several servers: Redis, with short timeouts
+// Redis, with short timeouts
 $cache = new Psr16Cache(new RedisAdapter(
     RedisAdapter::createConnection('redis://localhost', ['timeout' => 2, 'read_timeout' => 2]),
 ));
@@ -243,7 +245,7 @@ The SDK keeps the API key and the tokens out of the exceptions it throws (their 
 ### SDK design decisions
 
 - **Audience strategy.** One token per audience, minted on first use, rather than one token naming every service. An account that never calls the prices services never requests their audiences, so a refused audience cannot break DID management, and every token is valid for one service only.
-- **Cache store.** In-process memory by default, shared by the whole process, because the SDK configuration is static. It serves long-running processes; web workloads under PHP-FPM opt into a shared store through `tokenStore:`.
+- **Cache store.** APCu by default where it is enabled outside the CLI, so that the requests of PHP-FPM or mod_php workers share tokens; otherwise in-process memory, shared by the whole process because the SDK configuration is static. A store shared between servers is opt-in through `tokenStore:`.
 - **Token lifetime.** The longest the token service grants, one hour, so that a process mints each token as rarely as possible. Lifetime is decided by the server through the 401 refresh, not by a local expiry margin.
 - **Logger.** PSR-3, silent by default (`NullLogger`), as PHP libraries usually are.
 - **HTTP defaults.** Connect and read timeouts and a stall limit instead of a total timeout, so that large files are not cut off; no redirects, so that credentials stay on the configured hosts; no decompression, so that files are written as served; no cookies, so that no state is carried between calls.
@@ -1253,7 +1255,7 @@ Most code keeps working: `new Credentials($apiKey, $env)` and `Configuration::co
 - **Guzzle 8.** `guzzlehttp/guzzle` `^8.0.1` is required (10.x allowed Guzzle 7). Guzzle 8 changes its own API, so update any code of yours that uses Guzzle directly, such as a `handler`, middleware or callbacks you pass in `$httpClientConfig`, following Guzzle's upgrade guide. In particular a transport failure of a JSON:API call now throws Guzzle 8's exception classes: only a `GuzzleHttp\Exception\ResponseException` (such as a timeout after the response headers, `ResponseTimeoutException`) has `getResponse()`, a `ConnectException` or `NetworkException` has none, and `getHandlerContext()` is gone.
 - **Requirements.** `ext-zlib` and `psr/log` are now required.
 
-New in 11.0.0: [SMS trunks](#sms-trunks), [SMS trunk groups](#sms-trunk-groups), [Sender ID verifications](#sender-id-verifications), [DID SMS routing](#sms-routing), `sms_in` and `sms_out` [exports](#exports), [prices](#prices), `DidGroup::getIsDemo()`, `Identity` company website, the `codecs`, `ice_mode`, `rtcp_mux_mode` and `rtcp_feedback_mode` of [Voice OUT trunks](#voice-out-trunks) and of the SIP configuration of [Voice IN trunks](#voice-in-trunks) (`Didww\Enum\VoiceOutCodec`, `IceMode`, `RtcpMuxMode` and `RtcpFeedbackMode`), `Didww\Enum\ExportServiceType`, the `Retry-After` of a 429 (`Didww\RetryAfter`, `UploadResult::getRetryAfter()` and the `$retryAfter` argument of the export downloads, see [Error Handling](#error-handling)), and the `scope:`, `tokenStore:`, `logger:` and URL arguments of `configure()`.
+New in 11.0.0: [SMS trunks](#sms-trunks), [SMS trunk groups](#sms-trunk-groups), [Sender ID verifications](#sender-id-verifications), [DID SMS routing](#sms-routing), `sms_in` and `sms_out` [exports](#exports), [prices](#prices), `DidGroup::getIsDemo()`, `Identity` company website, the `codecs`, `ice_mode`, `rtcp_mux_mode` and `rtcp_feedback_mode` of [Voice OUT trunks](#voice-out-trunks) and of the SIP configuration of [Voice IN trunks](#voice-in-trunks) (`Didww\Enum\VoiceOutCodec`, `IceMode`, `RtcpMuxMode` and `RtcpFeedbackMode`), `Didww\Enum\ExportServiceType`, the `Retry-After` of a 429 (`Didww\RetryAfter`, `UploadResult::getRetryAfter()` and the `$retryAfter` argument of the export downloads, see [Error Handling](#error-handling)), the `scope:`, `tokenStore:`, `logger:` and URL arguments of `configure()`, and the token stores (`MemoryTokenStore`, `ApcuTokenStore` as the default outside the CLI with APCu enabled, `Psr16TokenStore`).
 
 ## Development
 
