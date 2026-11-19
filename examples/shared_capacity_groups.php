@@ -30,11 +30,14 @@ function printGroup(SharedCapacityGroup $group): void
     echo '  External reference: '.($group->getExternalReferenceId() ?? 'null')."\n";
 }
 
-$pools = CapacityPool::all()->getData();
-if (0 === count($pools)) {
-    exit("No capacity pools found.\n");
+// The group takes one shared channel: use a pool with an unassigned channel
+$pool = CapacityPool::all()->getData()->first(
+    fn (CapacityPool $candidate) => $candidate->getTotalChannelsCount() > $candidate->getAssignedChannelsCount()
+);
+if (null === $pool) {
+    echo "No capacity pool has an unassigned channel; see orders_capacity.php to buy one.\n";
+    exit(1);
 }
-$pool = $pools[0];
 echo 'Using capacity pool: '.$pool->getName().' ('.$pool->getId().")\n";
 
 // set name (should be unique)

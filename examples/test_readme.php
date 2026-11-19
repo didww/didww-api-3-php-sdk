@@ -6,7 +6,9 @@
 // runs anyway.
 //
 // What a check creates is deleted in its finally block, and what it changes
-// on an existing DID or Sender ID verification is put back. The README
+// on an existing DID or Sender ID verification is put back; a clean-up step
+// that fails also fails the check, and when a restore fails the trunks it
+// still uses are kept and that DID is not changed again. The README
 // placeholders ('uuid', 'YOUR_API_KEY', '/var/data/...') are replaced with
 // real values; its proxy and CA bundle placeholders are left out. The order
 // checks buy DIDs and a capacity channel on the sandbox account (an order
@@ -99,7 +101,16 @@ use Psr\Log\AbstractLogger;
 use Swis\JsonApi\Client\Collection;
 
 if ('sandbox' !== $credentials->getEnv()) {
-    exit("test_readme.php runs against the sandbox only: unset DIDWW_ENV or set it to sandbox\n");
+    echo "test_readme.php runs against the sandbox only: unset DIDWW_ENV or set it to sandbox\n";
+    exit(1);
+}
+// The URL overrides must not lead to production either
+$productionHosts = ['api.didww.com', 'auth.didww.com', 'api-vin.didww.com', 'api-vout.didww.com', 'api-sms.didww.com'];
+foreach (urlOverrides() as $argument => $url) {
+    if (null !== $url && in_array(strtolower((string) parse_url($url, PHP_URL_HOST)), $productionHosts, true)) {
+        echo "test_readme.php runs against the sandbox only: the $argument override points to production\n";
+        exit(1);
+    }
 }
 
 // ─── Helpers ────────────────────────────────────────────────
@@ -116,29 +127,44 @@ final class Readme
     public static int $skipped = 0;
     /** @var string[] */
     public static array $failures = [];
+    /** @var string[] the clean-up steps of the running check that failed */
+    public static array $cleanupErrors = [];
+    /** @var string|null a DID an earlier check could not restore */
+    public static ?string $unrestoredDid = null;
 
     public static function section(string $title): void
     {
         echo "\n== $title ==\n";
     }
 
-    // Runs one check: records it as passed, failed (with the error) or
-    // skipped, and puts the configuration of bootstrap.php back.
+    // Runs one check: records it as passed, failed (with the error and any
+    // failed clean-up step) or skipped, and puts the configuration of
+    // bootstrap.php back.
     public static function check(string $name, callable $check): void
     {
+        self::$cleanupErrors = [];
+        $error = $skipReason = null;
         try {
             $check();
-            ++self::$passed;
-            echo "  ✓ $name\n";
         } catch (SkipCheck $e) {
-            self::skip($name, $e->getMessage());
+            $skipReason = $e->getMessage();
         } catch (Throwable $e) {
-            ++self::$failed;
-            $message = get_class($e).': '.$e->getMessage();
-            self::$failures[] = "$name: $message";
-            echo "  ✗ $name: $message\n";
+            $error = get_class($e).': '.$e->getMessage();
         } finally {
             restoreConfiguration();
+        }
+        if ([] !== self::$cleanupErrors) {
+            $error = (null === $error ? '' : "$error; ").'clean-up failed: '.implode('; ', self::$cleanupErrors);
+        }
+        if (null !== $error) {
+            ++self::$failed;
+            self::$failures[] = "$name: $error";
+            echo "  ✗ $name: $error\n";
+        } elseif (null !== $skipReason) {
+            self::skip($name, $skipReason);
+        } else {
+            ++self::$passed;
+            echo "  ✓ $name\n";
         }
     }
 
@@ -199,17 +225,32 @@ function dataOf($document, string $what)
     return $document->getData();
 }
 
-// Runs a clean-up step. A failure is printed, not thrown, so that the check
-// reports the snippet itself.
-function cleanup(string $what, callable $step): void
+// Runs a clean-up step and returns whether it succeeded. A failure is
+// recorded, not thrown, so that the check reports the error of the snippet
+// first and then fails for the clean-up step too.
+function cleanup(string $what, callable $step): bool
 {
     try {
         $document = $step();
         if (is_object($document) && method_exists($document, 'hasErrors') && $document->hasErrors()) {
-            note("cleanup: $what failed: ".errorsOf($document));
+            Readme::$cleanupErrors[] = "$what: ".errorsOf($document);
+
+            return false;
         }
+
+        return true;
     } catch (Throwable $e) {
-        note("cleanup: $what failed: ".$e->getMessage());
+        Readme::$cleanupErrors[] = "$what: ".$e->getMessage();
+
+        return false;
+    }
+}
+
+// Leaves in place what an item that could not be restored still uses.
+function keep(string $what, $item): void
+{
+    if (null !== $item) {
+        note("kept $what ".$item->getId().', still in use after the failed restore');
     }
 }
 
@@ -249,7 +290,7 @@ function usCountryId(): string
     static $id = null;
     if (null === $id) {
         $countries = dataOf(Country::all(['filter' => ['iso' => 'US']]), 'country US');
-        ensure(count($countries) > 0, 'country US not found');
+        ensure($countries->isNotEmpty(), 'country US not found');
         $id = $countries[0]->getId();
     }
 
@@ -257,14 +298,18 @@ function usCountryId(): string
 }
 
 // The first DID of the account with its routing included; skips the check
-// when the account has none.
-function firstDid(): Did
+// when the account has none, or when the check would change a DID that an
+// earlier check could not restore.
+function firstDid(bool $toChange = false): Did
 {
+    if ($toChange && null !== Readme::$unrestoredDid) {
+        throw new SkipCheck('an earlier check could not restore DID '.Readme::$unrestoredDid);
+    }
     $dids = dataOf(Did::all([
         'include' => 'voice_in_trunk,voice_in_trunk_group,sms_trunk,sms_trunk_group',
         'page' => ['size' => 1, 'number' => 1],
     ]), 'listing DIDs');
-    if (0 === count($dids)) {
+    if ($dids->isEmpty()) {
         throw new SkipCheck('the account has no DID');
     }
 
@@ -272,10 +317,10 @@ function firstDid(): Did
 }
 
 // Puts back the description, capacity limit, voice routing and SMS routing of
-// $original, a DID read with firstDid().
-function restoreDid(Did $original): void
+// $original, a DID read with firstDid(), and returns whether that succeeded.
+function restoreDid(Did $original): bool
 {
-    cleanup('restoring DID '.$original->getNumber(), function () use ($original) {
+    $restored = cleanup('restoring DID '.$original->getNumber(), function () use ($original) {
         $did = Did::build($original->getId(), [
             'description' => $original->getDescription(),
             'capacity_limit' => $original->getAttribute('capacity_limit'),
@@ -303,6 +348,11 @@ function restoreDid(Did $original): void
 
         return $did->save();
     });
+    if (!$restored) {
+        Readme::$unrestoredDid = $original->getNumber();
+    }
+
+    return $restored;
 }
 
 function firstSkuId(): string
@@ -313,7 +363,7 @@ function firstSkuId(): string
     ]), 'listing DID groups');
     foreach ($didGroups as $didGroup) {
         $skus = $didGroup->stockKeepingUnits()->getIncluded();
-        if (count($skus) > 0) {
+        if ($skus->isNotEmpty()) {
             return $skus->first()->getId();
         }
     }
@@ -327,7 +377,7 @@ function firstAvailableDid(): AvailableDid
         'include' => 'did_group.stock_keeping_units',
         'page' => ['size' => 1, 'number' => 1],
     ]), 'listing available DIDs');
-    if (0 === count($availableDids)) {
+    if ($availableDids->isEmpty()) {
         throw new SkipCheck('no available DID');
     }
 
@@ -337,7 +387,7 @@ function firstAvailableDid(): AvailableDid
 function skuIdOf(AvailableDid $availableDid): string
 {
     $skus = $availableDid->didGroup()->getIncluded()?->stockKeepingUnits()->getIncluded();
-    ensure(null !== $skus && count($skus) > 0, 'no SKU for available DID '.$availableDid->getNumber());
+    ensure(null !== $skus && $skus->isNotEmpty(), 'no SKU for available DID '.$availableDid->getNumber());
 
     return $skus->first()->getId();
 }
@@ -548,7 +598,7 @@ Readme::section('Read-Only Resources');
 
 Readme::check('Read-only resources: countries', function () {
     $countries = dataOf(Country::all(), 'listing countries');
-    ensure(count($countries) > 0, 'no countries');
+    ensure($countries->isNotEmpty(), 'no countries');
     $country = dataOf(Country::find($countries[0]->getId()), 'finding a country');
     ensure($country->getId() === $countries[0]->getId(), 'find() returned another country');
     note(count($countries).' countries, found '.$country->getName());
@@ -574,7 +624,7 @@ Readme::check('Read-only resources: toll-free DID groups with SKUs', function ()
 
 Readme::check('Read-only resources: available DIDs with nested includes', function () {
     $available = dataOf(AvailableDid::all(['include' => 'did_group.stock_keeping_units']), 'listing available DIDs');
-    if (count($available) > 0) {
+    if ($available->isNotEmpty()) {
         $didGroup = $available[0]->didGroup()->getIncluded();
         ensure(null !== $didGroup, 'did_group is not included');
         note($available[0]->getNumber().': '.count($didGroup->stockKeepingUnits()->getIncluded()).' SKUs');
@@ -600,7 +650,7 @@ Readme::section('DIDs');
 
 Readme::check('DIDs: list, then update the description, capacity limit and trunk', function () {
     note(count(dataOf(Did::all(), 'listing DIDs')).' DIDs');
-    $original = firstDid();
+    $original = firstDid(true);
     $trunk = null;
     $changed = false;
     try {
@@ -615,17 +665,16 @@ Readme::check('DIDs: list, then update the description, capacity limit and trunk
         ensure('Updated' === $updated->getDescription() && 20 === $updated->getCapacityLimit(), 'the DID was not updated');
         ensure($trunk->getId() === $updated->voiceInTrunk()->getIncluded()?->getId(), 'the trunk was not assigned');
     } finally {
-        if ($changed) {
-            restoreDid($original);
-        }
-        if (null !== $trunk) {
+        if ($changed && !restoreDid($original)) {
+            keep('trunk', $trunk);
+        } elseif (null !== $trunk) {
             cleanup('deleting the trunk', fn () => $trunk->delete());
         }
     }
 });
 
 Readme::check('DIDs: SMS routing to a trunk, to a trunk group and unrouted', function () {
-    $original = firstDid();
+    $original = firstDid(true);
     $suffix = suffix();
     $trunk = $groupTrunk = $group = null;
     $changed = false;
@@ -662,23 +711,26 @@ Readme::check('DIDs: SMS routing to a trunk, to a trunk group and unrouted', fun
         $unrouted = dataOf($did->save(['include' => 'sms_trunk,sms_trunk_group']), 'unrouting');
         ensure(null === $unrouted->smsTrunk()->getIncluded() && null === $unrouted->smsTrunkGroup()->getIncluded(), 'the DID is still routed');
     } finally {
-        if ($changed) {
-            restoreDid($original);
-        }
-        // Deleting a group also deletes the trunks in it.
-        if (null !== $group) {
-            cleanup('deleting the SMS trunk group', fn () => $group->delete());
-        } elseif (null !== $groupTrunk) {
-            cleanup('deleting the SMS trunk', fn () => $groupTrunk->delete());
-        }
-        if (null !== $trunk) {
-            cleanup('deleting the SMS trunk', fn () => $trunk->delete());
+        if ($changed && !restoreDid($original)) {
+            keep('SMS trunk', $trunk);
+            keep('SMS trunk group', $group);
+            keep('SMS trunk', $groupTrunk);
+        } else {
+            // Deleting a group also deletes the trunks in it.
+            if (null !== $group) {
+                cleanup('deleting the SMS trunk group', fn () => $group->delete());
+            } elseif (null !== $groupTrunk) {
+                cleanup('deleting the SMS trunk', fn () => $groupTrunk->delete());
+            }
+            if (null !== $trunk) {
+                cleanup('deleting the SMS trunk', fn () => $trunk->delete());
+            }
         }
     }
 });
 
 Readme::check('DIDs: dirty-only PATCH serialization', function () {
-    $original = firstDid();
+    $original = firstDid(true);
     $id = $original->getId();
     $suffix = suffix();
     $trunk = null;
@@ -722,10 +774,9 @@ Readme::check('DIDs: dirty-only PATCH serialization', function () {
         $renamed = dataOf($included->save(), 'renaming the trunk');
         ensure("Renamed trunk $suffix" === $renamed->getName(), 'the trunk was not renamed');
     } finally {
-        if ($changed) {
-            restoreDid($original);
-        }
-        if (null !== $trunk) {
+        if ($changed && !restoreDid($original)) {
+            keep('trunk', $trunk);
+        } elseif (null !== $trunk) {
             cleanup('deleting the trunk', fn () => $trunk->delete());
         }
     }
@@ -947,7 +998,7 @@ function activeSenderIdVerifications()
 Readme::check('Sender ID verifications: list the active ones', function () {
     $verifications = activeSenderIdVerifications();
     note(count($verifications).' active Sender ID verifications');
-    if (count($verifications) > 0) {
+    if ($verifications->isNotEmpty()) {
         $meta = $verifications[0]->getMeta();
         note('monthly price: '.($meta['monthly_price'] ?? 'none'));
     }
@@ -955,7 +1006,7 @@ Readme::check('Sender ID verifications: list the active ones', function () {
 
 Readme::check('Sender ID verifications: route through an SMS trunk, then unroute', function () {
     $verifications = activeSenderIdVerifications();
-    if (0 === count($verifications)) {
+    if ($verifications->isEmpty()) {
         throw new SkipCheck('no active Sender ID verification on the account');
     }
     $original = $verifications[0];
@@ -974,15 +1025,15 @@ Readme::check('Sender ID verifications: route through an SMS trunk, then unroute
         $verification->setSmsTrunk(null);
         ensureNoErrors($verification->save(), 'unrouting');
     } finally {
-        if ($changed) {
-            cleanup('restoring the Sender ID verification', function () use ($original, $originalTrunk) {
-                $restore = SenderIdVerification::build($original->getId());
-                $restore->setSmsTrunk($originalTrunk ? SmsTrunk::build($originalTrunk->getId()) : null);
+        $restored = !$changed || cleanup('restoring the Sender ID verification', function () use ($original, $originalTrunk) {
+            $restore = SenderIdVerification::build($original->getId());
+            $restore->setSmsTrunk($originalTrunk ? SmsTrunk::build($originalTrunk->getId()) : null);
 
-                return $restore->save();
-            });
-        }
-        if (null !== $trunk) {
+            return $restore->save();
+        });
+        if (!$restored) {
+            keep('SMS trunk', $trunk);
+        } elseif (null !== $trunk) {
             cleanup('deleting the SMS trunk', fn () => $trunk->delete());
         }
     }
@@ -1059,21 +1110,15 @@ Readme::check('Orders: a reserved DID', function () {
 
 Readme::check('Orders: capacity', function () {
     $pools = dataOf(CapacityPool::all(), 'listing capacity pools');
-    ensure(count($pools) > 0, 'no capacity pools');
-    $pool = $pools[0];
-    foreach ($pools as $candidate) {
-        if ($candidate->getMinimumQtyPerOrder() <= 1) {
-            $pool = $candidate;
-            break;
-        }
-    }
+    ensure($pools->isNotEmpty(), 'no capacity pools');
+    $pool = $pools->first(fn (CapacityPool $candidate) => $candidate->getMinimumQtyPerOrder() <= 1) ?? $pools->first();
     $created = null;
     try {
         $order = new Order([
             'items' => [
                 new CapacityOrderItem([
                     'capacity_pool_id' => $pool->getId(),
-                    'qty' => 1,
+                    'qty' => max(1, $pool->getMinimumQtyPerOrder()),
                 ]),
             ],
         ]);
@@ -1119,13 +1164,17 @@ Readme::check('DID reservations: create, list and delete', function () {
 Readme::section('Shared Capacity Groups');
 
 Readme::check('Shared capacity groups: create', function () {
-    $pools = dataOf(CapacityPool::all(), 'listing capacity pools');
-    ensure(count($pools) > 0, 'no capacity pools');
+    $pool = dataOf(CapacityPool::all(), 'listing capacity pools')->first(
+        fn (CapacityPool $candidate) => $candidate->getTotalChannelsCount() > $candidate->getAssignedChannelsCount()
+    );
+    if (null === $pool) {
+        throw new SkipCheck('no capacity pool has an unassigned channel');
+    }
     $group = new SharedCapacityGroup();
     $group->setName('Shared Group '.suffix());
     // 20 in the README; 1 here, so that a sandbox pool has enough channels
     $group->setSharedChannelsCount(1);
-    $group->setCapacityPool(CapacityPool::build($pools[0]->getId()));
+    $group->setCapacityPool(CapacityPool::build($pool->getId()));
     $groupDocument = $group->save();
     $created = dataOf($groupDocument, 'creating the shared capacity group');
     cleanup('deleting the shared capacity group', fn () => $created->delete());
@@ -1135,24 +1184,25 @@ Readme::check('Shared capacity groups: create', function () {
 
 Readme::section('Identities and Addresses');
 
+// The address check deletes the identity the identity check creates.
 $identityId = null;
-try {
-    Readme::check('Identities: create a business identity', function () use (&$identityId) {
-        $identity = new Identity([
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'phone_number' => '12125551234',
-            'identity_type' => IdentityType::BUSINESS,
-            'company_name' => 'Example Ltd',
-        ]);
-        $identity->setCompanyWebsite('https://example.com');
-        $identity->setCountry(Country::build(usCountryId()));
-        $identityDocument = $identity->save();
-        $identityId = dataOf($identityDocument, 'creating the identity')->getId();
-    });
+Readme::check('Identities: create a business identity', function () use (&$identityId) {
+    $identity = new Identity([
+        'first_name' => 'John',
+        'last_name' => 'Doe',
+        'phone_number' => '12125551234',
+        'identity_type' => IdentityType::BUSINESS,
+        'company_name' => 'Example Ltd',
+    ]);
+    $identity->setCompanyWebsite('https://example.com');
+    $identity->setCountry(Country::build(usCountryId()));
+    $identityDocument = $identity->save();
+    $identityId = dataOf($identityDocument, 'creating the identity')->getId();
+});
 
-    Readme::check('Addresses: create', function () use (&$identityId) {
-        ensure(null !== $identityId, 'needs the identity of the previous check');
+Readme::check('Addresses: create', function () use ($identityId) {
+    ensure(null !== $identityId, 'needs the identity of the previous check');
+    try {
         $address = new Address();
         $address->setCityName('New York');
         $address->setPostalCode('10001');
@@ -1162,12 +1212,10 @@ try {
         $addressDocument = $address->save();
         $created = dataOf($addressDocument, 'creating the address');
         cleanup('deleting the address', fn () => $created->delete());
-    });
-} finally {
-    if (null !== $identityId) {
+    } finally {
         cleanup('deleting the identity', fn () => Identity::build($identityId)->delete());
     }
-}
+});
 
 // ─── Exports ────────────────────────────────────────────────
 
@@ -1323,7 +1371,7 @@ Readme::check('Regions with filter, include, sort and page', function () {
         'page' => ['size' => 25, 'number' => 1],
     ]);
     $regions = dataOf($regionsDocument, 'listing regions');
-    ensure(count($regions) > 0, 'Arizona not found');
+    ensure($regions->isNotEmpty(), 'Arizona not found');
     note($regions[0]->getName().', '.$regions[0]->country()->getIncluded()?->getName());
 });
 

@@ -25,6 +25,11 @@ use Didww\Item\Proof;
 use Didww\Item\ProofType;
 use Swis\JsonApi\Client\Collection;
 
+// Stops the flow; the resources created so far are deleted.
+final class FlowStopped extends RuntimeException
+{
+}
+
 function printErrors(string $message, $document): void
 {
     echo $message.":\n";
@@ -40,7 +45,7 @@ function saveOrFail($item, string $what, array $parameters = [])
     $document = $item->save($parameters);
     if ($document->hasErrors()) {
         printErrors("Error $what", $document);
-        throw new RuntimeException("Stopped: error $what");
+        throw new FlowStopped("Stopped: error $what");
     }
 
     return $document->getData();
@@ -56,15 +61,18 @@ function deleteOrReport($item, string $what): void
     }
 }
 
-function findProofType(string $entityType): ?ProofType
+function findProofType(string $entityType): ProofType
 {
     $proofTypes = ProofType::all(['filter' => ['entity_type' => $entityType]])->getData();
+    if ($proofTypes->isEmpty()) {
+        throw new FlowStopped("Stopped: no proof type for entity type $entityType");
+    }
 
-    return count($proofTypes) > 0 ? $proofTypes[0] : null;
+    return $proofTypes[0];
 }
 
 $countries = Country::all(['filter' => ['iso' => 'US']])->getData();
-if (0 === count($countries)) {
+if ($countries->isEmpty()) {
     exit("Country US not found\n");
 }
 $country = $countries[0];
@@ -103,21 +111,21 @@ try {
         'address' => findProofType('address'),
     ];
     foreach ($proofTypes as $entity => $proofType) {
-        echo ucfirst($entity).' proof type: '.($proofType ? $proofType->getName() : 'none found')."\n";
+        echo ucfirst($entity).' proof type: '.$proofType->getName()."\n";
     }
 
     echo "\n=== Encrypting and Uploading sample.pdf ===\n";
     $content = file_get_contents(__DIR__.'/sample.pdf');
     // Encrypt fetches the two DIDWW public keys
     $encrypt = new Encrypt();
-    foreach (array_filter($proofTypes) as $entity => $proofType) {
+    foreach (array_keys($proofTypes) as $entity) {
         $upload = EncryptedFile::upload($encrypt->getFingerprint(), $encrypt->encrypt($content), "$entity proof sample.pdf");
         if (!$upload->success()) {
             echo "Error uploading the $entity proof file (HTTP ".$upload->getResponseCode()."):\n";
             foreach ($upload->getErrors() as $error) {
                 echo '  - '.($error['detail'] ?? $error['title'] ?? json_encode($error))."\n";
             }
-            throw new RuntimeException('Stopped: the file upload failed');
+            throw new FlowStopped('Stopped: the file upload failed');
         }
         $fileIds[$entity] = $upload->getId();
         echo "Uploaded the $entity proof file: ".$upload->getId()."\n";
@@ -144,7 +152,7 @@ try {
     $reloadedAddress = Address::find($address->getId())->getData();
     echo 'Identity '.$reloadedIdentity->getId().': verified='.var_export($reloadedIdentity->getVerified(), true)."\n";
     echo 'Address '.$reloadedAddress->getId().': verified='.var_export($reloadedAddress->getVerified(), true)."\n";
-} catch (RuntimeException $e) {
+} catch (FlowStopped $e) {
     echo $e->getMessage()."\n";
     $exitCode = 1;
 } finally {

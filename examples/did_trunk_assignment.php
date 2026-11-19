@@ -38,8 +38,9 @@ function printVoiceRouting(Did $did): void
     echo '   voice_in_trunk_group = '.($group ? $group->name : 'null')."\n";
 }
 
-// Applies $change to the DID, saves it and prints its routing.
-function updateDid(string $didId, callable $change, string $what): void
+// Applies $change to the DID, saves it and prints its routing; returns
+// whether the API accepted the change.
+function updateDid(string $didId, callable $change, string $what): bool
 {
     $did = Did::build($didId);
     $change($did);
@@ -47,9 +48,11 @@ function updateDid(string $didId, callable $change, string $what): void
     if ($document->hasErrors()) {
         printErrors("Error $what", $document);
 
-        return;
+        return false;
     }
     printVoiceRouting($document->getData());
+
+    return true;
 }
 
 function deleteItem($item, string $what): void
@@ -67,7 +70,7 @@ $dids = Did::all([
     'include' => 'voice_in_trunk,voice_in_trunk_group',
     'page' => ['size' => 1, 'number' => 1],
 ])->getData();
-if (0 === count($dids)) {
+if ($dids->isEmpty()) {
     exit("No DIDs found. Please order a DID first.\n");
 }
 $did = $dids[0];
@@ -131,9 +134,10 @@ try {
         updateDid($did->getId(), fn (Did $d) => $d->setDescription('DID with a trunk assigned'), 'updating the description');
     }
 } finally {
+    $restored = true;
     if ($changed) {
         echo "\n=== 5. Restoring the original routing and description ===\n";
-        updateDid($did->getId(), function (Did $d) use ($originalTrunk, $originalGroup, $originalDescription) {
+        $restored = updateDid($did->getId(), function (Did $d) use ($originalTrunk, $originalGroup, $originalDescription) {
             if ($originalTrunk) {
                 $d->setVoiceInTrunk(VoiceInTrunk::build($originalTrunk->getId()));
             } elseif ($originalGroup) {
@@ -148,6 +152,15 @@ try {
     }
 
     echo "\n=== Cleaning up ===\n";
+    if (!$restored) {
+        // The DID may still use them: they are kept so that its calls keep a route
+        foreach (['trunk' => $trunk, 'trunk group' => $group] as $what => $item) {
+            if (null !== $item) {
+                echo 'Kept '.$what.' '.$item->getId()." because the DID routing was not restored\n";
+            }
+        }
+        exit(1);
+    }
     // The DID is routed back first, so the trunk and the group are no longer in use
     if (null !== $trunk) {
         deleteItem($trunk, 'trunk');
