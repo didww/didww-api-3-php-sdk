@@ -817,8 +817,8 @@ Readme::check('Voice IN trunk groups: create', function () {
     $groupDocument = null;
     try {
         $group = new VoiceInTrunkGroup();
-        $group->setName('Primary Group '.suffix());
-        $group->setCapacityLimit(50);
+        $group->name = 'Primary Group '.suffix();
+        $group->capacity_limit = 50;
         $groupDocument = $group->save();
         ensureNoErrors($groupDocument, 'creating the trunk group');
     } finally {
@@ -1104,7 +1104,7 @@ Readme::check('DID reservations: create, list and delete', function () {
         note(count($reservations).' reservations');
 
         // Delete reservation
-        ensureNoErrors($reservation->delete(), 'deleting the reservation');
+        ensureNoErrors($reservationDocument->getData()->delete(), 'deleting the reservation');
         $deleted = true;
     } finally {
         if (!$deleted && null !== $reservationDocument && !$reservationDocument->hasErrors()) {
