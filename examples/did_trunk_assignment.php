@@ -55,9 +55,16 @@ function updateDid(string $didId, callable $change, string $what): bool
     return true;
 }
 
+// Reports a failed delete, also a thrown one, so that the clean-up goes on.
 function deleteItem($item, string $what): void
 {
-    $document = $item->delete();
+    try {
+        $document = $item->delete();
+    } catch (Throwable $e) {
+        echo "Error deleting $what ".$item->getId().': '.$e->getMessage()."\n";
+
+        return;
+    }
     if ($document->hasErrors()) {
         printErrors("Error deleting $what ".$item->getId(), $document);
     } else {
@@ -71,7 +78,8 @@ $dids = Did::all([
     'page' => ['size' => 1, 'number' => 1],
 ])->getData();
 if ($dids->isEmpty()) {
-    exit("No DIDs found. Please order a DID first.\n");
+    echo "No DIDs found. Please order a DID first.\n";
+    exit(1);
 }
 $did = $dids[0];
 // Remember the routing and the description to put them back at the end

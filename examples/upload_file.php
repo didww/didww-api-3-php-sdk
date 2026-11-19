@@ -12,7 +12,8 @@ require_once 'bootstrap.php';
 $filePath = exampleEnv('FILE_PATH') ?? __DIR__.'/sample.pdf';
 $fileContent = file_get_contents($filePath);
 if (false === $fileContent) {
-    exit("Cannot read $filePath\n");
+    echo "Cannot read $filePath\n";
+    exit(1);
 }
 $enc = new Didww\Encrypt();
 $fingerprint = $enc->getFingerprint();

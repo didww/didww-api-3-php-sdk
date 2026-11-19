@@ -45,20 +45,24 @@ $availableDids = AvailableDid::all([
     'page' => ['size' => 2, 'number' => 1],
 ])->getData();
 if (count($availableDids) < 2) {
-    exit("Need at least 2 available DIDs for this example\n");
+    echo "Need at least 2 available DIDs for this example\n";
+    exit(1);
 }
 $available = $availableDids[0];
 $toReserve = $availableDids[1];
 $availableSkuId = skuIdOf($available);
 $reservedSkuId = skuIdOf($toReserve);
 if (null === $availableSkuId || null === $reservedSkuId) {
-    exit("No stock keeping units for the available DIDs\n");
+    echo "No stock keeping units for the available DIDs\n";
+    exit(1);
 }
 echo 'Available DID to order: '.$available->getNumber().', SKU '.$availableSkuId."\n";
 echo 'Available DID to reserve: '.$toReserve->getNumber().', SKU '.$reservedSkuId."\n";
 
 echo "\n=== Finding a SKU to Order by Quantity ===\n";
+// A DID group with numbers in stock, as the order is not back-ordered
 $didGroups = DidGroup::all([
+    'filter' => ['is_available' => 'true'],
     'include' => 'stock_keeping_units',
     'page' => ['size' => 10, 'number' => 1],
 ])->getData();
@@ -72,7 +76,8 @@ foreach ($didGroups as $didGroup) {
     }
 }
 if (null === $skuForQty) {
-    exit("No DID group with stock keeping units found\n");
+    echo "No DID group with stock keeping units found\n";
+    exit(1);
 }
 
 echo "\n=== Reserving a DID ===\n";

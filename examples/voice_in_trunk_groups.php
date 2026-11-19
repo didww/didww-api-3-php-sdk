@@ -24,9 +24,16 @@ function printErrors(string $message, $document): void
     }
 }
 
+// Reports a failed delete, also a thrown one, so that the clean-up goes on.
 function deleteItem($item, string $what): void
 {
-    $document = $item->delete();
+    try {
+        $document = $item->delete();
+    } catch (Throwable $e) {
+        echo "Error deleting $what ".$item->getId().': '.$e->getMessage()."\n";
+
+        return;
+    }
     if ($document->hasErrors()) {
         printErrors("Error deleting $what ".$item->getId(), $document);
     } else {

@@ -53,9 +53,16 @@ function printTrunk(VoiceInTrunk $trunk): void
     }
 }
 
+// Reports a failed delete, also a thrown one, so that the clean-up goes on.
 function deleteTrunk(VoiceInTrunk $trunk): void
 {
-    $document = $trunk->delete();
+    try {
+        $document = $trunk->delete();
+    } catch (Throwable $e) {
+        echo 'Error deleting trunk '.$trunk->getId().': '.$e->getMessage()."\n";
+
+        return;
+    }
     if ($document->hasErrors()) {
         printErrors('Error deleting trunk '.$trunk->getId(), $document);
     } else {

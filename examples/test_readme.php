@@ -107,7 +107,8 @@ if ('sandbox' !== $credentials->getEnv()) {
 // The URL overrides must not lead to production either
 $productionHosts = ['api.didww.com', 'auth.didww.com', 'api-vin.didww.com', 'api-vout.didww.com', 'api-sms.didww.com'];
 foreach (urlOverrides() as $argument => $url) {
-    if (null !== $url && in_array(strtolower((string) parse_url($url, PHP_URL_HOST)), $productionHosts, true)) {
+    // a trailing dot names the same host
+    if (null !== $url && in_array(rtrim(strtolower((string) parse_url($url, PHP_URL_HOST)), '.'), $productionHosts, true)) {
         echo "test_readme.php runs against the sandbox only: the $argument override points to production\n";
         exit(1);
     }
@@ -1231,9 +1232,10 @@ Readme::check('Exports: CDR export', function () {
 });
 
 Readme::check('Exports: SMS export, read again and downloaded when completed', function () {
-    $smsTrunk = newSmsTrunk('README export filter '.suffix(), smsToEmail());
     $dir = tempDir();
+    $smsTrunk = null;
     try {
+        $smsTrunk = newSmsTrunk('README export filter '.suffix(), smsToEmail());
         $export = new Export();
         $export->setExportType(ExportType::SMS_OUT);
         $export->setFilterFrom('2026-10-01 00:00:00');
@@ -1254,7 +1256,9 @@ Readme::check('Exports: SMS export, read again and downloaded when completed', f
             note('export '.$export->getStatus()->value.', not downloaded');
         }
     } finally {
-        cleanup('deleting the SMS trunk', fn () => $smsTrunk->delete());
+        if (null !== $smsTrunk) {
+            cleanup('deleting the SMS trunk', fn () => $smsTrunk->delete());
+        }
         removeDir($dir);
     }
 });

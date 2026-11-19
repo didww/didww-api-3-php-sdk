@@ -51,9 +51,16 @@ function saveOrFail($item, string $what, array $parameters = [])
     return $document->getData();
 }
 
+// Reports a failed delete, also a thrown one, so that the clean-up goes on.
 function deleteOrReport($item, string $what): void
 {
-    $document = $item->delete();
+    try {
+        $document = $item->delete();
+    } catch (Throwable $e) {
+        echo "Error deleting $what ".$item->getId().': '.$e->getMessage()."\n";
+
+        return;
+    }
     if ($document->hasErrors()) {
         printErrors("Error deleting $what ".$item->getId(), $document);
     } else {
@@ -73,7 +80,8 @@ function findProofType(string $entityType): ProofType
 
 $countries = Country::all(['filter' => ['iso' => 'US']])->getData();
 if ($countries->isEmpty()) {
-    exit("Country US not found\n");
+    echo "Country US not found\n";
+    exit(1);
 }
 $country = $countries[0];
 echo 'Using country: '.$country->getName().' ('.$country->getId().")\n";

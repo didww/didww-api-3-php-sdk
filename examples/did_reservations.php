@@ -22,7 +22,8 @@ function printErrors(string $message, $document): void
 
 $availableDids = AvailableDid::all(['page' => ['size' => 1, 'number' => 1]])->getData();
 if ($availableDids->isEmpty()) {
-    exit("No available DIDs found\n");
+    echo "No available DIDs found\n";
+    exit(1);
 }
 $availableDid = $availableDids[0];
 echo 'Reserving DID: '.$availableDid->getNumber()."\n";

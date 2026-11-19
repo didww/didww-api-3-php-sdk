@@ -37,7 +37,9 @@ foreach ($orders as $order) {
 }
 
 echo "\n=== Ordering a DID by SKU ===\n";
+// A DID group with numbers in stock, as the order is not back-ordered
 $didGroups = DidGroup::all([
+    'filter' => ['is_available' => 'true'],
     'include' => 'stock_keeping_units',
     'page' => ['size' => 10, 'number' => 1],
 ])->getData();
@@ -51,7 +53,8 @@ foreach ($didGroups as $didGroup) {
     }
 }
 if (null === $sku) {
-    exit("No DID group with stock keeping units found\n");
+    echo "No DID group with stock keeping units found\n";
+    exit(1);
 }
 
 $suffix = bin2hex(random_bytes(4));

@@ -16,7 +16,8 @@ $dids = Didww\Item\Did::all([
     'include' => 'identity,emergency_calling_service,emergency_verification',
 ])->getData();
 if ($dids->isEmpty()) {
-    exit("No DIDs found. Please order a DID first.\n");
+    echo "No DIDs found. Please order a DID first.\n";
+    exit(1);
 }
 
 foreach ($dids as $listed) {
