@@ -77,8 +77,12 @@ echo '  External reference: '.($order->getExternalReferenceId() ?? 'null')."\n";
 
 echo "\n=== Canceling the Order ===\n";
 $document = $order->delete();
-if ($document->hasErrors()) {
-    printErrors('Error canceling the order', $document);
-} else {
+if (!$document->hasErrors()) {
     echo "Order canceled\n";
+} elseif (Order::find($order->getId())->getData()?->isCompleted()) {
+    // Only a pending order can be canceled; this one completed first
+    echo "Order kept: it completed before it could be canceled\n";
+} else {
+    printErrors('Error canceling the order', $document);
+    exit(1);
 }

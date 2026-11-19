@@ -536,15 +536,36 @@ function httpOut(): HttpOut
 }
 
 // Cancels an order the check placed while it is still pending.
+// A completed order cannot be canceled: it is kept, which does not fail the
+// check; any other error canceling a pending order does.
 function cancelOrder(?Order $order): void
 {
     if (null === $order) {
         return;
     }
-    if ($order->isPending()) {
-        cleanup('canceling order '.$order->getReference(), fn () => $order->delete());
-    } else {
-        note('order '.$order->getReference().' is '.$order->getStatus()->value.', not canceled');
+    $what = 'order '.$order->getReference();
+    if (!$order->isPending()) {
+        note("$what kept (".$order->getStatus()->value.')');
+
+        return;
+    }
+    try {
+        $document = $order->delete();
+        if (!$document->hasErrors()) {
+            note("$what canceled");
+
+            return;
+        }
+        // The order may have completed since it was read
+        $notPending = str_contains(strtolower(errorsOf($document)), 'not pending');
+        if ($notPending || dataOf(Order::find($order->getId()), "reading $what")->isCompleted()) {
+            note("$what kept (completed)");
+
+            return;
+        }
+        Readme::$cleanupErrors[] = "canceling $what: ".errorsOf($document);
+    } catch (Throwable $e) {
+        Readme::$cleanupErrors[] = "canceling $what: ".$e->getMessage();
     }
 }
 
