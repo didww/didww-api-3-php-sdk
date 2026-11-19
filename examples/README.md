@@ -16,6 +16,7 @@ Several examples create, change or order things on the account (trunks, orders, 
 - `DIDWW_ENV` (optional): `sandbox` (default) or `production`; `test_readme.php` runs against the sandbox only
 - `DIDWW_API_URL`, `DIDWW_AUTH_URL`, `DIDWW_API_VIN_URL`, `DIDWW_API_VOUT_URL`, `DIDWW_API_SMS_URL` (optional): override the URL of the JSON:API, the token service and the Voice IN, Voice OUT and SMS prices services; [`bootstrap.php`](bootstrap.php) passes them to `Didww\Configuration::configure()`
 - `FILE_PATH` (optional for `upload_file.php`): the file to upload, [`sample.pdf`](sample.pdf) if not set
+- `DIDWW_README_REDIS_URL`, `DIDWW_README_PROXY_URL`, `DIDWW_README_CA_BUNDLE` (optional for `test_readme.php`): a Redis server (`redis://host:6379/0`), an HTTP proxy that allows CONNECT and a CA bundle path for the token cache, proxy and CA bundle snippets, which are skipped without them. The Redis snippet also needs `symfony/cache`, `psr/simple-cache` and the `redis` extension or `predis/predis`.
 
 ## Install
 

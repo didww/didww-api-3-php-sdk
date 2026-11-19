@@ -15,16 +15,27 @@
 // still pending is canceled), and the export checks create exports, which
 // cannot be deleted.
 //
-// Not run: the shell snippets (installation, development) and the snippets
-// reported as skipped with the reason, such as the production configuration.
+// Not run: the shell snippets (installation, development) and the production
+// configuration, reported as skipped. The Redis, proxy and CA bundle checks
+// need the variables below and are skipped without them; the Redis check also
+// needs symfony/cache, psr/simple-cache and the redis extension or
+// predis/predis, which the SDK does not depend on.
+//
+// The address and emergency verification checks order a DID when the account
+// has none that fits, and create verifications that DIDWW reviews; they cannot
+// be deleted. Each prints a line starting with "REVIEW address_verification"
+// or "REVIEW emergency_verification", with its ID and reference.
 //
 // Prints "Results: N passed, M failed" and exits with 1 when a check failed.
 //
 // Usage: DIDWW_API_KEY=your_sandbox_api_key php examples/test_readme.php
+// Optional: DIDWW_README_REDIS_URL (redis://host:6379/0), DIDWW_README_PROXY_URL
+// (an HTTP proxy that allows CONNECT), DIDWW_README_CA_BUNDLE (a CA bundle path)
 
 require_once 'bootstrap.php';
 
 use Didww\Auth\AccessToken;
+use Didww\Auth\Psr16TokenStore;
 use Didww\Auth\Scope;
 use Didww\Auth\TokenStore;
 use Didww\Callback\RequestValidator;
@@ -55,6 +66,7 @@ use Didww\Exception\DidwwPricesException;
 use Didww\Exception\PricesErrorKind;
 use Didww\Item\Address;
 use Didww\Item\AddressRequirement;
+use Didww\Item\AddressRequirementValidation;
 use Didww\Item\AddressVerification;
 use Didww\Item\Area;
 use Didww\Item\AuthenticationMethod\CredentialsAndIp;
@@ -71,6 +83,8 @@ use Didww\Item\DidHistory;
 use Didww\Item\DidReservation;
 use Didww\Item\EmergencyCallingService;
 use Didww\Item\EmergencyRequirement;
+use Didww\Item\EmergencyRequirementValidation;
+use Didww\Item\EmergencyVerification;
 use Didww\Item\EncryptedFile;
 use Didww\Item\Export;
 use Didww\Item\Identity;
@@ -80,6 +94,8 @@ use Didww\Item\OrderItem\AvailableDid as AvailableDidOrderItem;
 use Didww\Item\OrderItem\Capacity as CapacityOrderItem;
 use Didww\Item\OrderItem\Did as DidOrderItem;
 use Didww\Item\OrderItem\ReservationDid as ReservationDidOrderItem;
+use Didww\Item\PermanentSupportingDocument;
+use Didww\Item\Proof;
 use Didww\Item\ProofType;
 use Didww\Item\PublicKey;
 use Didww\Item\Region;
@@ -90,6 +106,7 @@ use Didww\Item\SmsTrunkConfiguration\HttpIn;
 use Didww\Item\SmsTrunkConfiguration\HttpOut;
 use Didww\Item\SmsTrunkConfiguration\SmsToEmail;
 use Didww\Item\SmsTrunkGroup;
+use Didww\Item\SupportingDocumentTemplate;
 use Didww\Item\VoiceInTrunk;
 use Didww\Item\VoiceInTrunkGroup;
 use Didww\Item\VoiceOutTrunk;
@@ -98,7 +115,10 @@ use Didww\Prices\PriceFileReader;
 use Didww\Prices\VoiceOutPriceCategory;
 use Didww\RetryAfter;
 use Psr\Log\AbstractLogger;
+use Psr\SimpleCache\CacheInterface;
 use Swis\JsonApi\Client\Collection;
+use Symfony\Component\Cache\Adapter\RedisAdapter;
+use Symfony\Component\Cache\Psr16Cache;
 
 if ('sandbox' !== $credentials->getEnv()) {
     echo "test_readme.php runs against the sandbox only: unset DIDWW_ENV or set it to sandbox\n";
@@ -132,6 +152,8 @@ final class Readme
     public static array $cleanupErrors = [];
     /** @var string|null a DID an earlier check could not restore */
     public static ?string $unrestoredDid = null;
+    /** @var string[] the addresses created by this run */
+    public static array $createdAddressIds = [];
 
     public static function section(string $title): void
     {
@@ -286,16 +308,80 @@ function suffix(): string
     return bin2hex(random_bytes(4));
 }
 
-function usCountryId(): string
+function countryId(string $iso): string
 {
-    static $id = null;
-    if (null === $id) {
-        $countries = dataOf(Country::all(['filter' => ['iso' => 'US']]), 'country US');
-        ensure($countries->isNotEmpty(), 'country US not found');
-        $id = $countries[0]->getId();
+    static $ids = [];
+    if (!isset($ids[$iso])) {
+        $countries = dataOf(Country::all(['filter' => ['iso' => $iso]]), "country $iso");
+        ensure($countries->isNotEmpty(), "country $iso not found");
+        $ids[$iso] = $countries[0]->getId();
     }
 
-    return $id;
+    return $ids[$iso];
+}
+
+function usCountryId(): string
+{
+    return countryId('US');
+}
+
+// The value of an environment variable a check needs; skips the check
+// without it.
+function requiredEnv(string $name): string
+{
+    return exampleEnv($name) ?? throw new SkipCheck("set $name");
+}
+
+// Waits for an order to complete and returns its DIDs.
+function didsOfCompletedOrder(Order $order): Collection
+{
+    for ($attempt = 0; $attempt < 24 && !$order->isCompleted(); ++$attempt) {
+        sleep(5);
+        $order = dataOf(Order::find($order->getId()), 'reading the order');
+    }
+    ensure($order->isCompleted(), 'order '.$order->getReference().' is still '.$order->getStatus()->value);
+    note('order '.$order->getReference().' completed');
+
+    return dataOf(Did::all(['filter' => ['order.id' => $order->getId()]]), 'listing the DIDs of the order');
+}
+
+// Uploads sample.pdf encrypted and returns the ID of the encrypted file.
+function uploadSample(string $description): string
+{
+    static $encrypt = null;
+    $encrypt ??= new Encrypt();
+    $upload = EncryptedFile::upload($encrypt->getFingerprint(), $encrypt->encrypt(file_get_contents(__DIR__.'/sample.pdf')), $description);
+    ensure($upload->success(), "uploading $description failed with HTTP ".$upload->getResponseCode().': '.json_encode($upload->getErrors()));
+
+    return $upload->getId();
+}
+
+// Creates $qty proofs of $entity, cycling through $proofTypes, each with its
+// own uploaded file.
+function createProofs($entity, Collection $proofTypes, int $qty, string $what): void
+{
+    ensure(0 === $qty || $proofTypes->isNotEmpty(), "$qty $what proofs required, but no proof type is listed");
+    for ($i = 0; $i < $qty; ++$i) {
+        $proofType = $proofTypes[$i % count($proofTypes)];
+        $proof = new Proof();
+        $proof->setEntity($entity);
+        $proof->setProofType(ProofType::build($proofType->getId()));
+        $proof->setFiles(new Collection([EncryptedFile::build(uploadSample("$what proof"))]));
+        ensureNoErrors($proof->save(), "creating the $what proof ".$proofType->getName());
+        note("$what proof: ".$proofType->getName());
+    }
+}
+
+// Deletes an item when the API allows it; a refusal is printed, as the
+// verification that uses the item is kept for the review.
+function deleteIfAllowed($item, string $what): void
+{
+    try {
+        $document = $item->delete();
+        note($document->hasErrors() ? "$what ".$item->getId().' kept: '.errorsOf($document) : "$what ".$item->getId().' deleted');
+    } catch (Throwable $e) {
+        note("$what ".$item->getId().' kept: '.$e->getMessage());
+    }
 }
 
 // The first DID of the account with its routing included; skips the check
@@ -526,19 +612,22 @@ Readme::section('Configuration');
 
 Readme::skip('Configuration: production', 'production only; this script runs against the sandbox');
 
-Readme::check('Configuration: sandbox, read-only tokens and a PSR-3 logger', function () {
+Readme::check('Configuration: sandbox, read-only tokens, a PSR-3 logger and a proxy', function () {
+    $proxy = requiredEnv('DIDWW_README_PROXY_URL');
     $logger = new MemoryLogger();
     $credentials = new Credentials(apiKey(), 'sandbox');
-    // The README also passes a proxy; its placeholder host is left out.
-    Configuration::configure($credentials, [], ...urlOverrides(), scope: Scope::READ, logger: $logger);
+    Configuration::configure($credentials, ['proxy' => $proxy], ...urlOverrides(), scope: Scope::READ, logger: $logger);
     ensure(Scope::READ === Configuration::getCredentials()->getScope(), 'the scope is not read');
     dataOf(Balance::find(), 'reading the balance with a read token');
     note(count($logger->records).' log records: '.implode(', ', $logger->records));
 });
 
-Readme::check('HTTP client: Guzzle options', function () {
-    // The README also passes a proxy and a CA bundle; their placeholders are left out.
-    Configuration::configure(new Credentials(apiKey(), 'sandbox'), ['connect_timeout' => 5], ...urlOverrides());
+Readme::check('HTTP client: proxy, CA bundle and connect timeout', function () {
+    Configuration::configure(new Credentials(apiKey(), 'sandbox'), [
+        'proxy' => requiredEnv('DIDWW_README_PROXY_URL'),
+        'verify' => requiredEnv('DIDWW_README_CA_BUNDLE'),
+        'connect_timeout' => 5,
+    ], ...urlOverrides());
     ensure(Configuration::getHttpClient() instanceof GuzzleHttp\ClientInterface, 'no Guzzle client');
     dataOf(Balance::find(), 'reading the balance');
 });
@@ -558,7 +647,39 @@ Readme::check('Scope: read, full and the default', function () {
     dataOf(Balance::find(), 'reading the balance with a read token');
 });
 
-Readme::skip('Token cache: Psr16TokenStore over Redis', 'needs a Redis server and symfony/cache, which the SDK does not depend on');
+Readme::check('Token cache: Psr16TokenStore over Redis', function () {
+    $redisUrl = requiredEnv('DIDWW_README_REDIS_URL');
+    if (!interface_exists(CacheInterface::class) || !class_exists(Psr16Cache::class)) {
+        throw new SkipCheck('install symfony/cache and psr/simple-cache');
+    }
+    if (!extension_loaded('redis') && !class_exists(Predis\Client::class)) {
+        throw new SkipCheck('install the redis extension or predis/predis');
+    }
+    // Redis, with short timeouts; a namespace of its own, so that the first
+    // client has to mint the token
+    $namespace = 'didww-readme-'.suffix();
+    $newCache = fn () => new Psr16Cache(new RedisAdapter(
+        RedisAdapter::createConnection($redisUrl, ['timeout' => 2, 'read_timeout' => 2]),
+        $namespace,
+    ));
+    $minted = fn (MemoryLogger $logger) => count(array_filter($logger->records, fn ($record) => str_contains($record, 'DIDWW token minted')));
+    $cache = $newCache();
+    try {
+        $first = new MemoryLogger();
+        Configuration::configure(new Credentials(apiKey(), 'sandbox'), [], ...urlOverrides(), tokenStore: new Psr16TokenStore($cache), logger: $first);
+        dataOf(Balance::find(), 'reading the balance');
+        ensure(1 === $minted($first), 'the first client minted '.$minted($first).' tokens, expected 1');
+
+        // A second client with its own connection reads the token from Redis
+        $second = new MemoryLogger();
+        Configuration::configure(new Credentials(apiKey(), 'sandbox'), [], ...urlOverrides(), tokenStore: new Psr16TokenStore($newCache()), logger: $second);
+        dataOf(Balance::find(), 'reading the balance with the second client');
+        ensure(0 === $minted($second), 'the second client minted a token instead of reusing the one in Redis');
+        note('the second client reused the token stored in Redis');
+    } finally {
+        $cache->clear();
+    }
+});
 
 Readme::check('Token cache: a TokenStore of your own', function () {
     $store = new class implements TokenStore {
@@ -895,10 +1016,7 @@ Readme::check('Voice OUT trunks: create with credentials_and_ip', function () {
     $trunk->setCodecs([VoiceOutCodec::OPUS, VoiceOutCodec::PCMA, VoiceOutCodec::TELEPHONE_EVENT]);
     $trunk->setDefaultDid(Did::build($did->getId()));
     $trunkDocument = $trunk->save();
-    // Without that configuration the API refuses replace_cli or its default_did
-    if ($trunkDocument->hasErrors() && preg_match('/on_cli_mismatch_action|default_did/', errorsOf($trunkDocument))) {
-        throw new SkipCheck('REPLACE_CLI needs additional account configuration by DIDWW support: '.errorsOf($trunkDocument));
-    }
+    // REPLACE_CLI needs the account configuration the README mentions
     $created = dataOf($trunkDocument, 'creating the Voice OUT trunk');
     try {
         $auth = $created->getAuthenticationMethod();
@@ -1271,7 +1389,131 @@ Readme::check('Address verifications: list', function () {
     note(count(dataOf(AddressVerification::all(), 'listing address verifications')).' address verifications');
 });
 
-Readme::skip('Address verifications: create', 'needs a DID whose DID group requires an address and an address that meets its requirements, and a verification cannot be deleted');
+// A DID of a local DID group of Ukraine, which needs an address, with no
+// address verification yet; ordered when the account has none.
+function didNeedingAnAddress(DidGroup $didGroup): Did
+{
+    $dids = dataOf(Did::all([
+        'filter' => ['did_group.id' => $didGroup->getId(), 'terminated' => 'false'],
+        'include' => 'address_verification',
+    ]), 'listing the DIDs of the DID group');
+    $did = $dids->first(fn (Did $did) => null === $did->addressVerification()->getIncluded());
+    if (null !== $did) {
+        return $did;
+    }
+    $order = new Order([
+        'items' => [new DidOrderItem(['sku_id' => $didGroup->stockKeepingUnits()->getIncluded()->first()->getId(), 'qty' => 1])],
+    ]);
+
+    return didsOfCompletedOrder(dataOf($order->save(), 'ordering a DID'))->first() ?? throw new UnexpectedValueException('the order has no DID');
+}
+
+Readme::check('Address verifications: create', function () {
+    $ukraine = countryId('UA');
+    $didGroups = dataOf(DidGroup::all([
+        'filter' => ['country.id' => $ukraine, 'number_type' => NumberType::LOCAL->value, 'is_available' => 'true'],
+        'include' => 'city.area,stock_keeping_units,address_requirement',
+        'page' => ['size' => 50, 'number' => 1],
+    ]), 'listing the local DID groups of Ukraine');
+    $didGroup = $didGroups
+        ->sortBy(fn (DidGroup $group) => str_contains(strtolower($group->getAreaName()), 'odes') ? 0 : 1)
+        ->first(fn (DidGroup $group) => null !== $group->addressRequirement()->getIncluded() && $group->stockKeepingUnits()->getIncluded()->isNotEmpty());
+    ensure(null !== $didGroup, 'no local DID group of Ukraine with an address requirement and numbers in stock');
+    $requirement = dataOf(AddressRequirement::find($didGroup->addressRequirement()->getIncluded()->getId(), [
+        'include' => 'personal_proof_types,business_proof_types,address_proof_types,personal_permanent_document,business_permanent_document',
+    ]), 'reading the address requirement');
+    $business = IdentityType::BUSINESS === $requirement->getIdentityType();
+    note('DID group '.$didGroup->getAreaName().', '.($business ? 'business' : 'personal').' identity');
+    $did = didNeedingAnAddress($didGroup);
+    note('DID '.$did->getNumber());
+
+    $suffix = suffix();
+    $identity = $address = $verification = null;
+    try {
+        // An identity and an address that meet the requirement
+        $newIdentity = new Identity();
+        $newIdentity->setIdentityType($business ? IdentityType::BUSINESS : IdentityType::PERSONAL);
+        $newIdentity->setFirstName('John');
+        $newIdentity->setLastName('Doe');
+        $newIdentity->setPhoneNumber('380441234567');
+        $newIdentity->setBirthDate('1980-01-01');
+        $newIdentity->setIdNumber('AB123456');
+        $newIdentity->setPersonalTaxId('1234567890');
+        $newIdentity->setContactEmail('readme@example.com');
+        if ($business) {
+            $newIdentity->setCompanyName("Example Ltd $suffix");
+            $newIdentity->setCompanyRegNumber('12345678');
+            $newIdentity->setVatId('UA123456789012');
+        }
+        $newIdentity->setCountry(Country::build($ukraine));
+        $newIdentity->setBirthCountry(Country::build($ukraine));
+        $identity = dataOf($newIdentity->save(), 'creating the identity');
+
+        $city = $didGroup->city()->getIncluded();
+        $newAddress = new Address();
+        $newAddress->setCityName($city ? $city->name : $didGroup->getAreaName());
+        $newAddress->setPostalCode('65000');
+        $newAddress->setAddress("1 Derybasivska St, office $suffix");
+        $newAddress->setIdentity(Identity::build($identity->getId()));
+        $newAddress->setCountry(Country::build($ukraine));
+        if ($city) {
+            $newAddress->city()->associate(City::build($city->getId()));
+            $area = $city->area()->getIncluded();
+            if ($area) {
+                $newAddress->area()->associate(Area::build($area->getId()));
+            }
+        }
+        $address = dataOf($newAddress->save(), 'creating the address');
+        Readme::$createdAddressIds[] = $address->getId();
+
+        // The proofs and the permanent supporting document the requirement lists
+        $identityProofTypes = $business ? $requirement->businessProofTypes() : $requirement->personalProofTypes();
+        $identityProofQty = $business ? $requirement->getBusinessProofQty() : $requirement->getPersonalProofQty();
+        createProofs(Identity::build($identity->getId()), $identityProofTypes->getIncluded(), $identityProofQty, 'identity');
+        createProofs(Address::build($address->getId()), $requirement->addressProofTypes()->getIncluded(), $requirement->getAddressProofQty(), 'address');
+        $template = ($business ? $requirement->businessPermanentDocument() : $requirement->personalPermanentDocument())->getIncluded();
+        if ($template) {
+            $document = new PermanentSupportingDocument();
+            $document->setIdentity(Identity::build($identity->getId()));
+            $document->setTemplate(SupportingDocumentTemplate::build($template->getId()));
+            $document->setFiles(new Collection([EncryptedFile::build(uploadSample('permanent supporting document'))]));
+            ensureNoErrors($document->save(), 'creating the permanent supporting document '.$template->getName());
+            note('permanent supporting document: '.$template->getName());
+        }
+
+        $validation = new AddressRequirementValidation();
+        $validation->setAddressRequirement(AddressRequirement::build($requirement->getId()));
+        $validation->setIdentity(Identity::build($identity->getId()));
+        $validation->setAddress(Address::build($address->getId()));
+        ensureNoErrors($validation->save(), 'validating the identity and the address against the requirement');
+
+        // Create address verification
+        $newVerification = new AddressVerification();
+        $newVerification->setCallbackUrl('https://example.com/callback');
+        $newVerification->setCallbackMethod(CallbackMethod::POST);
+        $newVerification->setAddress(Address::build($address->getId()));
+        $newVerification->setDids(new Collection([Did::build($did->getId())]));
+        if ($requirement->getServiceDescriptionRequired()) {
+            $newVerification->setServiceDescription('Inbound calls of a test of the DIDWW PHP SDK');
+        }
+        $verificationDocument = $newVerification->save();
+        $verification = dataOf($verificationDocument, 'creating the address verification');
+        echo 'REVIEW address_verification '.$verification->getId().' '.$verification->getReference()."\n";
+    } finally {
+        if (null !== $verification) {
+            // The verification cannot be deleted; its address and identity only if the API allows it
+            deleteIfAllowed($address, 'address');
+            deleteIfAllowed($identity, 'identity');
+        } else {
+            if (null !== $address) {
+                cleanup('deleting the address', fn () => $address->delete());
+            }
+            if (null !== $identity) {
+                cleanup('deleting the identity', fn () => $identity->delete());
+            }
+        }
+    }
+});
 
 // ─── Emergency Services ─────────────────────────────────────
 
@@ -1282,7 +1524,70 @@ Readme::check('Emergency services: requirements and calling services', function 
     note(count(dataOf(EmergencyCallingService::all(), 'listing emergency calling services')).' emergency calling services');
 });
 
-Readme::skip('Emergency services: create an emergency verification', 'needs a DID with the emergency feature and an address in its country, and a verification cannot be deleted; emergency_scenario.php runs this flow');
+// A DID with the emergency feature in the country, with no emergency calling
+// service or verification yet; ordered when the account has none.
+function didForEmergency(string $countryId): Did
+{
+    $include = 'did_group,emergency_calling_service,emergency_verification';
+    $dids = dataOf(Did::all([
+        'filter' => ['did_group.features' => 'emergency', 'country.id' => $countryId, 'emergency_enabled' => 'false', 'terminated' => 'false'],
+        'include' => $include,
+        'sort' => '-created_at',
+    ]), 'listing the DIDs with the emergency feature');
+    $did = $dids->first(fn (Did $did) => null === $did->emergencyCallingService()->getIncluded() && null === $did->emergencyVerification()->getIncluded());
+    if (null !== $did) {
+        return $did;
+    }
+    $availableDids = dataOf(AvailableDid::all([
+        'filter' => ['did_group.features' => 'emergency', 'country.id' => $countryId],
+        'include' => 'did_group.stock_keeping_units',
+        'page' => ['size' => 1, 'number' => 1],
+    ]), 'listing the available DIDs with the emergency feature');
+    ensure($availableDids->isNotEmpty(), 'no available DID with the emergency feature in the country of the address');
+    $order = new Order([
+        'items' => [new AvailableDidOrderItem(['sku_id' => skuIdOf($availableDids[0]), 'available_did_id' => $availableDids[0]->getId()])],
+    ]);
+    $ordered = didsOfCompletedOrder(dataOf($order->save(), 'ordering a DID with the emergency feature'))->first();
+    ensure(null !== $ordered, 'the order has no DID');
+
+    return dataOf(Did::find($ordered->getId(), ['include' => $include]), 'reading the ordered DID');
+}
+
+Readme::check('Emergency services: create an emergency verification', function () {
+    // An address of the account with its identity, one in Ukraine when there is one
+    $parameters = ['include' => 'country,identity', 'page' => ['size' => 50, 'number' => 1]];
+    $notCreatedHere = fn (Address $address) => !in_array($address->getId(), Readme::$createdAddressIds, true) && null !== $address->identity()->getIncluded();
+    $address = dataOf(Address::all(['filter' => ['country.id' => countryId('UA')]] + $parameters), 'listing the addresses in Ukraine')->first($notCreatedHere)
+        ?? dataOf(Address::all($parameters), 'listing the addresses')->first($notCreatedHere);
+    ensure(null !== $address, 'the account has no address with an identity');
+    $country = $address->country()->getIncluded();
+    $did = didForEmergency($country->getId());
+    note('address in '.$country->getName().', DID '.$did->getNumber());
+
+    // The requirement of the DID, checked as emergency_scenario.php does
+    $numberType = $did->didGroup()->getIncluded()?->getNumberType();
+    $requirements = dataOf(EmergencyRequirement::all(['filter' => [
+        'country.id' => $country->getId(),
+        'number_type' => $numberType instanceof BackedEnum ? $numberType->value : $numberType,
+    ]]), 'listing the emergency requirements');
+    ensure($requirements->isNotEmpty(), 'no emergency requirement for the DID');
+    $validation = new EmergencyRequirementValidation();
+    $validation->setEmergencyRequirement(EmergencyRequirement::build($requirements[0]->getId()));
+    $validation->setAddress(Address::build($address->getId()));
+    $validation->setIdentity(Identity::build($address->identity()->getIncluded()->getId()));
+    ensureNoErrors($validation->save(), 'validating the address and its identity against the emergency requirement');
+
+    // Create emergency verification
+    $emergVerification = new EmergencyVerification();
+    $emergVerification->setCallbackUrl('https://example.com/callback');
+    $emergVerification->setCallbackMethod(CallbackMethod::POST->value); // takes a string
+    $emergVerification->setAddress(Address::build($address->getId()));
+    $emergVerification->setDids(new Collection([Did::build($did->getId())]));
+    $emergVerificationDocument = $emergVerification->save();
+    $created = dataOf($emergVerificationDocument, 'creating the emergency verification');
+    // The verification cannot be deleted
+    echo 'REVIEW emergency_verification '.$created->getId().' '.$created->getReference()."\n";
+});
 
 // ─── DID History ────────────────────────────────────────────
 
