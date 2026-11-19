@@ -31,16 +31,12 @@ function printErrors(string $message, $document): void
     }
 }
 
-// The first SKU of the DID group included with an available DID.
-function skuIdOf(AvailableDid $availableDid): string
+// The first SKU of the DID group included with an available DID, or null.
+function skuIdOf(AvailableDid $availableDid): ?string
 {
-    $didGroup = $availableDid->didGroup()->getIncluded();
-    $skus = $didGroup ? $didGroup->stockKeepingUnits()->getIncluded() : null;
-    if (!$skus || 0 === count($skus)) {
-        throw new RuntimeException('No stock keeping units for available DID '.$availableDid->getNumber());
-    }
+    $skus = $availableDid->didGroup()->getIncluded()?->stockKeepingUnits()->getIncluded();
 
-    return $skus->first()->getId();
+    return $skus?->first()?->getId();
 }
 
 echo "=== Finding Available DIDs ===\n";
@@ -55,6 +51,9 @@ $available = $availableDids[0];
 $toReserve = $availableDids[1];
 $availableSkuId = skuIdOf($available);
 $reservedSkuId = skuIdOf($toReserve);
+if (null === $availableSkuId || null === $reservedSkuId) {
+    exit("No stock keeping units for the available DIDs\n");
+}
 echo 'Available DID to order: '.$available->getNumber().', SKU '.$availableSkuId."\n";
 echo 'Available DID to reserve: '.$toReserve->getNumber().', SKU '.$reservedSkuId."\n";
 
@@ -66,7 +65,7 @@ $didGroups = DidGroup::all([
 $skuForQty = null;
 foreach ($didGroups as $didGroup) {
     $skus = $didGroup->stockKeepingUnits()->getIncluded();
-    if (count($skus) > 0) {
+    if ($skus->isNotEmpty()) {
         $skuForQty = $skus->first();
         echo 'SKU '.$skuForQty->getId().' of DID group '.$didGroup->getId()."\n";
         break;

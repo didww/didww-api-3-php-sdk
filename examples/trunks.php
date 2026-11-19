@@ -76,7 +76,7 @@ foreach ($trunks as $trunk) {
     echo ' group: '.($group ? $group->name : 'none')."\n";
 }
 
-if (count($trunks) > 0) {
+if ($trunks->isNotEmpty()) {
     echo "\n=== Find a Trunk ===\n";
     printTrunk(VoiceInTrunk::find($trunks[0]->getId())->getData());
 }

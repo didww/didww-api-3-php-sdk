@@ -44,7 +44,7 @@ $didGroups = DidGroup::all([
 $sku = null;
 foreach ($didGroups as $didGroup) {
     $skus = $didGroup->stockKeepingUnits()->getIncluded();
-    if (count($skus) > 0) {
+    if ($skus->isNotEmpty()) {
         $sku = $skus->first();
         echo 'DID group: '.$didGroup->getAreaName().' ('.$didGroup->getPrefix().'), SKU: '.$sku->getId()."\n";
         break;

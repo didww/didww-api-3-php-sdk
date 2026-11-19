@@ -21,7 +21,7 @@ function printErrors(string $message, $document): void
 }
 
 $availableDids = AvailableDid::all(['page' => ['size' => 1, 'number' => 1]])->getData();
-if (0 === count($availableDids)) {
+if ($availableDids->isEmpty()) {
     exit("No available DIDs found\n");
 }
 $availableDid = $availableDids[0];

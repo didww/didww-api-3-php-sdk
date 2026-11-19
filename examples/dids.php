@@ -15,7 +15,7 @@ $dids = Didww\Item\Did::all([
     'page' => ['size' => 5, 'number' => 1],
     'include' => 'identity,emergency_calling_service,emergency_verification',
 ])->getData();
-if (0 === count($dids)) {
+if ($dids->isEmpty()) {
     exit("No DIDs found. Please order a DID first.\n");
 }
 
@@ -49,7 +49,7 @@ $supportedPool = reset($supportedPools);
 
 if ($supportedPool) {
     $sharedCapacityGroups = Didww\Item\SharedCapacityGroup::all(['filter' => ['capacity_pool.id' => $supportedPool->getId()]])->getData();
-    if (count($sharedCapacityGroups) > 0) {
+    if ($sharedCapacityGroups->isNotEmpty()) {
         // assign channel group to use shared channels
         $did->setSharedCapacityGroup($sharedCapacityGroups[0]);
     }

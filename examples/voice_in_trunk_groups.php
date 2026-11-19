@@ -58,7 +58,7 @@ try {
         echo "Created trunk $label: ".$document->getData()->getId()."\n";
     }
 
-    if (count($trunks) > 0) {
+    if ([] !== $trunks) {
         echo "\n=== Creating Trunk Group ===\n";
         $newGroup = new VoiceInTrunkGroup();
         $newGroup->name = "PHP Trunk Group $suffix";

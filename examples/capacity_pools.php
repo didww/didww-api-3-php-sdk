@@ -36,7 +36,7 @@ foreach ($pools as $pool) {
     }
 }
 
-if (count($pools) > 0) {
+if ($pools->isNotEmpty()) {
     echo "\n=== Find a Capacity Pool ===\n";
     $pool = CapacityPool::find($pools[0]->getId(), ['include' => 'qty_based_pricings'])->getData();
     echo $pool->getName().' ('.$pool->getId().")\n";
