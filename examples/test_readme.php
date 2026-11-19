@@ -843,7 +843,8 @@ Readme::check('Voice OUT trunks: create with credentials_and_ip', function () {
     $trunk->setCodecs([VoiceOutCodec::OPUS, VoiceOutCodec::PCMA, VoiceOutCodec::TELEPHONE_EVENT]);
     $trunk->setDefaultDid(Did::build($did->getId()));
     $trunkDocument = $trunk->save();
-    if ($trunkDocument->hasErrors() && str_contains(errorsOf($trunkDocument), 'on_cli_mismatch_action')) {
+    // Without that configuration the API refuses replace_cli or its default_did
+    if ($trunkDocument->hasErrors() && preg_match('/on_cli_mismatch_action|default_did/', errorsOf($trunkDocument))) {
         throw new SkipCheck('REPLACE_CLI needs additional account configuration by DIDWW support: '.errorsOf($trunkDocument));
     }
     $created = dataOf($trunkDocument, 'creating the Voice OUT trunk');
