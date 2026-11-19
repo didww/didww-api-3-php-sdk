@@ -31,7 +31,8 @@
       "psr/simple-cache": "^3.0"
     },
     "suggest": {
-      "psr/simple-cache": "To share access tokens between processes (PHP-FPM workers, queue workers) through Didww\\Auth\\Psr16TokenStore"
+      "ext-apcu": "To share access tokens between PHP-FPM or mod_php workers, through the default Didww\\Auth\\ApcuTokenStore",
+      "psr/simple-cache": "To share access tokens between servers through Didww\\Auth\\Psr16TokenStore"
     },
     "autoload": {
       "psr-4": {

@@ -2,6 +2,7 @@
 
 namespace Didww;
 
+use Didww\Auth\ApcuTokenStore;
 use Didww\Auth\BearerMiddleware;
 use Didww\Auth\MemoryTokenStore;
 use Didww\Auth\Scope;
@@ -34,6 +35,14 @@ class Configuration
     /** @var array<string, string> */
     private static array $urls = [];
 
+    /**
+     * @param string $sapi the server API (@internal, for tests)
+     */
+    private static function newDefaultTokenStore(string $sapi = \PHP_SAPI): TokenStore
+    {
+        return ApcuTokenStore::isAvailable($sapi) ? new ApcuTokenStore() : new MemoryTokenStore();
+    }
+
     public static function getCredentials()
     {
         return self::$credentials;
@@ -59,7 +68,8 @@ class Configuration
      * @param array                $httpClientConfig  Guzzle client configuration; a "handler" is wrapped by the SDK
      * @param string|null          $apiVersion        overrides the API version of $credentials
      * @param Scope|string|null    $scope             overrides the scope of $credentials
-     * @param TokenStore|null      $tokenStore        where tokens are cached; default: an in-memory store shared by the process
+     * @param TokenStore|null      $tokenStore        where tokens are cached; default: ApcuTokenStore where APCu is enabled
+     *                                                outside the CLI, otherwise an in-memory store shared by the process
      * @param LoggerInterface|null $logger            receives token warnings and debug messages; default: none
      * @param string|null          $baseUrl           JSON:API base URL (with or without /v3); default: the environment's
      * @param string|null          $authUrl           token service URL; default: the environment's
@@ -101,7 +111,7 @@ class Configuration
         $baseUri = Url::withV3($urls['API base']);
 
         $logger ??= new NullLogger();
-        $tokenStore ??= self::$defaultTokenStore ??= new MemoryTokenStore();
+        $tokenStore ??= self::$defaultTokenStore ??= self::newDefaultTokenStore();
 
         $config = self::httpClientConfig($httpClientConfig);
         if (isset($config['handler'])) {

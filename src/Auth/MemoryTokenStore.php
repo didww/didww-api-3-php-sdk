@@ -4,11 +4,11 @@ namespace Didww\Auth;
 
 /**
  * A TokenStore that keeps tokens in process memory; expired entries are
- * dropped when read. It is the default store, shared by every configuration
- * of the process that does not pass its own.
+ * dropped when read. It is the default store where APCu is not available,
+ * shared by every configuration of the process that does not pass its own.
  *
  * Under PHP-FPM or mod_php the process memory lasts one request, so every
- * request mints new tokens; use Psr16TokenStore with a shared cache there.
+ * request mints new tokens; ApcuTokenStore or Psr16TokenStore avoids that.
  */
 final class MemoryTokenStore implements TokenStore
 {

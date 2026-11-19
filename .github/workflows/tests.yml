@@ -24,6 +24,10 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: xdebug
+          extensions: apcu
+          ini-values: apc.enable_cli=1
+        env:
+          fail-fast: true
       - name: Install dependencies
         run: composer install
       - name: Run tests
