@@ -28,6 +28,8 @@ final class TokenProvider
 {
     public const CACHE_KEY_PREFIX = 'didww:token:v1:';
     public const MAX_MINT_ATTEMPTS = 4;
+    // The longest lifetime the token service grants: the fewer mints, the better.
+    public const REQUESTED_LIFETIME = 3600;
     public const MINT_TIMEOUT = 10;
     public const MAX_ERROR_BODY_SIZE = 1048576;
     private const BACKOFF_BASE = 0.5;
@@ -166,6 +168,7 @@ final class TokenProvider
         if (null !== $this->credentials->getScope()) {
             $body['scope'] = $this->credentials->getScope()->value;
         }
+        $body['expires_in'] = self::REQUESTED_LIFETIME;
         $start = ($this->clock)();
         $response = $this->post(json_encode($body, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES));
         $token = $this->tokenFrom($response, $audience);

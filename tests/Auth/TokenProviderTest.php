@@ -106,7 +106,7 @@ class TokenProviderTest extends TestCase
         $token = $this->provider(new Credentials(self::API_KEY, 'sandbox', '2099-01-01'))->token('api.didww.com');
 
         $this->assertSame('2099-01-01', $token->getApiVersion());
-        $this->assertJsonStringEqualsJsonString('{"aud":["api.didww.com"],"api_version":"2099-01-01"}', (string) $this->http->request(0)->getBody());
+        $this->assertJsonStringEqualsJsonString('{"aud":["api.didww.com"],"api_version":"2099-01-01","expires_in":3600}', (string) $this->http->request(0)->getBody());
     }
 
     public function testTokenReused()
@@ -131,8 +131,8 @@ class TokenProviderTest extends TestCase
 
         $this->assertNotSame($api->getAccessToken(), $vin->getAccessToken());
         $this->assertSame(2, $this->http->count());
-        $this->assertJsonStringEqualsJsonString('{"aud":["api.didww.com"],"api_version":"2026-11-19"}', (string) $this->http->request(0)->getBody());
-        $this->assertJsonStringEqualsJsonString('{"aud":["api-vin.didww.com"],"api_version":"2026-11-19"}', (string) $this->http->request(1)->getBody());
+        $this->assertJsonStringEqualsJsonString('{"aud":["api.didww.com"],"api_version":"2026-11-19","expires_in":3600}', (string) $this->http->request(0)->getBody());
+        $this->assertJsonStringEqualsJsonString('{"aud":["api-vin.didww.com"],"api_version":"2026-11-19","expires_in":3600}', (string) $this->http->request(1)->getBody());
     }
 
     public function testTokenSharedThroughStore()

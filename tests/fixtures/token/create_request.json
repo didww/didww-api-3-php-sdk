@@ -1,4 +1,5 @@
 {
   "aud": ["api.didww.com"],
-  "api_version": "2026-11-19"
+  "api_version": "2026-11-19",
+  "expires_in": 3600
 }
