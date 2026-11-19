@@ -342,14 +342,24 @@ function requiredEnv(string $name): string
     return exampleEnv($name) ?? throw new SkipCheck("set $name");
 }
 
-// Waits for an order to complete and returns its DIDs.
+// Waits up to 120 s for an order to complete and returns its DIDs. An order
+// still pending when the wait gives up or fails is canceled.
 function didsOfCompletedOrder(Order $order): Collection
 {
-    for ($attempt = 0; $attempt < 24 && !$order->isCompleted(); ++$attempt) {
-        sleep(5);
-        $order = dataOf(Order::find($order->getId()), 'reading the order');
+    try {
+        for ($attempt = 0; $attempt < 24 && !$order->isCompleted(); ++$attempt) {
+            sleep(5);
+            $order = dataOf(Order::find($order->getId()), 'reading the order');
+        }
+    } catch (Throwable $e) {
+        cancelOrder($order);
+        throw $e;
     }
-    ensure($order->isCompleted(), 'order '.$order->getReference().' is still '.$order->getStatus()->value);
+    if (!$order->isCompleted()) {
+        $status = $order->getStatus()->value;
+        cancelOrder($order);
+        throw new UnexpectedValueException('order '.$order->getReference()." is still $status");
+    }
     note('order '.$order->getReference().' completed');
 
     return dataOf(Did::all(['filter' => ['order.id' => $order->getId()]]), 'listing the DIDs of the order');

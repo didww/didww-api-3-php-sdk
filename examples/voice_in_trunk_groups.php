@@ -16,6 +16,11 @@ use Didww\Item\VoiceInTrunk;
 use Didww\Item\VoiceInTrunkGroup;
 use Swis\JsonApi\Client\Collection;
 
+// Stops the flow; what was created is deleted.
+final class FlowStopped extends RuntimeException
+{
+}
+
 function printErrors(string $message, $document): void
 {
     echo $message.":\n";
@@ -45,6 +50,7 @@ $suffix = bin2hex(random_bytes(4));
 
 $trunks = [];
 $group = null;
+$exitCode = 0;
 try {
     echo "=== Creating Trunks ===\n";
     foreach (['A' => 'sip-a.example.com', 'B' => 'sip-b.example.com'] as $label => $host) {
@@ -59,28 +65,26 @@ try {
         $document = $trunk->save();
         if ($document->hasErrors()) {
             printErrors("Error creating trunk $label", $document);
-            continue;
+            throw new FlowStopped("Stopped: trunk $label was not created");
         }
         $trunks[] = $document->getData();
         echo "Created trunk $label: ".$document->getData()->getId()."\n";
     }
 
-    if ([] !== $trunks) {
-        echo "\n=== Creating Trunk Group ===\n";
-        $newGroup = new VoiceInTrunkGroup();
-        $newGroup->name = "PHP Trunk Group $suffix";
-        $newGroup->capacity_limit = 10;
-        $newGroup->setExternalReferenceId("php-tg-$suffix");
-        $newGroup->setVoiceInTrunks(new Collection(array_map(fn ($trunk) => VoiceInTrunk::build($trunk->getId()), $trunks)));
-        $document = $newGroup->save(['include' => 'voice_in_trunks']);
-        if ($document->hasErrors()) {
-            printErrors('Error creating trunk group', $document);
-        } else {
-            $group = $document->getData();
-            echo 'Created trunk group: '.$group->getId().' - '.$group->name.' with '.count($group->voiceInTrunks()->getIncluded())." trunks\n";
-            echo '  External reference: '.($group->getExternalReferenceId() ?? 'null')."\n";
-        }
+    echo "\n=== Creating Trunk Group ===\n";
+    $newGroup = new VoiceInTrunkGroup();
+    $newGroup->name = "PHP Trunk Group $suffix";
+    $newGroup->capacity_limit = 10;
+    $newGroup->setExternalReferenceId("php-tg-$suffix");
+    $newGroup->setVoiceInTrunks(new Collection(array_map(fn ($trunk) => VoiceInTrunk::build($trunk->getId()), $trunks)));
+    $document = $newGroup->save(['include' => 'voice_in_trunks']);
+    if ($document->hasErrors()) {
+        printErrors('Error creating trunk group', $document);
+        throw new FlowStopped('Stopped: the trunk group was not created');
     }
+    $group = $document->getData();
+    echo 'Created trunk group: '.$group->getId().' - '.$group->name.' with '.count($group->voiceInTrunks()->getIncluded())." trunks\n";
+    echo '  External reference: '.($group->getExternalReferenceId() ?? 'null')."\n";
 
     echo "\n=== Trunk Groups ===\n";
     $groups = VoiceInTrunkGroup::all(['include' => 'voice_in_trunks'])->getData();
@@ -89,18 +93,19 @@ try {
         echo '  '.$listed->name.' ('.count($listed->voiceInTrunks()->getIncluded()).' trunks), external reference: '.($listed->getExternalReferenceId() ?? 'null')."\n";
     }
 
-    if (null !== $group) {
-        echo "\n=== Renaming Trunk Group ===\n";
-        // A group built with its ID sends only the name; the trunks stay.
-        $rename = VoiceInTrunkGroup::build($group->getId());
-        $rename->name = "PHP Trunk Group $suffix (renamed)";
-        $document = $rename->save();
-        if ($document->hasErrors()) {
-            printErrors('Error renaming trunk group', $document);
-        } else {
-            echo 'Renamed trunk group: '.$document->getData()->name."\n";
-        }
+    echo "\n=== Renaming Trunk Group ===\n";
+    // A group built with its ID sends only the name; the trunks stay.
+    $rename = VoiceInTrunkGroup::build($group->getId());
+    $rename->name = "PHP Trunk Group $suffix (renamed)";
+    $document = $rename->save();
+    if ($document->hasErrors()) {
+        printErrors('Error renaming trunk group', $document);
+        throw new FlowStopped('Stopped: the trunk group was not renamed');
     }
+    echo 'Renamed trunk group: '.$document->getData()->name."\n";
+} catch (FlowStopped $e) {
+    echo "\n".$e->getMessage()."\n";
+    $exitCode = 1;
 } finally {
     echo "\n=== Cleaning Up ===\n";
     if (null !== $group) {
@@ -112,3 +117,5 @@ try {
         }
     }
 }
+
+exit($exitCode);

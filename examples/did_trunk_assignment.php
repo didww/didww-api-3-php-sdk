@@ -22,6 +22,11 @@ use Didww\Item\Did;
 use Didww\Item\VoiceInTrunk;
 use Didww\Item\VoiceInTrunkGroup;
 
+// Stops the flow; the DID is restored and the trunk and group are deleted.
+final class FlowStopped extends RuntimeException
+{
+}
+
 function printErrors(string $message, $document): void
 {
     echo $message.":\n";
@@ -93,6 +98,7 @@ $suffix = bin2hex(random_bytes(4));
 
 $trunk = $group = null;
 $changed = false;
+$exitCode = 0;
 try {
     echo "\n=== Creating a trunk and a trunk group ===\n";
     $newTrunk = new VoiceInTrunk();
@@ -106,10 +112,10 @@ try {
     $document = $newTrunk->save();
     if ($document->hasErrors()) {
         printErrors('Error creating the trunk', $document);
-    } else {
-        $trunk = $document->getData();
-        echo 'Created trunk: '.$trunk->getName()."\n";
+        throw new FlowStopped('Stopped: the trunk was not created');
     }
+    $trunk = $document->getData();
+    echo 'Created trunk: '.$trunk->getName()."\n";
 
     $newGroup = new VoiceInTrunkGroup();
     $newGroup->name = "PHP Assignment Group $suffix";
@@ -117,30 +123,27 @@ try {
     $document = $newGroup->save();
     if ($document->hasErrors()) {
         printErrors('Error creating the trunk group', $document);
-    } else {
-        $group = $document->getData();
-        echo 'Created trunk group: '.$group->name."\n";
+        throw new FlowStopped('Stopped: the trunk group was not created');
     }
+    $group = $document->getData();
+    echo 'Created trunk group: '.$group->name."\n";
 
-    if (null !== $trunk) {
-        echo "\n=== 1. Assigning the trunk (sends voice_in_trunk_group as null) ===\n";
+    $steps = [
+        '1. Assigning the trunk (sends voice_in_trunk_group as null)' => fn (Did $d) => $d->setVoiceInTrunk(VoiceInTrunk::build($trunk->getId())),
+        '2. Assigning the trunk group (sends voice_in_trunk as null)' => fn (Did $d) => $d->setVoiceInTrunkGroup(VoiceInTrunkGroup::build($group->getId())),
+        '3. Assigning the trunk again (clears the trunk group)' => fn (Did $d) => $d->setVoiceInTrunk(VoiceInTrunk::build($trunk->getId())),
+        '4. Updating the description only (the trunk stays)' => fn (Did $d) => $d->setDescription('DID with a trunk assigned'),
+    ];
+    foreach ($steps as $title => $change) {
+        echo "\n=== $title ===\n";
         $changed = true;
-        updateDid($did->getId(), fn (Did $d) => $d->setVoiceInTrunk(VoiceInTrunk::build($trunk->getId())), 'assigning the trunk');
+        if (!updateDid($did->getId(), $change, lcfirst(substr($title, 3)))) {
+            throw new FlowStopped("Stopped: step $title failed");
+        }
     }
-
-    if (null !== $group) {
-        echo "\n=== 2. Assigning the trunk group (sends voice_in_trunk as null) ===\n";
-        $changed = true;
-        updateDid($did->getId(), fn (Did $d) => $d->setVoiceInTrunkGroup(VoiceInTrunkGroup::build($group->getId())), 'assigning the trunk group');
-    }
-
-    if (null !== $trunk) {
-        echo "\n=== 3. Assigning the trunk again (clears the trunk group) ===\n";
-        updateDid($did->getId(), fn (Did $d) => $d->setVoiceInTrunk(VoiceInTrunk::build($trunk->getId())), 'assigning the trunk');
-
-        echo "\n=== 4. Updating the description only (the trunk stays) ===\n";
-        updateDid($did->getId(), fn (Did $d) => $d->setDescription('DID with a trunk assigned'), 'updating the description');
-    }
+} catch (FlowStopped $e) {
+    echo "\n".$e->getMessage()."\n";
+    $exitCode = 1;
 } finally {
     $restored = true;
     if ($changed) {
@@ -177,3 +180,5 @@ try {
         deleteItem($group, 'trunk group');
     }
 }
+
+exit($exitCode);
