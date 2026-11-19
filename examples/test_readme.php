@@ -9,17 +9,20 @@
 // on an existing DID or Sender ID verification is put back; a clean-up step
 // that fails also fails the check, and when a restore fails the trunks it
 // still uses are kept and that DID is not changed again. The README
-// placeholders ('uuid', 'YOUR_API_KEY', '/var/data/...') are replaced with
-// real values; its proxy and CA bundle placeholders are left out. The order
+// placeholders ('uuid', 'YOUR_API_KEY', '/var/data/...', the proxy and the CA
+// bundle) are replaced with real values. The order
 // checks buy DIDs and a capacity channel on the sandbox account (an order
 // still pending is canceled), and the export checks create exports, which
 // cannot be deleted.
 //
-// Not run: the shell snippets (installation, development) and the production
-// configuration, reported as skipped. The Redis, proxy and CA bundle checks
-// need the variables below and are skipped without them; the Redis check also
-// needs symfony/cache, psr/simple-cache and the redis extension or
-// predis/predis, which the SDK does not depend on.
+// Not run: the shell snippets (installation, development). The production
+// configuration check runs only with DIDWW_README_PRODUCTION_API_KEY, with a
+// read-only token: it reads the balance, the countries and one Voice IN
+// price, and prints none of their values. Everything else runs against the
+// sandbox only. The Redis, proxy and CA bundle checks need the variables
+// below and are skipped without them; the Redis check also needs
+// symfony/cache, psr/simple-cache and the redis extension or predis/predis,
+// which the SDK does not depend on.
 //
 // The address and emergency verification checks order a DID when the account
 // has none that fits, and create verifications that DIDWW reviews; they cannot
@@ -30,11 +33,13 @@
 //
 // Usage: DIDWW_API_KEY=your_sandbox_api_key php examples/test_readme.php
 // Optional: DIDWW_README_REDIS_URL (redis://host:6379/0), DIDWW_README_PROXY_URL
-// (an HTTP proxy that allows CONNECT), DIDWW_README_CA_BUNDLE (a CA bundle path)
+// (an HTTP proxy that allows CONNECT), DIDWW_README_CA_BUNDLE (a CA bundle path),
+// DIDWW_README_PRODUCTION_API_KEY (a production API key, used read-only)
 
 require_once 'bootstrap.php';
 
 use Didww\Auth\AccessToken;
+use Didww\Auth\MemoryTokenStore;
 use Didww\Auth\Psr16TokenStore;
 use Didww\Auth\Scope;
 use Didww\Auth\TokenStore;
@@ -203,10 +208,15 @@ final class MemoryLogger extends AbstractLogger
 {
     /** @var string[] */
     public array $records = [];
+    /** @var string[] the scope of each token minted */
+    public array $mintedScopes = [];
 
     public function log($level, $message, array $context = []): void
     {
         $this->records[] = "$level: $message";
+        if ('DIDWW token minted' === (string) $message) {
+            $this->mintedScopes[] = (string) ($context['scope'] ?? '');
+        }
     }
 }
 
@@ -610,7 +620,26 @@ Readme::check('Usage: balance and DID groups', function () {
 
 Readme::section('Configuration');
 
-Readme::skip('Configuration: production', 'production only; this script runs against the sandbox');
+// The one check that talks to production, with the account of the person who
+// runs it. The token is read-only, so the API refuses any write with 403; the
+// calls are a balance read, a country list and one Voice IN price lookup.
+// The key is used here only; the sandbox URL overrides and the shared token
+// store are not used, and the sandbox configuration is put back afterwards.
+Readme::check('Configuration: production, read-only', function () {
+    $productionApiKey = requiredEnv('DIDWW_README_PRODUCTION_API_KEY');
+    $logger = new MemoryLogger();
+    $credentials = new Credentials($productionApiKey, 'production');
+    Configuration::configure($credentials, scope: Scope::READ, tokenStore: new MemoryTokenStore(), logger: $logger);
+    ensure(Scope::READ === Configuration::getCredentials()->getScope(), 'the production client does not ask for a read token');
+
+    ensureNoErrors(Balance::find(), 'reading the production balance');
+    ensure(['read'] === $logger->mintedScopes, 'expected one token with scope read, got scopes: '.implode(', ', $logger->mintedScopes));
+    $countries = dataOf(Country::all(), 'listing the production countries');
+    ensure($countries->isNotEmpty(), 'no production countries');
+    $prices = Prices::voiceIn()->lookup(['number' => '12125551234']);
+    ensure(count($prices) > 0, 'no Voice IN price');
+    note('production: token minted (scope read), balance read, '.count($countries).' countries, price lookup ok');
+});
 
 Readme::check('Configuration: sandbox, read-only tokens, a PSR-3 logger and a proxy', function () {
     $proxy = requiredEnv('DIDWW_README_PROXY_URL');
