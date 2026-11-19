@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "title": "Filter not allowed",
+      "detail": "src_country_iso is not allowed.",
+      "code": "102",
+      "status": "400"
+    }
+  ]
+}

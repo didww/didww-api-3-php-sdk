@@ -1,0 +1,141 @@
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/sender_id_verifications'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":[{"id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10","type":"sender_id_verifications","attributes":{"name":"ACME alerts","status":"active","sender_type":"long_code","sender_ids":["12125550100","12125550101"],"reference":"SID-1234","reject_reasons":null,"reject_comment":null,"renew_date":"2026-11-22","created_at":"2026-10-01T10:00:00.000Z","activated_at":"2026-10-03T12:30:00.000Z","closed_at":null},"relationships":{"sms_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/sms_trunk","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/sms_trunk"}},"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/countries","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/countries"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/dids","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/dids"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/order","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/order"}},"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/identity","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/identity"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/address","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/address"}}},"meta":{"setup_price":"10.0","monthly_price":"15.0"}},{"id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11","type":"sender_id_verifications","attributes":{"name":"ACME brand","status":"changes_required","sender_type":"alphanumeric","sender_ids":["ACME"],"reference":"SID-1235","reject_reasons":["Company documents are missing"],"reject_comment":"Upload the certificate of incorporation.","renew_date":null,"created_at":"2026-10-05T09:00:00.000Z","activated_at":null,"closed_at":null},"relationships":{"sms_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/relationships/sms_trunk","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/sms_trunk"}},"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/relationships/countries","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/countries"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/relationships/dids","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/dids"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/relationships/order","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/order"}},"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/relationships/identity","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/identity"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/relationships/address","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d11/address"}}},"meta":{"setup_price":"10.0","monthly_price":"15.0"}}],"meta":{"total_records":2},"links":{"first":"https://sandbox-api.didww.com/v3/sender_id_verifications?page%5Bnumber%5D=1&page%5Bsize%5D=50","last":"https://sandbox-api.didww.com/v3/sender_id_verifications?page%5Bnumber%5D=1&page%5Bsize%5D=50"}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10?include=sms_trunk'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10","type":"sender_id_verifications","attributes":{"name":"ACME alerts","status":"active","sender_type":"long_code","sender_ids":["12125550100","12125550101"],"reference":"SID-1234","reject_reasons":null,"reject_comment":null,"renew_date":"2026-11-22","created_at":"2026-10-01T10:00:00.000Z","activated_at":"2026-10-03T12:30:00.000Z","closed_at":null},"relationships":{"sms_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/sms_trunk","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/sms_trunk"},"data":{"type":"sms_trunks","id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03"}},"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/countries","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/countries"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/dids","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/dids"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/order","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/order"}},"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/identity","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/identity"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/address","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/address"}}},"meta":{"setup_price":"10.0","monthly_price":"15.0"}},"included":[{"id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03","type":"sms_trunks","attributes":{"name":"Outbound HTTP","external_reference_id":null,"blocked":false,"priority":null,"allow_any_did_as_source":false,"allow_in":false,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"http_out","attributes":{"callback_url":null,"allowed_ips":null,"auth_name":"generated-name","auth_password":"generated-password"}}},"meta":{"host":"https://sms-out.example.com/outbound_messages"}}]}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sender_id_verifications","id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10","attributes":{"name":"ACME notifications"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10","type":"sender_id_verifications","attributes":{"name":"ACME notifications","status":"active","sender_type":"long_code","sender_ids":["12125550100","12125550101"],"reference":"SID-1234","reject_reasons":null,"reject_comment":null,"renew_date":"2026-11-22","created_at":"2026-10-01T10:00:00.000Z","activated_at":"2026-10-03T12:30:00.000Z","closed_at":null},"relationships":{"sms_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/sms_trunk","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/sms_trunk"}},"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/countries","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/countries"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/dids","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/dids"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/order","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/order"}},"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/identity","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/identity"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/address","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/address"}}},"meta":{"setup_price":"10.0","monthly_price":"15.0"}}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10","type":"sender_id_verifications","attributes":{"name":"ACME alerts","status":"active","sender_type":"long_code","sender_ids":["12125550100","12125550101"],"reference":"SID-1234","reject_reasons":null,"reject_comment":null,"renew_date":"2026-11-22","created_at":"2026-10-01T10:00:00.000Z","activated_at":"2026-10-03T12:30:00.000Z","closed_at":null},"relationships":{"sms_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/sms_trunk","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/sms_trunk"},"data":{"type":"sms_trunks","id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03"}},"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/countries","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/countries"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/dids","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/dids"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/order","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/order"}},"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/identity","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/identity"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/address","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/address"}}},"meta":{"setup_price":"10.0","monthly_price":"15.0"}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sender_id_verifications","id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10","relationships":{"sms_trunk":{"data":{"type":"sms_trunks","id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03"}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10","type":"sender_id_verifications","attributes":{"name":"ACME alerts","status":"active","sender_type":"long_code","sender_ids":["12125550100","12125550101"],"reference":"SID-1234","reject_reasons":null,"reject_comment":null,"renew_date":"2026-11-22","created_at":"2026-10-01T10:00:00.000Z","activated_at":"2026-10-03T12:30:00.000Z","closed_at":null},"relationships":{"sms_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/sms_trunk","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/sms_trunk"},"data":{"type":"sms_trunks","id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03"}},"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/countries","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/countries"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/dids","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/dids"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/order","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/order"}},"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/identity","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/identity"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/address","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/address"}}},"meta":{"setup_price":"10.0","monthly_price":"15.0"}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sender_id_verifications","id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10","relationships":{"sms_trunk":{"data":null}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10","type":"sender_id_verifications","attributes":{"name":"ACME alerts","status":"active","sender_type":"long_code","sender_ids":["12125550100","12125550101"],"reference":"SID-1234","reject_reasons":null,"reject_comment":null,"renew_date":"2026-11-22","created_at":"2026-10-01T10:00:00.000Z","activated_at":"2026-10-03T12:30:00.000Z","closed_at":null},"relationships":{"sms_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/sms_trunk","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/sms_trunk"},"data":null},"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/countries","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/countries"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/dids","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/dids"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/order","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/order"}},"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/identity","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/identity"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/address","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/address"}}},"meta":{"setup_price":"10.0","monthly_price":"15.0"}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d12'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sender_id_verifications","id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d12","attributes":{"name":"ACME notifications"}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '422'
+            message: 'Unprocessable Entity'
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"errors":[{"title":"Sender ID Verification is closed and can not be changed","detail":"Sender ID Verification is closed and can not be changed","code":"100","source":{"pointer":"/data"},"status":"422"}]}'

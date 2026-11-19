@@ -3,9 +3,14 @@
 namespace Didww\Tests;
 
 use Didww\Enum\CliFormat;
+use Didww\Enum\Codec;
 use Didww\Enum\DiversionInjectMode;
+use Didww\Enum\IceMode;
 use Didww\Enum\MediaEncryptionMode;
 use Didww\Enum\NetworkProtocolPriority;
+use Didww\Enum\Pop;
+use Didww\Enum\RtcpFeedbackMode;
+use Didww\Enum\RtcpMuxMode;
 use Didww\Enum\RxDtmfFormat;
 use Didww\Enum\SstRefreshMethod;
 use Didww\Enum\StirShakenMode;
@@ -21,19 +26,23 @@ class VoiceInTrunkTest extends CassetteTest
 
     public function testAllWithIncludesAndPagination()
     {
-        $voiceInTrunksDocument = \Didww\Item\VoiceInTrunk::all(['sort' => '-created_at', 'include' => 'trunk_group,pop', 'page' => ['size' => 4, 'number' => 1]]);
+        $voiceInTrunksDocument = \Didww\Item\VoiceInTrunk::all(['sort' => '-created_at', 'include' => 'voice_in_trunk_group', 'page' => ['size' => 4, 'number' => 1]]);
         $voiceInTrunks = $voiceInTrunksDocument->getData();
         $this->assertContainsOnlyInstancesOf('Didww\Item\VoiceInTrunk', $voiceInTrunks);
         $voiceInTrunkGroup = $voiceInTrunks[0]->voiceInTrunkGroup()->getIncluded();
 
-        $pop = $voiceInTrunks[1]->pop()->getIncluded();
-
-        $this->assertInstanceOf('Didww\Item\Pop', $pop);
-        $this->assertEquals('DE, FRA', $pop->getName());
+        $this->assertNull($voiceInTrunks[0]->getPop());
+        $this->assertSame(Pop::FRA, $voiceInTrunks[1]->getPop());
         $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
 
         $this->assertInstanceOf('Didww\Item\Configuration\Pstn', $voiceInTrunks[0]->getConfiguration());
         $this->assertInstanceOf('Didww\Item\Configuration\Sip', $voiceInTrunks[1]->getConfiguration());
+
+        $sip = $voiceInTrunks[1]->getConfiguration();
+        $this->assertSame([Codec::PCMU, Codec::PCMA, Codec::G729], $sip->getCodecs());
+        $this->assertSame(IceMode::ACCEPT, $sip->getIceMode());
+        $this->assertSame(RtcpMuxMode::DISABLED, $sip->getRtcpMuxMode());
+        $this->assertSame(RtcpFeedbackMode::INITIATE, $sip->getRtcpFeedbackMode());
 
         $this->assertEquals($voiceInTrunksDocument->getMeta()['total_records'], 68);
     }
@@ -81,7 +90,10 @@ class VoiceInTrunkTest extends CassetteTest
                 'host' => '203.0.113.110',
                 'sst_refresh_method_id' => 1,
                 'port' => 5060,
-                'codec_ids' => \Didww\Item\Configuration\Base::getDefaultCodecIds(),
+                'codecs' => [Codec::PCMA, Codec::PCMU, Codec::AMR_WB, Codec::TELEPHONE_EVENT],
+                'ice_mode' => IceMode::ACCEPT,
+                'rtcp_mux_mode' => RtcpMuxMode::INITIATE,
+                'rtcp_feedback_mode' => 'accept',
                 'rerouting_disconnect_code_ids' => \Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(),
                 'media_encryption_mode' => 'zrtp',
                 'stir_shaken_mode' => 'pai',
@@ -90,6 +102,9 @@ class VoiceInTrunkTest extends CassetteTest
             'name' => 'hello, test sip trunk',
         ];
         $voiceInTrunk = new \Didww\Item\VoiceInTrunk($attributes);
+        $wire = $voiceInTrunk->toJsonApiArray()['attributes']['configuration']['attributes'];
+        $this->assertSame(['pcma', 'pcmu', 'amr_wb', 'telephone_event'], $wire['codecs']);
+        $this->assertSame(['accept', 'initiate', 'accept'], [$wire['ice_mode'], $wire['rtcp_mux_mode'], $wire['rtcp_feedback_mode']]);
         $voiceInTrunkDocument = $voiceInTrunk->save();
         $voiceInTrunk = $voiceInTrunkDocument->getData();
         $this->assertInstanceOf('Didww\Item\VoiceInTrunk', $voiceInTrunk);
@@ -102,7 +117,6 @@ class VoiceInTrunkTest extends CassetteTest
         $this->assertEquals('203.0.113.110', $sipConfiguration->getHost());
         $this->assertEquals(SstRefreshMethod::INVITE, $sipConfiguration->getSstRefreshMethodId());
         $this->assertEquals(5060, $sipConfiguration->getPort());
-        $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultCodecIds(), $sipConfiguration->getCodecIds());
         $this->assertEquals(\Didww\Item\Configuration\Base::getDefaultReroutingDisconnectCodeIds(), $sipConfiguration->getReroutingDisconnectCodeIds());
         $this->assertEquals('username', $sipConfiguration->getUsername());
         $this->assertEquals(MediaEncryptionMode::ZRTP, $sipConfiguration->getMediaEncryptionMode());
@@ -149,7 +163,22 @@ class VoiceInTrunkTest extends CassetteTest
             'name' => 'hello, updated test sip trunk',
             'description' => 'just a description',
         ];
+        $attributes['configuration']->setCodecs([Codec::G729, 'pcmu']);
+        $attributes['configuration']->setIceMode(IceMode::INITIATE);
+        $attributes['configuration']->setRtcpMuxMode('accept');
+        $attributes['configuration']->setRtcpFeedbackMode(RtcpFeedbackMode::INITIATE);
         $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('a80006b6-4183-4865-8b99-7ebbd359a762', $attributes);
+        $this->assertSame([
+            'type' => 'sip_configurations',
+            'attributes' => [
+                'username' => 'new-username',
+                'max_transfers' => 5,
+                'codecs' => ['g729', 'pcmu'],
+                'ice_mode' => 'initiate',
+                'rtcp_mux_mode' => 'accept',
+                'rtcp_feedback_mode' => 'initiate',
+            ],
+        ], $voiceInTrunk->toJsonApiPatchArray()['attributes']['configuration']);
         $voiceInTrunkDocument = $voiceInTrunk->save();
         $voiceInTrunk = $voiceInTrunkDocument->getData();
         $this->assertInstanceOf('Didww\Item\VoiceInTrunk', $voiceInTrunk);
@@ -171,19 +200,60 @@ class VoiceInTrunkTest extends CassetteTest
     public function testUpdateRelationships()
     {
         $voiceInTrunk = \Didww\Item\VoiceInTrunk::build('a80006b6-4183-4865-8b99-7ebbd359a762');
-        $voiceInTrunk->setPop(\Didww\Item\Pop::build('ba7ccbef-82ac-4372-9391-eac90d5c9479'));
+        $voiceInTrunk->setPop(Pop::FRA);
         $voiceInTrunk->setVoiceInTrunkGroup(\Didww\Item\VoiceInTrunkGroup::build('837c5764-a6c3-456f-aa37-71fc8f8ca07b'));
-        $voiceInTrunkDocument = $voiceInTrunk->save(['include' => 'pop,trunk_group']);
+        $voiceInTrunkDocument = $voiceInTrunk->save(['include' => 'voice_in_trunk_group']);
         $this->assertFalse($voiceInTrunkDocument->hasErrors());
         $voiceInTrunk = $voiceInTrunkDocument->getData();
 
         $voiceInTrunkGroup = $voiceInTrunk->voiceInTrunkGroup()->getIncluded();
-        $pop = $voiceInTrunk->pop()->getIncluded();
 
-        $this->assertInstanceOf('Didww\Item\Pop', $pop);
+        $this->assertSame(Pop::FRA, $voiceInTrunk->getPop());
         $this->assertInstanceOf('Didww\Item\VoiceInTrunkGroup', $voiceInTrunkGroup);
-        $this->assertEquals('ba7ccbef-82ac-4372-9391-eac90d5c9479', $pop->getId());
         $this->assertEquals('837c5764-a6c3-456f-aa37-71fc8f8ca07b', $voiceInTrunkGroup->getId());
+    }
+
+    public function testCreateWithPop()
+    {
+        $voiceInTrunk = new \Didww\Item\VoiceInTrunk();
+        $voiceInTrunk->setConfiguration(new \Didww\Item\Configuration\Pstn(['dst' => '558540420024']));
+        $voiceInTrunk->setName('hello, test pstn trunk');
+        $voiceInTrunk->setPop(Pop::FRA);
+        $this->assertSame([
+            'type' => 'voice_in_trunks',
+            'attributes' => [
+                'configuration' => ['type' => 'pstn_configurations', 'attributes' => ['dst' => '558540420024']],
+                'name' => 'hello, test pstn trunk',
+                'pop' => 'fra',
+            ],
+        ], $voiceInTrunk->toJsonApiArray());
+
+        $created = $voiceInTrunk->save()->getData();
+        $this->assertSame(Pop::FRA, $created->getPop());
+    }
+
+    public function testUpdateFromLoadedClearsPop()
+    {
+        $voiceInTrunk = \Didww\Item\VoiceInTrunk::find('41b94706-325e-4704-a433-d65105758836')->getData();
+        $this->assertSame(Pop::FRA, $voiceInTrunk->getPop());
+
+        $voiceInTrunk->setPop(null);
+        $this->assertSame([
+            'type' => 'voice_in_trunks',
+            'id' => '41b94706-325e-4704-a433-d65105758836',
+            'attributes' => ['pop' => null],
+        ], $voiceInTrunk->toJsonApiPatchArray());
+
+        $updated = $voiceInTrunk->save()->getData();
+        $this->assertNull($updated->getPop());
+    }
+
+    public function testCreateWithoutPopOmitsIt()
+    {
+        $voiceInTrunk = new \Didww\Item\VoiceInTrunk();
+        $voiceInTrunk->setName('trunk');
+
+        $this->assertArrayNotHasKey('pop', $voiceInTrunk->toJsonApiArray()['attributes']);
     }
 
     public function testSipSetters()
@@ -199,8 +269,17 @@ class VoiceInTrunkTest extends CassetteTest
         $sip->setPort(5061);
         $this->assertEquals(5061, $sip->getPort());
 
-        $sip->setCodecIds([9, 10]);
-        $this->assertEquals([\Didww\Enum\Codec::PCMU, \Didww\Enum\Codec::PCMA], $sip->getCodecIds());
+        $sip->setCodecs(['pcmu', Codec::PCMA]);
+        $this->assertSame([Codec::PCMU, Codec::PCMA], $sip->getCodecs());
+
+        $sip->setIceMode('initiate');
+        $this->assertSame(IceMode::INITIATE, $sip->getIceMode());
+
+        $sip->setRtcpMuxMode(RtcpMuxMode::ACCEPT);
+        $this->assertSame(RtcpMuxMode::ACCEPT, $sip->getRtcpMuxMode());
+
+        $sip->setRtcpFeedbackMode('future_mode');
+        $this->assertSame('future_mode', $sip->getRtcpFeedbackMode());
 
         $sip->setRxDtmfFormatId(1);
         $this->assertEquals(RxDtmfFormat::RFC_2833, $sip->getRxDtmfFormatId());
@@ -315,6 +394,16 @@ class VoiceInTrunkTest extends CassetteTest
 
         $trunk->setExternalReferenceId(null);
         $this->assertNull($trunk->getExternalReferenceId());
+
+        $trunk->setPop(Pop::AMS);
+        $this->assertSame(Pop::AMS, $trunk->getPop());
+        $this->assertSame('ams', $trunk->getAttributes()['pop']);
+
+        $trunk->setPop('XYZ');
+        $this->assertSame('XYZ', $trunk->getPop());
+
+        $trunk->setPop(null);
+        $this->assertNull($trunk->getPop());
     }
 
     public function testSipConfigurationRegistrationAttributes()

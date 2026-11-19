@@ -9,7 +9,7 @@ require_once 'bootstrap.php';
 use Didww\Item\EmergencyRequirement;
 
 echo "=== Listing Emergency Requirements ===\n";
-$document = EmergencyRequirement::all(['include' => 'country,did_group_type']);
+$document = EmergencyRequirement::all(['include' => 'country']);
 $requirements = $document->getData();
 echo 'Found '.count($requirements)." emergency requirements\n";
 
@@ -24,10 +24,8 @@ foreach ($requirements as $requirement) {
         echo '  Country: '.$country->getName()."\n";
     }
 
-    $didGroupType = $requirement->didGroupType()->getIncluded();
-    if ($didGroupType) {
-        echo '  DID Group Type: '.$didGroupType->name."\n";
-    }
+    $numberType = $requirement->getNumberType();
+    echo '  Number Type: '.($numberType instanceof BackedEnum ? $numberType->value : ($numberType ?? 'N/A'))."\n";
 
     $meta = $requirement->getMeta();
     if ($meta) {

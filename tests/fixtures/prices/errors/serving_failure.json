@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "title": "Serving failure",
+      "detail": "The price file is not available yet.",
+      "code": "serving_failure",
+      "status": "503"
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 namespace Didww\Item;
 
 use Didww\Enum\Feature;
+use Didww\Enum\NumberType;
 use Didww\Traits\Fetchable;
 
 class DidGroup extends BaseItem
@@ -36,9 +37,9 @@ class DidGroup extends BaseItem
         return $this->hasOne(City::class);
     }
 
-    public function didGroupType()
+    public function getNumberType(): NumberType|string|null
     {
-        return $this->hasOne(DidGroupType::class);
+        return $this->enumAttribute('number_type', NumberType::class);
     }
 
     public function addressRequirement()
@@ -67,6 +68,11 @@ class DidGroup extends BaseItem
     public function getIsMetered(): bool
     {
         return $this->getAttributes()['is_metered'];
+    }
+
+    public function getIsDemo(): bool
+    {
+        return $this->getAttributes()['is_demo'];
     }
 
     public function getAllowAdditionalChannels(): bool

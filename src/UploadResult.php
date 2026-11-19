@@ -7,11 +7,13 @@ class UploadResult
     private $response;
     private $responseCode;
     private $responseData;
+    private ?int $retryAfter;
 
-    public function __construct($response, $responseCode)
+    public function __construct($response, $responseCode, ?int $retryAfter = null)
     {
         $this->response = $response;
         $this->responseCode = $responseCode;
+        $this->retryAfter = $retryAfter;
         $this->responseData = null;
         if (false != $response && 500 != $responseCode) {
             $this->responseData = json_decode($this->response, true);
@@ -40,7 +42,17 @@ class UploadResult
 
     public function getErrors(): array
     {
-        return null == $this->responseData ? [] : $this->responseData['errors'];
+        return $this->responseData['errors'] ?? [];
+    }
+
+    /**
+     * The Retry-After of the answer in seconds (see RetryAfter::seconds()),
+     * for example with a 429 (`too_many_requests`), which is not retried; null
+     * when it is missing or no answer was received.
+     */
+    public function getRetryAfter(): ?int
+    {
+        return $this->retryAfter;
     }
 
     public function getId(): ?string

@@ -3,6 +3,7 @@
 namespace Didww\Item;
 
 use Didww\Enum\CliFormat;
+use Didww\Enum\Pop;
 use Didww\Item\Configuration\Pstn;
 use Didww\Item\Configuration\Sip;
 use Didww\Traits\Deletable;
@@ -35,6 +36,7 @@ class VoiceInTrunk extends BaseItem
         'ringing_timeout',
         'configuration',
         'external_reference_id',
+        'pop',
     ];
 
     /**
@@ -142,11 +144,6 @@ class VoiceInTrunk extends BaseItem
         $this->configuration = $configuration;
     }
 
-    public function pop()
-    {
-        return $this->hasOne(Pop::class);
-    }
-
     public function voiceInTrunkGroup()
     {
         return $this->hasOne(VoiceInTrunkGroup::class);
@@ -169,9 +166,20 @@ class VoiceInTrunk extends BaseItem
         $this->voiceInTrunkGroup()->associate($voiceInTrunkGroup);
     }
 
-    public function setPop(Pop $pop)
+    /**
+     * Point of presence the trunk receives calls through; null lets DIDWW choose.
+     */
+    public function getPop(): Pop|string|null
     {
-        $this->pop()->associate($pop);
+        return $this->enumAttribute('pop', Pop::class);
+    }
+
+    /**
+     * Pass null to let DIDWW choose the point of presence.
+     */
+    public function setPop(Pop|string|null $pop)
+    {
+        $this->setEnumAttribute('pop', $pop);
     }
 
     public function toJsonApiArray(): array

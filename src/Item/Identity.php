@@ -36,6 +36,7 @@ class Identity extends BaseItem
         'identity_type',
         'external_reference_id',
         'contact_email',
+        'company_website',
     ];
 
     public function getFirstName(): string
@@ -108,6 +109,10 @@ class Identity extends BaseItem
         $this->attributes['company_reg_number'] = $companyRegNumber;
     }
 
+    /**
+     * VAT identification number, listed as `tax_id` in the mandatory fields
+     * of AddressRequirement and EmergencyRequirement.
+     */
     public function getVatId(): ?string
     {
         return $this->attribute('vat_id');
@@ -156,6 +161,19 @@ class Identity extends BaseItem
     public function setContactEmail(string $contactEmail)
     {
         $this->attributes['contact_email'] = $contactEmail;
+    }
+
+    public function getCompanyWebsite(): ?string
+    {
+        return $this->attribute('company_website');
+    }
+
+    /**
+     * Company website URL; pass null to clear it. Rejected on a personal identity.
+     */
+    public function setCompanyWebsite(?string $companyWebsite)
+    {
+        $this->attributes['company_website'] = $companyWebsite;
     }
 
     public function getCreatedAt(): ?\DateTime

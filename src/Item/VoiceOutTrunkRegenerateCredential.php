@@ -4,6 +4,11 @@ namespace Didww\Item;
 
 use Didww\Traits\Saveable;
 
+/**
+ * Rotates the generated credentials of a Voice OUT trunk with
+ * `credentials_and_ip` authentication; only save() of a new one is supported.
+ * A trunk with `twilio` authentication is answered 404.
+ */
 class VoiceOutTrunkRegenerateCredential extends BaseItem
 {
     use Saveable;

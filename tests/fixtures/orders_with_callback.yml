@@ -9,7 +9,7 @@
             User-Agent: GuzzleHttp/7
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"orders","attributes":{"items":[{"type":"did_order_items","attributes":{"sku_id":"f36d2812-2195-4385-85e8-e59c3484a8bc","qty":1}}],"allow_back_ordering":true,"callback_url":"https:\/\/example.com\/callback","callback_method":"post"}}}'
     response:
         status:
@@ -47,9 +47,8 @@
             Accept-Encoding: ''
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
             User-Agent: didww-php-sdk/dev-master
-            x-didww-api-version: '2026-04-16'
         body: '{"data":{"type":"orders","attributes":{"items":[{"type":"did_order_items","attributes":{"sku_id":"f36d2812-2195-4385-85e8-e59c3484a8bc","qty":1}}],"allow_back_ordering":true,"callback_url":"https:\/\/example.com\/callback","callback_method":"post"}}}'
     response:
         status:

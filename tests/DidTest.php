@@ -317,4 +317,73 @@ class DidTest extends CassetteTest
         $addressVerificationPatch = $addressVerification->toJsonApiPatchArray();
         $this->assertArrayNotHasKey('attributes', $addressVerificationPatch);
     }
+
+    public function testFindWithSmsTrunk()
+    {
+        $did = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b', ['include' => 'sms_trunk'])->getData();
+
+        $trunk = $did->smsTrunk()->getIncluded();
+        $this->assertInstanceOf(\Didww\Item\SmsTrunk::class, $trunk);
+        $this->assertSame('1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02', $trunk->getId());
+        $this->assertInstanceOf(\Didww\Item\SmsTrunkConfiguration\HttpIn::class, $trunk->getConfiguration());
+        $this->assertSame('https://example.com/sms', $trunk->getConfiguration()->getUrl());
+        $this->assertNull($did->smsTrunkGroup()->getIncluded());
+
+        $patch = $did->toJsonApiPatchArray();
+        $this->assertArrayNotHasKey('attributes', $patch);
+        $this->assertArrayNotHasKey('relationships', $patch);
+    }
+
+    public function testFindWithSmsTrunkGroup()
+    {
+        $did = \Didww\Item\Did::find('9df99644-f1a5-4a3c-99a4-559d758eb96b', ['include' => 'sms_trunk_group'])->getData();
+
+        $group = $did->smsTrunkGroup()->getIncluded();
+        $this->assertInstanceOf(\Didww\Item\SmsTrunkGroup::class, $group);
+        $this->assertSame('Inbound SMS', $group->getName());
+        $this->assertSame(2, $group->getSmsTrunksCount());
+        $this->assertNull($did->smsTrunk()->getIncluded());
+        $this->assertArrayNotHasKey('relationships', $did->toJsonApiPatchArray());
+    }
+
+    public function testUpdateAssignSmsTrunk()
+    {
+        $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
+        $did->setSmsTrunk(\Didww\Item\SmsTrunk::build('1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02'));
+        $document = $did->save();
+
+        $this->assertFalse($document->hasErrors());
+        $updated = $document->getData();
+        $this->assertSame('http_in trunk', $updated->smsTrunk()->getIncluded()->getName());
+        $this->assertNull($updated->smsTrunkGroup()->getIncluded());
+    }
+
+    public function testUpdateAssignSmsTrunkGroup()
+    {
+        $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
+        $did->setSmsTrunkGroup(\Didww\Item\SmsTrunkGroup::build('2b3c4d5e-0001-4b6c-9d7e-8f9a0b1c2d01'));
+        $document = $did->save();
+
+        $this->assertFalse($document->hasErrors());
+        $updated = $document->getData();
+        $this->assertSame('Inbound SMS', $updated->smsTrunkGroup()->getIncluded()->getName());
+        $this->assertNull($updated->smsTrunk()->getIncluded());
+    }
+
+    public function testUpdateUnassignSms()
+    {
+        $did = \Didww\Item\Did::build('9df99644-f1a5-4a3c-99a4-559d758eb96b');
+        $did->setSmsTrunk(null);
+        $did->setSmsTrunkGroup(null);
+
+        $this->assertSame([
+            'type' => 'dids',
+            'id' => '9df99644-f1a5-4a3c-99a4-559d758eb96b',
+            'relationships' => [
+                'sms_trunk' => ['data' => null],
+                'sms_trunk_group' => ['data' => null],
+            ],
+        ], $did->toJsonApiPatchArray());
+        $this->assertFalse($did->save()->hasErrors());
+    }
 }

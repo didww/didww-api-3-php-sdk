@@ -1,0 +1,424 @@
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":[{"id":"1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01","type":"sms_trunks","attributes":{"name":"sms_to_email trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":false,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"sms_to_email","attributes":{"send_to":"sms@example.com","subject":"Inbound SMS","message":"You have a new message."}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/sms_trunk_group"}}}},{"id":"1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02","type":"sms_trunks","attributes":{"name":"http_in trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":false,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"http_in","attributes":{"url":"https://example.com/sms","http_method":"post","query_parameters":null,"headers":{"X-Source":"didww"},"body_type":"json","body":"{\"text\":\"{SMS_TEXT}\",\"from\":\"{SMS_SRC_ADDR}\"}","follow_redirect":false,"validate_https_certificate":true}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/sms_trunk_group"}}}},{"id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03","type":"sms_trunks","attributes":{"name":"http_out trunk","external_reference_id":null,"blocked":false,"priority":null,"allow_any_did_as_source":false,"allow_in":false,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"http_out","attributes":{"callback_url":"https://example.com/sms/status","allowed_ips":["203.0.113.10"],"auth_name":"generated-name","auth_password":"generated-password"}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/sms_trunk_group"}}},"meta":{"host":"https://sms-out.example.com/outbound_messages"}},{"id":"1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04","type":"sms_trunks","attributes":{"name":"smpp_esme trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"smpp_esme","attributes":{"system_type":null,"allowed_ips":["203.0.113.10"],"system_id":"esme1234","password":"gen12345","server_location":"nyc"}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/sms_trunk_group"}}}},{"id":"1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05","type":"sms_trunks","attributes":{"name":"smpp_smsc trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"smpp_smsc","attributes":{"host":"smsc.example.com","tx_port":2775,"rx_port":2776,"transceiver_mode":true,"connection_timeout":30,"use_ssl":false,"system_id":"didww","system_type":null,"password":"secret","server_location":"nyc"}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/sms_trunk_group"}}}}],"meta":{"total_records":5}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks?filter%5Bconfiguration.type%5D=http_in&include=sms_trunk_group&sort=-priority'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":[{"id":"1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02","type":"sms_trunks","attributes":{"name":"http_in trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":false,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"http_in","attributes":{"url":"https://example.com/sms","http_method":"post","query_parameters":null,"headers":{"X-Source":"didww"},"body_type":"json","body":"{\"text\":\"{SMS_TEXT}\",\"from\":\"{SMS_SRC_ADDR}\"}","follow_redirect":false,"validate_https_certificate":true}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/sms_trunk_group"},"data":{"type":"sms_trunk_groups","id":"2b3c4d5e-0001-4b6c-9d7e-8f9a0b1c2d01"}}}}],"included":[{"id":"2b3c4d5e-0001-4b6c-9d7e-8f9a0b1c2d01","type":"sms_trunk_groups","attributes":{"name":"Inbound SMS","external_reference_id":null,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z"},"relationships":{"sms_trunks":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunk_groups/2b3c4d5e-0001-4b6c-9d7e-8f9a0b1c2d01/relationships/sms_trunks","related":"https://sandbox-api.didww.com/v3/sms_trunk_groups/2b3c4d5e-0001-4b6c-9d7e-8f9a0b1c2d01/sms_trunks"},"data":[{"type":"sms_trunks","id":"1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02"}]},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunk_groups/2b3c4d5e-0001-4b6c-9d7e-8f9a0b1c2d01/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunk_groups/2b3c4d5e-0001-4b6c-9d7e-8f9a0b1c2d01/incoming_dids"}}},"meta":{"sms_trunks_count":1}}],"meta":{"total_records":1}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03","type":"sms_trunks","attributes":{"name":"http_out trunk","external_reference_id":null,"blocked":false,"priority":null,"allow_any_did_as_source":false,"allow_in":false,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"http_out","attributes":{"callback_url":"https://example.com/sms/status","allowed_ips":["203.0.113.10"],"auth_name":"generated-name","auth_password":"generated-password"}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/sms_trunk_group"}}},"meta":{"host":"https://sms-out.example.com/outbound_messages"}}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03?include=sender_id_verifications'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03","type":"sms_trunks","attributes":{"name":"http_out trunk","external_reference_id":null,"blocked":false,"priority":null,"allow_any_did_as_source":false,"allow_in":false,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"http_out","attributes":{"callback_url":"https://example.com/sms/status","allowed_ips":["203.0.113.10"],"auth_name":"generated-name","auth_password":"generated-password"}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/sms_trunk_group"}},"sender_id_verifications":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/sender_id_verifications","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/sender_id_verifications"},"data":[{"type":"sender_id_verifications","id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10"}]}},"meta":{"host":"https://sms-out.example.com/outbound_messages"}},"included":[{"id":"e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10","type":"sender_id_verifications","attributes":{"name":"ACME alerts","status":"active","sender_type":"long_code","sender_ids":["12125550100","12125550101"],"reference":"SID-1234","reject_reasons":null,"reject_comment":null,"renew_date":"2026-11-22","created_at":"2026-10-01T10:00:00.000Z","activated_at":"2026-10-03T12:30:00.000Z","closed_at":null},"relationships":{"sms_trunk":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/sms_trunk","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/sms_trunk"}},"countries":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/countries","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/countries"}},"dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/dids","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/dids"}},"order":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/order","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/order"}},"identity":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/identity","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/identity"}},"address":{"links":{"self":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/relationships/address","related":"https://sandbox-api.didww.com/v3/sender_id_verifications/e5a4e2f1-3b26-4a5c-9a0a-2f7c1f3e8d10/address"}}},"meta":{"setup_price":"10.0","monthly_price":"15.0"}}]}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0009-4a5b-8c6d-7e8f9a0b1c09'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '404'
+            message: 'Not Found'
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"errors":[{"title":"Record not found","detail":"The record identified by 1a2b3c4d-0009-4a5b-8c6d-7e8f9a0b1c09 could not be found.","code":"404","status":"404"}]}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","attributes":{"name":"sms_to_email trunk","configuration":{"type":"sms_to_email","attributes":{"send_to":"sms@example.com","subject":"Inbound SMS","message":"You have a new message."}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01","type":"sms_trunks","attributes":{"name":"sms_to_email trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":false,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"sms_to_email","attributes":{"send_to":"sms@example.com","subject":"Inbound SMS","message":"You have a new message."}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01/sms_trunk_group"}}}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","attributes":{"name":"http_in trunk","configuration":{"type":"http_in","attributes":{"url":"https:\/\/example.com\/sms","http_method":"post","headers":{"X-Source":"didww"},"body_type":"json","body":"{\"text\":\"{SMS_TEXT}\",\"from\":\"{SMS_SRC_ADDR}\"}","follow_redirect":false,"validate_https_certificate":true}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02","type":"sms_trunks","attributes":{"name":"http_in trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":false,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"http_in","attributes":{"url":"https://example.com/sms","http_method":"post","query_parameters":null,"headers":{"X-Source":"didww"},"body_type":"json","body":"{\"text\":\"{SMS_TEXT}\",\"from\":\"{SMS_SRC_ADDR}\"}","follow_redirect":false,"validate_https_certificate":true}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/sms_trunk_group"}}}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","attributes":{"name":"http_out trunk","configuration":{"type":"http_out","attributes":{"callback_url":"https:\/\/example.com\/sms\/status","allowed_ips":["203.0.113.10"]}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03","type":"sms_trunks","attributes":{"name":"http_out trunk","external_reference_id":null,"blocked":false,"priority":null,"allow_any_did_as_source":false,"allow_in":false,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"http_out","attributes":{"callback_url":"https://example.com/sms/status","allowed_ips":["203.0.113.10"],"auth_name":"generated-name","auth_password":"generated-password"}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/sms_trunk_group"}}},"meta":{"host":"https://sms-out.example.com/outbound_messages"}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","attributes":{"name":"smpp_esme trunk","configuration":{"type":"smpp_esme","attributes":{"allowed_ips":["203.0.113.10"],"server_location":"nyc"}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04","type":"sms_trunks","attributes":{"name":"smpp_esme trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"smpp_esme","attributes":{"system_type":null,"allowed_ips":["203.0.113.10"],"system_id":"esme1234","password":"gen12345","server_location":"nyc"}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0004-4a5b-8c6d-7e8f9a0b1c04/sms_trunk_group"}}}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","attributes":{"name":"smpp_smsc trunk","configuration":{"type":"smpp_smsc","attributes":{"host":"smsc.example.com","tx_port":2775,"rx_port":2776,"transceiver_mode":true,"connection_timeout":30,"use_ssl":false,"system_id":"didww","password":"secret","server_location":"nyc"}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05","type":"sms_trunks","attributes":{"name":"smpp_smsc trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"smpp_smsc","attributes":{"host":"smsc.example.com","tx_port":2775,"rx_port":2776,"transceiver_mode":true,"connection_timeout":30,"use_ssl":false,"system_id":"didww","system_type":null,"password":"secret","server_location":"nyc"}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/sms_trunk_group"}}}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","attributes":{"name":"smpp_smsc trunk","configuration":{"type":"smpp_smsc","attributes":{"host":"smsc.example.com","system_id":"didww","password":"secret","server_location":"nyc"}}},"relationships":{"sms_trunk_group":{"data":{"type":"sms_trunk_groups","id":"2b3c4d5e-0001-4b6c-9d7e-8f9a0b1c2d01"}},"outgoing_dids":{"data":[{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b"}]}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05","type":"sms_trunks","attributes":{"name":"smpp_smsc trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"smpp_smsc","attributes":{"host":"smsc.example.com","tx_port":2775,"rx_port":2776,"transceiver_mode":true,"connection_timeout":30,"use_ssl":false,"system_id":"didww","system_type":null,"password":"secret","server_location":"nyc"}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0005-4a5b-8c6d-7e8f9a0b1c05/sms_trunk_group"}}}}}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","attributes":{"name":"sms_to_email trunk","configuration":{"type":"sms_to_email","attributes":{}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '422'
+            message: 'Unprocessable Entity'
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"errors":[{"title":"can''t be blank","detail":"configuration - send_to can''t be blank","code":"100","source":{"pointer":"/data/attributes/configuration"},"status":"422"}]}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","id":"1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02","attributes":{"name":"Webhook","configuration":{"type":"http_in","attributes":{"url":"https:\/\/example.com\/sms\/v2"}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02","type":"sms_trunks","attributes":{"name":"Webhook","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":false,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-02T10:00:00.000Z","configuration":{"type":"http_in","attributes":{"url":"https://example.com/sms/v2","http_method":"post","query_parameters":null,"headers":{"X-Source":"didww"},"body_type":"json","body":"{\"text\":\"{SMS_TEXT}\",\"from\":\"{SMS_SRC_ADDR}\"}","follow_redirect":false,"validate_https_certificate":true}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/sms_trunk_group"}}}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03","attributes":{"configuration":{"type":"http_out","attributes":{"callback_url":"https:\/\/example.com\/sms\/status\/v2","allowed_ips":["203.0.113.10"]}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03","type":"sms_trunks","attributes":{"name":"http_out trunk","external_reference_id":null,"blocked":false,"priority":null,"allow_any_did_as_source":false,"allow_in":false,"allow_out":true,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-02T10:00:00.000Z","configuration":{"type":"http_out","attributes":{"callback_url":"https://example.com/sms/status/v2","allowed_ips":["203.0.113.10"],"auth_name":"generated-name","auth_password":"generated-password"}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03/sms_trunk_group"}}},"meta":{"host":"https://sms-out.example.com/outbound_messages"}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","id":"1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02","relationships":{"sms_trunk_group":{"data":null},"outgoing_dids":{"data":[]}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02","type":"sms_trunks","attributes":{"name":"Webhook","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":false,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-02T10:00:00.000Z","configuration":{"type":"http_in","attributes":{"url":"https://example.com/sms/v2","http_method":"post","query_parameters":null,"headers":{"X-Source":"didww"},"body_type":"json","body":"{\"text\":\"{SMS_TEXT}\",\"from\":\"{SMS_SRC_ADDR}\"}","follow_redirect":false,"validate_https_certificate":true}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/sms_trunk_group"}}}}}'
+-
+    request:
+        method: GET
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06","type":"sms_trunks","attributes":{"name":"future trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":false,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"future_transport","attributes":{"endpoint":"https://example.com/future","retries":3,"enabled":true}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/sms_trunk_group"}}}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","id":"1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06","attributes":{"configuration":{"type":"future_transport","attributes":{"endpoint":"https:\/\/example.com\/future\/v2","retries":3,"enabled":true}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06","type":"sms_trunks","attributes":{"name":"future trunk","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":false,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-01T10:00:00.000Z","configuration":{"type":"future_transport","attributes":{"endpoint":"https://example.com/future/v2","retries":3,"enabled":true}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0006-4a5b-8c6d-7e8f9a0b1c06/sms_trunk_group"}}}}}'
+-
+    request:
+        method: PATCH
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunks","id":"1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02","attributes":{"configuration":{"type":"http_in","attributes":{"http_method":"get","body_type":null,"body":null}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02","type":"sms_trunks","attributes":{"name":"Webhook","external_reference_id":null,"blocked":false,"priority":100,"allow_any_did_as_source":false,"allow_in":true,"allow_out":false,"created_at":"2026-10-01T10:00:00.000Z","updated_at":"2026-10-02T10:00:00.000Z","configuration":{"type":"http_in","attributes":{"url":"https://example.com/sms/v2","http_method":"post","query_parameters":null,"headers":{"X-Source":"didww"},"body_type":"json","body":"{\"text\":\"{SMS_TEXT}\",\"from\":\"{SMS_SRC_ADDR}\"}","follow_redirect":false,"validate_https_certificate":true}}},"relationships":{"outgoing_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/outgoing_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/outgoing_dids"}},"incoming_dids":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/incoming_dids","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/incoming_dids"}},"sms_trunk_group":{"links":{"self":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/relationships/sms_trunk_group","related":"https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02/sms_trunk_group"}}}}}'
+-
+    request:
+        method: DELETE
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0002-4a5b-8c6d-7e8f9a0b1c02'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '204'
+            message: 'No Content'
+        headers:
+            Content-Type: application/vnd.api+json
+-
+    request:
+        method: DELETE
+        url: 'https://sandbox-api.didww.com/v3/sms_trunks/1a2b3c4d-0001-4a5b-8c6d-7e8f9a0b1c01'
+        headers:
+            Host: sandbox-api.didww.com
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+    response:
+        status:
+            http_version: '1.1'
+            code: '422'
+            message: 'Unprocessable Entity'
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"errors":[{"title":"is in use","detail":"base - Cannot delete an SMS trunk while DIDs are routed to it","code":"100","status":"422"}]}'
+-
+    request:
+        method: POST
+        url: 'https://sandbox-api.didww.com/v3/sms_trunk_regenerate_credentials'
+        headers:
+            Host: sandbox-api.didww.com
+            Expect: ''
+            Accept-Encoding: ''
+            User-Agent: GuzzleHttp/7
+            Accept: application/vnd.api+json
+            Content-Type: application/vnd.api+json
+            Authorization: Bearer test-access-token
+        body: '{"data":{"type":"sms_trunk_regenerate_credentials","relationships":{"sms_trunk":{"data":{"type":"sms_trunks","id":"1a2b3c4d-0003-4a5b-8c6d-7e8f9a0b1c03"}}}}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Content-Type: application/vnd.api+json
+        body: '{"data":{"id":"3c4d5e6f-0001-4c7d-8e9f-0a1b2c3d4e01","type":"sms_trunk_regenerate_credentials"}}'

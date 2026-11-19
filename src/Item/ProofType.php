@@ -20,6 +20,9 @@ class ProofType extends BaseItem
         return $this->attributes['name'];
     }
 
+    /**
+     * What the document proves: `address`, `business` or `personal`.
+     */
     public function getEntityType(): string
     {
         return $this->attributes['entity_type'];

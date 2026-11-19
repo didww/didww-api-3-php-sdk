@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "title": "Price plan not assigned",
+      "detail": "No price plan is assigned to this account.",
+      "code": "price_plan_not_assigned",
+      "status": "404"
+    }
+  ]
+}

@@ -16,17 +16,23 @@
     "require": {
       "php": ">=8.2",
       "swisnl/json-api-client": "^2.0",
-      "guzzlehttp/guzzle": "^7.0",
+      "guzzlehttp/guzzle": "^8.0.1",
       "phpseclib/phpseclib": "^3.0.7",
       "ext-openssl": "*",
       "ext-curl": "*",
-      "ext-json": "*"
+      "ext-json": "*",
+      "ext-zlib": "*",
+      "psr/log": "^1.1 || ^2.0 || ^3.0"
     },
     "require-dev": {
       "phpunit/phpunit": "^10.5|^11.5",
       "php-vcr/php-vcr": "^1.4",
       "friendsofphp/php-cs-fixer": "^3.45",
-      "php-coveralls/php-coveralls": "^2.1"
+      "psr/simple-cache": "^3.0"
+    },
+    "suggest": {
+      "ext-apcu": "To share access tokens between PHP-FPM or mod_php workers, through the default Didww\\Auth\\ApcuTokenStore",
+      "psr/simple-cache": "To share access tokens between servers through Didww\\Auth\\Psr16TokenStore"
     },
     "autoload": {
       "psr-4": {

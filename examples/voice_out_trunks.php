@@ -6,6 +6,7 @@
 
 require_once 'bootstrap.php';
 
+use Didww\Enum\VoiceOutCodec;
 use Didww\Item\AuthenticationMethod\CredentialsAndIp;
 use Didww\Item\AuthenticationMethod\IpOnly;
 use Didww\Item\AuthenticationMethod\Twilio;
@@ -32,6 +33,8 @@ foreach ($trunks->take(5) as $trunk) {
     echo '  External Reference ID: '.($trunk->getExternalReferenceId() ?? 'null')."\n";
     echo '  Emergency Enable All: '.($trunk->getEmergencyEnableAll() ? 'true' : 'false')."\n";
     echo '  RTP Timeout: '.($trunk->getRtpTimeout() ?? 'null')."\n";
+    $codecs = array_map(static fn ($codec) => $codec instanceof BackedEnum ? $codec->value : $codec, $trunk->getCodecs() ?? []);
+    echo '  Codecs: '.implode(', ', $codecs)."\n";
     echo "\n";
 }
 
@@ -52,6 +55,8 @@ $voiceOutTrunk->setAuthenticationMethod($authMethod);
 $voiceOutTrunk->setOnCliMismatchAction('reject_call');
 $voiceOutTrunk->setExternalReferenceId("php-example-$suffix");
 $voiceOutTrunk->setRtpTimeout(60);
+// Codec names in priority order; left out, the trunk offers pcma, pcmu and telephone_event
+$voiceOutTrunk->setCodecs([VoiceOutCodec::OPUS, VoiceOutCodec::PCMA, VoiceOutCodec::TELEPHONE_EVENT]);
 
 $document = $voiceOutTrunk->save();
 

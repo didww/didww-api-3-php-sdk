@@ -10,7 +10,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"shared_capacity_groups","id":"89f987e2-0862-4bf4-a3f4-cdc89af0d875","attributes":{"name":"didww1","shared_channels_count":10,"metered_channels_count":2}}}'
     response:
         status:
@@ -48,7 +48,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"shared_capacity_groups","id":"89f987e2-0862-4bf4-a3f4-cdc89af0d875","relationships":{"dids":{"data":[{"type":"dids","id":"9df99644-f1a5-4a3c-99a4-559d758eb96b"}]}}}}'
     response:
         status:
@@ -86,7 +86,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -123,7 +123,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -159,7 +159,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -193,7 +193,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
         body: '{"data":{"type":"shared_capacity_groups","attributes":{"name":"php-sdk","shared_channels_count":5,"metered_channels_count":0},"relationships":{"capacity_pool":{"data":{"type":"capacity_pools","id":"f288d07c-e2fc-4ae6-9837-b18fb469c324"}}}}}'
     response:
         status:

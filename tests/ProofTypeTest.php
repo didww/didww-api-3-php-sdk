@@ -21,10 +21,10 @@ class ProofTypeTest extends CassetteTest
 
         $first = $proofTypes[0];
         $this->assertEquals('Utility Bill', $first->getName());
-        $this->assertEquals('Address', $first->getEntityType());
+        $this->assertSame('address', $first->getEntityType());
 
         $fourth = $proofTypes[3];
         $this->assertEquals('Drivers License', $fourth->getName());
-        $this->assertEquals('Personal', $fourth->getEntityType());
+        $this->assertSame('personal', $fourth->getEntityType());
     }
 }

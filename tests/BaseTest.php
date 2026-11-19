@@ -9,7 +9,7 @@ abstract class BaseTest extends \PHPUnit\Framework\TestCase
         \Didww\Configuration::configure($this->getDidwwCredentials(), [
             'timeout' => 20,
             'debug' => true,
-        ]);
+        ], tokenStore: new Support\FixedTokenStore());
 
         parent::setUp();
     }

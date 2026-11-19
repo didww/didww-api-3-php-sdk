@@ -19,9 +19,7 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('available_dids', Item\AvailableDid::class);
         $this->setMapping('stock_keeping_units', Item\StockKeepingUnit::class);
         $this->setMapping('did_reservations', Item\DidReservation::class);
-        $this->setMapping('pops', Item\Pop::class);
         $this->setMapping('cities', Item\City::class);
-        $this->setMapping('did_group_types', Item\DidGroupType::class);
         $this->setMapping('qty_based_pricings', Item\QtyBasedPricing::class);
         $this->setMapping('exports', Item\Export::class);
         $this->setMapping('addresses', Item\Address::class);
@@ -44,5 +42,9 @@ class TypeMapper extends \Swis\JsonApi\Client\TypeMapper
         $this->setMapping('emergency_requirement_validations', Item\EmergencyRequirementValidation::class);
         $this->setMapping('emergency_calling_services', Item\EmergencyCallingService::class);
         $this->setMapping('emergency_verifications', Item\EmergencyVerification::class);
+        $this->setMapping('sms_trunks', Item\SmsTrunk::class);
+        $this->setMapping('sms_trunk_groups', Item\SmsTrunkGroup::class);
+        $this->setMapping('sms_trunk_regenerate_credentials', Item\SmsTrunkRegenerateCredential::class);
+        $this->setMapping('sender_id_verifications', Item\SenderIdVerification::class);
     }
 }

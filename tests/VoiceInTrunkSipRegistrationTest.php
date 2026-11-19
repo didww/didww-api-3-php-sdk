@@ -58,7 +58,7 @@ class VoiceInTrunkSipRegistrationTest extends CassetteTest
                 'diversion_relay_policy' => 'as_is',
                 'diversion_inject_mode' => 'did_number',
                 'network_protocol_priority' => 'prefer_ipv4',
-                'codec_ids' => [9, 7],
+                'codecs' => ['pcmu', 'g723'],
                 'transport_protocol_id' => 1,
             ]),
             'name' => 'sip-registration-trunk',

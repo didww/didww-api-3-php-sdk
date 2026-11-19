@@ -9,7 +9,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -47,7 +47,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -77,7 +77,7 @@
         url: 'https://sandbox-api.didww.com/v3/encrypted_files'
         headers:
             Host: sandbox-api.didww.com
-            Api-Key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
             Content-Type: 'multipart/form-data; boundary=-------------606b3cb6603e8'
             Content-Length: '787'
             Accept: application/json
@@ -117,7 +117,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
@@ -155,7 +155,7 @@
             User-Agent: 'GuzzleHttp/6.3.3 curl/7.63.0 PHP/7.1.25'
             Accept: application/vnd.api+json
             Content-Type: application/vnd.api+json
-            api-key: PLACEYOURAPIKEYHERE
+            Authorization: Bearer test-access-token
     response:
         status:
             http_version: '1.1'
