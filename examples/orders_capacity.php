@@ -1,5 +1,10 @@
 <?php
 
+// Buys capacity: orders shared channels in a capacity pool. Capacity items
+// cannot share an order with DID items.
+//
+// Usage: DIDWW_API_KEY=your_api_key php examples/orders_capacity.php
+
 require_once 'bootstrap.php';
 
 // get capacity pool

@@ -478,8 +478,8 @@ $update->save();
 
 ```php
 $group = new Didww\Item\VoiceInTrunkGroup();
-$group->setName('Primary Group');
-$group->setCapacityLimit(50);
+$group->name = 'Primary Group';
+$group->capacity_limit = 50;
 $groupDocument = $group->save();
 ```
 
@@ -680,7 +680,7 @@ $reservationDocument->getData()->getExpiresAt(); // \DateTime
 $reservations = Didww\Item\DidReservation::all(['sort' => 'expires_at'])->getData();
 
 // Delete reservation
-$reservation->delete();
+$reservationDocument->getData()->delete();
 ```
 
 ### Shared Capacity Groups

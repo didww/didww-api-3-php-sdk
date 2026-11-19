@@ -64,8 +64,8 @@ if ($orderDocument->hasErrors()) {
 $order = $orderDocument->getData();
 echo '  Order: '.$order->getId().' — '.$order->getStatus()->value."\n";
 
-// Wait for order to complete
-for ($i = 0; $i < 10; ++$i) {
+// Wait for order to complete, up to 120 s
+for ($i = 0; $i < 24; ++$i) {
     if ('completed' === $order->getStatus()->value) {
         break;
     }
