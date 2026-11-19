@@ -12,6 +12,17 @@ namespace Didww\Auth;
  */
 final class ApcuTokenStore implements TokenStore
 {
+    /** @var callable(string, array, int): bool */
+    private $store;
+
+    /**
+     * @param (callable(string, array, int): bool)|null $store apcu_store (@internal, for tests)
+     */
+    public function __construct(?callable $store = null)
+    {
+        $this->store = $store ?? static fn (string $key, #[\SensitiveParameter] array $value, int $ttl): bool => apcu_store($key, $value, $ttl);
+    }
+
     /**
      * Whether APCu can share tokens between requests: it is enabled, and the
      * process serves web requests (in the CLI and phpdbg each process has its
@@ -34,7 +45,7 @@ final class ApcuTokenStore implements TokenStore
     public function set(string $key, #[\SensitiveParameter] AccessToken $token, int $ttl): void
     {
         try {
-            $stored = apcu_store($key, $token->toArray(), max($ttl, 0));
+            $stored = ($this->store)($key, $token->toArray(), max($ttl, 0));
         } catch (\Throwable $e) {
             // Its trace holds the token as a plain array, so it is not chained.
             throw new \RuntimeException($e::class.': '.$e->getMessage());
