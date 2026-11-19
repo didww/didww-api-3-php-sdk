@@ -199,7 +199,7 @@ Tokens are cached in a `Didww\Auth\TokenStore`, keyed by the token service URL, 
 
 Every `configure()` call of the process without its own store shares one default store:
 
-- **Under PHP-FPM or mod_php with APCu enabled:** `Didww\Auth\ApcuTokenStore`. APCu is shared by the workers of the server, so a web request reuses the tokens minted by earlier ones.
+- **Outside the CLI (PHP-FPM, mod_php and other web servers) with APCu enabled:** `Didww\Auth\ApcuTokenStore`. APCu is shared by the workers of the server, so a web request reuses the tokens minted by earlier ones.
 - **Otherwise:** `Didww\Auth\MemoryTokenStore`, in process memory. A long-running worker (a queue consumer, a daemon, a CLI job) reuses its tokens. **Under PHP-FPM or mod_php without APCu the process memory lasts one request, so every request mints new tokens:** enable APCu, or pass a store that outlives the request.
 
 APCu memory is shared by every pool of one PHP-FPM master. Where the sites of other owners run under the same master, as on shared hosting, pass `tokenStore: new Didww\Auth\MemoryTokenStore()` or a store of your own. To share tokens between servers, use `Didww\Auth\Psr16TokenStore` over a [PSR-16](https://www.php-fig.org/psr/psr-16/) cache (requires `psr/simple-cache`):

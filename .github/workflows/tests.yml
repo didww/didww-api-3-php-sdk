@@ -17,14 +17,18 @@ jobs:
     strategy:
       matrix:
         php: [ '8.2', '8.3', '8.4', '8.5' ]
-    name: Tests with PHP ${{ matrix.php }}
+        apcu: [ 'apcu' ]
+        include:
+          - php: '8.4'
+            apcu: ':apcu'
+    name: Tests with PHP ${{ matrix.php }}${{ matrix.apcu == ':apcu' && ' without APCu' || '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           coverage: xdebug
-          extensions: apcu
+          extensions: ${{ matrix.apcu }}
           ini-values: apc.enable_cli=1
         env:
           fail-fast: true
@@ -34,7 +38,7 @@ jobs:
         run: composer test && composer check-style
 
       - name: Generate badge.json
-        if: matrix.php == '8.4'
+        if: matrix.php == '8.4' && matrix.apcu == 'apcu'
         run: |
           CLOVER="build/logs/clover.xml"
           if [ ! -f "$CLOVER" ]; then
@@ -61,7 +65,7 @@ jobs:
           echo "{\"schemaVersion\":1,\"label\":\"coverage\",\"message\":\"${PERCENT}%\",\"color\":\"${COLOR}\"}" > badge/badge.json
 
       - name: Upload badge artifact
-        if: matrix.php == '8.4'
+        if: matrix.php == '8.4' && matrix.apcu == 'apcu'
         uses: actions/upload-artifact@v4
         with:
           name: coverage-badge

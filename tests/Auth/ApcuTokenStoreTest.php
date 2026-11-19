@@ -7,11 +7,13 @@ use Didww\Auth\ApcuTokenStore;
 use Didww\Auth\MemoryTokenStore;
 use Didww\Auth\TokenProvider;
 use Didww\Configuration;
-use Didww\Tests\Support\TraceArgs;
+use Didww\Tests\Support\AssertsFailedStoreWrite;
 use PHPUnit\Framework\TestCase;
 
 class ApcuTokenStoreTest extends TestCase
 {
+    use AssertsFailedStoreWrite;
+
     private const KEY = TokenProvider::CACHE_KEY_PREFIX.'2e1c5435f0e67f91d34497fabf69840a945923a47982fad172c353b3f26be539';
 
     public function testRoundTrip()
@@ -65,14 +67,7 @@ class ApcuTokenStoreTest extends TestCase
     {
         $store = new ApcuTokenStore(static fn (): bool => throw new \RuntimeException('cache unavailable'));
 
-        try {
-            TraceArgs::keepingArgs(fn () => $store->set(self::KEY, new AccessToken('secret-token', 'Bearer', 3600, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable()), 3600));
-            $this->fail('No exception');
-        } catch (\RuntimeException $e) {
-            $this->assertSame('RuntimeException: cache unavailable', $e->getMessage());
-            $this->assertNull($e->getPrevious());
-            $this->assertStringNotContainsString('secret-token', print_r($e->getTrace(), true));
-        }
+        $this->assertFailedWriteKeepsNoToken($store, 'RuntimeException: cache unavailable');
     }
 
     public function testWriteAnsweredFalseThrows()
@@ -83,28 +78,31 @@ class ApcuTokenStoreTest extends TestCase
         (new ApcuTokenStore(static fn (): bool => false))->set(self::KEY, new AccessToken('t1', 'Bearer', 3600, ['api.didww.com'], 'full', '2026-11-19', new \DateTimeImmutable()), 3600);
     }
 
-    public function testAvailableOnlyOutsideTheCli()
+    public function testAvailableOnlyOutsideTheCliWithApcuEnabled()
     {
-        $this->requireApcu();
-        $this->assertTrue(ApcuTokenStore::isAvailable('fpm-fcgi'));
+        $this->assertSame(self::apcuEnabled(), ApcuTokenStore::isAvailable('fpm-fcgi'));
         $this->assertFalse(ApcuTokenStore::isAvailable('cli'));
         $this->assertFalse(ApcuTokenStore::isAvailable('phpdbg'));
     }
 
     public function testDefaultStoreOfWebRequests()
     {
-        $this->requireApcu();
         $newDefault = new \ReflectionMethod(Configuration::class, 'newDefaultTokenStore');
 
-        $this->assertInstanceOf(ApcuTokenStore::class, $newDefault->invoke(null, 'fpm-fcgi'));
+        $this->assertInstanceOf(self::apcuEnabled() ? ApcuTokenStore::class : MemoryTokenStore::class, $newDefault->invoke(null, 'fpm-fcgi'));
         $this->assertInstanceOf(MemoryTokenStore::class, $newDefault->invoke(null, 'cli'));
     }
 
     private function requireApcu(): void
     {
-        if (!\function_exists('apcu_enabled') || !apcu_enabled()) {
+        if (!self::apcuEnabled()) {
             $this->markTestSkipped('APCu is not enabled in the CLI (apc.enable_cli)');
         }
         apcu_clear_cache();
+    }
+
+    private static function apcuEnabled(): bool
+    {
+        return \function_exists('apcu_enabled') && apcu_enabled();
     }
 }

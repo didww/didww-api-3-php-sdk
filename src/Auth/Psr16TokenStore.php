@@ -6,8 +6,8 @@ use Psr\SimpleCache\CacheInterface;
 
 /**
  * A TokenStore backed by a PSR-16 cache (requires psr/simple-cache), for
- * example APCu or Redis through symfony/cache, so that PHP-FPM workers and
- * short-lived processes share tokens instead of minting one per request.
+ * example Redis through symfony/cache, so that the processes of several
+ * servers share tokens.
  *
  * Tokens are stored as arrays (AccessToken::toArray()) under keys mapped to
  * "didww_token_v1_" plus 48 hex digits, which fit the PSR-16 key rules. A
